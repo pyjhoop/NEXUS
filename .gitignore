@@ -3,6 +3,7 @@
 
 mybatis-config.xml
 log4j.xml
+/Servers/
 
 lecture
 target
