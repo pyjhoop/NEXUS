@@ -8,11 +8,6 @@
 </head>
 <body>
 
-hello2
-hello3
-hi mini
-gkgkgk
-SDFSDFDS
-
+ODEGARD
 </body>
 </html>
