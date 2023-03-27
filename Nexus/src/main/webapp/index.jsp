@@ -7,12 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-hello2
-hello3
-hi mini
-gkgkgk
-SDFSDFDS
-준호임 ㅋ
+하이
+<jsp:forward page="WEB-INF/views/nexus.jsp"/>
 </body>
 </html>
