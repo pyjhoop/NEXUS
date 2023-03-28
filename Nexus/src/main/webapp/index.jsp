@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-하이
+
 <jsp:forward page="WEB-INF/views/nexus.jsp"/>
 </body>
 </html>

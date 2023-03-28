@@ -282,7 +282,10 @@
               </ul>
             </div>
           </nav>
-
+          
+          <a href="https://github.com/login/oauth/authorize?scope=user:email%20repo&client_id=3b8e80bc4dbc71a39f57">Click here</a>
+		<h1>${ code }</h1>
+		<a href="test">클릭 여기</a>
       
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
