@@ -68,6 +68,7 @@
   </head>
 
   <body>
+ 
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -96,7 +97,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="#" class="menu-link">
+              <a href="/nexus/views/card.jsp" class="menu-link">
                 <i class="menu-icon tf-icons bx bxl-github"></i>
                 <div data-i18n="Misc">Repository</div>
               </a>
