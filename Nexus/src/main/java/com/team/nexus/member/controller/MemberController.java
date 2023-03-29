@@ -61,7 +61,7 @@ public class MemberController {
 	
 	@RequestMapping("test")
 	public String test() {
-		return "nexus";
+		return "test";
 	}
 	
 
