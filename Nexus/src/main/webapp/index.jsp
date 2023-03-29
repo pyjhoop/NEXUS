@@ -8,6 +8,8 @@
 </head>
 <body>
 
-ODEGARD
+
+<jsp:forward page="WEB-INF/views/nexus.jsp"/>
+
 </body>
 </html>
