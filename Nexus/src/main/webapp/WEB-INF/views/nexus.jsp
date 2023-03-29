@@ -65,6 +65,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${pageContext.request.contextPath}/resources/assets/js/config.js"></script>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
   </head>
 
   <body>
@@ -282,11 +283,20 @@
               </ul>
             </div>
           </nav>
+
           
           <a href="https://github.com/login/oauth/authorize?scope=user:email%20repo&client_id=3b8e80bc4dbc71a39f57">Click here</a>
 		<h1>${ code }</h1>
 		<a href="test">클릭 여기</a>
       
+
+	<!-- kakao -->
+       <div class="wrap">
+     <a class="kakao" href="https://kauth.kakao.com/oauth/authorize?client_id=c2b8f2ae81e7206df597a694d983c1ee&redirect_uri=http://localhost:8010/nexus/kakao&response_type=code">
+      	<div>카카오톡으로 간편로그인 </div>
+   	</a>
+</div>
+
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="${pageContext.request.contextPath}/resources/assets/vendor/libs/jquery/jquery.js"></script>
