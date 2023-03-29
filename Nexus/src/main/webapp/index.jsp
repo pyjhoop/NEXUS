@@ -9,7 +9,7 @@
 <body>
 
 
-<jsp:forward page="WEB-INF/views/nexus.jsp"/>
+<jsp:forward page="WEB-INF/views/member/login.jsp"/>
 
 </body>
 </html>

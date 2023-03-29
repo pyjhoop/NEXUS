@@ -64,6 +64,16 @@ public class MemberController {
 		return "test";
 	}
 	
+	@RequestMapping("register")
+	public String toRegister() {
+		return "member/register";
+	}
+	
+	@RequestMapping("login")
+	public String login() {
+		return "member/login";
+	}
+	
 
 	
 	

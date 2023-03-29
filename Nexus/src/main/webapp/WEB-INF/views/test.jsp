@@ -8,10 +8,13 @@
 </head>
 <body>
 
-<jsp:include page="nexus.jsp"/>
+<jsp:include page="common/nexus.jsp"/>
 
 <a href="#">여기 크릭해줘요</a>
-<div class="container-xxl flex-grow-1 container-p-y">여기</div>
+<div class="container-xxl flex-grow-1 container-p-y">
+    
+	
+</div>
 
 </body>
 </html>
