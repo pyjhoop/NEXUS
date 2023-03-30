@@ -3,19 +3,35 @@ package com.team.nexus.member.controller;
 import java.util.Collections;
 
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+
+import com.team.nexus.member.model.service.MailSendService;
+import com.team.nexus.member.model.service.MemberService;
+import com.team.nexus.member.model.service.MemberServiceImpl;
+import com.team.nexus.member.model.vo.Member;
 
 
 @Controller
 public class MemberController {
+	
+	@Autowired
+	private MemberServiceImpl mService;
+	
+	@Autowired
+	private MailSendService mailService;
+
 	
 	@RequestMapping("callback")
 	public String getUserInfo(@RequestParam String code) {
@@ -72,6 +88,24 @@ public class MemberController {
 	@RequestMapping("login")
 	public String login() {
 		return "member/login";
+	}
+	
+	@RequestMapping(value="idCheck.me.p", method=RequestMethod.POST)
+	@ResponseBody
+	public String idCheck(Member m) {
+		int checkCount = mService.idCheck(m.getUserId());
+		return checkCount+"";
+	}
+	
+	@RequestMapping("mailCheck")
+	@ResponseBody
+	public String mailCheck(String email) {
+		System.out.println("이메인 인증 요청이 들어옴");
+		System.out.println(email);
+		
+		
+		return mailService.joinEmail(email);
+		
 	}
 	
 

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration 
-PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
-"mybatis-3-config.dtd" >
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
 	<settings>
@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	
 	<!-- 유의사항 미리 등록해두려면 반드시 해당 클래스가 존재해야 한다. -->
 	<typeAliases>
-		
+		<typeAlias type="com.team.nexus.member.model.vo.Member" alias="Member"/>
 	</typeAliases>
 	
 	<!-- 
@@ -22,6 +22,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 
 	<!-- 유의사항 : 미리 등록해두려면 해당 mapper 파일이 진짜 존재하고 있는 상태여야함! 뿐만 아니라 namespace 등록까지 지정돼있어야 한다. -->
 	<mappers>
-		
+		<mapper resource="/mappers/member-mapper.xml"/>
 	</mappers>
 </configuration>
