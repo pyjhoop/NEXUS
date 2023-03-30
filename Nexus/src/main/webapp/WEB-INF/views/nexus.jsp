@@ -288,6 +288,7 @@
           <a href="https://github.com/login/oauth/authorize?scope=user:email%20repo&client_id=3b8e80bc4dbc71a39f57">Click here</a>
 		<h1>${ code }</h1>
 		<a href="test">클릭 여기</a>
+		<img src="http://k.kakaocdn.net/dn/hbceQ/btr5gt3JuXn/j4JeMpbMCWB8ha8ktkdJ3K/img_640x640.jpg" width="300px">
       
 
 	<!-- kakao -->
