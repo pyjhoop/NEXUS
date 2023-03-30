@@ -61,7 +61,17 @@ public class MemberController {
 	
 	@RequestMapping("test")
 	public String test() {
-		return "nexus";
+		return "test";
+	}
+	
+	@RequestMapping("register")
+	public String toRegister() {
+		return "member/register";
+	}
+	
+	@RequestMapping("login")
+	public String login() {
+		return "member/login";
 	}
 	
 

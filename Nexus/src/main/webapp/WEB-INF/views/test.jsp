@@ -8,8 +8,13 @@
 </head>
 <body>
 
+<jsp:include page="common/nexus.jsp"/>
 
-<jsp:forward page="WEB-INF/views/member/login.jsp"/>
+<a href="#">여기 크릭해줘요</a>
+<div class="container-xxl flex-grow-1 container-p-y">
+    
+	
+</div>
 
 </body>
 </html>
