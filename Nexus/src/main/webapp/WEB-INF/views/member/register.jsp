@@ -93,76 +93,74 @@
 				
               <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
                 <div class="mb-3">
-                  <label for="userId" class="form-label">id</label>
+                  <label for="userId" class="form-label">아이디</label>
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control dis"
                     id="userId"
                     name="userId"
                     placeholder="Enter your username"
                     autofocus
-                    required
                   />
                 </div>
 
                 <div class="mb-3">
-                  <label for="userPwd" class="form-label">password</label>
+                  <label for="userPwd" class="form-label">비밀번호</label>
                   <input
                     type="password"
-                    class="form-control"
+                    class="form-control dis"
                     id="userPwd"
                     name="userPwd"
                     placeholder="Enter your password"
-                    required
                   />
                 </div>
 
                 <div class="mb-3">
-                  <label for="pwdConfirm" class="form-label">password check</label>
+                  <label for="pwdConfirm" class="form-label">비밀번호 확인</label>
                   <input
                     type="password"
-                    class="form-control"
+                    class="form-control dis"
                     id="pwdConfirm"
                     name="pwdConfirm"
                     placeholder="Enter your password again"
-                    required
                   />
                 </div>
 
-                <label for="userName" class="form-label">Name</label>
+                <label for="userName" class="form-label">이름</label>
                 <div class="mb-3" style="display: flex;">
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control dis"
                     id="userName"
                     name="userName"
                     placeholder="Name"
                     style="margin-right: 10px;"
-                    required
                   />
                  
                 </div>
 
                 <div class="mb-3">
-                  <label for="defaultSelect" class="form-label">Gender</label>
+                  <label for="defaultSelect" class="form-label">성별</label>
                   <select id="gemder" class="form-select" name="gender">
-                    <option value="">Gender</option>
-                    <option value="M">Male</option>
-                    <option value="F">Female</option>
-                    <option value="O">Other</option>
+                    <option value="">성별</option>
+                    <option value="M">남</option>
+                    <option value="F">여</option>
+                    <option value="O">기타</option>
                   </select>
                 </div>
 
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" />
+                  <label for="email" class="form-label">이메일</label>
+                  <input type="text" class="form-control dis" id="email" name="email" placeholder="Enter your email" />
                 </div>
                 <div style="width: 100%; display: flex; justify-content: flex-end;" class="mb-3">
-                  <button type="button" class="btn btn-primary" onclick="return firm();">Email Confirm</button>
+                  <span id="timer" style="padding-right: 20px; padding-top: 10px;" class="text-primary"></span>
+                  <button type="button" class="btn btn-primary" onclick="return firm();">이메일 인증</button>
                 </div>
 
-                <div class="mb-3">
-                  <input type="text" class="form-control" id="code" name="code" placeholder="Enter Code" />
+                <div class="mb-3 c" style="display: flex;">
+                  <input type="text" class="form-control dis" id="code" name="code" placeholder="Enter Code"  style="width: 70%;"/>
+                  <button id="condeFirm" type="button" class="btn btn-primary" style="width:30%">코드인증</button>
                 </div>
 
 
@@ -175,7 +173,7 @@
                     </label>
                   </div>
                 </div>
-                <button class="btn btn-primary d-grid w-100">Sign up</button>
+                <button type="submit" class="btn btn-primary d-grid w-100" onclick="return final()">회원가입</button>
               </form>
 
               
