@@ -91,7 +91,7 @@
               <h4 class="mb-2">Adventure starts here 🚀</h4>
               <p class="mb-4">Make your app management easy and fun!</p>
 				
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3" action="register.mep" method="POST">
                 <div class="mb-3">
                   <label for="userId" class="form-label">아이디</label>
                   <input

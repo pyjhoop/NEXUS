@@ -147,13 +147,15 @@ function firm(){
 }
 
 function final(){
-    console.log($("#terms-conditions").checked());
     const dis = $(".dis");
-    console.log(dis);
-    return false;
-    // if(dis.length == 0){
-    //     return true;
-    // }else{
-    //     return false;
-    // }
+    console.log($("#terms-conditions").is(":checked"));
+    if($("#terms-conditions").is(":checked")){
+        if(dis.length == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }else{
+        return false;
+    }
 }

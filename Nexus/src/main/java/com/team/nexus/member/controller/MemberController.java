@@ -108,6 +108,13 @@ public class MemberController {
 		
 	}
 	
+	@RequestMapping("register.mep")
+	public String registerMember(Member m) {
+		System.out.println(m);
+		return "";
+	}
+	
+	
 
 	
 	
