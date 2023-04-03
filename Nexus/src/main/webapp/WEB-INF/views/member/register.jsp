@@ -83,15 +83,14 @@
               <!-- Logo -->
               <div class="app-brand justify-content-center">
                 <a href="index.html" class="app-brand-link gap-2">
-                	<img src="${ pageContext.request.contextPath }/resources/image/logo1.png" class="app-brand-logo w-px-50 h-auto mt-1" alt="logo" />
-                    <span class="app-brand-text demo text-body fw-bolder" style="position:relative; left:-20px; font-size:2.5rem;">NEXUS</span>
+                    <span class="app-brand-text demo text-body fw-bolder" style="position:relative; font-size:2.5rem;">NEXUS</span>
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Adventure starts here 🚀</h4>
-              <p class="mb-4">Make your app management easy and fun!</p>
+              <h4 class="mb-2">NEXUS를 시작해보세요 🚀</h4>
+              <p class="mb-4">팀원과의 소통을 더욱더 원활하게 해줍니다!</p>
 				
-              <form id="formAuthentication" class="mb-3" action="register.mep" method="POST">
+              <form id="formAuthentication" class="mb-3" action="insert.me.p" method="POST">
                 <div class="mb-3">
                   <label for="userId" class="form-label">아이디</label>
                   <input
@@ -180,7 +179,7 @@
 
               <p class="text-center">
                 <span>Already have an account?</span>
-                <a href="login">
+                <a href="login.p">
                   <span>Sign in instead</span>
                 </a>
               </p>

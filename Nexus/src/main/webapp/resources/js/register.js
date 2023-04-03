@@ -13,8 +13,6 @@ $(function(){
                 type:"POST",
                 data: form,
                 success:function(data){
-                    console.log(data)
-                    console.log(userId.val())
                     if(data == 0){
                         userId.after("<span class='text-primary inf'>사용가능</span>");
                         userId.removeClass('dis')
@@ -85,17 +83,14 @@ function firm(){
     const email = $("#email");
     email.addClass("dis")
     if(regEx.test(email.val())){
-        console.log("hi")
         
         const email = $("#email");
         email.removeClass("dis")
-        console.log(email.val());
 
         $.ajax({
             url:"mailCheck?email="+email.val(),
             type:"GET",
             success(data){
-                console.log(data);
                 code = data;
             }
         })

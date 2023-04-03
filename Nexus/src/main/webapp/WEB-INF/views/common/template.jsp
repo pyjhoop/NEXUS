@@ -300,18 +300,6 @@
             </div>
           </nav>
 
-          
-          <a href="https://github.com/login/oauth/authorize?scope=user:email%20repo&client_id=3b8e80bc4dbc71a39f57">Click here</a>
-		<h1>${ token }</h1>
-		<a href="test">클릭 여기</a>
-      
-
-	<!-- kakao -->
-       <div class="wrap">
-     <a class="kakao" href="https://kauth.kakao.com/oauth/authorize?client_id=c2b8f2ae81e7206df597a694d983c1ee&redirect_uri=http://localhost:8010/nexus/kakao&response_type=code">
-      	<div>카카오톡으로 간편로그인 </div>
-   	</a>
-</div>
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
