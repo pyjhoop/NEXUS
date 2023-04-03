@@ -12,11 +12,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class kakaoService {
@@ -85,7 +83,7 @@ public class kakaoService {
 	  public HashMap<String, Object> getUserInfo (String access_Token) {
 
           //    ��û�ϴ� Ŭ���̾�Ʈ���� ���� ������ �ٸ� �� �ֱ⿡ HashMapŸ������ ����
-          HashMap<String, Object> userInfo = new HashMap<>();
+          HashMap<String, Object> userInfo = new HashMap<String, Object>();
           String reqURL = "https://kapi.kakao.com/v2/user/me";
           try {
               URL url = new URL(reqURL);
