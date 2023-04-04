@@ -78,8 +78,7 @@
               <!-- Logo -->
               <div class="app-brand justify-content-center">
                 <a href="index.html" class="app-brand-link gap-2">
-                  <img src="${ pageContext.request.contextPath }/resources/image/logo2.png" class="app-brand-logo w-px-50 h-auto mt-1" alt="logo" />
-                  <span class="app-brand-text demo text-body fw-bolder" style="position:relative; left:-20px; font-size:2.5rem;">NEXUS</span>
+                  <span class="app-brand-text demo text-body fw-bolder" style="position:relative;  font-size:2.5rem;">NEXUS</span>
                 </a>
               </div> 
               <!-- /Logo -->
@@ -130,7 +129,7 @@
 
               <div style="display: flex; justify-content: space-evenly;">
                 <div class="git">
-                  <a href="" style="display: block; padding-left: 50px;"><img alt="" src="${ pageContext.request.contextPath }/resources/image/github.png" width="50px" style="display: block; margin: auto;"></a>
+                  <a href="https://github.com/login/oauth/authorize?scope=user:email%20repo&client_id=3b8e80bc4dbc71a39f57" style="display: block; padding-left: 50px;"><img alt="" src="${ pageContext.request.contextPath }/resources/image/github.png" width="50px" style="display: block; margin: auto;"></a>
                 </div>
                 <div class="kaka">
                   <a href="" style="display: block; padding-right: 50px;"><img src="${ pageContext.request.contextPath }/resources/image/kakao.png" alt="" width="60px" style="display: block; margin: auto;"></a>
@@ -140,7 +139,7 @@
 
               <p class="text-center">
                 <span>New on our platform?</span>
-                <a href="register">
+                <a href="register.p">
                   <span>Create an account</span>
                 </a>
               </p>

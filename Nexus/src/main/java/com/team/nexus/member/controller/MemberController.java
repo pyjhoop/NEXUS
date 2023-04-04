@@ -2,13 +2,18 @@ package com.team.nexus.member.controller;
 
 import java.util.Collections;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +22,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team.nexus.member.model.service.MailSendService;
 import com.team.nexus.member.model.service.MemberService;
 import com.team.nexus.member.model.service.MemberServiceImpl;
 import com.team.nexus.member.model.vo.Member;
 
 
+@PropertySource("classpath:git.properties")
 @Controller
 public class MemberController {
 	
@@ -31,10 +40,19 @@ public class MemberController {
 	
 	@Autowired
 	private MailSendService mailService;
-
 	
-	@RequestMapping("callback")
-	public String getUserInfo(@RequestParam String code) {
+	@Autowired
+	private BCryptPasswordEncoder bcrypt;
+	
+	@Value("${git.id}")
+	private String gitId;
+	
+	@Value("${git.secret}")
+	private String gitSecret;
+	
+
+	@RequestMapping("callback.p")
+	public String getUserInfo(@RequestParam String code, HttpSession session) {
 	    System.out.println(code);
 	    
 	    RestTemplate restTemplate = new RestTemplate();
@@ -47,45 +65,86 @@ public class MemberController {
 	    String url = "https://github.com/login/oauth/access_token";
 	    
 	    JSONObject jsonObject = new JSONObject();
-	    jsonObject.put("client_id", "3b8e80bc4dbc71a39f57");
-	    jsonObject.put("client_secret", "bc1c89f230d674b06dcdb1d0ab553c083c8f8c79");
+	    jsonObject.put("client_id", gitId);
+	    jsonObject.put("client_secret", gitSecret);
 	    jsonObject.put("code", code);
 
         HttpEntity<String> entity = new HttpEntity<String>(jsonObject.toString(), headers);
 
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
         String[] arr = response.getBody().split(",");
-        System.out.println(response);
-        String token = (arr[0].split(":"))[1].replace("\"", "");
-//        System.out.println(arr[0]);
+        System.out.println(response.getBody());
+        ObjectMapper objectMapper = new ObjectMapper();
+//        String token = (arr[0].split(":"))[1].replace("\"", "");
+        String token ="";
+        try {
+			JsonNode jsonNode = objectMapper.readTree(response.getBody());
+			token = jsonNode.get("access_token").asText();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+        
+        
+        
+        session.setAttribute("token", token);
         System.out.println(token);
        
         RestTemplate restTemplate1 = new RestTemplate();
         
-        String url1 = "https://api.github.com/repos/pyjhoop/NEXUS/issues";
+        String url1 = "https://api.github.com/user";
         HttpHeaders headers1 = new HttpHeaders();
         headers1.set("Authorization", "Bearer "+token);
         
         HttpEntity<String> req = new HttpEntity<String>(headers1);
         
         ResponseEntity<String> res = restTemplate1.exchange(url1, HttpMethod.GET, req, String.class);
+        ObjectMapper om = new ObjectMapper();
         
-        System.out.println(res);
+        Member m = new Member();
         
-	    return "nexus";
+        
+        try {
+			JsonNode jn = om.readTree(res.getBody());
+			System.out.println("id  : "+ jn.get("id").asText());
+			System.out.println("name : "+jn.get("name").asText());
+			System.out.println("url : "+ jn.get("avatar_url").asText());
+			m.setUserId(jn.get("id").asText());
+			m.setUserName(jn.get("name").asText());
+			m.setProfile(jn.get("avatar_url").asText());
+			m.setEmail(jn.get("email").asText());
+			
+			
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+        // 있는지 조회부터
+        Member m1 = mService.selectMember(m);
+        
+        
+        
+        // 조회된 결과 없을시 insert
+        if(m1 == null) {
+        	int result = mService.insertMember(m);
+        }else {
+        	m1.setToken(token);
+        	session.setAttribute("member", m1);
+        }
+        
+        
+	    return "redirect:nexus.p";
 	}
 	
-	@RequestMapping("test")
-	public String test() {
-		return "test";
+	@RequestMapping("nexus.p")
+	public String nexusPage() {
+		return "main";
 	}
 	
-	@RequestMapping("register")
+	@RequestMapping("register.p")
 	public String toRegister() {
 		return "member/register";
 	}
 	
-	@RequestMapping("login")
+	@RequestMapping("login.p")
 	public String login() {
 		return "member/login";
 	}
@@ -103,15 +162,22 @@ public class MemberController {
 		System.out.println("이메인 인증 요청이 들어옴");
 		System.out.println(email);
 		
-		
 		return mailService.joinEmail(email);
 		
 	}
 	
-	@RequestMapping("register.mep")
-	public String registerMember(Member m) {
-		System.out.println(m);
-		return "";
+	@RequestMapping("insert.me.p")
+	public String insertMember(Member m) {
+		
+		m.setUserPwd(bcrypt.encode(m.getUserPwd()));
+		
+		int result = mService.insertMember(m);
+		if(result>0) {
+			System.out.println("회원가입 성공");
+		}else {
+			System.out.println("회원가입 실패");
+		}
+		return "redirect:login.p";
 	}
 	
 	
