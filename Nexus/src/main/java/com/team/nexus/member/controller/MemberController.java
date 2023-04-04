@@ -111,6 +111,7 @@ public class MemberController {
         
         try {
 			JsonNode jn = om.readTree(res.getBody());
+			System.out.println(jn.asText());
 			System.out.println("id  : "+ jn.get("id").asText());
 			System.out.println("name : "+jn.get("name").asText());
 			System.out.println("url : "+ jn.get("avatar_url").asText());
