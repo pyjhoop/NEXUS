@@ -251,7 +251,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="${loginUser.profile }" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -260,7 +260,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="${loginUser.profile }" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -292,7 +292,7 @@
                     <li>
                     <c:choose>
                     <c:when test="${loginUser.social eq 'K'}">
-                      <a class="dropdown-item" href="https://kauth.kakao.com/oauth/logout?client_id=c2b8f2ae81e7206df597a694d983c1ee&logout_redirect_uri=http://localhost:8010/nexus">
+                      <a class="dropdown-item" href="https://kauth.kakao.com/oauth/logout?client_id=c2b8f2ae81e7206df597a694d983c1ee&logout_redirect_uri=http://localhost:8010/nexus/logout">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                      </a>
