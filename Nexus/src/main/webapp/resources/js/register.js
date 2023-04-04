@@ -16,6 +16,7 @@ $(function(){
                     if(data == 0){
                         userId.after("<span class='text-primary inf'>사용가능</span>");
                         userId.removeClass('dis')
+                        userId.css("border-color","");
                     }else{
                         userId.after("<span class='text-danger inf'>존재하는 아이디 입니다</span>");
                         userId.addClass("dis");
@@ -41,6 +42,7 @@ $(function(){
         if(regEx.test(pwd.val())){
             pwd.after("<span class='text-primary inf1'>사용가능</span>")
             pwd.removeClass("dis");
+            pwd.css("border-color","");
         }else{
             pwd.after("<span class='text-danger inf1'>영문자와 숫자 특수문자를 조합해 8자 이상 입력해주세요</span>")
             pwd.addClass("dis");
@@ -56,6 +58,7 @@ $(function(){
             if(pwdFirm.val() == pwdRaw){
                 pwdFirm.after("<span class='text-primary inf2'>비밀번호가 일치합니다</span>")
                 pwdFirm.removeClass("dis")
+                pwdFirm.css("border-color","");
             }else{
                 pwdFirm.after("<span class='text-danger inf2'>비밀번호가 일치하지 않습니다</span>")
                 pwdFirm.addClass("dis");
@@ -70,6 +73,7 @@ $(function(){
             $(this).addClass("dis");
         }else{
             $(this).removeClass("dis")
+            $(this).css("border-color","");
         }
     })
 
@@ -82,6 +86,7 @@ function firm(){
     const regEx = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     const email = $("#email");
     email.addClass("dis")
+    email.css("border-color","");
     if(regEx.test(email.val())){
         
         const email = $("#email");
@@ -119,6 +124,7 @@ function firm(){
 
         $("#condeFirm").click(function(){
             const inputCode = $("#code");
+            inputCode.css("border-color","");
             $(".inf4").text("");
             if(inputCode.val() === code){
                 clearInterval(x);
@@ -143,6 +149,8 @@ function firm(){
 
 function final(){
     const dis = $(".dis");
+    console.log(dis)
+    dis.css("border-color","red");
     console.log($("#terms-conditions").is(":checked"));
     if($("#terms-conditions").is(":checked")){
         if(dis.length == 0){

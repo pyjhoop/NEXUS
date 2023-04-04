@@ -617,6 +617,331 @@ ALTER TABLE TB_NOTIFICATIONS
 				, 'N'
 			)
 	;
+    
+    
+
+
+CREATE SEQUENCE SEQ_INQUIRY
+NOCACHE;
+
+CREATE SEQUENCE SEQ_QUESTION
+NOCACHE;
+
+------------- 질문-----------------
+CREATE TABLE TB_QUESTION (
+	question_no number primary key,
+	inquiry_no number NOT NULL,
+	question_content varchar2(4000) NULL,
+	question_date	date NOT NULL,
+	user_no number NOT NULL
+);
+
+
+
+COMMENT ON COLUMN TB_QUESTION.question_no IS '질문 번호';
+COMMENT ON COLUMN TB_QUESTION.inquiry_no IS '문의 번호';
+COMMENT ON COLUMN TB_QUESTION.question_content IS '질문 내용';
+COMMENT ON COLUMN TB_QUESTION.question_date IS '질문 날짜';
+COMMENT ON COLUMN TB_QUESTION.user_no IS '문의한 회원 번호';
+
+INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.nextval, '님아 대답해', SYSDATE, 1);
+INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.currval, '봇주제에 개구림 ㅋ', SYSDATE, 1);
+INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.nextval, '탈퇴 어케하나요', SYSDATE, 2);
+
+------------------- 친구 ------------------------------
+
+CREATE TABLE TB_FRIEND (
+	user_no number references TB_MEMBER on delete cascade,
+	user_add_no number references TB_MEMBER on delete cascade,
+	user_blocked char(3) DEFAULT 'N' NOT NULL,
+    primary key(user_no, user_add_no)
+);
+
+COMMENT ON COLUMN TB_FRIEND.user_no IS '친추 보낸이 번호';
+COMMENT ON COLUMN TB_FRIEND.user_add_no IS '친추 받은이 번호';
+COMMENT ON COLUMN TB_FRIEND.user_blocked IS '차단  여부("Y", "N")';
+
+INSERT INTO TB_FRIEND VALUES(1, 2, DEFAULT);
+INSERT INTO TB_FRIEND VALUES(1, 3, DEFAULT);
+INSERT INTO TB_FRIEND VALUES(2, 1, DEFAULT);
+
+CREATE SEQUENCE SEQ_PJT_PR
+       INCREMENT BY 1
+       START WITH 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       ORDER;
+       
+CREATE SEQUENCE SEQ_PSN_PR
+       INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       ORDER;
+CREATE SEQUENCE SEQ_PJT_PR_REPLY
+       INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       ORDER;
+CREATE SEQUENCE SEQ_PSN_PR_REPLY
+       INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       ORDER;
+CREATE SEQUENCE SEQ_MILEST_NO
+       INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       ORDER;
+CREATE SEQUENCE SEQ_PROJECT_NO
+       INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       ORDER;
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE "PJT_PR_BOARD" (
+   "PJT_PR_NO"   number      NOT NULL,
+   "user_no"   number      NOT NULL,
+   "PJT_PR_TITLE"   VARCHAR2(100)      NOT NULL,
+   "PJT_PR_START"   VARCHAR2(100)      NOT NULL,
+   "PJT_PR_PERIOD"   VARCHAR2(100)      NULL,
+   "PJT_PR_DEADLINE"   VARCHAR2(100)      NULL,
+   "PJT_PR_STACK"   VARCHAR2(500)      NULL,
+   "PJT_PR_FACE"   VARCHAR2(100)      NULL,
+   "PJT_PR_CONTACT"   VARCHAR2(4000)      NOT NULL,
+   "PJT_PR_CAPACITY"   VARCHAR2(100)      NULL,
+   "PJT_PR_CONTENT"   VARCHAR2(4000)      NOT NULL,
+   "PJT_PR_RECRUITS"   VARCHAR2(100)      NULL,
+   "PJT_PR_CREATEDATE"   date   DEFAULT SYSDATE   NOT NULL,
+   "user_id"   varchar2(50)      NOT NULL,
+   "PJT_PR_FIELD"   VARCHAR2(100)     NULL
+);
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_NO" IS '프젝홍보 게시글 번호';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."user_no" IS 'seq';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_TITLE" IS '게시글 제목';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_START" IS '프로젝트 시작일';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_PERIOD" IS '예상 기간';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_DEADLINE" IS '인원모집 마감일';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_STACK" IS '사용 기술 스택';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_FACE" IS '진행방식';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CONTACT" IS '연락방법';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CAPACITY" IS '프로젝트 정원';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CONTENT" IS '프로젝트 소개글';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_RECRUITS" IS '모집인원';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CREATEDATE" IS '게시글 등록일';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."user_id" IS '작성자 ID';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_FIELD" IS '모집분야';
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE "SAVED_PJT_PR" (
+   "user_no"   number      NOT NULL,
+   "PJT_PR_SAVED_DATE"   DATE      NOT NULL,
+   "PJT_PR_NO"   number      NOT NULL
+);
+
+COMMENT ON COLUMN "SAVED_PJT_PR"."user_no" IS 'seq';
+
+COMMENT ON COLUMN "SAVED_PJT_PR"."PJT_PR_SAVED_DATE" IS '찜한 날짜';
+
+COMMENT ON COLUMN "SAVED_PJT_PR"."PJT_PR_NO" IS '홍보 게시글 번호';
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE "PSN_PR_BOARD" (
+   "PSN_PR_NO"   number      NOT NULL,
+   "PSN_PR_STACK"   VARCHAR2(300)      NULL,
+   "PSN_PR_CONTENT"   VARCHAR2(4000)      NOT NULL,
+   "PSN_PR_AVLPRD"   VARCHAR2(100)    NULL,
+   "PSN_PR_TITLE"   VARCHAR2(200)      NOT NULL,
+   "PSN_PR_CONTACT"   VARCHAR2(500)      NULL,
+   "user_id"   VARCHAR2(50)      NOT NULL,
+   "user_no"   number      NOT NULL
+);
+
+
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_NO" IS '개인홍보 게시글 번호';
+
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_STACK" IS '기술스택';
+
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_CONTENT" IS '자기소개글';
+
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_AVLPRD" IS '프로젝트 참여 가능기간';
+
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_TITLE" IS '게시글 제목';
+
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_CONTACT" IS '연락방법';
+
+COMMENT ON COLUMN "PSN_PR_BOARD"."user_id" IS '작성자 ID';
+
+COMMENT ON COLUMN "PSN_PR_BOARD"."user_no" IS 'seq';
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE "SAVED_PSN_PR" (
+   "user_no"   number      NOT NULL,
+   "PSN_PR_NO"   number      NOT NULL,
+   "PSN_PR_SAVED_DATE"   DATE      NOT NULL
+);
+
+COMMENT ON COLUMN "SAVED_PSN_PR"."user_no" IS 'seq';
+
+COMMENT ON COLUMN "SAVED_PSN_PR"."PSN_PR_SAVED_DATE" IS '찜한 날짜';
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE "PJT_PR_REPLY" (
+   "PJT_PR_REPLY_NO"   number      NOT NULL,
+   "PJT_PR_NO2"   number      NOT NULL,
+   "PJT_PR_REPLY_DATE"   DATE      NOT NULL,
+   "PJT_PR_REPLY_CONTENT"   VARCHAR2(4000)      NOT NULL,
+   "PJT_PR_NO"   number      NOT NULL,
+   "user_id"   number      NOT NULL
+);
+
+COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_NO2" IS '프젝홍보 게시글 번호';
+
+COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_REPLY_DATE" IS '댓글작성일';
+
+COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_REPLY_CONTENT" IS '댓글내용';
+
+COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_NO" IS '참조게시글번호';
+
+COMMENT ON COLUMN "PJT_PR_REPLY"."user_id" IS '댓글작성자 ID';
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE "PSN_PR_REPLY" (
+   "PSN_PR_REPLY_NO"   number      NOT NULL,
+   "PSN_PR_NO2"   number      NOT NULL,
+   "PSN_PR_REPLY_DATE"   DATE      NOT NULL,
+   "PSN_PR_REPLY_CONTENT"   VARCHAR2(4000)   NOT NULL,
+   "PSN_PR_NO"   number      NOT NULL,
+   "user_id"   number      NOT NULL
+);
+
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_NO" IS '댓글번호';
+
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_NO2" IS '개인홍보 게시글 번호';
+
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_DATE" IS '댓글작성일';
+
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_CONTENT" IS '댓글내용';
+
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_NO" IS '참조게시글번호';
+
+COMMENT ON COLUMN "PSN_PR_REPLY"."user_id" IS '댓글작성자ID';
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE "PROJECT" (
+   "PJT_NO"   number      NOT NULL,
+   "PJT_TITLE"   varchar2(100)      NOT NULL,
+   "PJT_DATE"   date      NOT NULL,
+   "PJT_ CONTENT"   varchar2(4000)      NULL,
+   "PJT_CREATOR"   varchar2(100)      NOT NULL
+);
+
+COMMENT ON COLUMN "PROJECT"."PJT_NO" IS '프로젝트 번호';
+
+COMMENT ON COLUMN "PROJECT"."PJT_TITLE" IS '프로젝트 이름';
+
+COMMENT ON COLUMN "PROJECT"."PJT_DATE" IS '프로젝트 생성일';
+
+COMMENT ON COLUMN "PROJECT"."PJT_ CONTENT" IS '프로젝트 설명';
+
+COMMENT ON COLUMN "PROJECT"."PJT_CREATOR" IS '프로젝트 생성자';
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE "MILESTONE" (
+   "milest_no"   number      NULL,
+   "user_no"   number      NOT NULL,
+   "PJT_NO"   number      NOT NULL,
+   "milest_title"   varchar2(100)      NOT NULL,
+   "milest_createdate"   date      NULL,
+   "milest_start"   date      NULL,
+   "milest_end"   date      NULL,
+   "milest_status"   varchar2(50)      NULL
+);
+
+
+COMMENT ON COLUMN "MILESTONE"."milest_no" IS '마일스톤 번호';
+
+COMMENT ON COLUMN "MILESTONE"."user_no" IS 'seq';
+
+COMMENT ON COLUMN "MILESTONE"."PJT_NO" IS '프로젝트 번호';
+
+COMMENT ON COLUMN "MILESTONE"."milest_title" IS '마일스톤 제목';
+
+COMMENT ON COLUMN "MILESTONE"."milest_createdate" IS '마일스톤 작성일자';
+
+COMMENT ON COLUMN "MILESTONE"."milest_start" IS '마일스톤시작일자';
+
+COMMENT ON COLUMN "MILESTONE"."milest_end" IS '마일스톤 종료일자';
+
+COMMENT ON COLUMN "MILESTONE"."milest_status" IS '마일스톤 상태';
+
+INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 1,  '쇼핑몰 프로젝트 팀원구해요', '4월말', '3달정도', '5월초', 'ORACLE,JAVA', 'FULL비대면', '댓글달아주세요', '10명내외', '저희는 쇼핑몰을 개발하고자 합니다', '3명', SYSDATE, 'user01', '백엔드');
+
+INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 2,  '게임커뮤니티 프로젝트 팀원구해요', '4월15일', '6개월', '4월말', 'PYHTON,JAVASCRIPT', '대면', '카톡오픈채팅방', '5명정도', '저희는 게임커뮤니티를 개발하고자 합니다', '4명', SYSDATE, 'user02', '프론트엔드,백엔드');
+
+INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 3,  '사이드 프로젝트 팀원구해요', '5월중순', '3개월', '5월초', 'JAVA,SPRING', 'FULL비대면', '010-1234-5678', '10명', '저희는 친목커뮤니티를 개발하고자 합니다', '5명', SYSDATE, 'user03', '백엔드');
+
+INSERT INTO SAVED_PJT_PR VALUES (1, SYSDATE, 1);
+INSERT INTO SAVED_PJT_PR VALUES (2, SYSDATE,2);
+INSERT INTO SAVED_PJT_PR VALUES (3, SYSDATE,3);
+
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'AJAX,HTML,CSS,REACT', '자신있습니다', '4월중순~10월말', '프론트엔드 개발자입니다', '채팅', 'user01', 1 );
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'ORACLE,JAVA,SPRING', '백엔드 프로젝트 참여경력 많습니다.','4월초 이후', '백엔드 개발자입니다', '010-1234-5678', 'user02', 2 );
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'FLUTTER,JAVA,CSS,FIGMA', '자신있습니다', '4월말~', '풀스택 개발자입니다', '채팅', 'user02', 3 );
+
+INSERT INTO SAVED_PSN_PR VALUES(1, 1, SYSDATE );
+
+INSERT INTO SAVED_PSN_PR VALUES(2, 2, SYSDATE );
+
+INSERT INTO SAVED_PSN_PR VALUES(3, 3, SYSDATE );
+
+INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 1, SYSDATE, '저 관심있습니다', 1, 1 );
+INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 2, SYSDATE, '010-1234-5677 연락주세요', 2, 2 );
+INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 3, SYSDATE, '재밌어보여요!', 3, 3 );
+
+INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 1, SYSDATE, '프로젝트 구하셨어요?', 1, 1 );
+INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 2, SYSDATE, '프론트도 가능하세요?', 2, 2 );
+INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 3, SYSDATE, '4월20일부터 가능하세요?', 3, 3 );
+
+INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'OVCOS', SYSDATE, '달리기!', 'USER01' );
+INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'FLUERYOUNG', SYSDATE, '꽃팔기!', 'USER02' );
+INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'MEAL', SYSDATE, '밥먹기!', 'USER03' );
+
+INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 1, 1, '달리기프젝 진척도', SYSDATE, SYSDATE, '2023-07-15', 'OPEN');
+INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 2, 2, 'FLUERYOUNG', SYSDATE, SYSDATE, '2023-09-17', 'OPEN');
+INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 3, 3, '식사프로젝트', SYSDATE, SYSDATE, '2023-04-01', 'CLOSED');
+
 COMMIT;
 
 
