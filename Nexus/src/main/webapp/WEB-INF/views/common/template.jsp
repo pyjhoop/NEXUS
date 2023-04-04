@@ -184,7 +184,7 @@
             </li>
             <li class="menu-item">
               <a
-                href="#"
+                href="personal.me"
                 target="_blank"
                 class="menu-link"
               >
