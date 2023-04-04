@@ -291,7 +291,7 @@
                     </li>
                     <li>
                     <c:choose>
-                    <c:when test="${loginUser.social eq 'K  '}">
+                    <c:when test="${loginUser.social eq 'K'}">
                       <a class="dropdown-item" href="https://kauth.kakao.com/oauth/logout?client_id=c2b8f2ae81e7206df597a694d983c1ee&logout_redirect_uri=http://localhost:8010/nexus">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
