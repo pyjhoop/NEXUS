@@ -67,6 +67,9 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${pageContext.request.contextPath}/resources/assets/js/config.js"></script>
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+    <!-- jquery-->
+   
   </head>
 
   <body>
@@ -78,7 +81,7 @@
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
+            <a href="main.p" class="app-brand-link">
 
               <span class="app-brand-text demo menu-text fw-bolder ms-2">NEXUS</span>
             </a>
@@ -93,33 +96,17 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item active">
-              <a href="index.html" class="menu-link">
+              <a href="main.p" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Home</div>
               </a>
             </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bxl-github"></i>
-                <div data-i18n="Layouts">Repository</div>
+             <li class="menu-item" id="repository">
+              <a href="repository.p" class="menu-link">
+              	<i class="menu-icon tf-icons bx bxl-github"></i>
+                <div data-i18n="Basic">Repository</div>
               </a>
-
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="layouts-without-menu.html" class="menu-link">
-                    <div data-i18n="Without menu">Team</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
-                    <div data-i18n="Without navbar">Individual</div>
-                  </a>
-                </li>
-              </ul>
             </li>
-
-
-
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Project</span></li>
             <!-- Cards -->
@@ -296,6 +283,12 @@
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                      </a>
+                     </c:when>
+                     <c:when test="${ loginUser.social eq 'G' }">
+                     	<a class="dropdown-item" href="logout.p">
+	                        <i class="bx bx-power-off me-2"></i>
+	                        <span class="align-middle">Log Out</span>
+                     	</a>
                      </c:when>
                      <c:otherwise>
                		<div>${loginUser.social }</div>

@@ -1,8 +1,10 @@
 package com.team.nexus.member.controller;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -83,7 +85,6 @@ public class MemberController {
         String[] arr = response.getBody().split(",");
         System.out.println(response.getBody());
         ObjectMapper objectMapper = new ObjectMapper();
-//        String token = (arr[0].split(":"))[1].replace("\"", "");
         String token ="";
         try {
 			JsonNode jsonNode = objectMapper.readTree(response.getBody());
@@ -111,6 +112,7 @@ public class MemberController {
         Member m = new Member();
         
         
+        
         try {
 			JsonNode jn = om.readTree(res.getBody());
 			System.out.println(jn.asText());
@@ -121,6 +123,7 @@ public class MemberController {
 			m.setUserName(jn.get("name").asText());
 			m.setProfile(jn.get("avatar_url").asText());
 			m.setEmail(jn.get("email").asText());
+			m.setSocial("G");
 			
 			
 		} catch (JsonProcessingException e) {
@@ -130,20 +133,22 @@ public class MemberController {
         Member m1 = mService.selectMember(m);
         
         
-        
         // 조회된 결과 없을시 insert
         if(m1 == null) {
         	int result = mService.insertMember(m);
-        }else {
+        	m1 = mService.selectMember(m);
         	m1.setToken(token);
-        	session.setAttribute("member", m1);
+        }else {
+        	m1 = mService.selectMember(m);
+        	m1.setToken(token);
         }
+        session.setAttribute("loginUser", m1);
         
         
-	    return "redirect:nexus.p";
+	    return "redirect:main.p";
 	}
 	
-	@RequestMapping("nexus.p")
+	@RequestMapping("main.p")
 	public String nexusPage() {
 		return "main";
 	}
@@ -179,6 +184,7 @@ public class MemberController {
 	public String insertMember(Member m) {
 		
 		m.setUserPwd(bcrypt.encode(m.getUserPwd()));
+		m.setSocial("O");
 		
 		int result = mService.insertMember(m);
 		if(result>0) {
@@ -202,9 +208,14 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces = "application/hal+json; charset=UTF-8" )
-	public String kakaoLogout() {
+	public String kakaoLogout(HttpSession session) {
 		token = "";
-		
+		session.removeAttribute("loginUser");
 		return "redirect:login.p";
 	}
+	@RequestMapping("logout.p")
+    public String logout(HttpSession session){
+        session.removeAttribute("loginUser");
+        return "redirect:login.p";
+    }
 }

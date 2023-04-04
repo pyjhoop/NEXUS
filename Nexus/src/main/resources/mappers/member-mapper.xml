@@ -38,6 +38,7 @@
 		      , gender
 		      , email
 		      , profile
+		      , social
 		    )
 		    values
 		    (
@@ -48,6 +49,7 @@
 		      , #{gender}
 		      , #{email}  
 		      , #{profile}
+		      , #{social}
 		    )
 	</insert>
 	
