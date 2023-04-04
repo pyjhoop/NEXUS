@@ -1,6 +1,7 @@
 package com.team.nexus.member.controller;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,16 +16,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.team.nexus.member.model.service.kakaoService;
 import com.team.nexus.member.model.service.MailSendService;
 import com.team.nexus.member.model.service.MemberService;
 import com.team.nexus.member.model.service.MemberServiceImpl;
@@ -50,7 +54,9 @@ public class MemberController {
 	@Value("${git.secret}")
 	private String gitSecret;
 	
-
+	@Autowired
+    private kakaoService kakaoService;
+	
 	@RequestMapping("callback.p")
 	public String getUserInfo(@RequestParam String code, HttpSession session) {
 	    System.out.println(code);
@@ -180,8 +186,19 @@ public class MemberController {
 		return "redirect:login.p";
 	}
 	
-	
+	@RequestMapping(value = "/kakao", method = RequestMethod.GET, produces = "application/hal+json; charset=UTF-8" )
+	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, HttpSession session) throws Throwable {
+		String access_Token = kakaoService.getAccessToken(code);
+		Member userInfo = kakaoService.getUserInfo(access_Token);
+        System.out.println("###access_Token#### : " + access_Token);
+        System.out.println("###userInfo#### : " + userInfo.getUserId());
+        System.out.println("###nickname#### : " + userInfo.getUserName());
+        System.out.println("###profile_image#### : " + userInfo.getProfile());
+		System.out.println(userInfo.getSocial());
+        session.setAttribute("loginUser", userInfo);
+        
+		return "main";	
 
 	
-	
+	}
 }

@@ -68,6 +68,49 @@
 		  from tb_member
 		  where user_id = #{userId}
 	</select>
-
+	
+	<select id="findKaKao" parameterType="java.util.HashMap" resultMap="memberResultSet">
+		select
+				user_no
+		      , user_id
+		      , user_pwd
+		      , user_name
+		      , user_nick
+		      , email
+		      , profile
+		      , gender
+		      , social
+		      , enroll_date
+		      , token
+		      , status
+		   from tb_member
+		   where user_id = #{email}
+		   	 and user_name = #{nickname}
+	</select>
+	
+	<insert id="insertKaKao" parameterType="java.util.HashMap">
+		insert 
+		    into tb_member
+		    (	user_no
+		      , user_id
+		      , user_pwd
+		      , user_name
+		      , gender
+		      , email
+		      , profile
+		      , social
+		    )
+		    values
+		    (
+		    	seq_member.nextval
+		      , #{email}
+		      , null
+		      , #{nickname}
+		      , null
+		      , null
+		      , #{profile_image}
+		      , 'K'
+		    )
+	</insert>
 	
 </mapper>

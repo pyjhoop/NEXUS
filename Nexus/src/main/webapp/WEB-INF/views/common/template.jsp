@@ -289,17 +289,28 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
+                      <div class="dropdown-item">
                         <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
+                        <span class="align-middle" onclick="logout()">Log Out</span>
+                     </div>
                     </li>
                   </ul>
                 </li>
               </ul>
             </div>
           </nav>
-
+			
+		 <script>
+		 function logout(){
+			 const social = "${loginUser.social}";
+			 console.log(social);
+			if(social == "K"){
+				console.log('성공');
+			}else{
+				
+			}
+		 }
+		 </script>
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
