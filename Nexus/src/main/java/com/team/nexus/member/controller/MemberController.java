@@ -194,7 +194,7 @@ public class MemberController {
         System.out.println("###userInfo#### : " + userInfo.getUserId());
         System.out.println("###nickname#### : " + userInfo.getUserName());
         System.out.println("###profile_image#### : " + userInfo.getProfile());
-		System.out.println(userInfo.getSocial());
+		System.out.println(userInfo.getSocial() + "Sdfsd");
         session.setAttribute("loginUser", userInfo);
         
 		return "main";	

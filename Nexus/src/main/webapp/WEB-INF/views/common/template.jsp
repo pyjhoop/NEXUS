@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -263,7 +264,7 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">박연준</span>
+                            <span class="fw-semibold d-block">${loginUser.userName }</span>
                             <small class="text-muted">Admin</small>
                           </div>
                         </div>
@@ -289,28 +290,23 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <div class="dropdown-item">
+                    <c:choose>
+                    <c:when test="${loginUser.social eq 'K  '}">
+                      <a class="dropdown-item" href="https://kauth.kakao.com/oauth/logout?client_id=c2b8f2ae81e7206df597a694d983c1ee&logout_redirect_uri=http://localhost:8010/nexus">
                         <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle" onclick="logout()">Log Out</span>
-                     </div>
+                        <span class="align-middle">Log Out</span>
+                     </a>
+                     </c:when>
+                     <c:otherwise>
+               		<div>${loginUser.social }</div>
+                    </c:otherwise>
+                     </c:choose>
                     </li>
                   </ul>
                 </li>
               </ul>
             </div>
           </nav>
-			
-		 <script>
-		 function logout(){
-			 const social = "${loginUser.social}";
-			 console.log(social);
-			if(social == "K"){
-				console.log('성공');
-			}else{
-				
-			}
-		 }
-		 </script>
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
