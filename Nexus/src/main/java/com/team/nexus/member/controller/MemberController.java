@@ -57,6 +57,8 @@ public class MemberController {
 	@Autowired
     private kakaoService kakaoService;
 	
+	private String token = "";
+	
 	@RequestMapping("callback.p")
 	public String getUserInfo(@RequestParam String code, HttpSession session) {
 	    System.out.println(code);
@@ -189,17 +191,20 @@ public class MemberController {
 	
 	@RequestMapping(value = "/kakao", method = RequestMethod.GET, produces = "application/hal+json; charset=UTF-8" )
 	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, HttpSession session) throws Throwable {
+		if(token == "") {
 		String access_Token = kakaoService.getAccessToken(code);
-		Member userInfo = kakaoService.getUserInfo(access_Token);
-        System.out.println("###access_Token#### : " + access_Token);
-        System.out.println("###userInfo#### : " + userInfo.getUserId());
-        System.out.println("###nickname#### : " + userInfo.getUserName());
-        System.out.println("###profile_image#### : " + userInfo.getProfile());
-		System.out.println(userInfo.getSocial());
-        session.setAttribute("loginUser", userInfo);
-        
-		return "main";	
-
+		token = access_Token;
+		}
+		Member userInfo = kakaoService.getUserInfo(token);
+		session.setAttribute("loginUser", userInfo);
+		
+		return "main";		
+	}
 	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces = "application/hal+json; charset=UTF-8" )
+	public String kakaoLogout() {
+		token = "";
+		
+		return "redirect:login.p";
 	}
 }
