@@ -1,4 +1,4 @@
-package com.team.nexus;
+package com.team.nexus.member.model.service;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -9,16 +9,25 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.team.nexus.member.model.dao.MemberDao;
+import com.team.nexus.member.model.vo.Member;
+
 
 @Service
 public class kakaoService {
-
+		
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
+	@Autowired
+	private MemberDao mDao;
 	
 	  public String getAccessToken (String authorize_code) {
           String access_Token = "";
@@ -80,7 +89,7 @@ public class kakaoService {
           return access_Token;
       }
 	
-	  public HashMap<String, Object> getUserInfo (String access_Token) {
+	  public Member getUserInfo (String access_Token) {
 
           //    ��û�ϴ� Ŭ���̾�Ʈ���� ���� ������ �ٸ� �� �ֱ⿡ HashMapŸ������ ����
           HashMap<String, Object> userInfo = new HashMap<String, Object>();
@@ -128,8 +137,17 @@ public class kakaoService {
               // TODO Auto-generated catch block
               e.printStackTrace();
           }
-
-          return userInfo;
+          
+          Member result = mDao.findKaKao(sqlSession,userInfo);
+          
+          if(result == null) {
+        	  mDao.insertKaKao(sqlSession,userInfo);
+        	  
+        	  return mDao.findKaKao(sqlSession,userInfo);
+          }else {
+        	  return result;
+          }
+          
       }
 
 }
