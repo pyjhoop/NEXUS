@@ -304,7 +304,7 @@
 		 function logout(){
 			 const social = "${loginUser.social}";
 			 console.log(social);
-			if(social == "K"){
+			if(social == " "){
 				console.log('성공');
 			}else{
 				
