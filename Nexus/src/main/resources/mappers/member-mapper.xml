@@ -87,7 +87,7 @@
 		      , status
 		   from tb_member
 		   where user_id = #{email}
-		   	 and user_name = #{nickname}
+		   	 and status = 'Y'
 	</select>
 	
 	<insert id="insertKaKao" parameterType="java.util.HashMap">

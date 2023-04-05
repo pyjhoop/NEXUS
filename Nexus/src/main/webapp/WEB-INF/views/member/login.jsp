@@ -85,14 +85,14 @@
               <h4 class="mb-2">Welcome to Nexus! 👋</h4>
               <p class="mb-4">Please sign-in to your account and enjoy the Nexus</p>
 
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3" action="login.ih" method="POST">
                 <div class="mb-3">
                   <label for="email" class="form-label">ID</label>
                   <input
                     type="text"
                     class="form-control"
                     id="email"
-                    name="email-username"
+                    name="userId"
                     placeholder="Enter your id"
                     autofocus
                   />
@@ -109,7 +109,7 @@
                       type="password"
                       id="password"
                       class="form-control"
-                      name="password"
+                      name="userPwd"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       aria-describedby="password"
                     />
