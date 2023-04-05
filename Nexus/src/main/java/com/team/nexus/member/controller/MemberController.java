@@ -1,8 +1,10 @@
 package com.team.nexus.member.controller;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -57,6 +59,11 @@ public class MemberController {
 	@Autowired
     private kakaoService kakaoService;
 	
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	private String token = "";
+	
 	@RequestMapping("callback.p")
 	public String getUserInfo(@RequestParam String code, HttpSession session) {
 	    System.out.println(code);
@@ -81,7 +88,6 @@ public class MemberController {
         String[] arr = response.getBody().split(",");
         System.out.println(response.getBody());
         ObjectMapper objectMapper = new ObjectMapper();
-//        String token = (arr[0].split(":"))[1].replace("\"", "");
         String token ="";
         try {
 			JsonNode jsonNode = objectMapper.readTree(response.getBody());
@@ -109,8 +115,10 @@ public class MemberController {
         Member m = new Member();
         
         
+        
         try {
 			JsonNode jn = om.readTree(res.getBody());
+			System.out.println(jn.asText());
 			System.out.println("id  : "+ jn.get("id").asText());
 			System.out.println("name : "+jn.get("name").asText());
 			System.out.println("url : "+ jn.get("avatar_url").asText());
@@ -118,6 +126,7 @@ public class MemberController {
 			m.setUserName(jn.get("name").asText());
 			m.setProfile(jn.get("avatar_url").asText());
 			m.setEmail(jn.get("email").asText());
+			m.setSocial("G");
 			
 			
 		} catch (JsonProcessingException e) {
@@ -127,20 +136,22 @@ public class MemberController {
         Member m1 = mService.selectMember(m);
         
         
-        
         // 조회된 결과 없을시 insert
         if(m1 == null) {
         	int result = mService.insertMember(m);
-        }else {
+        	m1 = mService.selectMember(m);
         	m1.setToken(token);
-        	session.setAttribute("member", m1);
+        }else {
+        	m1 = mService.selectMember(m);
+        	m1.setToken(token);
         }
+        session.setAttribute("loginUser", m1);
         
         
-	    return "redirect:nexus.p";
+	    return "redirect:main.p";
 	}
 	
-	@RequestMapping("nexus.p")
+	@RequestMapping("main.p")
 	public String nexusPage() {
 		return "main";
 	}
@@ -176,6 +187,7 @@ public class MemberController {
 	public String insertMember(Member m) {
 		
 		m.setUserPwd(bcrypt.encode(m.getUserPwd()));
+		m.setSocial("O");
 		
 		int result = mService.insertMember(m);
 		if(result>0) {
@@ -188,17 +200,39 @@ public class MemberController {
 	
 	@RequestMapping(value = "/kakao", method = RequestMethod.GET, produces = "application/hal+json; charset=UTF-8" )
 	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, HttpSession session) throws Throwable {
+		if(token == "") {
 		String access_Token = kakaoService.getAccessToken(code);
-		Member userInfo = kakaoService.getUserInfo(access_Token);
-        System.out.println("###access_Token#### : " + access_Token);
-        System.out.println("###userInfo#### : " + userInfo.getUserId());
-        System.out.println("###nickname#### : " + userInfo.getUserName());
-        System.out.println("###profile_image#### : " + userInfo.getProfile());
-		System.out.println(userInfo.getSocial());
-        session.setAttribute("loginUser", userInfo);
-        
-		return "main";	
-
+		token = access_Token;
+		}
+		Member userInfo = kakaoService.getUserInfo(token);
+		session.setAttribute("loginUser", userInfo);
+		
+		return "main";		
+	}
 	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces = "application/hal+json; charset=UTF-8" )
+	public String kakaoLogout(HttpSession session) {
+		token = "";
+		session.removeAttribute("loginUser");
+		return "redirect:login.p";
+	}
+	@RequestMapping("logout.p")
+    public String logout(HttpSession session){
+        session.removeAttribute("loginUser");
+        return "redirect:login.p";
+    }
+	
+	@RequestMapping("login.ih")
+	public String nexusLogin(Member m,HttpSession session,Model model) {
+		Member loginUser = mService.selectMember(m);
+		
+		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())){
+			session.setAttribute("loginUser", loginUser);
+			return "main";
+		}else {
+			model.addAttribute("errorMsg", "로그인 실패");
+			return "common/errorPage";
+		}
+		
 	}
 }
