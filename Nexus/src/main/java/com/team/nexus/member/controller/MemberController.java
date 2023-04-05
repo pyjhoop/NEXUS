@@ -59,6 +59,9 @@ public class MemberController {
 	@Autowired
     private kakaoService kakaoService;
 	
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
 	private String token = "";
 	
 	@RequestMapping("callback.p")
@@ -218,4 +221,18 @@ public class MemberController {
         session.removeAttribute("loginUser");
         return "redirect:login.p";
     }
+	
+	@RequestMapping("login.ih")
+	public String nexusLogin(Member m,HttpSession session,Model model) {
+		Member loginUser = mService.selectMember(m);
+		
+		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())){
+			session.setAttribute("loginUser", loginUser);
+			return "main";
+		}else {
+			model.addAttribute("errorMsg", "로그인 실패");
+			return "common/errorPage";
+		}
+		
+	}
 }
