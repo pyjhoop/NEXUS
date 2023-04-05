@@ -32,18 +32,18 @@ END;
 
 ---------------------- 회원 테이블 -------------------------
 create table tb_member(
-    user_no   number primary key,
-   user_id   varchar2(50) not null unique,
-   user_pwd varchar2(100),
-   user_name varchar2(100)   NOT NULL,
-   user_nick varchar2(100),
-   email varchar2(100),
-   profile   varchar2(200),
-   gender char(3) check(gender in('M','W','O')),
-   social char(3) check(social in('K','G','O')),
-   enroll_date   date default sysdate,
-   token   varchar2(200),
-   status   char(3)   default 'Y' check(status in('Y','N'))
+    user_no	number primary key,
+	user_id	varchar2(50) not null unique,
+	user_pwd varchar2(100),
+	user_name varchar2(100)	NOT NULL,
+	user_nick varchar2(100),
+	email varchar2(100),
+	profile	varchar2(200),
+	gender varchar2(3) check(gender in('M','W','O')),
+	social varchar2(3) check(social in('K','G','O')),
+	enroll_date	date default sysdate,
+	token	varchar2(200),
+	status	varchar2(3)	default 'Y' check(status in('Y','N'))
 );
 
 create sequence seq_member
@@ -70,15 +70,15 @@ COMMENT ON COLUMN TB_MEMBER.STATUS IS '탈퇴여부';
 
 ---------------------- 뉴스 테이블 -------------------------
 create table tb_news (
-   news_no   number primary key,
-   user_no   number references tb_member,
-   news_title   varchar2(1000)   NOT NULL,
-   news_content varchar2(4000)   NOT NULL,
-   create_date date DEFAULT sysdate,
-   update_date date DEFAULT sysdate,
-   status   char(3) default 'Y'   check(status in('Y','N')),
-   origin_name   varchar2(100)   NULL,
-   change_name   varchar2(100)   NULL
+	news_no	number primary key,
+	user_no	number references tb_member,
+	news_title	varchar2(1000)	NOT NULL,
+	news_content varchar2(4000)	NOT NULL,
+	create_date date DEFAULT sysdate,
+	update_date date DEFAULT sysdate,
+	status	varchar2(3) default 'Y'	check(status in('Y','N')),
+	origin_name	varchar2(100)	NULL,
+	change_name	varchar2(100)	NULL
 );
 
 create sequence seq_news
@@ -105,7 +105,7 @@ create table tb_news_comments(
     comment_writer varchar2(50) not null,
     comment_content varchar2(2000) not null,
     comment_date date default sysdate,
-    status char(3) default 'Y' check(status in('Y','N'))
+    status varchar2(3) default 'Y' check(status in('Y','N'))
 );
 
 insert into tb_news_comments values(1, 'user01','ㅋㅋㅋㅋ',sysdate,'Y');
@@ -177,7 +177,7 @@ CREATE TABLE TB_CHAT_ROOM(
    ROOM_NO NUMBER PRIMARY KEY,
    NUMBER_PARTICIPANTS NUMBER NOT NULL,
    CREATE_DATE DATE DEFAULT SYSDATE NOT NULL,
-   STATUS CHAR(3) DEFAULT 'Y' NOT NULL
+   STATUS VARCHAR2(3) DEFAULT 'Y' NOT NULL
 );
 COMMENT ON COLUMN TB_CHAT_ROOM.ROOM_NO IS '채팅방 번호';
 COMMENT ON COLUMN TB_CHAT_ROOM.NUMBER_PARTICIPANTS IS '참여인원';
@@ -651,9 +651,9 @@ INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.nextval, '탈�
 ------------------- 친구 ------------------------------
 
 CREATE TABLE TB_FRIEND (
-   user_no number references TB_MEMBER on delete cascade,
-   user_add_no number references TB_MEMBER on delete cascade,
-   user_blocked char(3) DEFAULT 'N' NOT NULL,
+	user_no number references TB_MEMBER on delete cascade,
+	user_add_no number references TB_MEMBER on delete cascade,
+	user_blocked varchar2(3) DEFAULT 'N' NOT NULL,
     primary key(user_no, user_add_no)
 );
 

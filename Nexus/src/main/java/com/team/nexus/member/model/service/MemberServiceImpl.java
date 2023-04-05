@@ -31,5 +31,7 @@ public class MemberServiceImpl {
 	public Member selectMember(Member m) {
 		return mDao.selectMember(sqlSession, m);
 	}
+	
+	
 
 }

@@ -85,14 +85,14 @@
               <h4 class="mb-2">Welcome to Nexus! 👋</h4>
               <p class="mb-4">Please sign-in to your account and enjoy the Nexus</p>
 
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3" action="login.ih" method="POST">
                 <div class="mb-3">
                   <label for="email" class="form-label">ID</label>
                   <input
                     type="text"
                     class="form-control"
                     id="email"
-                    name="email-username"
+                    name="userId"
                     placeholder="Enter your id"
                     autofocus
                   />
@@ -109,7 +109,7 @@
                       type="password"
                       id="password"
                       class="form-control"
-                      name="password"
+                      name="userPwd"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       aria-describedby="password"
                     />
@@ -129,10 +129,10 @@
 
               <div style="display: flex; justify-content: space-evenly;">
                 <div class="git">
-                  <a href="https://github.com/login/oauth/authorize?scope=user:email%20repo&client_id=3b8e80bc4dbc71a39f57" style="display: block; padding-left: 50px;"><img alt="" src="${ pageContext.request.contextPath }/resources/image/github.png" width="50px" style="display: block; margin: auto;"></a>
+                  <a href="https://github.com/login/oauth/authorize?scope=user%20repo%20project&client_id=3b8e80bc4dbc71a39f57" style="display: block; padding-left: 50px;"><img alt="" src="${ pageContext.request.contextPath }/resources/image/github.png" width="50px" style="display: block; margin: auto;"></a>
                 </div>
                 <div class="kaka">
-                  <a href="" style="display: block; padding-right: 50px;"><img src="${ pageContext.request.contextPath }/resources/image/kakao.png" alt="" width="60px" style="display: block; margin: auto;"></a>
+                  <a href="https://kauth.kakao.com/oauth/authorize?client_id=c2b8f2ae81e7206df597a694d983c1ee&redirect_uri=http://localhost:8010/nexus/kakao&response_type=code" style="display: block; padding-right: 50px;"><img src="${ pageContext.request.contextPath }/resources/image/kakao.png" alt="" width="60px" style="display: block; margin: auto;"></a>
                 </div>
 
               </div>
