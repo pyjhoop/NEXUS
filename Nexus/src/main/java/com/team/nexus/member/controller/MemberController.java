@@ -1,7 +1,10 @@
 package com.team.nexus.member.controller;
 
+import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -15,16 +18,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.team.nexus.member.model.service.kakaoService;
 import com.team.nexus.member.model.service.MailSendService;
 import com.team.nexus.member.model.service.MemberService;
 import com.team.nexus.member.model.service.MemberServiceImpl;
@@ -50,7 +56,14 @@ public class MemberController {
 	@Value("${git.secret}")
 	private String gitSecret;
 	
-
+	@Autowired
+    private kakaoService kakaoService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	private String token = "";
+	
 	@RequestMapping("callback.p")
 	public String getUserInfo(@RequestParam String code, HttpSession session) {
 	    System.out.println(code);
@@ -75,7 +88,6 @@ public class MemberController {
         String[] arr = response.getBody().split(",");
         System.out.println(response.getBody());
         ObjectMapper objectMapper = new ObjectMapper();
-//        String token = (arr[0].split(":"))[1].replace("\"", "");
         String token ="";
         try {
 			JsonNode jsonNode = objectMapper.readTree(response.getBody());
@@ -103,8 +115,10 @@ public class MemberController {
         Member m = new Member();
         
         
+        
         try {
 			JsonNode jn = om.readTree(res.getBody());
+			System.out.println(jn.asText());
 			System.out.println("id  : "+ jn.get("id").asText());
 			System.out.println("name : "+jn.get("name").asText());
 			System.out.println("url : "+ jn.get("avatar_url").asText());
@@ -112,6 +126,7 @@ public class MemberController {
 			m.setUserName(jn.get("name").asText());
 			m.setProfile(jn.get("avatar_url").asText());
 			m.setEmail(jn.get("email").asText());
+			m.setSocial("G");
 			
 			
 		} catch (JsonProcessingException e) {
@@ -121,20 +136,22 @@ public class MemberController {
         Member m1 = mService.selectMember(m);
         
         
-        
         // 조회된 결과 없을시 insert
         if(m1 == null) {
         	int result = mService.insertMember(m);
-        }else {
+        	m1 = mService.selectMember(m);
         	m1.setToken(token);
-        	session.setAttribute("member", m1);
+        }else {
+        	m1 = mService.selectMember(m);
+        	m1.setToken(token);
         }
+        session.setAttribute("loginUser", m1);
         
         
-	    return "redirect:nexus.p";
+	    return "redirect:main.p";
 	}
 	
-	@RequestMapping("nexus.p")
+	@RequestMapping("main.p")
 	public String nexusPage() {
 		return "main";
 	}
@@ -170,6 +187,7 @@ public class MemberController {
 	public String insertMember(Member m) {
 		
 		m.setUserPwd(bcrypt.encode(m.getUserPwd()));
+		m.setSocial("O");
 		
 		int result = mService.insertMember(m);
 		if(result>0) {
@@ -180,8 +198,41 @@ public class MemberController {
 		return "redirect:login.p";
 	}
 	
+	@RequestMapping(value = "/kakao", method = RequestMethod.GET, produces = "application/hal+json; charset=UTF-8" )
+	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, HttpSession session) throws Throwable {
+		if(token == "") {
+		String access_Token = kakaoService.getAccessToken(code);
+		token = access_Token;
+		}
+		Member userInfo = kakaoService.getUserInfo(token);
+		session.setAttribute("loginUser", userInfo);
+		
+		return "main";		
+	}
 	
-
+	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces = "application/hal+json; charset=UTF-8" )
+	public String kakaoLogout(HttpSession session) {
+		token = "";
+		session.removeAttribute("loginUser");
+		return "redirect:login.p";
+	}
+	@RequestMapping("logout.p")
+    public String logout(HttpSession session){
+        session.removeAttribute("loginUser");
+        return "redirect:login.p";
+    }
 	
-	
+	@RequestMapping("login.ih")
+	public String nexusLogin(Member m,HttpSession session,Model model) {
+		Member loginUser = mService.selectMember(m);
+		
+		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())){
+			session.setAttribute("loginUser", loginUser);
+			return "main";
+		}else {
+			model.addAttribute("errorMsg", "로그인 실패");
+			return "common/errorPage";
+		}
+		
+	}
 }
