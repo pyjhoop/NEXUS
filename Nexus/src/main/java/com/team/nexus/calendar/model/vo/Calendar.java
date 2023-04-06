@@ -15,8 +15,9 @@ import lombok.ToString;
 @Getter                 // getter 메소드
 @ToString
 public class Calendar {
-
-	private int _id;
+	
+	private String _id;
+	private int userNo;
 	private String title;
 	private String start;
 	private String end;

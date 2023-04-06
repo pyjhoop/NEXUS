@@ -18,4 +18,10 @@ public class CalendarDao {
 	public void insertCalendar(SqlSessionTemplate sqlSession, Calendar cal) {
 		sqlSession.insert("calendarMapper.insertCalendar", cal);
 	}
+	
+	public void dropSchedule(SqlSessionTemplate sqlSession, Calendar cal) {
+		sqlSession.update("calendarMapper.dropSchedule",cal);
+	}
+	
+	
 }

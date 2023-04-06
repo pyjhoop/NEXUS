@@ -25,10 +25,9 @@
         <div id="contextMenu" class="dropdown clearfix">
             <ul class="dropdown-menu dropNewEvent" role="menu" aria-labelledby="dropdownMenu"
                 style="display:block;position:static;margin-bottom:5px;">
-                <li><a tabindex="-1" href="#">카테고리1</a></li>
-                <li><a tabindex="-1" href="#">카테고리2</a></li>
-                <li><a tabindex="-1" href="#">카테고리3</a></li>
-                <li><a tabindex="-1" href="#">카테고리4</a></li>
+                <li><a tabindex="-1" href="#">업무</a></li>
+                <li><a tabindex="-1" href="#">개인 일정</a></li>
+                <li><a tabindex="-1" href="#">소셜 일정</a></li>
                 <li class="divider"></li>
                 <li><a tabindex="-1" href="#" data-role="close">Close</a></li>
             </ul>
@@ -56,7 +55,7 @@
                           <tr>
                             <td class="align-middle"><label for="edit-allDay">하루 종일</label></td>
                             <td class="py-3">
-                              <input class='allDayNewEvent' id="edit-allDay" type="checkbox"></label>
+                              <input class='allDayNewEvent  form-check-input' id="edit-allDay" type="checkbox"></label>
                             </td>
                           </tr>
                           <tr>
@@ -82,10 +81,9 @@
                             <td class="align-middle"><label for="edit-type">구분</label></td>
                             <td class="py-3">
                                <select class="form-select" type="text" name="edit-type" id="edit-type">
-                                    <option value="카테고리1">카테고리1</option>
-                                    <option value="카테고리2">카테고리2</option>
-                                    <option value="카테고리3">카테고리3</option>
-                                    <option value="카테고리4">카테고리4</option>
+                                    <option value="업무">업무</option>
+                                    <option value="개인 일정">개인 일정</option>
+                                    <option value="소셜 일정">소셜 일정</option>
                                 </select>
                             </td>
                           </tr>
@@ -123,30 +121,29 @@
                         <button type="button" class="btn btn-primary" id="save-event">저장</button>
                     </div>
                     <div class="modal-footer modalBtnContainer-modifyEvent">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
                         <button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
                         <button type="button" class="btn btn-primary" id="updateEvent">저장</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-		 
-        <div class="panel panel-default">
+		 <br>
+        <div class="card">
 
-            <div class="panel-heading">
-                <h3 class="panel-title">필터</h3>
+            <div class="card-header">
+                <h4 class="panel-title">필터</h4>
             </div>
 
-            <div class="panel-body">
+            <div class="card-body">
 
                 <div class="col-lg-6">
                     <label for="calendar_view">구분별</label>
                     <div class="input-group">
                         <select class="filter" id="type_filter" multiple="multiple">
-                            <option value="카테고리1">카테고리1</option>
-                            <option value="카테고리2">카테고리2</option>
-                            <option value="카테고리3">카테고리3</option>
-                            <option value="카테고리4">카테고리4</option>
+                            <option value="업무">업무</option>
+                            <option value="개인 일정">개인 일정</option>
+                            <option value="소셜 일정">소셜 일정</option>
                         </select>
                     </div>
                 </div>

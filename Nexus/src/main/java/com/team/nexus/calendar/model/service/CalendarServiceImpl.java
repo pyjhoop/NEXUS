@@ -20,16 +20,19 @@ public class CalendarServiceImpl implements CalendarService {
 
 	@Override
 	public ArrayList<Calendar> selectCalendar(int userNo) {
-		
 		return cDao.selectCalendar(sqlSession, userNo);
 	}
 
 	@Override
 	public void insertCalendar(Calendar cal) {
-		
 		cDao.insertCalendar(sqlSession, cal);
-		
 	}
+
+	@Override
+	public void dropSchedule(Calendar cal) {
+		cDao.dropSchedule(sqlSession, cal);
+	}
+
 	
 
 

@@ -43,7 +43,14 @@ public class CalendarController {
 	@RequestMapping("insertCal.ih")
 	public void insertCalendar(Calendar cal, HttpSession session) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		cal.set_id(loginUser.getUserNo());
+		cal.setUserNo(loginUser.getUserNo());
 		cService.insertCalendar(cal);
+	}
+	
+	
+	@RequestMapping("drop.ih")
+	public void dropSchedule(Calendar cal, String _id) {
+		cal.set_id(_id);
+		cService.dropSchedule(cal);
 	}
 }

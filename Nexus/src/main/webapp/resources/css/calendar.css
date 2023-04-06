@@ -91,12 +91,15 @@ body {
   text-transform: uppercase;
   font-size: 13px;
   font-weight: 500;
-  color: #505363;
-  background-color: #FAFAFA;
+  color: rgb(245, 241, 241);
+  background-color: #8989f2;
   padding: 11px 0px !important;
   text-decoration: none;
 }
 
+.fc-unthemed td.fc-today{
+  background-color: #c3c3f2;
+}
 .fc-day-header a {
   text-decoration: none !important;
   color: #505363;
@@ -298,4 +301,72 @@ select.filter {
 #add-color,
 #edit-color {
   color: #d25565;
+}
+
+
+
+.fc-button{
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.53;
+  color: #697a8d;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.4375rem 1.25rem;
+  font-size: 0.9375rem;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.fc-month-button, .fc-agendaWeek-button, .fc-agendaDay-button, .fc-next-button, .fc-prev-button, .fc-prevYear-button, .fc-nextYear-button , .fc-today-button, .fc-viewWeekends-button {
+   color: #8592a3;
+    border-color: #8592a3;
+    background: transparent;
+}
+
+/* .fc-next-button, .fc-prev-button, .fc-prevYear-button, .fc-nextYear-button {
+  color: #696cff;
+  border-color: #696cff;
+  background: transparent;
+
+} 
+
+.fc-today-button, .fc-viewWeekends-button {
+  color: #fff;
+  background-color: #8592a3;
+  border-color: #8592a3;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(133, 146, 163, 0.4);
+} */
+.fc-listWeek-button{
+  color: #fff;
+  background-color: #696cff;
+  border-color: #696cff;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+}
+.fc-button:hover{
+  color: #fff;
+  background-color: #5f61e6;
+  border-color: #5f61e6;
+  transform: translateY(-1px);
+}
+
+.dropdown-menu>li>a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+}
+
+.dropdown-menu .divider {
+  height: 1px;
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
 }

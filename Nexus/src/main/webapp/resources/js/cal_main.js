@@ -142,10 +142,11 @@ var calendar = $('#calendar').fullCalendar({
     //리사이즈한 일정 업데이트
     $.ajax({
       type: "get",
-      url: "",
+      url: "drop.ih",
       data: {
-        //id: event._id,
-        //....
+        _id: event._id,
+        start: newDates.startDate,
+        end: newDates.endDate
       },
       success: function (response) {
         alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
@@ -173,13 +174,15 @@ var calendar = $('#calendar').fullCalendar({
 
     // 드랍시 수정된 날짜반영
     var newDates = calDateWhenDragnDrop(event);
-
+    console.log(event);
     //드롭한 일정 업데이트
     $.ajax({
       type: "get",
-      url: "",
+      url: "drop.ih",
       data: {
-        //...
+        _id: event._id,
+        start: newDates.startDate,
+        end: newDates.endDate
       },
       success: function (response) {
         alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);

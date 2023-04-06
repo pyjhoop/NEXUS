@@ -10,4 +10,7 @@ public interface CalendarService {
 	
 	void insertCalendar(Calendar cal);
 	
+	void dropSchedule(Calendar cal);
+	
+	
 }

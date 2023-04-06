@@ -37,7 +37,7 @@ var newEvent = function (start, end, eventType) {
     $('#save-event').on('click', function () {
 
         var eventData = {
-            _id: userNo.val(),
+            
             title: editTitle.val(),
             start: editStart.val(),
             end: editEnd.val(),
