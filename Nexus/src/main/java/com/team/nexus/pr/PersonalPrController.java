@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PersonalPrController {
 	
 	@RequestMapping("personal.me")
-	public String persoanlPr() {
+	public String persoanlForm() {
 		return "pr/personalPr";
+	}
+	
+	@RequestMapping("enrollPsnPr.pr")
+	public String enrollPsnPr() {
+		return "pr/enrollPsnPr";
 	}
 
 

@@ -11,13 +11,11 @@
 #mainBody{
 	height: 2500px;
 	width: 85%;
-	border:1px solid black;
 	margin:auto;
 }
 #stacks{
 	width:89%;
 	height:18%;
-	border:1px solid black;
 	margin:auto;
 	padding-top:25px;
 	padding-bottom:50px;
@@ -27,7 +25,6 @@
 #prs{
 	width:89%;
 	height:82%;
-	border:1px solid black;
 	margin:auto;
 	padding-top:50px;
 }
@@ -295,7 +292,6 @@ hr{
 <body>
 <jsp:include page="../common/template.jsp"/>
 
-<h1>우효---------------------------------------------------------------------</h1>
 <div id="mainBody">
 
 <div id="stacks">
@@ -357,7 +353,7 @@ hr{
 </div>
 
 <div id="prs">
-
+<a href="enrollPsnPr.pr">새 글 쓰기</a>
 </div>
 
 
@@ -375,16 +371,16 @@ hr{
 		var seeBack = document.getElementById("seeBack");
 		var seeMobile = document.getElementById("seeMobile");
 		var seeEtc = document.getElementById("seeEtc");
-		
 		seeAll.style.color = "#706482";
 		seeAll.style.fontSize = "28px";
 		
 
 	
 	function seeFront(){
-        
         seeFront1.style.color = "#706482";
         seeFront1.style.fontSize = "28px";
+       	seeAll.style.color="lightgray";  
+        seeAll.style.fontSize="25px";
     }
  
 </script>
