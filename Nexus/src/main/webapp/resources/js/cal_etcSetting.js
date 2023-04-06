@@ -14,6 +14,6 @@ $("#type_filter").select2({
 });
 
 //datetimepicker
-$("#edit-start, #edit-end").datetimepicker({
-    format: 'YYYY-MM-DD HH:mm'
-});
+// $("#edit-start, #edit-end").datetimepicker({
+//     format: 'YYYY-MM-DD HH:mm'
+// });

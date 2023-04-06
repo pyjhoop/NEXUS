@@ -37,8 +37,13 @@ public class CalendarController {
 		int userNo = loginUser.getUserNo();
 		ArrayList<Calendar> list =  cService.selectCalendar(userNo);
 		
-		System.out.println(list);
-		
 		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping("insertCal.ih")
+	public void insertCalendar(Calendar cal, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		cal.set_id(loginUser.getUserNo());
+		cService.insertCalendar(cal);
 	}
 }

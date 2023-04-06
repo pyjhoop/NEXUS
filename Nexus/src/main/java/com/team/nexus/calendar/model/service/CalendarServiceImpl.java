@@ -23,6 +23,13 @@ public class CalendarServiceImpl implements CalendarService {
 		
 		return cDao.selectCalendar(sqlSession, userNo);
 	}
+
+	@Override
+	public void insertCalendar(Calendar cal) {
+		
+		cDao.insertCalendar(sqlSession, cal);
+		
+	}
 	
 
 

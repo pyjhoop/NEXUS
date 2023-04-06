@@ -8,4 +8,6 @@ public interface CalendarService {
 	
 	ArrayList<Calendar> selectCalendar(int userNo);
 	
+	void insertCalendar(Calendar cal);
+	
 }

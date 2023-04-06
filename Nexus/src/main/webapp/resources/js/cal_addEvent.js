@@ -1,5 +1,5 @@
 var eventModal = $('#eventModal');
-
+var userNo = $("#userNo");
 var modalTitle = $('.modal-title');
 var editAllDay = $('#edit-allDay');
 var editTitle = $('#edit-title');
@@ -17,7 +17,7 @@ var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
  *  새로운 일정 생성
  * ************** */
 var newEvent = function (start, end, eventType) {
-
+    console.log(userNo.val());
     $("#contextMenu").hide(); //메뉴 숨김
 
     modalTitle.html('새로운 일정');
@@ -37,7 +37,7 @@ var newEvent = function (start, end, eventType) {
     $('#save-event').on('click', function () {
 
         var eventData = {
-            _id: eventId,
+            _id: userNo.val(),
             title: editTitle.val(),
             start: editStart.val(),
             end: editEnd.val(),
@@ -78,14 +78,21 @@ var newEvent = function (start, end, eventType) {
         //새로운 일정 저장
         $.ajax({
             type: "get",
-            url: "",
+            url: "insertCal.ih",
             data: {
-                //.....
+                title:eventData.title,
+                start:eventData.start,
+                end:eventData.end,
+                description:eventData.description,
+                type:eventData.type,
+                backgroundColor:eventData.backgroundColor,
+                textColor:eventData.textColor,
+                allDay:eventData.allDay
             },
             success: function (response) {
                 //DB연동시 중복이벤트 방지를 위한
-                //$('#calendar').fullCalendar('removeEvents');
-                //$('#calendar').fullCalendar('refetchEvents');
+                $('#calendar').fullCalendar('removeEvents');
+                $('#calendar').fullCalendar('refetchEvents');
             }
         });
     });

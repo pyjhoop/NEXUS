@@ -19,9 +19,37 @@
  		select *
  			from tb_calendar
  		where user_no = #{userNo}
+ 		  and status = 'Y'
  	</select>
  
- 
+ 	<insert id="insertCalendar">
+ 		insert  
+ 			into tb_calendar
+ 			(
+ 			  user_no
+ 			, schedule_title
+ 			, start_date
+ 			, end_date
+ 			, date_color
+ 			, schedule_content
+ 			, category
+ 			, text_color
+ 			, all_day  
+ 			)
+ 			values
+ 			(
+ 			  #{_id}
+ 			, #{title}
+ 			, #{start}
+ 			, #{end}
+ 			, #{backgroundColor}
+ 			, #{description}
+ 			, #{type}
+ 			, #{textColor}
+ 			, #{allDay} 			 
+ 			)
+ 			 
+ 	</insert>
  
  
  </mapper>

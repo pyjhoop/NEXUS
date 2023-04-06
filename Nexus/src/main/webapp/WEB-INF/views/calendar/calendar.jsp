@@ -159,15 +159,8 @@
     </div>
     <!-- /.container -->
     
-    <script>
-    $('#save-event').on('click', function () {
-
-       
-          console.log($('#edit-start').val());
-          console.log($('#edit-type').val());
-          console.log($('#edit-color').val());
-    });
-    </script>
+    <input type="hidden" id="userNo" value="${loginUser.userNo }">
+   
     
    	<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
    	<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>

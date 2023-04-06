@@ -26,7 +26,7 @@ var editEvent = function (event, element, view) {
 
     modalTitle.html('일정 수정');
     editTitle.val(event.title);
-    editStart.val(event.start.format('YYYY-MM-DD HH:mm'));
+   editStart.val(event.start.format('YYYY-MM-DD HH:mm'));
     editType.val(event.type);
     editDesc.val(event.description);
     editColor.val(event.backgroundColor).css('color', event.backgroundColor);
