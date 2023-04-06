@@ -8,10 +8,9 @@
 	<link rel=" shortcut icon" href="image/favicon.ico">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/fullcalendar.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
     <link rel="stylesheet" href='${pageContext.request.contextPath}/resources/css/select2.min.css' />
     <link rel="stylesheet" href='${pageContext.request.contextPath}/resources/css/bootstrap-datetimepicker.min.css' />
-
+	
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -39,60 +38,61 @@
             <div id="loading"></div>
             <div id="calendar"></div>
         </div>
+        
+       
 
 
-        <!-- 일정 추가 MODAL -->
+       <!--일정 추가 MODAL  -->
         <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
-            <div class="modal-dialog" role="document">
+             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"></h4>
                     </div>
                     <div class="modal-body">
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-allDay">하루종일</label>
-                                <input class='allDayNewEvent' id="edit-allDay" type="checkbox"></label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-title">일정명</label>
-                                <input class="inputModal" type="text" name="edit-title" id="edit-title"
+							
+							<table class="table table-borderless">
+                        <tbody>
+                          <tr>
+                            <td class="align-middle"><label for="edit-allDay">하루 종일</label></td>
+                            <td class="py-3">
+                              <input class='allDayNewEvent' id="edit-allDay" type="checkbox"></label>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle"><label for="edit-title">일정명</label></td>
+                            <td class="py-3">
+                               <input class="form-control" type="text" name="edit-title" id="edit-title"
                                     required="required" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-start">시작</label>
-                                <input class="inputModal" type="text" name="edit-start" id="edit-start" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-end">끝</label>
-                                <input class="inputModal" type="text" name="edit-end" id="edit-end" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-type">구분</label>
-                                <select class="inputModal" type="text" name="edit-type" id="edit-type">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle"><label  for="edit-start">시작</label></td>
+                            <td class="py-3">
+                              <input class="form-control" type="datetime-local" name="edit-start" id="edit-start"/> <!-- 아이디 선택자 지움 edit-start-->
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle"><label class="col mb-4" for="edit-end">끝</label></td>
+                            <td class="py-3">
+                             <input class="form-control" type="datetime-local" name="edit-end" id="edit-end"/> <!-- 아이디 선택자 지움  edit-end-->
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle"><label for="edit-type">구분</label></td>
+                            <td class="py-3">
+                               <select class="form-select" type="text" name="edit-type" id="edit-type">
                                     <option value="카테고리1">카테고리1</option>
                                     <option value="카테고리2">카테고리2</option>
                                     <option value="카테고리3">카테고리3</option>
                                     <option value="카테고리4">카테고리4</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-color">색상</label>
-                                <select class="inputModal" name="color" id="edit-color">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td> <label for="edit-color">색상</label></td>
+                            <td class="py-3">
+                             <select class="form-select" name="color" id="edit-color">
                                     <option value="#D25565" style="color:#D25565;">빨간색</option>
                                     <option value="#9775fa" style="color:#9775fa;">보라색</option>
                                     <option value="#ffa94d" style="color:#ffa94d;">주황색</option>
@@ -103,18 +103,23 @@
                                     <option value="#4d638c" style="color:#4d638c;">남색</option>
                                     <option value="#495057" style="color:#495057;">검정색</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-desc">설명</label>
-                                <textarea rows="4" cols="50" class="inputModal" name="edit-desc"
+                            </td>
+                          </tr>
+                          <tr>
+                            <td><label class="col mb-4" for="edit-desc">설명</label></td>
+                            <td class="py-3">
+                              <textarea rows="4" cols="50" class="form-control" name="edit-desc"
                                     id="edit-desc"></textarea>
-                            </div>
-                        </div>
+                            </td>
+                          </tr>
+                         
+                        </tbody>
+                      </table>
+							
+							
                     </div>
                     <div class="modal-footer modalBtnContainer-addEvent">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">취소</button>
                         <button type="button" class="btn btn-primary" id="save-event">저장</button>
                     </div>
                     <div class="modal-footer modalBtnContainer-modifyEvent">
@@ -125,7 +130,7 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-
+		 
         <div class="panel panel-default">
 
             <div class="panel-heading">
@@ -146,22 +151,7 @@
                     </div>
                 </div>
 
-				  <div class="col-lg-6">
-                    <label for="calendar_view">등록자별</label>
-                    <div class="input-group">
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="목록1"
-                                checked>목록</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="목록2"
-                                checked>목록</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="목록3"
-                                checked>목록</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="목록4"
-                                checked>목록</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="목록5"
-                                checked>목록5</label>
-                    </div>
-                </div>
-               
+				
             </div>
         </div>
         <!-- /.filter panel -->
@@ -169,16 +159,26 @@
     </div>
     <!-- /.container -->
     
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <script>
+    $('#save-event').on('click', function () {
+
+       
+          console.log($('#edit-start').val());
+          console.log($('#edit-type').val());
+          console.log($('#edit-color').val());
+    });
+    </script>
+    
+   	<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+   	<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/fullcalendar.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/ko.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/select2.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/cal_main.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/cal_addEvent.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/cal_editEvent.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/cal_etcSetting.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/cal_main.js?ver=1"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/cal_addEvent.js?ver=1"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/cal_editEvent.js?ver=1"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/cal_etcSetting.js?ver=1"></script>
 </body>
 </html>
