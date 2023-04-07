@@ -1,5 +1,7 @@
 package com.team.nexus.member.model.dao;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +22,12 @@ public class MemberDao {
 	public Member selectMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.selectOne("memberMapper.selectMember", m);
 	}
-
+	
+	public Member findKaKao(SqlSessionTemplate sqlSession, HashMap<String, Object> userInfo) {
+		return sqlSession.selectOne("memberMapper.findKaKao", userInfo);
+	}
+	
+	public void insertKaKao(SqlSessionTemplate sqlSession, HashMap<String, Object> userInfo) {
+		sqlSession.insert("memberMapper.insertKaKao", userInfo);
+	}
 }
