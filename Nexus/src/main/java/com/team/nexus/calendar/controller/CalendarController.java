@@ -53,4 +53,20 @@ public class CalendarController {
 		cal.set_id(_id);
 		cService.dropSchedule(cal);
 	}
+	
+	@ResponseBody
+	@RequestMapping("updateCal.ih")
+	public int updateCalendar(Calendar cal, String title, String _id) {
+		cal.set_id(_id);
+		int result = cService.updateCalendar(cal);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("deleteCal.ih")
+	public int deleteCalendar(String _id) {
+		int result = cService.deleteCalendar(_id);
+		
+		return result;
+	}
 }

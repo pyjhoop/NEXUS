@@ -58,7 +58,7 @@ var editEvent = function (event, element, view) {
             statusAllDay = true;
             startDate = moment(editStart.val()).format('YYYY-MM-DD');
             endDate = moment(editEnd.val()).format('YYYY-MM-DD');
-            displayDate = moment(editEnd.val()).add(1, 'days').format('YYYY-MM-DD');
+            displayDate = moment(editEnd.val()).format('YYYY-MM-DD');
         } else {
             statusAllDay = false;
             startDate = editStart.val();
@@ -77,16 +77,34 @@ var editEvent = function (event, element, view) {
         event.description = editDesc.val();
 
         $("#calendar").fullCalendar('updateEvent', event);
-
+        console.log(event.allDay);
+        console.log(event.end);
+        if(event.allDay == true){
+       
+        }
         //일정 업데이트
         $.ajax({
             type: "get",
-            url: "",
+            url: "updateCal.ih",
             data: {
-                //...
+                _id: event._id,
+                title: event.title,
+                start: event.start,
+                end: event.end,
+                type: event.type,
+                backgroundColor: event.backgroundColor,
+                description: event.description,
+                allDay: event.allDay
             },
             success: function (response) {
-                alert('수정되었습니다.')
+                if(response > 0){
+                   location.reload();
+                   alert('수정되었습니다.')
+
+               }else{
+                    alert('수정에 실패했습니다.');
+               }
+
             }
         });
 
@@ -99,16 +117,21 @@ $('#deleteEvent').on('click', function () {
     $('#deleteEvent').unbind();
     $("#calendar").fullCalendar('removeEvents', $(this).data('id'));
     eventModal.modal('hide');
-
+    console.log($(this).data('id'));
     //삭제시
     $.ajax({
         type: "get",
-        url: "",
+        url: "deleteCal.ih",
         data: {
-            //...
+            _id: $(this).data('id')
         },
         success: function (response) {
-            alert('삭제되었습니다.');
+            if(response>0){
+                location.reload();
+                alert('삭제되었습니다.');
+            }else{
+                alert('삭제에 실패했습니다.')
+            }
         }
     });
 

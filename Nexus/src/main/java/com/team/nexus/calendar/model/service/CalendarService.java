@@ -12,5 +12,8 @@ public interface CalendarService {
 	
 	void dropSchedule(Calendar cal);
 	
+	int updateCalendar(Calendar cal);
+	
+	int deleteCalendar(String _id);
 	
 }

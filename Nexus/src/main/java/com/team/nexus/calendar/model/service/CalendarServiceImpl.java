@@ -33,6 +33,20 @@ public class CalendarServiceImpl implements CalendarService {
 		cDao.dropSchedule(sqlSession, cal);
 	}
 
+	@Override
+	public int updateCalendar(Calendar cal) {
+		int result = cDao.updateCalendar(sqlSession, cal);
+		
+		return result;
+	}
+
+	@Override
+	public int deleteCalendar(String _id) {
+		int result = cDao.deleteCalendar(sqlSession, _id);
+		
+		return result;
+	}
+
 	
 
 

@@ -1,6 +1,13 @@
 var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
+function getToday(){
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = ("0" + (1 + date.getMonth())).slice(-2);
+  var day = ("0" + date.getDate()).slice(-2);
 
+  return year + "-" + month + "-" + day;
+}
 var calendar = $('#calendar').fullCalendar({
 
  /** ******************
@@ -22,7 +29,7 @@ var calendar = $('#calendar').fullCalendar({
                               },
   eventLimitClick           : 'week', //popover
   navLinks                  : true,
-  defaultDate               : moment('2023-04'), //실제 사용시 현재 날짜로 수정
+  defaultDate               : moment(getToday()), //실제 사용시 현재 날짜로 수정
   timeFormat                : 'HH:mm',
   defaultTimedEventDuration : '01:00:00',
   editable                  : true,
@@ -97,7 +104,7 @@ var calendar = $('#calendar').fullCalendar({
       container: 'body'
     });
 
-    return true;
+    return filtering(event);
 
   },
 
@@ -270,15 +277,11 @@ function getDisplayEventDate(event) {
 }
 
 function filtering(event) {
-  var show_username = true;
   var show_type = true;
 
-  var username = $('input:checkbox.filter:checked').map(function () {
-    return $(this).val();
-  }).get();
+
   var types = $('#type_filter').val();
 
-  show_username = username.indexOf(event.username) >= 0;
 
   if (types && types.length > 0) {
     if (types[0] == "all") {
@@ -288,7 +291,7 @@ function filtering(event) {
     }
   }
 
-  return show_username && show_type;
+  return show_type;
 }
 
 function calDateWhenResize(event) {
