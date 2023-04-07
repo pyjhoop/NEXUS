@@ -59,8 +59,6 @@ public class MemberController {
 	@Autowired
     private kakaoService kakaoService;
 	
-	@Autowired
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	private String token = "";
 	
@@ -216,17 +214,12 @@ public class MemberController {
 		session.removeAttribute("loginUser");
 		return "redirect:login.p";
 	}
-	@RequestMapping("logout.p")
-    public String logout(HttpSession session){
-        session.removeAttribute("loginUser");
-        return "redirect:login.p";
-    }
 	
 	@RequestMapping("login.ih")
 	public String nexusLogin(Member m,HttpSession session,Model model) {
 		Member loginUser = mService.selectMember(m);
 		
-		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())){
+		if(loginUser != null && bcrypt.matches(m.getUserPwd(), loginUser.getUserPwd())){
 			session.setAttribute("loginUser", loginUser);
 			return "main";
 		}else {
