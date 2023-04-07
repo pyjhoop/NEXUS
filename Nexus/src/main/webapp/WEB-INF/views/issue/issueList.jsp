@@ -43,6 +43,22 @@
     <script src="../assets/js/config.js"></script>
 
 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript 한국어 번역 파일 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/i18n/defaults-ko_KR.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../resources/css/core_issue_mini.css">
+
+
+<style>
+
+
+
+</style>
+
 
 
 </head>
@@ -70,13 +86,53 @@
                   <table class="table">
                     <thead>
                       <tr>
-                      	<th> 전체 </th>
-                      	<th> 진행중 </th>
-                      	<th> 종료 </th>
-                        <th>라벨</th>
-                        <th>작성자</th>
-                        <th>우선순위</th>
-                        <th>담당자</th>
+                      	<th><button type="button" class="btn btn-outline-primary">전체</button></th>
+                      	<th><button type="button" class="btn btn-outline-success">진행 중</button></th>
+                      	<th><button type="button" class="btn btn-outline-secondary">종료</button></th>
+                        <th>
+			                <select class="form-select" aria-label="Default select example">
+							  <option selected>라벨</option>
+							  <option value="1">버그</option>
+							  <option value="2">문서작성</option>
+							  <option value="3">베포 관려</option>
+							  <option value="4">기능</option>
+							  <option value="5">개발 환경</option>
+							  <option value="6">기타 등등</option>
+							</select>
+                        </th>
+                        
+                        
+                        <th>
+                            <select class="form-select" aria-label="Default select example">
+							  <option selected>작성자</option>
+							  <!-- 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? -->
+							  <option value="mini">혜민</option>
+							  <option value="jun">연준</option>
+							  <option value="ho">인호</option>
+							  <option value="hyeon">철현</option>
+							  <option value="jun">준호</option>
+							</select>
+                        </th>
+                        <th>
+                              <select class="form-select" aria-label="Default select example">
+							  <option selected>우선순위</option>
+							  <option value="1">젤 먼저</option>
+							  <option value="2">되도록이면 빨리</option>
+							  <option value="3">중간</option>
+							  <option value="4">천천히</option>
+							</select>
+                        </th>
+                        <th>
+                          <select class="form-select" aria-label="Default select example">
+							  <option selected>담당자</option>
+							  <!-- 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? -->
+							  <option value="mini">혜민</option>
+							  <option value="jun">연준</option>
+							  <option value="ho">인호</option>
+							  <option value="hyeon">철현</option>
+							  <option value="jun">준호</option>
+							</select>
+                        </th>
                         <th>마일스톤</th>
                       </tr>
                     </thead>
