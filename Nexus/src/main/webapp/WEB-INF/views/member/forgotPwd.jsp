@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -29,12 +30,12 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Login</title>
+    <title>Forgot Password Basic - Pages | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -68,80 +69,61 @@
 
   <body>
     <!-- Content -->
+    <c:if test="${alertMsg != null}">
+	    <script>
+	        alert("${alertMsg}")
+	    </script>
+	    <c:remove var="alertMsg" scope="session"/>
+    	
+    </c:if>
 
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
-          <!-- Register -->
+        <div class="authentication-inner py-4">
+          <!-- Forgot Password -->
           <div class="card">
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
-                <a href="index.html" class="app-brand-link gap-2">
-                  <span class="app-brand-text demo text-body fw-bolder" style="position:relative;  font-size:2.5rem;">NEXUS</span>
-                </a>
-              </div> 
+                
+                  <span class="app-brand-text demo text-body fw-bolder">NEXUS</span>
+              </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Welcome to Nexus! 👋</h4>
-              <p class="mb-4">Please sign-in to your account and enjoy the Nexus</p>
-
-              <form id="formAuthentication" class="mb-3" action="login.ih" method="POST">
+              <h4 class="mb-2">Forgot Password? 🔒</h4>
+              <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
+              <form id="formAuthentication" class="mb-3" action="resetPwd.p" method="POST">
+	              <div class="mb-3">
+	                  <label for="ID" class="form-label">아이디</label>
+	                  <input
+	                    type="text"
+	                    class="form-control"
+	                    id="id"
+	                    name="userId"
+	                    placeholder="Enter your id"
+	                    autofocus
+	                  />
+	                </div>
                 <div class="mb-3">
-                  <label for="email" class="form-label">ID</label>
+                  <label for="email" class="form-label">이메일</label>
                   <input
                     type="text"
                     class="form-control"
                     id="email"
-                    name="userId"
-                    placeholder="Enter your id"
-                    autofocus
+                    name="email"
+                    placeholder="Enter your email"
                   />
                 </div>
-                <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Password</label>
-                    <a href="forgotPwd.p">
-                      <small>Forgot Password?</small>
-                    </a>
-                  </div>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-                      name="userPwd"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
-                    />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
-                </div>
-                <div class="mb-3">
-                </div>
-                <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
-                </div>
+                <button class="btn btn-primary d-grid w-100">Send Reset Link</button>
               </form>
-
-              <div style="display: flex; justify-content: space-evenly;">
-                <div class="git">
-                  <a href="https://github.com/login/oauth/authorize?scope=user%20repo%20project&client_id=3b8e80bc4dbc71a39f57" style="display: block; padding-left: 50px;"><img alt="" src="${ pageContext.request.contextPath }/resources/image/github.png" width="50px" style="display: block; margin: auto;"></a>
-                </div>
-                <div class="kaka">
-                  <a href="https://kauth.kakao.com/oauth/authorize?client_id=c2b8f2ae81e7206df597a694d983c1ee&redirect_uri=http://localhost:8010/nexus/kakao&response_type=code" style="display: block; padding-right: 50px;"><img src="${ pageContext.request.contextPath }/resources/image/kakao.png" alt="" width="60px" style="display: block; margin: auto;"></a>
-                </div>
-
-              </div>
-
-              <p class="text-center">
-                <span>New on our platform?</span>
-                <a href="register.p">
-                  <span>Create an account</span>
+              <div class="text-center">
+                <a href="login.p" class="d-flex align-items-center justify-content-center">
+                  <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                  Back to login
                 </a>
-              </p>
+              </div>
             </div>
           </div>
-          <!-- /Register -->
+          <!-- /Forgot Password -->
         </div>
       </div>
     </div>

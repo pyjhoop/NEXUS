@@ -139,7 +139,7 @@
 							class="menu-icon tf-icons bx bx-detail"></i>
 							<div data-i18n="Form Elements">News</div>
 					</a></li>
-					<li class="menu-item"><a href="#" class="menu-link"> <i
+					<li class="menu-item"><a href="selectCal.ih" class="menu-link"> <i
 							class="menu-icon tf-icons bx bxs-calendar"></i>
 							<div data-i18n="Tables">Calendar</div>
 					</a></li>
@@ -250,12 +250,6 @@
 												<a class="dropdown-item"
 													href="https://kauth.kakao.com/oauth/logout?client_id=c2b8f2ae81e7206df597a694d983c1ee&logout_redirect_uri=http://localhost:8010/nexus/logout">
 													<i class="bx bx-power-off me-2"></i> <span
-													class="align-middle">Log Out</span>
-												</a>
-											</c:when>
-											<c:when test="${ loginUser.social eq 'G' }">
-												<a class="dropdown-item" href="logout.p"> <i
-													class="bx bx-power-off me-2"></i> <span
 													class="align-middle">Log Out</span>
 												</a>
 											</c:when>
