@@ -131,11 +131,7 @@
 							<div data-i18n="Extended UI">Kanban</div>
 					</a></li>
 
-					<li class="menu-item"><a href="#" class="menu-link"> <i
-							class="menu-icon tf-icons bx bxl-wikipedia"></i>
-							<div data-i18n="Boxicons">Wiki</div>
-					</a></li>
-					<li class="menu-item"><a href="#" class="menu-link"> <i
+					<li class="menu-item news"><a href="news.p" class="menu-link"> <i
 							class="menu-icon tf-icons bx bx-detail"></i>
 							<div data-i18n="Form Elements">News</div>
 					</a></li>
@@ -213,7 +209,7 @@
 								href="javascript:void(0);" data-bs-toggle="dropdown">
 									<div class="avatar avatar-online">
 										<img src="${loginUser.profile }" alt
-											class="w-px-40 h-auto rounded-circle" />
+											class="w-px-40 h-px-40 rounded-circle" />
 									</div>
 							</a>
 								<ul class="dropdown-menu dropdown-menu-end">
