@@ -11,8 +11,6 @@
 
 
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,25 +20,9 @@
       rel="stylesheet"
     />
 
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="../../../resources/css/core_issue_mini.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+  
 
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
-    <!-- Page CSS -->
-
-    <!-- Helpers -->
-    <script src="../assets/vendor/js/helpers.js"></script>
-
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../assets/js/config.js"></script>
 
 
 <!-- Latest compiled and minified CSS -->
@@ -51,6 +33,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../resources/css/core_issue_mini.css">
+<link rel="stylesheet" href="../../../resources/css/apex-charts.css">
+<link rel="stylesheet" href="../../../resources/css/theme-default.css">
+
 
 
 <style>
@@ -153,9 +138,9 @@
                               data-popup="tooltip-custom"
                               data-bs-placement="top"
                               class="avatar avatar-xs pull-up"
-                              title="Lilian Fuller"
+                              title="이혜민"
                             >
-                              <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                              <img src="../assets/img/avatars/5.png" alt="" class="rounded-circle" />
                             </li>
                           
                           </ul>
@@ -169,27 +154,27 @@
                               data-popup="tooltip-custom"
                               data-bs-placement="top"
                               class="avatar avatar-xs pull-up"
-                              title="Lilian Fuller"
+                              title="이혜민"
                             >
-                              <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                              <img src="../assets/img/avatars/5.png" alt="" class="rounded-circle" />
                             </li>
                             <li
                               data-bs-toggle="tooltip"
                               data-popup="tooltip-custom"
                               data-bs-placement="top"
                               class="avatar avatar-xs pull-up"
-                              title="Sophia Wilkerson"
+                              title="왈왈왈"
                             >
-                              <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
+                              <img src="../assets/img/avatars/6.png" alt="" class="rounded-circle" />
                             </li>
                             <li
                               data-bs-toggle="tooltip"
                               data-popup="tooltip-custom"
                               data-bs-placement="top"
                               class="avatar avatar-xs pull-up"
-                              title="Christina Parker"
+                              title="테스트"
                             >
-                              <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
+                              <img src="../assets/img/avatars/7.png" alt="" class="rounded-circle" />
                             </li>
                           </ul>
                         </td>
@@ -226,9 +211,9 @@
                               data-popup="tooltip-custom"
                               data-bs-placement="top"
                               class="avatar avatar-xs pull-up"
-                              title="Lilian Fuller"
+                              title="닉네임"
                             >
-                              <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                              <img src="../assets/img/avatars/5.png" alt="" class="rounded-circle" />
                             </li>
                           
                           </ul>
@@ -242,27 +227,27 @@
                               data-popup="tooltip-custom"
                               data-bs-placement="top"
                               class="avatar avatar-xs pull-up"
-                              title="Lilian Fuller"
+                              title="벌써"
                             >
-                              <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                              <img src="../assets/img/avatars/5.png" alt="" class="rounded-circle" />
                             </li>
                             <li
                               data-bs-toggle="tooltip"
                               data-popup="tooltip-custom"
                               data-bs-placement="top"
                               class="avatar avatar-xs pull-up"
-                              title="Sophia Wilkerson"
+                              title="12시"
                             >
-                              <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
+                              <img src="../assets/img/avatars/6.png" alt="" class="rounded-circle" />
                             </li>
                             <li
                               data-bs-toggle="tooltip"
                               data-popup="tooltip-custom"
                               data-bs-placement="top"
                               class="avatar avatar-xs pull-up"
-                              title="Christina Parker"
+                              title="오예"
                             >
-                              <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
+                              <img src="../assets/img/avatars/7.png" alt="" class="rounded-circle" />
                             </li>
                           </ul>
                         </td>
@@ -295,16 +280,21 @@
      
      
      
+     <script>
+
+      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+     </script>
      
      
      
+  
      
      
-     
-     
-     
-     
-     
+    <script src="../../../resources/js/issue_mini.js"></script>
      
      
      
@@ -316,24 +306,7 @@
      
      
      
-      <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../assets/vendor/libs/popper/popper.js"></script>
-    <script src="../assets/vendor/js/bootstrap.js"></script>
-    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
-    <script src="../assets/vendor/js/menu.js"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-
-    <!-- Main JS -->
-    <script src="../assets/js/main.js"></script>
-
-    <!-- Page JS -->
-
-    <!-- Place this tag in your head or just before your close body tag. -->
+  
     <script async defer src="https://buttons.github.io/buttons.js"></script>
      
 

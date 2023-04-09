@@ -29,6 +29,17 @@
 
 <meta name="description" content="" />
 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="../../../resources/js/apexcharts.js"></script>
+<script src="../../../resources/js/bootstrap.js"></script>
+
+
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon"
 	href="${pageContext.request.contextPath}/resources/assets/img/favicon/favicon.ico" />
@@ -102,7 +113,6 @@
 
 				<div class="menu-inner-shadow"></div>
 
-<<<<<<< HEAD
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item active">
@@ -132,31 +142,6 @@
                 <div data-i18n="User interface">Milestone</div>
               </a>
             </li>
-=======
-				<ul class="menu-inner py-1">
-					<!-- Dashboard -->
-					<li class="menu-item active"><a href="main.p"
-						class="menu-link"> <i
-							class="menu-icon tf-icons bx bx-home-circle"></i>
-							<div data-i18n="Analytics">Home</div>
-					</a></li>
-					<li class="menu-item" id="repository"><a href="repository.p"
-						class="menu-link"> <i class="menu-icon tf-icons bx bxl-github"></i>
-							<div data-i18n="Basic">Repository</div>
-					</a></li>
-					<!-- Components -->
-					<li class="menu-header small text-uppercase"><span
-						class="menu-header-text">Project</span></li>
-					<!-- Cards -->
-					<li class="menu-item"><a href="#" class="menu-link"> <i
-							class="menu-icon tf-icons bx bx-collection"></i>
-							<div data-i18n="Basic">Issue</div>
-					</a></li>
-					<li class="menu-item"><a href="#" class="menu-link"> <i
-							class="menu-icon tf-icons bx bx-box"></i>
-							<div data-i18n="User interface">Milestone</div>
-					</a></li>
->>>>>>> main
 
 					<li class="menu-item"><a href="#" class="menu-link"> <i
 							class="menu-icon tf-icons bx bx-copy"></i>
