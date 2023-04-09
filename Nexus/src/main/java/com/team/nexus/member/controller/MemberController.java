@@ -164,6 +164,13 @@ public class MemberController {
 		return "member/login";
 	}
 	
+	@RequestMapping("forgotPwd.p")
+	public String forgotPwd() {
+		return "member/forgotPwd";
+	}
+	
+	
+	
 	@RequestMapping(value="idCheck.me.p", method=RequestMethod.POST)
 	@ResponseBody
 	public String idCheck(Member m) {
@@ -226,6 +233,22 @@ public class MemberController {
 			model.addAttribute("errorMsg", "로그인 실패");
 			return "common/errorPage";
 		}
+	}
+	
+	@RequestMapping("resetPwd.p")
+	public String resetPwd(Member m, HttpSession session) {
+		
+		int count = mService.resetPwd(m);
+		
+		if(count>0) {
+			System.out.println("비번 변경 페이지 이동");
+			return "redirect:login.p";
+		}else {
+			System.out.println("정보가 일치지 않습니다.");
+			session.setAttribute("alertMsg", "정보가 일치하지 않습니다.");
+			return "redirect:forgotPwd.p";
+		}
 		
 	}
+	
 }

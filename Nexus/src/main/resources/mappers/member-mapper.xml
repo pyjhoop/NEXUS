@@ -109,10 +109,18 @@
 		      , null
 		      , #{nickname}
 		      , null
-		      , null
+		      , #{email}
 		      , #{profile_image}
 		      , 'K'
 		    )
 	</insert>
+	
+	<select id="resetPwd" resultType="_int">
+		select 
+			    count(*) as "count"
+		  from tb_member
+		 where user_id = #{userId}
+		   and email = #{email}
+	</select>
 	
 </mapper>
