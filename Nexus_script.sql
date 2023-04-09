@@ -112,6 +112,7 @@ insert into tb_news_comments values(1, 'user01','ㅋㅋㅋㅋ',sysdate,'Y');
 insert into tb_news_comments values(1, 'user02','ㅋㅋㅋㅋ',sysdate,'Y');
 insert into tb_news_comments values(1, 'user03','ㅋㅋㅋㅋ',sysdate,'Y');
 
+
 comment on column tb_news_comments.news_no is '뉴스번호';
 comment on column tb_news_comments.comment_writer is '작성자 아이디';
 comment on column tb_news_comments.comment_content is '내용';
