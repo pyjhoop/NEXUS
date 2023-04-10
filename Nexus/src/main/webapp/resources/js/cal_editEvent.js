@@ -98,7 +98,7 @@ var editEvent = function (event, element, view) {
             },
             success: function (response) {
                 if(response > 0){
-                   location.reload();
+                    location.reload();
                    alert('수정되었습니다.')
 
                }else{
@@ -128,7 +128,6 @@ $('#deleteEvent').on('click', function () {
         success: function (response) {
             if(response>0){
                 location.reload();
-                alert('삭제되었습니다.');
             }else{
                 alert('삭제에 실패했습니다.')
             }
