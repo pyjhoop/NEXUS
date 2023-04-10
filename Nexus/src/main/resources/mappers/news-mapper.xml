@@ -16,7 +16,7 @@
 	
 	<resultMap type="NewsReply" id="newsReplyResultSet">
 		<result column="news_no" property="newsNo"/>
-		<result column="comment_writer" property="commentWriter"/>
+		<result column="user_name" property="commentWriter"/>
 		<result column="comment_content" property="commentContent"/>
 		<result column="comment_date" property="commentDate"/>
 		<result column="status" property="status"/>
@@ -59,15 +59,32 @@
 	<select id="selectrList" resultMap="newsReplyResultSet">
 		select 
 		        news_no
-		      , comment_writer
+		      , user_name
 		      , comment_content
-		      , to_char(comment_date,'YYYY.MM.DD HH:mm') "COMMENT_DATE"
+		      , to_char(comment_date,'YYYY.MM.DD HH24:MI') "COMMENT_DATE"
 		      , profile
 		from tb_news_comments  nc
-		join tb_member on(user_id = comment_writer)
+		join tb_member on(user_no = comment_writer)
 		where nc.status = 'Y'
-		and news_no = #{newsNo}
+        and news_no = #{newsNo}
+        order by comment_date desc
 	</select>
+	
+	<insert id="newsReplyInsert">
+		insert 
+			into tb_news_comments
+			(
+				news_no
+			  , comment_writer
+			  , comment_content
+			)
+			values
+			(
+				#{newsNo}
+			  , #{commentWriter}
+			  , #{commentContent}
+			)
+	</insert>
 	
 	
 </mapper>

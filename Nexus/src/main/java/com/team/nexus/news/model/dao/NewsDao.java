@@ -29,4 +29,8 @@ public class NewsDao {
 		return (ArrayList)sqlsession.selectList("newsMapper.selectrList",newsNo);
 	}
 
+	public int newsReplyInsert(SqlSessionTemplate sqlsession, NewsReply nr) {
+		return sqlsession.insert("newsMapper.newsReplyInsert", nr);
+	}
+
 }

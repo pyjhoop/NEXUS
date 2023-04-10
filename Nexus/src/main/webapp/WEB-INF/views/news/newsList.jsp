@@ -13,7 +13,7 @@
 <body>
 	<jsp:include page="../common/template.jsp"/>
     <div class="container-xxl flex-grow-1 container-p-y cpadding">
-        <button type="button" class="btn btn-primary">작성</button>
+        <button type="button" class="btn btn-primary" id="enroll">뉴스작성</button>
 		<c:forEach var="i" items="${list }" varStatus="status">
 	        <div class="card mb-5 ct">
 	            <div class="firstrow" style="display: flex;">
@@ -27,80 +27,165 @@
 	            </div>
                 
 	            
-	            <div class="row">
-	                <div class="col-md-6 imgp" style="padding-right: 0px;"><img src="${pageContext.request.contextPath}/resources/image/laoh.jpg" alt="" class="imgplace"></div>
+	            <div class="row row-bordered g-0">
+	                <div class="col-md-6 contents" style="padding-right: 0px;">
+                        <div>
+                            ${i.newsContent}
+                        </div>
+                    </div>
+
 	                <div class="col-md-6" style="padding: 40px;">
-	                    <div class="contents">
-	                        ${ i.newsContent }
-	                    </div>
-                        <div class="divider">
-                            <div class="divider-text">댓글</div>
-                          </div>
-	                    <div class="reply">
+	                    
+	                    <div class="reply re${i.newsNo}">
+
+                        <c:forEach var="j" items="${allList[status.count - 1]}" varStatus="loop">
+                            <div style="display: flex;">
+                                <img alt="" src="${pageContext.request.contextPath}/resources/image/laoh.jpg" class="reImg">
+                                <div class="rediv">
+                                    <span class="reWriter">${ j.commentWriter }</span>
+                                    <span class="reDate">${ j.commentDate }</span>
+                                    <br>
+                                    <span class="reComment">
+                                        ${ j.commentContent }
+                                    </span>
+                                </div>
+                            </div>
+                            <br>
                             
-
-	                    	<c:choose>
-	                    		<c:when test="${ status.count eq 1 }">
-			                    	<c:forEach var="j" items="${allList[0]}">
-			                    		${ j.commentContent }
-			                    		<br>
-			                    	</c:forEach>
-	                    		</c:when>
-	                    		<c:when test="${ status.count eq 2 }">
-			                    	<c:forEach var="j" items="${allList[1]}">
-			                    		${ j.commentContent }
-			                    		<br>
-			                    	</c:forEach>
-	                    		</c:when>
-	                    		<c:when test="${ status.count eq 3 }">
-			                    	<c:forEach var="j" items="${allList[2]}">
-                                        <div style="display: flex;">
-                                            <img alt="" src="${pageContext.request.contextPath}/resources/image/laoh.jpg" class="reImg">
-                                            <div class="rediv">
-                                                <span class="reWriter">${ j.commentWriter }</span>
-                                                <span class="reDate">${ j.commentDate }</span>
-                                                <br>
-                                               <span class="reComment">
-                                                   ${j.commentContent }
-                                               </span>
-
-                                            </div>
-                                        </div>
-			                    		<br>
-			                    	</c:forEach>
-	                    		</c:when>
-	                    		<c:when test="${ status.count eq 4 }">
-			                    	<c:forEach var="j" items="${allList[3]}">
-			                    		${ j.commentContent }
-			                    		<br>
-			                    	</c:forEach>
-	                    		</c:when>
-	                    		<c:when test="${ status.count eq 5 }">
-			                    	<c:forEach var="j" items="${allList[4]}">
-			                    		${ j.commentContent }
-			                    		<br>
-			                    	</c:forEach>
-	                    		</c:when>
-	                    	</c:choose>
+                        </c:forEach>
 	                    	
 	                    </div>
 	                    <div class="inputreply">
 	                        <img src="${loginUser.profile}" alt="">
 	                        <input type="text" class="form-control" id="inputtext" placeholder="댓글 작성" aria-describedby="defaultFormControlHelp">
-	                        <button type="button" class="btn btn-primary re">입력</button>
+                            <input type="hidden" name="userNo" id="userNo" value="${loginUser.userNo}">
+	                        <button type="button" class="${i.newsNo} btn btn-primary ">submit</button>
 	                    </div>
 	                </div>
 	
 	            </div>
 	        </div>
 		</c:forEach>
-        <div class="list"></div>
+      
        
             
-      <div id="observer" class="card">더보기</div>
     </div>
+    
+    <div id="observer" class="card">더보기</div>
+    <script>
+        let timer;
+        let page = 1;
+        const $observer = document.getElementById('observer');
+        const io = new IntersectionObserver((entries) => {
+        clearTimeout(timer);
+        if (entries[0].isIntersecting) {
+        //timer = setTimeout(() => makeListElement(), 1000);
+        //let page = Number($("#page").val())+1;
+        page+=1;
+        //console.log(page);
+        var data2;
+        $.ajax({
+            url:"ajaxNewsList.p",
+            data: {"page":page},
+            success:function(data){
+                if(data.length == 0){
+                    page-=1;
+                }
+                let value = "";
+                let val = "";
 
- 
+                let list = "";
+                for(let i in data){
+                    list += data[i].newsNo +" "
+                }
+
+                $.ajax({
+                    url:"ajaxNewsReplyList.p",
+                    data:{list:list.trim()},
+                    success:function(data1){
+                        console.log(data1)
+                        data2 = data1;
+                        console.log(data2);
+                        
+                    }, error:function(){
+
+                    }
+                })
+
+                $.each(data, function(index, item) {
+                    console.log(index)
+                    value+="<div class=\"card mb-5 ct\">" +
+                    "<div class=\"firstrow\" style=\"display: flex;\">" +
+                        "<div class=\"col-md-2 col-4 profile1\" style=\"display: flex;\">" +
+                            "<img src=\"" + item.profile + "\" alt=\"프로필\" class=\"profile rounded-circle\">" +
+                            "<span class=\"username d-flex align-items-center justify-content-center\">" + item.userNo + "</span>" +
+                        "</div>" +
+                        "<div class=\"col-md-5 col-4 d-flex align-items-center justify-content-center title\">" + item.newsTitle + "</div>" +
+                        "<div class=\"col-md-5 col-4 d-flex align-items-center justify-content-center\">" + item.createDate + "</div>" +
+                    "</div>" +
+                    "<div class=\"row row-bordered g-0\">" +
+                        "<div class=\"col-md-6 contents\" style=\"padding-right: 0px;\">" +
+                            "<div>" + item.newsContent + "</div>" +
+                        "</div>" +
+                        "<div class=\"col-md-6\" style=\"padding: 40px;\">" +
+                            "<div class=\"reply re" + item.newsNo + "\">";
+                                
+                                    for(let j in data2[0][j]){
+                                        value += "<div style=\"display: flex;\">" +
+                                                "<img alt=\"\" src=\"" + data2[i].profile + "/resources/image/laoh.jpg\" class=\"reImg\">" +
+                                                "<div class=\"rediv\">" +
+                                                    "<span class=\"reWriter\">" + data2[i].commentWriter + "</span>" +
+                                                    "<span class=\"reDate\">" + data2[i].commentDate + "</span>" +
+                                                    "<br>" +
+                                                    "<span class=\"reComment\">" + data2[i].commentContent + "</span>" +
+                                                "</div>" +
+                                            "</div>" +
+                                            "<br>";
+
+                                    }
+                    
+                            
+                           value+= "</div>" +
+                            "<div class=\"inputreply\">" +
+                                "<img src=\"${loginUser.profile}\" alt=\"\">" +
+                                "<input type=\"text\" class=\"form-control\" id=\"inputtext\" placeholder=\"댓글 작성\" aria-describedby=\"defaultFormControlHelp\">" +
+                                "<input type=\"hidden\" name=\"userNo\" id=\"userNo\" value=\"" + "${loginUser}.userNo" + "\">" +
+                                "<button type=\"button\" class=\"" + item.newsNo + " btn btn-primary \">submit</button>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>" +
+                "</div>";
+
+                });
+
+                $(".cpadding").html($(".cpadding").html()+value);
+                
+
+                
+
+                
+                
+            }, error:function(){
+                console.log("ajax 오류 발생")
+            }
+        })
+
+       
+
+       
+        
+        
+        }
+        });
+        io.observe($observer);
+
+        $("body").on("keyup","#inputtext",function(event){
+        if(event.which == 13){
+            console.log($(this).siblings(".btn"))
+            $(this).siblings(".btn").click();
+        }
+    })
+  </script>
 
 		
 

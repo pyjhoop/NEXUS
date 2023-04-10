@@ -33,16 +33,21 @@
 }
 
 .contents{
-  
-    margin-bottom: 10px;
-    height: 200px;
+    width: 100%;
+    height: 500px;
+}
+.contents>div{
+    width: 100%;
+    height: 100%;
+    margin: 20px;
+    overflow-y: auto;
 }
 
 .inputreply{
     position: absolute;
     display: flex;
     bottom: 40px;
-    width: 40%;
+    width: 100%;
 }
 
 .inputreply>img{
@@ -53,12 +58,9 @@
 
 .inputreply>input{
     margin-left: 20px;
-    width: 80% !important;
+    width: 60% !important;
 }
-.re{
-    font-size: 0.8rem !important;
-    
-}
+
 
 .reImg{
     width: 35px;
@@ -77,10 +79,11 @@
 
 .reply{
     overflow: auto;
-    height: 200px;
+    height: 330px;
 }
 
 .ct{
 	width:80%;
 	margin:auto;
 }
+
