@@ -228,7 +228,7 @@
 										<img src="${loginUser.profile }" alt
 											class="w-px-40 h-px-40 rounded-circle" />
 									</div>
-							</a>
+								</a>
 								<ul class="dropdown-menu dropdown-menu-end">
 									<li><a class="dropdown-item" href="#">
 											<div class="d-flex">
@@ -279,7 +279,7 @@
 					</div>
 				</nav>
 				
-				<!-- CHAT BAR BLOCK -->
+	<!-- CHAT BAR BLOCK -->
     <div class="chat-bar-collapsible">
         <button id="chat-button" type="button" class="collapsible">Chat with us!
             <i id="chat-icon" style="color: #fff;" class="fa fa-fw fa-comments-o"></i>

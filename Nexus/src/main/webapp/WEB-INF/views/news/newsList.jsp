@@ -15,7 +15,7 @@
     <div class="container-xxl flex-grow-1 container-p-y cpadding">
         <button type="button" class="btn btn-primary">작성</button>
 		<c:forEach var="i" items="${list }" varStatus="status">
-	        <div class="card mb-5">
+	        <div class="card mb-5 ct">
 	            <div class="firstrow" style="display: flex;">
 	                <div class="col-md-2 col-4 profile1" style="display: flex;">
 	                    <img src="${i.profile}" alt="프로필" class="profile rounded-circle">
