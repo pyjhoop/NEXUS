@@ -1,26 +1,26 @@
-----------------삭제------------------
---접속유저의 모든테이블 및 제약조건 삭제
+----------------�------------------
+--�� 紐⑤대 諛 �쎌“嫄 �
 BEGIN
     FOR C IN (SELECT TABLE_NAME FROM USER_TABLES) LOOP
     EXECUTE IMMEDIATE ('DROP TABLE '||C.TABLE_NAME||' CASCADE CONSTRAINTS');
     END LOOP;
 END;
 /
---접속유저의 모든 시퀀스 삭제
+--�� 紐⑤  �
 BEGIN
 FOR C IN (SELECT * FROM USER_SEQUENCES) LOOP
   EXECUTE IMMEDIATE 'DROP SEQUENCE '||C.SEQUENCE_NAME;
 END LOOP;
 END;
 /
---접속유저의 모든 뷰 삭제
+--�� 紐⑤ 酉 �
 BEGIN
 FOR C IN (SELECT * FROM USER_VIEWS) LOOP
   EXECUTE IMMEDIATE 'DROP VIEW '||C.VIEW_NAME;
 END LOOP;
 END;
 /
---접속유저의 모든 트리거 삭제
+--�� 紐⑤ 몃━嫄 �
 BEGIN
 FOR C IN (SELECT * FROM USER_TRIGGERS) LOOP
   EXECUTE IMMEDIATE 'DROP TRIGGER '||C.TRIGGER_NAME;
@@ -28,9 +28,9 @@ END LOOP;
 END;
 /
 
--- 테이블 생성
+-- 대 
 
----------------------- 회원 테이블 -------------------------
+----------------------  대 -------------------------
 create table tb_member(
     user_no	number primary key,
 	user_id	varchar2(50) not null unique,
@@ -49,26 +49,26 @@ create table tb_member(
 create sequence seq_member
 nocache;
 
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user01','pass01','박연준','자바마스터','email01@kh.co.kr',null,null,'O',SYSDATE,null,'Y');
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user02','pass02','이혜민','DB의 달인','email02@kh.co.kr',null,null,'O',SYSDATE,null,'Y');
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user03','pass03','임철현','스프링의귀재','email03@kh.co.kr',null,null,'O',SYSDATE,null,'Y');
+INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user01','pass01','諛곗','諛留ㅽ','email01@kh.co.kr',null,null,'O',SYSDATE,null,'Y');
+INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user02','pass02','댄誘','DB ъ','email02@kh.co.kr',null,null,'O',SYSDATE,null,'Y');
+INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user03','pass03','泥','ㅽ留洹','email03@kh.co.kr',null,null,'O',SYSDATE,null,'Y');
 
 
-COMMENT ON COLUMN TB_MEMBER.USER_NO IS '회원번호';
-COMMENT ON COLUMN TB_MEMBER.USER_ID IS '아이디';
-COMMENT ON COLUMN TB_MEMBER.USER_PWD IS '비밀번호';
-COMMENT ON COLUMN TB_MEMBER.USER_NAME IS '회원 이름';
-COMMENT ON COLUMN TB_MEMBER.USER_NICK IS '닉네임';
-COMMENT ON COLUMN TB_MEMBER.EMAIL IS '이메일';
-COMMENT ON COLUMN TB_MEMBER.PROFILE IS '프로필주소';
-COMMENT ON COLUMN TB_MEMBER.GENDER IS '성별';
-COMMENT ON COLUMN TB_MEMBER.SOCIAL IS '소셜 여부';
-COMMENT ON COLUMN TB_MEMBER.ENROLL_DATE IS '가입일';
-COMMENT ON COLUMN TB_MEMBER.TOKEN IS '토큰';
-COMMENT ON COLUMN TB_MEMBER.STATUS IS '탈퇴여부';
+COMMENT ON COLUMN TB_MEMBER.USER_NO IS '踰';
+COMMENT ON COLUMN TB_MEMBER.USER_ID IS '대';
+COMMENT ON COLUMN TB_MEMBER.USER_PWD IS '鍮諛踰';
+COMMENT ON COLUMN TB_MEMBER.USER_NAME IS ' 대';
+COMMENT ON COLUMN TB_MEMBER.USER_NICK IS 'ㅼ';
+COMMENT ON COLUMN TB_MEMBER.EMAIL IS '대';
+COMMENT ON COLUMN TB_MEMBER.PROFILE IS '濡二쇱';
+COMMENT ON COLUMN TB_MEMBER.GENDER IS '깅';
+COMMENT ON COLUMN TB_MEMBER.SOCIAL IS ' щ';
+COMMENT ON COLUMN TB_MEMBER.ENROLL_DATE IS '媛';
+COMMENT ON COLUMN TB_MEMBER.TOKEN IS '';
+COMMENT ON COLUMN TB_MEMBER.STATUS IS '댁щ';
 
 
----------------------- 뉴스 테이블 -------------------------
+---------------------- 댁 대 -------------------------
 create table tb_news (
 	news_no	number primary key,
 	user_no	number references tb_member,
@@ -84,22 +84,22 @@ create table tb_news (
 create sequence seq_news
 nocache;
 
-insert into tb_news values(seq_news.nextval, 1,'오늘 하루 힘들다','지하철에서 빌런만났는데 힘드네요',sysdate,sysdate,'Y','qwe','qwe');
-insert into tb_news values(seq_news.nextval, 2,'배고프다','점심시간인데 왜 밥을 못먹게 합니까!!!',sysdate,sysdate,'Y','asdf','asdf');
-insert into tb_news values(seq_news.nextval, 3,'아니 지하철에서 시위좀 그만 합시다','제시간에 도착하고 싶어여ㅠㅠ',sysdate,sysdate,'Y','qwe','qwe');
+insert into tb_news values(seq_news.nextval, 1,'ㅻ 猷 ㅻ','吏泥 鍮곕щ ㅼ',sysdate,sysdate,'Y','qwe','qwe');
+insert into tb_news values(seq_news.nextval, 2,'諛곌�','�ъ媛몃  諛μ 紐삳㉨寃 ⑸源!!!',sysdate,sysdate,'Y','asdf','asdf');
+insert into tb_news values(seq_news.nextval, 3,' 吏泥 醫 洹몃 ⑹','�媛 李⑺怨 띠댁с',sysdate,sysdate,'Y','qwe','qwe');
 
-comment on column tb_news.news_no is '뉴스번호';
-comment on column tb_news.user_no is '회원번호';
-comment on column tb_news.news_title is '제목';
-comment on column tb_news.news_content is '내용';
-comment on column tb_news.create_date is '생성일';
-comment on column tb_news.update_date is '수정일';
-comment on column tb_news.status is '상태';
-comment on column tb_news.origin_name is '기존 파일명';
-comment on column tb_news.change_name is '변경된 파일명';
+comment on column tb_news.news_no is '댁ㅻ';
+comment on column tb_news.user_no is '踰';
+comment on column tb_news.news_title is '�紐';
+comment on column tb_news.news_content is '댁';
+comment on column tb_news.create_date is '깆';
+comment on column tb_news.update_date is '�';
+comment on column tb_news.status is '';
+comment on column tb_news.origin_name is '湲곗〈 쇰';
+comment on column tb_news.change_name is '蹂寃쎈 쇰';
 
 
----------------------- 뉴스 댓글 -------------------------
+---------------------- 댁 湲 -------------------------
 create table tb_news_comments(
     news_no number references tb_news,
     comment_writer varchar2(50) not null,
@@ -108,9 +108,11 @@ create table tb_news_comments(
     status varchar2(3) default 'Y' check(status in('Y','N'))
 );
 
-insert into tb_news_comments values(1, 'user01','ㅋㅋㅋㅋ',sysdate,'Y');
-insert into tb_news_comments values(1, 'user02','ㅋㅋㅋㅋ',sysdate,'Y');
-insert into tb_news_comments values(1, 'user03','ㅋㅋㅋㅋ',sysdate,'Y');
+insert into tb_news_comments values(1, 'user01','',sysdate,'Y');
+insert into tb_news_comments values(1, 'user02','',sysdate,'Y');
+insert into tb_news_comments values(1, 'user03','',sysdate,'Y');
+
+
 
 comment on column tb_news_comments.news_no is '뉴스번호';
 comment on column tb_news_comments.comment_writer is '작성자 아이디';
@@ -118,36 +120,36 @@ comment on column tb_news_comments.comment_content is '내용';
 comment on column tb_news_comments.comment_date is '작성일';
 comment on column tb_news_comments.status is '상태';
 
----------------------- 팀원 -------------------------
+----------------------  -------------------------
 create table tb_collaborator(
     repository_no number not null,
     user_no number references tb_member,
     part varchar2(10)
 );
 
-insert into tb_collaborator values(1, 1, '팀장');
-insert into tb_collaborator values(1,2,'팀원');
-insert into tb_collaborator values(1,3,'팀원');
+insert into tb_collaborator values(1, 1, '');
+insert into tb_collaborator values(1,2,'');
+insert into tb_collaborator values(1,3,'');
 
-comment on column tb_collaborator.repository_no is '레파지토리 번호';
-comment on column tb_collaborator.user_no is '회원번호';
-comment on column tb_collaborator.part is '역할';
+comment on column tb_collaborator.repository_no is '�吏由 踰';
+comment on column tb_collaborator.user_no is '踰';
+comment on column tb_collaborator.part is '�';
 
 
----------------------- 캘린더 카테고리 -------------------------
+---------------------- 罹由곕 移댄怨由 -------------------------
 CREATE TABLE TB_CALENDAR_CATEGORY(
    CATEGORY_NO NUMBER PRIMARY KEY,
    CATEGORY_NAME VARCHAR2(30)
 );
 
-COMMENT ON COLUMN TB_CALENDAR_CATEGORY.CATEGORY_NO IS '카테고리 번호';
-COMMENT ON COLUMN TB_CALENDAR_CATEGORY.CATEGORY_NAME IS '카테고리 이름';
+COMMENT ON COLUMN TB_CALENDAR_CATEGORY.CATEGORY_NO IS '移댄怨由 踰';
+COMMENT ON COLUMN TB_CALENDAR_CATEGORY.CATEGORY_NAME IS '移댄怨由 대';
 
-INSERT INTO TB_CALENDAR_CATEGORY VALUES(1,'업무');
-INSERT INTO TB_CALENDAR_CATEGORY VALUES(2,'개인 일정');
-INSERT INTO TB_CALENDAR_CATEGORY VALUES(3,'소셜 일정');
+INSERT INTO TB_CALENDAR_CATEGORY VALUES(1,'臾');
+INSERT INTO TB_CALENDAR_CATEGORY VALUES(2,'媛 쇱');
+INSERT INTO TB_CALENDAR_CATEGORY VALUES(3,' 쇱');
 
----------------------- 캘린더 -------------------------
+---------------------- 罹由곕 -------------------------
 
 CREATE TABLE TB_CALENDAR(
    CALENDAR_NO NUMBER PRIMARY KEY,
@@ -163,49 +165,49 @@ CREATE TABLE TB_CALENDAR(
    STATUS VARCHAR2(3) DEFAULT 'Y' CHECK(STATUS IN('Y','N'))
 );
 
-COMMENT ON COLUMN TB_CALENDAR.USER_NO IS '회원 번호';
-COMMENT ON COLUMN TB_CALENDAR.SCHEDULE_TITLE IS '일정 제목';
-COMMENT ON COLUMN TB_CALENDAR.START_DATE IS '시작일';
-COMMENT ON COLUMN TB_CALENDAR.END_DATE IS '마감일';
-COMMENT ON COLUMN TB_CALENDAR.DATE_COLOR IS '색상';
-COMMENT ON COLUMN TB_CALENDAR.SCHEDULE_CONTENT IS '일정 내용';
-COMMENT ON COLUMN TB_CALENDAR.CATEGORY_NO IS '카테고리 번호';
+COMMENT ON COLUMN TB_CALENDAR.USER_NO IS ' 踰';
+COMMENT ON COLUMN TB_CALENDAR.SCHEDULE_TITLE IS '쇱 �紐';
+COMMENT ON COLUMN TB_CALENDAR.START_DATE IS '';
+COMMENT ON COLUMN TB_CALENDAR.END_DATE IS '留媛';
+COMMENT ON COLUMN TB_CALENDAR.DATE_COLOR IS '';
+COMMENT ON COLUMN TB_CALENDAR.SCHEDULE_CONTENT IS '쇱 댁';
+COMMENT ON COLUMN TB_CALENDAR.CATEGORY_NO IS '移댄怨由 踰';
 
-INSERT INTO TB_CALENDAR VALUES(1,'프로젝트 회의',SYSDATE,'2023-04-04','빨강','5시 NEXUS 회의',1);
-INSERT INTO TB_CALENDAR VALUES(2,'청소하기',SYSDATE,'2023-04-04','파랑','3시 집청소',2);
-INSERT INTO TB_CALENDAR VALUES(3,'준호 생일','2023-05-05','2023-05-05','초록','준호의 생일',3);
+INSERT INTO TB_CALENDAR VALUES(1,'濡� ',SYSDATE,'2023-04-04','鍮④','5 NEXUS ',1);
+INSERT INTO TB_CALENDAR VALUES(2,'泥�湲',SYSDATE,'2023-04-04','','3 吏泥�',2);
+INSERT INTO TB_CALENDAR VALUES(3,'以 ','2023-05-05','2023-05-05','珥濡','以몄 ',3);
 
 
----------------------- 채팅방 -------------------------
+---------------------- 梨諛 -------------------------
 CREATE TABLE TB_CHAT_ROOM(
    ROOM_NO NUMBER PRIMARY KEY,
    NUMBER_PARTICIPANTS NUMBER NOT NULL,
    CREATE_DATE DATE DEFAULT SYSDATE NOT NULL,
    STATUS VARCHAR2(3) DEFAULT 'Y' NOT NULL
 );
-COMMENT ON COLUMN TB_CHAT_ROOM.ROOM_NO IS '채팅방 번호';
-COMMENT ON COLUMN TB_CHAT_ROOM.NUMBER_PARTICIPANTS IS '참여인원';
-COMMENT ON COLUMN TB_CHAT_ROOM.CREATE_DATE IS '생성일자';
-COMMENT ON COLUMN TB_CHAT_ROOM.STATUS IS '삭제여부';
+COMMENT ON COLUMN TB_CHAT_ROOM.ROOM_NO IS '梨諛 踰';
+COMMENT ON COLUMN TB_CHAT_ROOM.NUMBER_PARTICIPANTS IS '李몄ъ몄';
+COMMENT ON COLUMN TB_CHAT_ROOM.CREATE_DATE IS '깆쇱';
+COMMENT ON COLUMN TB_CHAT_ROOM.STATUS IS '�щ';
 
 INSERT INTO TB_CHAT_ROOM VALUES(1,2,SYSDATE,'Y');
 INSERT INTO TB_CHAT_ROOM VALUES(2,2,SYSDATE,'Y');
 INSERT INTO TB_CHAT_ROOM VALUES(3,2,SYSDATE,'Y');
 
----------------------- 채팅방 회원 -------------------------
+---------------------- 梨諛  -------------------------
 CREATE TABLE TB_CHAT_USER(
    USER_NO NUMBER NOT NULL REFERENCES TB_MEMBER,
    ROOM_NO NUMBER NOT NULL REFERENCES TB_CHAT_ROOM 
 );
-COMMENT ON COLUMN TB_CHAT_USER.USER_NO IS '회원 번호';
-COMMENT ON COLUMN TB_CHAT_USER.ROOM_NO IS '채팅방 번호';
+COMMENT ON COLUMN TB_CHAT_USER.USER_NO IS ' 踰';
+COMMENT ON COLUMN TB_CHAT_USER.ROOM_NO IS '梨諛 踰';
 
 INSERT INTO TB_CHAT_USER VALUES(1,2);
 INSERT INTO TB_CHAT_USER VALUES(2,1);
 INSERT INTO TB_CHAT_USER VALUES(3,3);
 
 
----------------------- 채팅 -------------------------
+---------------------- 梨 -------------------------
 CREATE TABLE TB_CHATTING(
    CHATTING_NO NUMBER PRIMARY KEY,
    ROOM_NO NUMBER NOT NULL REFERENCES TB_CHAT_ROOM,
@@ -216,21 +218,21 @@ CREATE TABLE TB_CHATTING(
    CREATE_DATE DATE DEFAULT SYSDATE NOT NULL
 );
 
-COMMENT ON COLUMN TB_CHATTING.CHATTING_NO IS '채팅 번호';
-COMMENT ON COLUMN TB_CHATTING.ROOM_NO IS '채팅방 번호';
-COMMENT ON COLUMN TB_CHATTING.CHATTING_CONTENT IS '메세지 내용';
-COMMENT ON COLUMN TB_CHATTING.ORIGIN_NAME IS '원본 파일명';
-COMMENT ON COLUMN TB_CHATTING.CHANGE_NAME IS '바뀐 파일명';
-COMMENT ON COLUMN TB_CHATTING.CHAT_WRITER IS '작성자';
-COMMENT ON COLUMN TB_CHATTING.CREATE_DATE IS '작성일자';
+COMMENT ON COLUMN TB_CHATTING.CHATTING_NO IS '梨 踰';
+COMMENT ON COLUMN TB_CHATTING.ROOM_NO IS '梨諛 踰';
+COMMENT ON COLUMN TB_CHATTING.CHATTING_CONTENT IS '硫몄 댁';
+COMMENT ON COLUMN TB_CHATTING.ORIGIN_NAME IS '蹂 쇰';
+COMMENT ON COLUMN TB_CHATTING.CHANGE_NAME IS '諛 쇰';
+COMMENT ON COLUMN TB_CHATTING.CHAT_WRITER IS '깆';
+COMMENT ON COLUMN TB_CHATTING.CREATE_DATE IS '깆쇱';
 
 
-INSERT INTO TB_CHATTING VALUES(1,1,'ㅎㅇㅎㅇ',NULL,NULL,'연준',SYSDATE);
-INSERT INTO TB_CHATTING VALUES(2,1,'ㅋㅋㅋㅋ',NULL,NULL,'혜민',SYSDATE);
-INSERT INTO TB_CHATTING VALUES(3,2,'철현의 코딩일지..',NULL,NULL,'철현',SYSDATE);
+INSERT INTO TB_CHATTING VALUES(1,1,'',NULL,NULL,'곗',SYSDATE);
+INSERT INTO TB_CHATTING VALUES(2,1,'',NULL,NULL,'誘',SYSDATE);
+INSERT INTO TB_CHATTING VALUES(3,2,'泥 肄⑹쇱..',NULL,NULL,'泥',SYSDATE);
 
 --------------------------------------------------
---------------     ISSUE 관련 	------------------	
+--------------     ISSUE 愿� 	------------------	
 --------------------------------------------------
 
 CREATE TABLE TB_ISSUE (
@@ -251,21 +253,21 @@ CREATE TABLE TB_ISSUE (
 
 
 
-COMMENT ON COLUMN TB_ISSUE.ISSUE_NO IS '이슈번호(깃에서받아옴)';
-COMMENT ON COLUMN TB_ISSUE.LABEL IS '이슈 라벨';
-COMMENT ON COLUMN TB_ISSUE.CREATE_DATE IS '이슈 생성일';
-COMMENT ON COLUMN TB_ISSUE.MODIFY_DATE IS '이슈 수정일';
-COMMENT ON COLUMN TB_ISSUE.CLOSE_DATE IS '이슈 종료일';
-COMMENT ON COLUMN TB_ISSUE.STATUS IS '이슈 상태값';
-COMMENT ON COLUMN TB_ISSUE.REPOSITORY_ID IS '이슈가 속한 레파지토리';
-COMMENT ON COLUMN TB_ISSUE.MILESTONE_ID IS '이슈가 속한 마일스톤';
-COMMENT ON COLUMN TB_ISSUE.ISSUE_TITLE IS '이슈 제목';
-COMMENT ON COLUMN TB_ISSUE.ISSUE_CONTENT IS '이슈 내용';
-COMMENT ON COLUMN TB_ISSUE.ISSUE_AUTHOR IS '이슈 작성자';
-COMMENT ON COLUMN TB_ISSUE.ISSUE_ASSIGNEE IS '이슈 할당 받은 사람';
-COMMENT ON COLUMN TB_ISSUE.PRIORITY IS '이슈 우선순위';
+COMMENT ON COLUMN TB_ISSUE.ISSUE_NO IS '댁踰(源諛)';
+COMMENT ON COLUMN TB_ISSUE.LABEL IS '댁 쇰꺼';
+COMMENT ON COLUMN TB_ISSUE.CREATE_DATE IS '댁 깆';
+COMMENT ON COLUMN TB_ISSUE.MODIFY_DATE IS '댁 �';
+COMMENT ON COLUMN TB_ISSUE.CLOSE_DATE IS '댁 醫猷';
+COMMENT ON COLUMN TB_ISSUE.STATUS IS '댁 媛';
+COMMENT ON COLUMN TB_ISSUE.REPOSITORY_ID IS '댁媛  �吏由';
+COMMENT ON COLUMN TB_ISSUE.MILESTONE_ID IS '댁媛  留쇱ㅽ';
+COMMENT ON COLUMN TB_ISSUE.ISSUE_TITLE IS '댁 �紐';
+COMMENT ON COLUMN TB_ISSUE.ISSUE_CONTENT IS '댁 댁';
+COMMENT ON COLUMN TB_ISSUE.ISSUE_AUTHOR IS '댁 깆';
+COMMENT ON COLUMN TB_ISSUE.ISSUE_ASSIGNEE IS '댁  諛 щ';
+COMMENT ON COLUMN TB_ISSUE.PRIORITY IS '댁 곗';
 
--- 시퀀스
+-- 
 CREATE SEQUENCE SEQ_ISSUE_NO NOCACHE;
 
 
@@ -280,7 +282,7 @@ ADD CONSTRAINT FK_ISU_AUTHOR FOREIGN KEY(ISSUE_AUTHOR) REFERENCES TB_MEMBER (USE
 
 
 
--- 모든값 넣기 - 디폴트
+-- 紐⑤媛 ｊ린 - 댄
 INSERT 
 	INTO 	TB_ISSUE
 			(
@@ -307,12 +309,12 @@ INSERT
 				, SYSDATE
 				, SYSDATE
 				, DEFAULT
-				, '레파지토리 ID 123'
-				, '마일스톤ID 123'
-				, '버그 수정 요망'
-				, '어쩌구저쩌구 수정해주세요. 빨리요 프로젝트 진행 불가'
+				, '�吏由 ID 123'
+				, '留쇱ㅽID 123'
+				, '踰洹 � 留'
+				, '댁援ъ姨援 �댁＜몄. 鍮⑤━ 濡� 吏 遺媛'
 				, 1
-				, '팀원전체' -- 팀원전체일때는 우째 할지
+				, '�泥' -- �泥댁쇰 곗㎏ 吏
 				, 1
 			)
 	;
@@ -322,7 +324,7 @@ INSERT
 
 		
 
--- NULL 빼고 넣기
+-- NULL 鍮쇨� ｊ린
 INSERT 
 	INTO 	TB_ISSUE
 			(
@@ -341,17 +343,17 @@ INSERT
 				 SEQ_ISSUE_NO.NEXTVAL
 				, DEFAULT
 				, DEFAULT
-				, '레파지토리 ID 456'
-				, '알람 기능 구현'
-				, '하하하K 잘 해야내야지 암요'
-				, 1 -- 회원 만든 아이디 넣어야해염
+				, '�吏由 ID 456'
+				, ' 湲곕 援ы'
+				, 'K  댁쇰댁쇱 '
+				, 1 --  留 대 ｌ댁쇳댁
                 , 1
 
 			)
 	;
 
 	
--- 모든값 넣기 - 수정버전
+-- 紐⑤媛 ｊ린 - �踰�
 INSERT 
 	INTO 	TB_ISSUE
 			(
@@ -378,12 +380,12 @@ INSERT
 				, '20230110'
 				, '20230210'
 				, 'N'
-				, '레파지토리 ID 78910'
-				, '마일스톤ID 456'
-				, '이슈 어려웡 힝'
-				, '힝힝 흉흉 랩을한다 홍홍홍'
+				, '�吏由 ID 78910'
+				, '留쇱ㅽID 456'
+				, '댁 대ㅼ '
+				, '  ⑹ '
 				, 3
-				, 'user02' -- 팀원전체일때는 우째 할지
+				, 'user02' -- �泥댁쇰 곗㎏ 吏
 				, 2
 			)
 	;
@@ -391,7 +393,7 @@ INSERT
 	
 	
 --------------------------------------------------
--------------    ISSUE_REPLY 관련 	--------------
+-------------    ISSUE_REPLY 愿� 	--------------
 --------------------------------------------------
 
 CREATE TABLE TB_ISU_REPLY (
@@ -403,14 +405,14 @@ CREATE TABLE TB_ISU_REPLY (
 	REF_ISSUE_NO	NUMBER	NOT NULL
 );
 
-COMMENT ON COLUMN TB_ISU_REPLY.REPLY_NO IS '댓글 번호';
-COMMENT ON COLUMN TB_ISU_REPLY.REPLY_CONTENT IS '댓글 내용';
-COMMENT ON COLUMN TB_ISU_REPLY.REPLY_WRITER IS '댓글 작성자';
-COMMENT ON COLUMN TB_ISU_REPLY.CREATE_DATE IS '댓글 작성일';
-COMMENT ON COLUMN TB_ISU_REPLY.STATUS IS '댓글 상태값';
-COMMENT ON COLUMN TB_ISU_REPLY.REF_ISSUE_NO IS '참조 이슈 번호';
+COMMENT ON COLUMN TB_ISU_REPLY.REPLY_NO IS '湲 踰';
+COMMENT ON COLUMN TB_ISU_REPLY.REPLY_CONTENT IS '湲 댁';
+COMMENT ON COLUMN TB_ISU_REPLY.REPLY_WRITER IS '湲 깆';
+COMMENT ON COLUMN TB_ISU_REPLY.CREATE_DATE IS '湲 깆';
+COMMENT ON COLUMN TB_ISU_REPLY.STATUS IS '湲 媛';
+COMMENT ON COLUMN TB_ISU_REPLY.REF_ISSUE_NO IS '李몄“ 댁 踰';
 
---시퀀스
+--
 CREATE SEQUENCE SEQ_ISU_REPLY_NO NOCACHE;
 
 
@@ -427,7 +429,7 @@ ALTER TABLE TB_ISU_REPLY
 ADD CONSTRAINT FK_REPLY_WRITER FOREIGN KEY(REPLY_WRITER) REFERENCES TB_MEMBER (USER_NO);
 
 
--- 모든값 넣기
+-- 紐⑤媛 ｊ린
 
 INSERT 
 	INTO 	TB_ISU_REPLY
@@ -443,7 +445,7 @@ INSERT
 			(
 				
 				SEQ_ISU_REPLY_NO.NEXTVAL
-				, '이거 하기싫어용 담당 바꿔주세용'
+				, '닿굅 湲곗レ댁 대 諛轅二쇱몄'
 				, 1
 				, DEFAULT
 				, DEFAULT
@@ -452,7 +454,7 @@ INSERT
 	;
 
 
--- NULL 제외 값 넣기
+-- NULL � 媛 ｊ린
 
 
 INSERT 
@@ -468,7 +470,7 @@ INSERT
 			(
 				
 				SEQ_ISU_REPLY_NO.NEXTVAL
-				, '이게 맞나 싶어용~'
+				, '닿 留 띠댁~'
 				, 2
 				, '20230314'
 				, 2
@@ -476,7 +478,7 @@ INSERT
 	;
 	
 	
--- 모든값 넣기 - 수정버전
+-- 紐⑤媛 ｊ린 - �踰�
 
 INSERT 
 	INTO 	TB_ISU_REPLY
@@ -492,7 +494,7 @@ INSERT
 			(
 				
 				SEQ_ISU_REPLY_NO.NEXTVAL
-				, '맞아염?? 이게???'
+				, '留?? 닿???'
 				, 1
 				, SYSDATE
 				, 'N'
@@ -500,7 +502,7 @@ INSERT
 			)
 	;
 	
--- 모든값 넣기 - 수정버전2
+-- 紐⑤媛 ｊ린 - �踰�2
 
 INSERT 
 	INTO 	TB_ISU_REPLY
@@ -516,7 +518,7 @@ INSERT
 			(
 				
 				SEQ_ISU_REPLY_NO.NEXTVAL
-				, '두번째댓글 테스트중입니'
+				, '踰吏몃湲 ㅽ몄'
 				, 1
 				, SYSDATE
 				, DEFAULT
@@ -528,7 +530,7 @@ INSERT
 
 
 --------------------------------------------------
--------------    실시간 알림 서비스 관련 	--------------
+-------------    ㅼ媛 由 鍮 愿� 	--------------
 --------------------------------------------------	
 
 
@@ -541,20 +543,20 @@ CREATE TABLE TB_NOTIFICATIONS (
 	STATUS char(1)	DEFAULT 'Y'	CHECK (STATUS IN ('Y','N')) 
 );
 
--- 실시간 알림 종 눌렀다가 떼면 다 N처리? 아님 직접 X 누른건만 N 처리??
+-- ㅼ媛 由 醫 �ㅺ 쇰㈃  N泥由?  吏� X 瑜멸굔留 N 泥由??
 
-COMMENT ON COLUMN TB_NOTIFICATIONS.user_no IS '회원 번호';
-COMMENT ON COLUMN TB_NOTIFICATIONS.category_no IS '카테고리 번호 (이슈,친구,뉴스,개인홍보,프로젝트,마일스톤)';
-COMMENT ON COLUMN TB_NOTIFICATIONS.noti_content IS '실시간 알림 내용';
-COMMENT ON COLUMN TB_NOTIFICATIONS.ocu_time IS '실시간 알림 발생 시간';
-COMMENT ON COLUMN TB_NOTIFICATIONS.post_no IS '이슈 번호';
-COMMENT ON COLUMN TB_NOTIFICATIONS.STATUS IS '실시간 알림 상태값';
+COMMENT ON COLUMN TB_NOTIFICATIONS.user_no IS ' 踰';
+COMMENT ON COLUMN TB_NOTIFICATIONS.category_no IS '移댄怨由 踰 (댁,移援,댁,媛명蹂,濡�,留쇱ㅽ)';
+COMMENT ON COLUMN TB_NOTIFICATIONS.noti_content IS 'ㅼ媛 由 댁';
+COMMENT ON COLUMN TB_NOTIFICATIONS.ocu_time IS 'ㅼ媛 由 諛 媛';
+COMMENT ON COLUMN TB_NOTIFICATIONS.post_no IS '댁 踰';
+COMMENT ON COLUMN TB_NOTIFICATIONS.STATUS IS 'ㅼ媛 由 媛';
 
 ALTER TABLE TB_NOTIFICATIONS
   ADD CONSTRAINT PK_USER_NO PRIMARY KEY (user_no);
   
   
- -- 모든값넣기 
+ -- 紐⑤媛ｊ린 
  INSERT 
 	INTO 	TB_NOTIFICATIONS
 			(
@@ -570,9 +572,9 @@ ALTER TABLE TB_NOTIFICATIONS
 				
 				1
 				, 2
-				, 'XXX님이 친구 신청을 했습니다'
+				, 'XXX 移援 泥� 듬'
 				, SYSDATE
-				, 2 -- 그 회원의 카테고리에 해당되는 이슈를 어떻게 가져오지? 컬럼에 넣는게 맞나?
+				, 2 -- 洹  移댄怨由ъ 대밸 댁瑜 대산 媛�몄ㅼ? 而щ쇱 ｋ寃 留?
 				, DEFAULT
 			)
 	;
@@ -593,7 +595,7 @@ ALTER TABLE TB_NOTIFICATIONS
 				
 				2
 				, 1
-				, 'XXX님이 회원님을 @@@ 프로젝트 이슈에 등록했습니다'
+				, 'XXX  @@@ 濡� 댁 깅듬'
 				, '20230401'
 				, 1
 				, 'Y'
@@ -615,7 +617,7 @@ ALTER TABLE TB_NOTIFICATIONS
 				
 				3
 				, 5
-				, '### 프로젝트에 참가되었습니다.'
+				, '### 濡�몄 李멸듬.'
 				, '20230403'
 				, 1
 				, 'N'
@@ -631,7 +633,7 @@ NOCACHE;
 CREATE SEQUENCE SEQ_QUESTION
 NOCACHE;
 
-------------- 질문-----------------
+------------- 吏臾-----------------
 CREATE TABLE TB_QUESTION (
 	question_no number primary key,
 	inquiry_no number NOT NULL,
@@ -642,17 +644,17 @@ CREATE TABLE TB_QUESTION (
 
 
 
-COMMENT ON COLUMN TB_QUESTION.question_no IS '질문 번호';
-COMMENT ON COLUMN TB_QUESTION.inquiry_no IS '문의 번호';
-COMMENT ON COLUMN TB_QUESTION.question_content IS '질문 내용';
-COMMENT ON COLUMN TB_QUESTION.question_date IS '질문 날짜';
-COMMENT ON COLUMN TB_QUESTION.user_no IS '문의한 회원 번호';
+COMMENT ON COLUMN TB_QUESTION.question_no IS '吏臾 踰';
+COMMENT ON COLUMN TB_QUESTION.inquiry_no IS '臾몄 踰';
+COMMENT ON COLUMN TB_QUESTION.question_content IS '吏臾 댁';
+COMMENT ON COLUMN TB_QUESTION.question_date IS '吏臾 吏';
+COMMENT ON COLUMN TB_QUESTION.user_no IS '臾몄  踰';
 
-INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.nextval, '님아 대답해', SYSDATE, 1);
-INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.currval, '봇주제에 개구림 ㅋ', SYSDATE, 1);
-INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.nextval, '탈퇴 어케하나요', SYSDATE, 2);
+INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.nextval, ' 듯', SYSDATE, 1);
+INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.currval, '遊二쇱 媛援щ┝ ', SYSDATE, 1);
+INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.nextval, ' 댁', SYSDATE, 2);
 
-------------------- 친구 ------------------------------
+------------------- 移援 ------------------------------
 
 CREATE TABLE TB_FRIEND (
 	user_no number references TB_MEMBER on delete cascade,
@@ -661,9 +663,9 @@ CREATE TABLE TB_FRIEND (
     primary key(user_no, user_add_no)
 );
 
-COMMENT ON COLUMN TB_FRIEND.user_no IS '친추 보낸이 번호';
-COMMENT ON COLUMN TB_FRIEND.user_add_no IS '친추 받은이 번호';
-COMMENT ON COLUMN TB_FRIEND.user_blocked IS '차단  여부("Y", "N")';
+COMMENT ON COLUMN TB_FRIEND.user_no IS '移異 蹂대몄 踰';
+COMMENT ON COLUMN TB_FRIEND.user_add_no IS '移異 諛 踰';
+COMMENT ON COLUMN TB_FRIEND.user_blocked IS '李⑤  щ("Y", "N")';
 
 INSERT INTO TB_FRIEND VALUES(1, 2, DEFAULT);
 INSERT INTO TB_FRIEND VALUES(1, 3, DEFAULT);
@@ -737,35 +739,35 @@ CREATE TABLE "PJT_PR_BOARD" (
    "PJT_PR_FIELD"   VARCHAR2(100)     NULL
 );
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_NO" IS '프젝홍보 게시글 번호';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_NO" IS '�蹂 寃湲 踰';
 
 COMMENT ON COLUMN "PJT_PR_BOARD"."user_no" IS 'seq';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_TITLE" IS '게시글 제목';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_TITLE" IS '寃湲 �紐';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_START" IS '프로젝트 시작일';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_START" IS '濡� ';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_PERIOD" IS '예상 기간';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_PERIOD" IS ' 湲곌';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_DEADLINE" IS '인원모집 마감일';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_DEADLINE" IS '몄紐⑥ 留媛';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_STACK" IS '사용 기술 스택';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_STACK" IS 'ъ 湲곗 ㅽ';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_FACE" IS '진행방식';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_FACE" IS '吏諛⑹';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CONTACT" IS '연락방법';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CONTACT" IS '곕쎈갑踰';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CAPACITY" IS '프로젝트 정원';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CAPACITY" IS '濡� �';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CONTENT" IS '프로젝트 소개글';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CONTENT" IS '濡� 媛湲';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_RECRUITS" IS '모집인원';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_RECRUITS" IS '紐⑥몄';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CREATEDATE" IS '게시글 등록일';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CREATEDATE" IS '寃湲 깅';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."user_id" IS '작성자 ID';
+COMMENT ON COLUMN "PJT_PR_BOARD"."user_id" IS '깆 ID';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_FIELD" IS '모집분야';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_FIELD" IS '紐⑥遺';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "SAVED_PJT_PR" (
@@ -776,9 +778,9 @@ CREATE TABLE "SAVED_PJT_PR" (
 
 COMMENT ON COLUMN "SAVED_PJT_PR"."user_no" IS 'seq';
 
-COMMENT ON COLUMN "SAVED_PJT_PR"."PJT_PR_SAVED_DATE" IS '찜한 날짜';
+COMMENT ON COLUMN "SAVED_PJT_PR"."PJT_PR_SAVED_DATE" IS '李 吏';
 
-COMMENT ON COLUMN "SAVED_PJT_PR"."PJT_PR_NO" IS '홍보 게시글 번호';
+COMMENT ON COLUMN "SAVED_PJT_PR"."PJT_PR_NO" IS '蹂 寃湲 踰';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "PSN_PR_BOARD" (
@@ -793,19 +795,19 @@ CREATE TABLE "PSN_PR_BOARD" (
 );
 
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_NO" IS '개인홍보 게시글 번호';
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_NO" IS '媛명蹂 寃湲 踰';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_STACK" IS '기술스택';
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_STACK" IS '湲곗ㅽ';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_CONTENT" IS '자기소개글';
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_CONTENT" IS '湲곗媛湲';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_AVLPRD" IS '프로젝트 참여 가능기간';
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_AVLPRD" IS '濡� 李몄 媛κ린媛';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_TITLE" IS '게시글 제목';
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_TITLE" IS '寃湲 �紐';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_CONTACT" IS '연락방법';
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_CONTACT" IS '곕쎈갑踰';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."user_id" IS '작성자 ID';
+COMMENT ON COLUMN "PSN_PR_BOARD"."user_id" IS '깆 ID';
 
 COMMENT ON COLUMN "PSN_PR_BOARD"."user_no" IS 'seq';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -818,7 +820,7 @@ CREATE TABLE "SAVED_PSN_PR" (
 
 COMMENT ON COLUMN "SAVED_PSN_PR"."user_no" IS 'seq';
 
-COMMENT ON COLUMN "SAVED_PSN_PR"."PSN_PR_SAVED_DATE" IS '찜한 날짜';
+COMMENT ON COLUMN "SAVED_PSN_PR"."PSN_PR_SAVED_DATE" IS '李 吏';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "PJT_PR_REPLY" (
@@ -830,15 +832,15 @@ CREATE TABLE "PJT_PR_REPLY" (
    "user_id"   number      NOT NULL
 );
 
-COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_NO2" IS '프젝홍보 게시글 번호';
+COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_NO2" IS '�蹂 寃湲 踰';
 
-COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_REPLY_DATE" IS '댓글작성일';
+COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_REPLY_DATE" IS '湲깆';
 
-COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_REPLY_CONTENT" IS '댓글내용';
+COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_REPLY_CONTENT" IS '湲댁';
 
-COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_NO" IS '참조게시글번호';
+COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_NO" IS '李몄“寃湲踰';
 
-COMMENT ON COLUMN "PJT_PR_REPLY"."user_id" IS '댓글작성자 ID';
+COMMENT ON COLUMN "PJT_PR_REPLY"."user_id" IS '湲깆 ID';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "PSN_PR_REPLY" (
@@ -850,17 +852,17 @@ CREATE TABLE "PSN_PR_REPLY" (
    "user_id"   number      NOT NULL
 );
 
-COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_NO" IS '댓글번호';
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_NO" IS '湲踰';
 
-COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_NO2" IS '개인홍보 게시글 번호';
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_NO2" IS '媛명蹂 寃湲 踰';
 
-COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_DATE" IS '댓글작성일';
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_DATE" IS '湲깆';
 
-COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_CONTENT" IS '댓글내용';
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_CONTENT" IS '湲댁';
 
-COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_NO" IS '참조게시글번호';
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_NO" IS '李몄“寃湲踰';
 
-COMMENT ON COLUMN "PSN_PR_REPLY"."user_id" IS '댓글작성자ID';
+COMMENT ON COLUMN "PSN_PR_REPLY"."user_id" IS '湲깆ID';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "PROJECT" (
@@ -871,15 +873,15 @@ CREATE TABLE "PROJECT" (
    "PJT_CREATOR"   varchar2(100)      NOT NULL
 );
 
-COMMENT ON COLUMN "PROJECT"."PJT_NO" IS '프로젝트 번호';
+COMMENT ON COLUMN "PROJECT"."PJT_NO" IS '濡� 踰';
 
-COMMENT ON COLUMN "PROJECT"."PJT_TITLE" IS '프로젝트 이름';
+COMMENT ON COLUMN "PROJECT"."PJT_TITLE" IS '濡� 대';
 
-COMMENT ON COLUMN "PROJECT"."PJT_DATE" IS '프로젝트 생성일';
+COMMENT ON COLUMN "PROJECT"."PJT_DATE" IS '濡� 깆';
 
-COMMENT ON COLUMN "PROJECT"."PJT_ CONTENT" IS '프로젝트 설명';
+COMMENT ON COLUMN "PROJECT"."PJT_ CONTENT" IS '濡� ㅻ';
 
-COMMENT ON COLUMN "PROJECT"."PJT_CREATOR" IS '프로젝트 생성자';
+COMMENT ON COLUMN "PROJECT"."PJT_CREATOR" IS '濡� 깆';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "MILESTONE" (
@@ -894,35 +896,35 @@ CREATE TABLE "MILESTONE" (
 );
 
 
-COMMENT ON COLUMN "MILESTONE"."milest_no" IS '마일스톤 번호';
+COMMENT ON COLUMN "MILESTONE"."milest_no" IS '留쇱ㅽ 踰';
 
 COMMENT ON COLUMN "MILESTONE"."user_no" IS 'seq';
 
-COMMENT ON COLUMN "MILESTONE"."PJT_NO" IS '프로젝트 번호';
+COMMENT ON COLUMN "MILESTONE"."PJT_NO" IS '濡� 踰';
 
-COMMENT ON COLUMN "MILESTONE"."milest_title" IS '마일스톤 제목';
+COMMENT ON COLUMN "MILESTONE"."milest_title" IS '留쇱ㅽ �紐';
 
-COMMENT ON COLUMN "MILESTONE"."milest_createdate" IS '마일스톤 작성일자';
+COMMENT ON COLUMN "MILESTONE"."milest_createdate" IS '留쇱ㅽ 깆쇱';
 
-COMMENT ON COLUMN "MILESTONE"."milest_start" IS '마일스톤시작일자';
+COMMENT ON COLUMN "MILESTONE"."milest_start" IS '留쇱ㅽㅼ쇱';
 
-COMMENT ON COLUMN "MILESTONE"."milest_end" IS '마일스톤 종료일자';
+COMMENT ON COLUMN "MILESTONE"."milest_end" IS '留쇱ㅽ 醫猷쇱';
 
-COMMENT ON COLUMN "MILESTONE"."milest_status" IS '마일스톤 상태';
+COMMENT ON COLUMN "MILESTONE"."milest_status" IS '留쇱ㅽ ';
 
-INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 1,  '쇼핑몰 프로젝트 팀원구해요', '4월말', '3달정도', '5월초', 'ORACLE,JAVA', 'FULL비대면', '댓글달아주세요', '10명내외', '저희는 쇼핑몰을 개발하고자 합니다', '3명', SYSDATE, 'user01', '백엔드');
+INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 1,  '쇳紐 濡� 援ы댁', '4留', '3ъ', '5珥', 'ORACLE,JAVA', 'FULL鍮硫', '湲ъ二쇱몄', '10紐댁', '�щ 쇳紐곗 媛諛怨 ⑸', '3紐', SYSDATE, 'user01', '諛깆');
 
-INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 2,  '게임커뮤니티 프로젝트 팀원구해요', '4월15일', '6개월', '4월말', 'PYHTON,JAVASCRIPT', '대면', '카톡오픈채팅방', '5명정도', '저희는 게임커뮤니티를 개발하고자 합니다', '4명', SYSDATE, 'user02', '프론트엔드,백엔드');
+INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 2,  '寃而ㅻ� 濡� 援ы댁', '415', '6媛', '4留', 'PYHTON,JAVASCRIPT', '硫', '移댄≪ㅽ梨諛', '5紐�', '�щ 寃而ㅻ�곕� 媛諛怨 ⑸', '4紐', SYSDATE, 'user02', '濡몄,諛깆');
 
-INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 3,  '사이드 프로젝트 팀원구해요', '5월중순', '3개월', '5월초', 'JAVA,SPRING', 'FULL비대면', '010-1234-5678', '10명', '저희는 친목커뮤니티를 개발하고자 합니다', '5명', SYSDATE, 'user03', '백엔드');
+INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 3,  'ъ대 濡� 援ы댁', '5以', '3媛', '5珥', 'JAVA,SPRING', 'FULL鍮硫', '010-1234-5678', '10紐', '�щ 移紐⑹빱裕ㅻ곕� 媛諛怨 ⑸', '5紐', SYSDATE, 'user03', '諛깆');
 
 INSERT INTO SAVED_PJT_PR VALUES (1, SYSDATE, 1);
 INSERT INTO SAVED_PJT_PR VALUES (2, SYSDATE,2);
 INSERT INTO SAVED_PJT_PR VALUES (3, SYSDATE,3);
 
-INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'AJAX,HTML,CSS,REACT', '자신있습니다', '4월중순~10월말', '프론트엔드 개발자입니다', '채팅', 'user01', 1 );
-INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'ORACLE,JAVA,SPRING', '백엔드 프로젝트 참여경력 많습니다.','4월초 이후', '백엔드 개발자입니다', '010-1234-5678', 'user02', 2 );
-INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'FLUTTER,JAVA,CSS,FIGMA', '자신있습니다', '4월말~', '풀스택 개발자입니다', '채팅', 'user02', 3 );
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'AJAX,HTML,CSS,REACT', '듬', '4以~10留', '濡몄 媛諛', '梨', 'user01', 1 );
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'ORACLE,JAVA,SPRING', '諛깆 濡� 李몄ш꼍� 留듬.','4珥 댄', '諛깆 媛諛', '010-1234-5678', 'user02', 2 );
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'FLUTTER,JAVA,CSS,FIGMA', '듬', '4留~', 'ㅽ 媛諛', '梨', 'user02', 3 );
 
 INSERT INTO SAVED_PSN_PR VALUES(1, 1, SYSDATE );
 
@@ -930,20 +932,20 @@ INSERT INTO SAVED_PSN_PR VALUES(2, 2, SYSDATE );
 
 INSERT INTO SAVED_PSN_PR VALUES(3, 3, SYSDATE );
 
-INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 1, SYSDATE, '저 관심있습니다', 1, 1 );
-INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 2, SYSDATE, '010-1234-5677 연락주세요', 2, 2 );
-INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 3, SYSDATE, '재밌어보여요!', 3, 3 );
+INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 1, SYSDATE, '� 愿ъ듬', 1, 1 );
+INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 2, SYSDATE, '010-1234-5677 곕쎌＜몄', 2, 2 );
+INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 3, SYSDATE, 'щ대낫ъ!', 3, 3 );
 
-INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 1, SYSDATE, '프로젝트 구하셨어요?', 1, 1 );
-INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 2, SYSDATE, '프론트도 가능하세요?', 2, 2 );
-INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 3, SYSDATE, '4월20일부터 가능하세요?', 3, 3 );
+INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 1, SYSDATE, '濡� 援ы⑥댁?', 1, 1 );
+INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 2, SYSDATE, '濡몃 媛ν몄?', 2, 2 );
+INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 3, SYSDATE, '420쇰 媛ν몄?', 3, 3 );
 
-INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'OVCOS', SYSDATE, '달리기!', 'USER01' );
-INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'FLUERYOUNG', SYSDATE, '꽃팔기!', 'USER02' );
-INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'MEAL', SYSDATE, '밥먹기!', 'USER03' );
+INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'OVCOS', SYSDATE, 'щ━湲!', 'USER01' );
+INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'FLUERYOUNG', SYSDATE, '苑湲!', 'USER02' );
+INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'MEAL', SYSDATE, '諛λ㉨湲!', 'USER03' );
 
-INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 1, 1, '달리기프젝 진척도', SYSDATE, SYSDATE, '2023-07-15', 'OPEN');
+INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 1, 1, 'щ━湲고� 吏泥', SYSDATE, SYSDATE, '2023-07-15', 'OPEN');
 INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 2, 2, 'FLUERYOUNG', SYSDATE, SYSDATE, '2023-09-17', 'OPEN');
-INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 3, 3, '식사프로젝트', SYSDATE, SYSDATE, '2023-04-01', 'CLOSED');
+INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 3, 3, 'ы濡�', SYSDATE, SYSDATE, '2023-04-01', 'CLOSED');
 
 COMMIT;
