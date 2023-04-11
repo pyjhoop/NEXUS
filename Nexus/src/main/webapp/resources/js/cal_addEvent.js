@@ -90,9 +90,12 @@ var newEvent = function (start, end, eventType) {
                 allDay:eventData.allDay
             },
             success: function (response) {
-                //DB연동시 중복이벤트 방지를 위한
-                $('#calendar').fullCalendar('removeEvents');
-                $('#calendar').fullCalendar('refetchEvents');
+                if(response > 0){
+
+                    $('#calendar').fullCalendar('removeEvents');
+                    $('#calendar').fullCalendar('refetchEvents');
+            
+                }
             }
         });
     });
