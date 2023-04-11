@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="calendarMapper">
+ 
+	 <resultMap type="Calendar" id="calendarResultSet">
+		 <result column="calendar_no" property="_id"/>
+		 <result column="user_no" property="userNo"/>
+		 <result column="schedule_title" property="title"/>
+		 <result column="start_date" property="start"/>
+		 <result column="end_date" property="end"/>
+		 <result column="date_color" property="backgroundColor"/>
+		 <result column="schedule_content" property="description"/>
+		 <result column="category" property="type"/>
+		 <result column="text_color" property="textColor"/>
+		 <result column="all_day" property="allDay"/>
+	 </resultMap>
+ 
+ 	<select id="selectCalendar" resultMap="calendarResultSet">
+ 		select *
+ 			from tb_calendar
+ 		where user_no = #{userNo}
+ 		  and status = 'Y'
+ 	</select>
+ 
+ 	<insert id="insertCalendar">
+ 		insert  
+ 			into tb_calendar
+ 			(
+			  calendar_no 			
+ 			, user_no
+ 			, schedule_title
+ 			, start_date
+ 			, end_date
+ 			, date_color
+ 			, schedule_content
+ 			, category
+ 			, text_color
+ 			, all_day  
+ 			)
+ 			values
+ 			(
+ 			  seq_calendar.nextval
+ 			, #{userNo}
+ 			, #{title}
+ 			, #{start}
+ 			, #{end}
+ 			, #{backgroundColor}
+ 			, #{description}
+ 			, #{type}
+ 			, #{textColor}
+ 			, #{allDay} 			 
+ 			)
+ 	</insert>
+ 
+ 	<update id="dropSchedule">
+ 		update
+ 			  tb_calendar
+ 		set start_date = #{start}
+ 		  , end_date = #{end}
+ 		  where calendar_no = #{_id}
+ 	</update>
+ 	
+ 	<update id="updateCalendar">
+ 		update
+ 			  tb_calendar
+ 	    set schedule_title = #{title}
+ 	      , start_date = #{start}
+ 	      , end_date = #{end}
+ 	      , date_color = #{backgroundColor}
+ 	      , schedule_content = #{description}
+ 	      , category = #{type}
+ 	      , all_day = #{allDay}
+ 	      where calendar_no = #{_id}
+ 	</update>
+ 
+ 	<update id="deleteCalendar">
+ 		update
+ 			 tb_calendar
+ 		set status = 'N'
+ 		  where calendar_no = #{_id}	 
+ 	</update>
+ </mapper>
