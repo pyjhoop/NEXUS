@@ -18,4 +18,10 @@ public class IssueController {
 		return "issue/issueList";
 	}
 	
+	
+	@RequestMapping("issueEnroll.mini")
+	public String issueEnrollForm() {
+		return "issue/issueEnrollView";
+	}
+	
 }

@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
+<!-- jQuery 라이브러리 -->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Main Quill library -->
 <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
@@ -20,10 +22,11 @@
 <style>
 
 #body{
-	height: 1000px;
-	width: 78%;
+	height: 2000px;
+	width: 90%;
 	margin:auto;
-	border:1px solid black;
+	/* border:1px solid black; */
+	margin-top:20px;
 	margin-bottom:50px;
 }
 #body1{
@@ -39,11 +42,11 @@
 	border:1px solid black;
 }
 #body1Ment{
-	margin-top:15px;
+	margin-top:25px;
 	color:black;
 }
 input{
-	background-color:#f1eef5
+	width:300px;
 }
 #psnInfoInput li{
 	
@@ -56,6 +59,40 @@ input{
 	width:90%;
 	height:70%;
 }
+multi-input {
+  display: inline-block;
+  margin: 0 20px 20px 0;
+   
+}
+
+button {
+  background-color: #eee;
+  border: 1px solid #ddd;  
+  font-size: 16px;
+  height: 30px;
+  margin: 0 10px 20px 0;
+}
+#h4Letter{
+	float:left;
+}
+.col-md-4{
+	width:100%;
+}
+.col-md-6{
+	width:100%;
+}
+#stackInputCard{
+	width: 700px;
+}
+.form-control{
+	height: 60px;
+}
+.input-group{
+	margin-top:50px;
+}
+label{
+	font-size: 20px;
+}
 </style>
 </head>
 <body>
@@ -63,34 +100,77 @@ input{
 
 <div id="body">
 
-<div id="body1">
-	<div id="body1Ment">
-		<H4><b>개인 홍보 기본정보를 입력해주세요</b></H4>
-	</div>
-	<div id="psnInfoInput">
-		<ul>
-			<li>
-				이름<br><input type=text >
-			</li>
-			<li>
-				기술스택<br><input type=text>
-			</li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
-	</div>
-</div>
-
-<div id="body2">
-
-<div id="body2Ment">
-		<H4><b>프로젝트에 대해 소개해주세요</b></H4>
-	</div>
 	
-<body>
-    <div id="standalone-container">
+	<div class="col-md-6" style="width:100%; height:100%">
+                  <div class="card mb-4">
+                    <h4 class="card-header"><b>기본 정보 입력</b></h4>
+                    <div class="card-body demo-vertical-spacing demo-only-element">
+                    
+                    <label><b>제목</b></label>
+                      <div class="input-group">
+                       <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
+                        <input type="text" class="form-control" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon11">
+                      </div>
+                      
+                       <label ><b>프로젝트 참여 가능기간</b></label>
+                      <div class="input-group" style="margin-top: 90px;">
+                       <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
+                        <input  style="margin-top:0px;" type="text" class="form-control" placeholder="프로젝트 참여 가능기간을 입력해주세요 (ex-5월말부터 가능 or 6월중순부터 6개월간 가능 등)" aria-label="Username" aria-describedby="basic-addon11">
+                      </div>
+                      
+                      <label ><b>연락 수단</b></label>
+                      <div class="input-group">
+                       <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
+                        <input type="text" class="form-control" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11">
+                      </div>
+					
+                    
+                   <label ><b>기술 스택</b></label>    
+                   <div class="input-group">
+                       		<multi-input>
+			      <input id="stackInputCard" list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요.">
+			      <datalist id="speakers">
+			        <option value="AWS"></option>
+			        <option value="Django"></option>
+			        <option value="Docker"></option>
+			        <option value="Express"></option>
+			        <option value="Figma"></option>
+			        <option value="Firebase"></option>
+			        <option value="Flutter"></option>
+			        <option value="Git"></option>
+			        <option value="Go"></option>
+			        <option value="GraphQL"></option>
+			        <option value="Java"></option>
+			        <option value="JavaScript"></option>
+			        <option value="Kotlin"></option>
+			        <option value="Kubernetes"></option>
+			        <option value="MongoDB"></option>
+			        <option value="MySQL"></option>
+			        <option value="Nestjs"></option>
+			        <option value="Nextjs"></option>
+			        <option value="NodeJs"></option>
+			        <option value="php"></option>
+			        <option value="Python"></option>
+			        <option value="TypeScript"></option>
+			        <option value="React"></option>
+			        <option value="ReactNative"></option>
+			        <option value="Spring"></option>
+			        <option value="Svelte"></option>
+			        <option value="Swift"></option>
+			        <option value="Unity"></option>
+			        <option value="Vue"></option>
+			        <option value="Zeplin"></option>
+			        <option value="Zest"></option>
+			      </datalist>
+			    </multi-input>
+			    <button id="get">Get</button>
+                       		<p id="values"></p>
+                       </div>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div id="standalone-container">
       <div id="toolbar-container">
         <span class="ql-formats">
           <select class="ql-font"></select>
@@ -136,13 +216,18 @@ input{
       </div>
       <div id="editor-container"></div>
     </div>
+                
+                
+    <!-- body태그 --></div> 
+	 
     
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    
-    </body>
-</div>
+	
+
+
 
 	
+
 </div>
 
 <script>
@@ -156,6 +241,9 @@ var quill = new Quill('#editor-container', {
 	  theme: 'snow'
 	});
 </script>
+
+<script src="./././resources/js/multi-input.js"></script>
+  <script src="./././resources/js/script.js"></script>
 
 </body>
 </html>

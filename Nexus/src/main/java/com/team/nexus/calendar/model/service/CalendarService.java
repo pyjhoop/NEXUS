@@ -8,7 +8,7 @@ public interface CalendarService {
 	
 	ArrayList<Calendar> selectCalendar(int userNo);
 	
-	void insertCalendar(Calendar cal);
+	int insertCalendar(Calendar cal);
 	
 	void dropSchedule(Calendar cal);
 	

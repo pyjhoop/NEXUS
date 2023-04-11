@@ -40,9 +40,21 @@
 
 <style>
 
+.luda {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.luda a {
+  margin-left: auto;
+  margin-right: 5vw;
+}
+
 
 
 </style>
+
 
 
 
@@ -64,9 +76,24 @@
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Project /</span> NEXUS Project </h4>
 
+
+          
+                <br><br>
+
+
               <!-- Basic Bootstrap Table -->
               <div class="card">
-                <h5 class="card-header">NEXUS Project</h5>
+                <h5 class="card-header" style="padding-bottom: 0px;">NEXUS Project</h5>
+                
+                
+                
+            
+                  <div class="luda">
+                      
+                      <a class="btn btn-primary" href="issueEnroll.mini">이슈 등록</a>
+                 
+            	</div><br>
+            	
                 <div class="table-responsive text-nowrap">
                   <table class="table">
                     <thead>
