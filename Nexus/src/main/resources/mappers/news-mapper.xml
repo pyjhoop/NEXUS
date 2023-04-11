@@ -61,13 +61,13 @@
 		        news_no
 		      , user_name
 		      , comment_content
-		      , to_char(comment_date,'YYYY.MM.DD HH24:MI') "COMMENT_DATE"
+		      , to_char(comment_date,'YYYY.MM.DD HH24:MI:SS') "COMMENT_DATE"
 		      , profile
 		from tb_news_comments  nc
 		join tb_member on(user_no = comment_writer)
 		where nc.status = 'Y'
         and news_no = #{newsNo}
-        order by comment_date desc
+        order by comment_date asc
 	</select>
 	
 	<insert id="newsReplyInsert">
