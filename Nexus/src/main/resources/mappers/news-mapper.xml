@@ -86,5 +86,23 @@
 			)
 	</insert>
 	
+	<insert id="insertNews">
+		insert
+		  into tb_news
+		  (
+		     news_no
+		   , user_no
+		   , news_title
+		   , news_content
+		  )
+		  values
+		  (
+		     seq_news.nextval
+		   , #{userNo}
+		   , #{newsTitle}
+		   , #{newsContent}
+		  )
+	</insert>
+	
 	
 </mapper>

@@ -33,4 +33,8 @@ public class NewsDao {
 		return sqlsession.insert("newsMapper.newsReplyInsert", nr);
 	}
 
+	public int insertNews(SqlSessionTemplate sqlsession, News n) {
+		return sqlsession.insert("newsMapper.insertNews", n);
+	}
+
 }

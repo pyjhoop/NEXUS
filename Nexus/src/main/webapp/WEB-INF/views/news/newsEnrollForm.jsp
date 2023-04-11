@@ -2,39 +2,36 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css">
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/newsEnrollForm.js"></script>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/newsEnrollForm.css">
-
-
 </head>
 <body>
 
+    <jsp:include page="../common/template.jsp"/>
+    <div class="container-xxl flex-grow-1 container-p-y cpadding">
+        <form action="insertNews" method="post" id="newsEnrollForm">
+            <div class="card">
+                <input type="text" class="form-control" id="newsTitle" name="newsTitle" placeholder="Title"  autofocus>
+                <div id="editor"></div>
+                <input type="hidden" name="userNo" value="${loginUser.userNo}">
+                <input type="hidden" name="newsContent" id="newsContent">
+                <button type="submit" class="btn btn-primary sbtn" onclick="return test();">제출</button>
 
-    <form action="" method="get" id="newsEnrollForm">
-        <div id="editor"></div>
-    </form>
+            </div>
+        </form>
+    </div>
 
 
 
+    
 
-
-    <script>
-        var editor = new toastui.Editor({
-            el: document.querySelector('#editor'),
-            height: '500px',
-            initialEditType: 'markdown',
-            initialValue: '# Hello, World!',
-            codeBlock: false
-        });
-
-        editor.removeToolbarItem("Code",false);
-        var markdownValue = editor.getMarkdown();	
-        console.log(markdownValue); // Output: "# Hello, World!"
-    </script>
+   
 	
 </body>
 </html>

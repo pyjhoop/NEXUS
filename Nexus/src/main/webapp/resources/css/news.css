@@ -128,3 +128,25 @@
     margin-right: 11vw;
     margin-top: 30px;
   }
+
+  .contents>div{
+    width: 96%;
+    height: 96%;
+  }
+
+  .contents>div::-webkit-scrollbar{
+    width: 10px;
+    
+}
+
+/* 스크롤바 막대 설정*/
+.contents>div::-webkit-scrollbar-thumb{
+    background-color: rgb(102, 101, 101);
+    /* 스크롤바 둥글게 설정    */
+    border-radius: 10px;    
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.contents>div::-webkit-scrollbar-track{
+    background-color: rgba(0,0,0,0);
+}

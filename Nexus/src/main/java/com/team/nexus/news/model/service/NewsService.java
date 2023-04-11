@@ -37,4 +37,8 @@ public class NewsService {
 		return newsdao.newsReplyInsert(sqlsession, nr);
 	}
 
+	public int insertNews(News n) {
+		return newsdao.insertNews(sqlsession, n);
+	}
+
 }
