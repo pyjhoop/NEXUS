@@ -159,7 +159,7 @@
 					<!-- Misc -->
 					<li class="menu-header small text-uppercase"><span
 						class="menu-header-text">Team</span></li>
-					<li class="menu-item"><a href="#" target="_blank"
+					<li class="menu-item"><a href="selectChat.ih" 
 						class="menu-link"> <i
 							class="menu-icon tf-icons bx bx-message-rounded-dots"></i>
 							<div data-i18n="Support">Chatting</div>
