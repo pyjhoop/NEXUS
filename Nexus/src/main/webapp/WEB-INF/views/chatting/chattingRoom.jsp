@@ -16,6 +16,8 @@
 	
 	<div class="container-wrapper">
 	<div class="container-xxl flex-grow-1 container-p-y">
+	<div class="row">
+	<div class="col-sm-12">
 	<div class="chat-window">
 	<div class="chat-cont-left">
 	<div class="chat-header">
@@ -34,39 +36,7 @@
 	</form>
 	<div class="chat-users-list">
 	<div class="chat-scroll">
-	<a href="javascript:void(0);" class="media d-flex">
-	<div class="media-img-wrap">
-	<div class="avatar avatar-away">
-	<img src="assets/img/profiles/avatar-03.jpg" alt="" class="avatar-img rounded-circle">
-	</div>
-	</div>
-	<div class="media-body">
-	<div>
-	<div class="user-name">Marie Canales</div>
-	<div class="user-last-chat">Hey, How are you?</div>
-	</div>
-	<div>
-	<div class="last-chat-time block">2 min</div>
-	<div class="badge badge-success badge-pill">15</div>
-	</div>
-	</div>
-	</a>
-	<a href="javascript:void(0);" class="media read-chat active d-flex">
-	<div class="media-img-wrap">
-	<div class="avatar avatar-online">
-	<img src="assets/img/profiles/avatar-04.jpg" alt="" class="avatar-img rounded-circle">
-	</div>
-	</div>
-	<div class="media-body">
-	<div>
-	<div class="user-name">Barbara Moore</div>
-	<div class="user-last-chat">I'll call you later </div>
-	</div>
-	<div>
-	<div class="last-chat-time block">8:01 PM</div>
-	</div>
-	</div>
-	</a>
+
 	<a href="javascript:void(0);" class="media d-flex">
 	<div class="media-img-wrap">
 	<div class="avatar avatar-away">
@@ -446,8 +416,8 @@
 	</div>
 	</div>
 	</div>
-	
-	
+	</div>
+	</div>
 	</div>
 	</div>
 	
