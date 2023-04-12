@@ -95,7 +95,7 @@
             	</div><br>
             	
                 <div class="table-responsive text-nowrap">
-                  <table class="table">
+                  <table class="table" id="issueTable">
                     <thead>
                       <tr>
                       	<th><button type="button" class="btn btn-outline-primary">전체</button></th>
@@ -227,6 +227,7 @@
                        <!-- 한바퀴  -->
                     
                       <tr>
+                    	  <input type="hidden" class="ino" value="1">
                         <td colspan="3"><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>이슈 제목</strong></td>
                         
                          <td><span class="badge bg-label-primary me-1">개발환경</span></td>
@@ -313,6 +314,14 @@
         tooltipTriggerList.map(function (tooltipTriggerEl) {
           return new bootstrap.Tooltip(tooltipTriggerEl);
         });
+
+        
+        
+        $(function() {
+        	  $("#issueTable>tbody>tr").click(function() {
+        	    location.href = "issueDetail.mini?ino=" + $(this).find(".ino").val();
+        	  });
+        	});
 
      </script>
      

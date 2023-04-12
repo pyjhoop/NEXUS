@@ -27,14 +27,33 @@
   border-radius: 0.375rem;
 } 
 
-
+.why{
+width:100%;
+	height:100%;
+	 background-color: white;
+}
 
 .editor-wrapper {
+width:100%;
   flex: 1 1 68%;
   padding: 20px 20px;
+  height:85%;
     background-color: white;
     border-radius: 0.375rem;
 }
+
+
+.editor{
+	width:100%;
+}
+
+.btn-box{
+	width:100%;
+	float:right;
+	margin-right:10px;
+}
+
+
 
 .editor-label {
   flex: 1 1 32%;
@@ -161,22 +180,29 @@
 <div class="container input-top" style="margin-left: 0px; margin-right: 0px; height:70px;">
   <div class="input-group mb-3" style="width: calc(100% - 5px);  display: flex;">
     <span class="input-group-text" id="inputGroup-sizing-default" style="width: 100px;">이슈 제목</span>
-    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="flex: 1;" required>
+    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="flex: 1;"
+    	name="issueTitle" id="title" required>
   </div>
 </div>
 
 
  <div class="container total-box" style="margin-left: 0px; margin-right: 0px;">
   
-
+	<div class = "why">
   	<div class="editor-wrapper">
 	    <div id="editor">
-	
+	    </div>
+	    <div class="btn-box">
+	    <br>
+	    <button type="submit" class="btn btn-outline-primary">등록</button>
 	    </div>
   	</div>
+  	</div>
+  	
+  	<!-- 구분선 -->
+  	
   	<div class="editor-label">
   
-
 <div class="wrapper">
   <div class="select">
     <span>나라를 선택해주세요</span>
