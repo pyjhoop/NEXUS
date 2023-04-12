@@ -21,7 +21,13 @@
                 <div id="editor"></div>
                 <input type="hidden" name="userNo" value="${loginUser.userNo}">
                 <input type="hidden" name="newsContent" id="newsContent">
-                <button type="submit" class="btn btn-primary sbtn" onclick="return test();">제출</button>
+                <div class="btns"  align="right">
+                    <button type="submit" class="btn btn-outline-secondary">수정하기</button>
+                    <button type="submit" class="btn btn-outline-danger">삭제하기</button>
+    
+                    <button type="submit" class="btn btn-outline-primary" onclick="return test();">제출하기</button>
+
+                </div>
 
             </div>
         </form>

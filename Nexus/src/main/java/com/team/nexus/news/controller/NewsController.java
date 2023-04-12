@@ -63,7 +63,7 @@ public class NewsController {
 	
 	@RequestMapping("newsEnrollForm.p")
 	public String newsEnrollFormPage() {
-		return "news/newsEnrollForm";
+		return "news/newsEnrollForm2";
 	}
 	
 	@ResponseBody
@@ -107,6 +107,7 @@ public class NewsController {
 		
 		return "redirect:news.p";
 	}
+	
 	
 	@PostMapping("insert.n")
 	@ResponseBody

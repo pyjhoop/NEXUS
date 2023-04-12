@@ -19,6 +19,9 @@
         <button type="button" class="btn btn-primary" id="enroll">뉴스작성</button>
     </div>
     <div class="container-xxl flex-grow-1 container-p-y cpadding">
+        <script>
+            const Viewer = toastui.Editor;
+        </script>
 		<c:forEach var="i" items="${list }" varStatus="status">
 	        <div class="card mb-5 ct">
 	            <div class="firstrow" style="display: flex;">
