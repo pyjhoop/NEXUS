@@ -8,17 +8,15 @@
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 <!-- jQuery 라이브러리 -->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- Main Quill library -->
-<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
-<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+ 
+<!-- Include stylesheet -->
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-<!-- Theme included stylesheets -->
-<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-<link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+<!-- Include the Quill library -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+        
+        
 
-<!-- Core build with no theme, formatting, non-essential modules -->
-<link href="//cdn.quilljs.com/1.3.6/quill.core.css" rel="stylesheet">
-<script src="//cdn.quilljs.com/1.3.6/quill.core.js"></script>
 <style>
 
 #body{
@@ -93,6 +91,14 @@ button {
 label{
 	font-size: 20px;
 }
+#stackInputCard::placeholder {
+  color: #a4aab1;
+}
+#buttonDiv>button{
+	margin:auto;
+	width: 170px;
+	height: 60px;
+}
 </style>
 </head>
 <body>
@@ -100,29 +106,29 @@ label{
 
 <div id="body">
 
-	
-	<div class="col-md-6" style="width:100%; height:100%">
+	<form>
+		<div class="col-md-6" style="width:73%; height:100%; margin: auto;">
                   <div class="card mb-4">
-                    <h4 class="card-header"><b>기본 정보 입력</b></h4>
-                    <div class="card-body demo-vertical-spacing demo-only-element">
+                    <h4 class="card-header" ><b>기본 정보 입력</b></h4>
+                    <div class="card-body demo-vertical-spacing demo-only-element" style="height: 1800px;"><br>
                     
                     <label><b>제목</b></label>
-                      <div class="input-group">
+                      <div class="input-group" >
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
                         <input type="text" class="form-control" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon11">
-                      </div>
+                      </div> <br>
                       
                        <label ><b>프로젝트 참여 가능기간</b></label>
-                      <div class="input-group" style="margin-top: 90px;">
+                      <div class="input-group" >
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
                         <input  style="margin-top:0px;" type="text" class="form-control" placeholder="프로젝트 참여 가능기간을 입력해주세요 (ex-5월말부터 가능 or 6월중순부터 6개월간 가능 등)" aria-label="Username" aria-describedby="basic-addon11">
-                      </div>
+                      </div><br>
                       
                       <label ><b>연락 수단</b></label>
                       <div class="input-group">
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
                         <input type="text" class="form-control" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11">
-                      </div>
+                      </div><br>
 					
                     
                    <label ><b>기술 스택</b></label>    
@@ -163,15 +169,15 @@ label{
 			        <option value="Zest"></option>
 			      </datalist>
 			    </multi-input>
-			    <button id="get">Get</button>
-                       		<p id="values"></p>
-                       </div>
-                      
-                    </div>
-                  </div>
-                </div>
-                <div id="standalone-container">
-      <div id="toolbar-container">
+                       </div><br>
+                       
+                       
+                       
+                       
+        <!-- quill 들어갈 자리 -->
+        <label ><b>자기소개</b></label>                
+       <div id="standalone-container" style="margin: 0;">
+      <div id="toolbar-container" style="width: 98%;">
         <span class="ql-formats">
           <select class="ql-font"></select>
           <select class="ql-size"></select>
@@ -214,33 +220,51 @@ label{
           <button class="ql-clean"></button>
         </span>
       </div>
-      <div id="editor-container"></div>
+      <div id="editor-container" style="height: 800px; width: 98%; "></div> <Br>
+      
+      <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center; margin-top: 80px">
+      	<button type="button" class="btn btn-outline-primary" style="font-size: 20px"><b>등록하기</b></button> &nbsp;
+		<button type="button" class="btn btn-outline-secondary" style="font-size: 20px"><b>취소</b></button>
+      </div>
+      
+		
     </div>
+	</form>
+	
+                      
+   <script>
+	var quill = new Quill('#editor-container', {
+		  modules: {
+		    formula: true,
+		    syntax: true,
+		    toolbar: '#toolbar-container'
+		  },
+		  placeholder: '게시물을 작성해주세요.',
+		  theme: 'snow'
+		});
+</script>
+                      
+                      
+                      
+                      
+                    </div>
+                  </div>
+                </div>
+               
                 
                 
     <!-- body태그 --></div> 
 	 
     
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    
 	
 
 
 
 	
 
-</div>
 
-<script>
-var quill = new Quill('#editor-container', {
-	  modules: {
-	    formula: true,
-	    syntax: true,
-	    toolbar: '#toolbar-container'
-	  },
-	  placeholder: '게시물을 작성해주세요.',
-	  theme: 'snow'
-	});
-</script>
+
 
 <script src="./././resources/js/multi-input.js"></script>
   <script src="./././resources/js/script.js"></script>
