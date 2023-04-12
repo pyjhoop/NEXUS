@@ -39,6 +39,7 @@ public class NewsController {
 		model.addAttribute("list", list);
 		
 		//댓글 리스트
+		/*  페이지 수정하면서 더이상 필요없어진 코드
 		ArrayList<ArrayList<NewsReply>> allList = new ArrayList();
 		
 		for(int i =1; i<=list.size(); i++) {
@@ -46,8 +47,8 @@ public class NewsController {
 		}
 		
 		model.addAttribute("allList",allList);
+		*/
 		
-		System.out.println(allList);
 		
 		return "news/newsList";
 	}
@@ -63,7 +64,7 @@ public class NewsController {
 	
 	@RequestMapping("newsEnrollForm.p")
 	public String newsEnrollFormPage() {
-		return "news/newsEnrollForm2";
+		return "news/newsEnrollForm";
 	}
 	
 	@ResponseBody
@@ -103,7 +104,13 @@ public class NewsController {
 	@RequestMapping("insertNews")
 	public String insertNews(News n) {
 		
+		int index = n.getNewsContent().lastIndexOf(",");
+		
+		n.setNewsContent(n.getNewsContent().substring(0, index));
+		
 		int result = newsService.insertNews(n);
+		
+		System.out.println(n);
 		
 		return "redirect:news.p";
 	}
@@ -134,6 +141,7 @@ public class NewsController {
 			finalName = "resources/uploadFiles/"+changeName;
 			System.out.println(finalName);
 			response.put("url", finalName);
+			
 		
 			//서버에 파일 업로드
 			try {
@@ -143,5 +151,15 @@ public class NewsController {
 			}
 		}
 		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
+	
+	@RequestMapping("newsDetail.p")
+	public String newsDetailPage(int nNo, Model model) {
+		
+		News n = newsService.selectNews(nNo);
+		
+		model.addAttribute("news", n);
+		
+		return "news/newsDetailPage";
 	}
 }

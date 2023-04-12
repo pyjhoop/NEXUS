@@ -5,25 +5,39 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<jsp:include page="../common/template.jsp"/>
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css">
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/newsEnrollForm2.js"></script>
 
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/newsEnrollForm2.css">
 </head>
 <body>
-    <div class="container-xxl flex-grow-1 container-p-y cpadding">
-        <div id="summernote"><p>Hello Summernote</p></div>
 
+    <jsp:include page="../common/template.jsp"/>
+    <div class="container-xxl flex-grow-1 container-p-y cpadding">
+        <form action="insertNews" method="post" id="newsEnrollForm">
+            <div class="card">
+                <input type="text" class="form-control" id="newsTitle" name="newsTitle" placeholder="Title"  autofocus>
+                <div id="editor"></div>
+                <input type="hidden" name="userNo" value="${loginUser.userNo}">
+                <input type="hidden" name="newsContent" id="newsContent">
+                <div class="btns"  align="right">
+                    <button type="submit" class="btn btn-outline-secondary">수정하기</button>
+                    <button type="submit" class="btn btn-outline-danger">삭제하기</button>
+    
+                    <button type="submit" class="btn btn-outline-primary" onclick="return test();">제출하기</button>
+
+                </div>
+
+            </div>
+        </form>
     </div>
 
-  <script>
-    $(document).ready(function() {
-        $('#summernote').summernote();
-    });
-  </script>
 
 
+    
+
+   
 	
 </body>
 </html>
