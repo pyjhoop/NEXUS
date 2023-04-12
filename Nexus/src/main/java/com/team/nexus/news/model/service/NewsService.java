@@ -29,7 +29,16 @@ public class NewsService {
 	}
 
 	public ArrayList<NewsReply> selectrList(int newsNo) {
+		System.out.println(newsNo);
 		return newsdao.selectrList(sqlsession, newsNo);
+	}
+
+	public int newsReplyInsert(NewsReply nr) {
+		return newsdao.newsReplyInsert(sqlsession, nr);
+	}
+
+	public int insertNews(News n) {
+		return newsdao.insertNews(sqlsession, n);
 	}
 
 }

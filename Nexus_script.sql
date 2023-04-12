@@ -108,9 +108,9 @@ create table tb_news_comments(
     status varchar2(3) default 'Y' check(status in('Y','N'))
 );
 
-insert into tb_news_comments values(1, 'user01','せせせせ',sysdate,'Y');
-insert into tb_news_comments values(1, 'user02','せせせせ',sysdate,'Y');
-insert into tb_news_comments values(1, 'user03','せせせせ',sysdate,'Y');
+--insert into tb_news_comments values(1, 'user01','せせせせ',sysdate,'Y');
+--insert into tb_news_comments values(1, 'user02','せせせせ',sysdate,'Y');
+--insert into tb_news_comments values(1, 'user03','せせせせ',sysdate,'Y');
 
 
 comment on column tb_news_comments.news_no is '敢什腰硲';
