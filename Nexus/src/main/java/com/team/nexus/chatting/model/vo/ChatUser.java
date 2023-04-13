@@ -15,4 +15,6 @@ public class ChatUser {
 	
 	private int userNo;
 	private int roomNo;
+	private String userName;
+	private String profile;
 }

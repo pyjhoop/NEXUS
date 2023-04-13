@@ -15,8 +15,39 @@
  		<result column="user_name" property="userName"/>
  	</resultMap>
  	
- 	<select id="selectRoom">
+ 	<resultMap type="ChatUser" id="chatUserResultSet">
+ 		<result column="room_no" property="roomNo"/>
+ 		<result column="user_no" property="userNo"/>
+ 		<result column="user_name" property="userName"/>
+ 		<result column="profile" property="profile"/>
+ 	</resultMap>
  	
+ 	<resultMap type="ChatMessage" id="chatMessageResultSet">
+ 		<result column="room_no" property="roomNo"/>
+ 	</resultMap>
+ 	
+ 	<select id="selectRoom" resultMap="chatRoomResultSet">
+ 	select *
+		from tb_chat_room r
+		join tb_chat_user u using(room_no)
+		where u.user_no = #{userNo}
+   	 and r.status = 'Y'
+ 	</select>
+ 	
+ 	<select id="selectRoomUser" resultMap="chatUserResultSet">
+ 	select 
+	    u.user_no,
+	    room_no,
+	    user_name,
+	    profile
+	from tb_chat_user u 
+	join  tb_member m on(u.user_no = m.user_no)
+	where room_no in (select room_no
+	                            from tb_chat_room r
+	                            join tb_chat_user u using(room_no)
+	                            where u.user_no = #{userNo}
+	                                and r.status = 'Y')
+	        and u.user_no != #{userNo}
  	</select>
  
  </mapper>

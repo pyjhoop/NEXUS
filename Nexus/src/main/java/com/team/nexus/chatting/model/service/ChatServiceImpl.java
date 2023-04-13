@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.team.nexus.chatting.model.dao.ChatDao;
 import com.team.nexus.chatting.model.vo.ChatMessage;
 import com.team.nexus.chatting.model.vo.ChatRoom;
+import com.team.nexus.chatting.model.vo.ChatUser;
 @Service
 public class ChatServiceImpl implements ChatService{
 
@@ -28,6 +29,18 @@ public class ChatServiceImpl implements ChatService{
 	public int insertMessage(ChatMessage chatMessage) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public ArrayList<ChatUser> selectRoomUser(int userNo) {
+		
+		return cDao.selectRoomUser(sqlSession, userNo);
+	}
+
+	@Override
+	public ArrayList<ChatMessage> selectMessage(int rno) {
+		
+		return cDao.selectMessage(sqlSession,rno);
 	}
 
 }

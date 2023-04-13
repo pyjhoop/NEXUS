@@ -4,12 +4,17 @@ import java.util.ArrayList;
 
 import com.team.nexus.chatting.model.vo.ChatMessage;
 import com.team.nexus.chatting.model.vo.ChatRoom;
+import com.team.nexus.chatting.model.vo.ChatUser;
 
 public interface ChatService {
 
 	 int insertMessage(ChatMessage chatMessage);
 
 	 ArrayList<ChatRoom> selectRoom(int userNo);
+	 
+	 ArrayList<ChatUser> selectRoomUser(int userNo);
+	 
+	 ArrayList<ChatMessage> selectMessage(int rno);
 	
 
 }

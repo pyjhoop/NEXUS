@@ -16,6 +16,8 @@
 		<typeAlias type="com.team.nexus.news.model.vo.NewsReply" alias="NewsReply"/>
 		<typeAlias type="com.team.nexus.chatting.model.vo.ChatRoom" alias="ChatRoom"/>
 		<typeAlias type="com.team.nexus.chatting.model.vo.ChatMessage" alias="ChatMessage"/>
+		<typeAlias type="com.team.nexus.chatting.model.vo.ChatUser" alias="ChatUser"/>
+		
 	</typeAliases>
 	
 	<!-- 
