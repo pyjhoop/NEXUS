@@ -1,58 +1,70 @@
 
-var editor;
-$(function(){
+// function
 
-   editor = new toastui.Editor({
-    el: document.querySelector('#editor'),
-    height: '600px',
-    initialEditType: 'markdown',
-    initialValue: '# Hello, World!',
-    previewStyle: 'vertical',
-    toolbarItems:[
-    ['heading', 'bold', 'italic', 'strike'],
-    ['hr', 'quote'],
-    ['ul', 'ol', 'task'],
-    ['image'],
-    ['scrollSync'],
-    ],
-    hooks:{
-      addImageBlobHook:(blob, callback) => {
-        const formData = new FormData();
-        formData.append('images',blob);
+// 이미지 업로드하는 메서드
+
+
+function sendFile(file, editor){
+    const formData = new FormData();
+    formData.append('images',file);
         
-        fetch('insert.n', {
-              method: 'POST',
-              body: formData,
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                console.log(data.url);
-                callback(data.url, '사진 대체 텍스트 입력');
-              })
-              .catch((error) => {
-                callback('image_load_fail', '사진 대체 텍스트 입력');
-              });
-          }
-    
-      }
-    
-});
+    fetch('insert.n', {
+        method: 'POST',
+        body: formData,
+    })
+    .then((response) => response.json())
+    .then((data) => {
 
-editor.removeToolbarItem("Code",false);
-var markdownValue = editor.getMarkdown();	
-console.log(markdownValue); // Output: "# Hello, World!"
-
-// 에디터 내용 가져오기
-$("#btn1").click(function(){
-    console.log(editor.getMarkdown());
-    console.log(editor.getHTML());
-    viewer.setMarkdown(editor.getMarkdown())
-})
-})
-
-
-function test(){
-  $("#newsContent").val(editor.getHTML());
-  console.log($("#newsContent").val());
-  return true;
+        $(editor).summernote('insertImage', data.url)
+        
+    })
+    .catch((error) => {
+        $(editor).summernote('inserterrorImage', data.url)
+    });
 }
+
+// 제출버튼 클릭시 title, newsContent가 잘있는지 확인하는 메서드
+
+function confirm(){
+    let $title = $("#newsTitle").val().trim();
+    let $content = $("#newsContent").val();
+
+    let checkcontent = $content.trim();
+
+    let imgSrc = $(checkcontent).find('img').attr('src');
+    console.log(imgSrc)
+    $("#thumbnail").val(imgSrc);
+    
+    if($title=="" || checkcontent ==""){
+        console.log("타이틀 또는 본문을 입력해주세요");
+        return false;
+    }else{
+        return true;
+    }
+
+   
+}
+
+
+
+
+
+// $(function)
+
+$(function(){
+    $('#newsContent').summernote({
+        height: 700,
+        width : 1350,
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+        lang: "ko-KR",
+        callbacks: {
+          onImageUpload : function(files){
+            sendFile(files[0],this);
+          }
+        }
+     });
+
+})
+

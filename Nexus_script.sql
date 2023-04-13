@@ -77,16 +77,15 @@ create table tb_news (
 	create_date date DEFAULT sysdate,
 	update_date date DEFAULT sysdate,
 	status	varchar2(3) default 'Y'	check(status in('Y','N')),
-	origin_name	varchar2(100)	NULL,
-	change_name	varchar2(100)	NULL
+    thumbnail varchar2(100)
 );
 
 create sequence seq_news
 nocache;
 
-insert into tb_news values(seq_news.nextval, 1,'오늘 하루 힘들다','지하철에서 빌런만났는데 힘드네요',sysdate,sysdate,'Y','qwe','qwe');
-insert into tb_news values(seq_news.nextval, 2,'배고프다','점심시간인데 왜 밥을 못먹게 합니까!!!',sysdate,sysdate,'Y','asdf','asdf');
-insert into tb_news values(seq_news.nextval, 3,'아니 지하철에서 시위좀 그만 합시다','제시간에 도착하고 싶어여ㅠㅠ',sysdate,sysdate,'Y','qwe','qwe');
+--insert into tb_news values(seq_news.nextval, 1,'오늘 하루 힘들다','지하철에서 빌런만났는데 힘드네요',sysdate,sysdate,'Y','asdf');
+--insert into tb_news values(seq_news.nextval, 2,'배고프다','점심시간인데 왜 밥을 못먹게 합니까!!!',sysdate,sysdate,'Y','asdf');
+--insert into tb_news values(seq_news.nextval, 3,'아니 지하철에서 시위좀 그만 합시다','제시간에 도착하고 싶어여ㅠㅠ',sysdate,sysdate,'Y','asdf');
 
 comment on column tb_news.news_no is '뉴스번호';
 comment on column tb_news.user_no is '회원번호';
@@ -95,8 +94,7 @@ comment on column tb_news.news_content is '내용';
 comment on column tb_news.create_date is '생성일';
 comment on column tb_news.update_date is '수정일';
 comment on column tb_news.status is '상태';
-comment on column tb_news.origin_name is '기존 파일명';
-comment on column tb_news.change_name is '변경된 파일명';
+comment on column tb_news.thumbnail is '썸네일';
 
 
 ---------------------- 뉴스 댓글 -------------------------
@@ -118,6 +116,9 @@ comment on column tb_news_comments.comment_writer is '작성자 아이디';
 comment on column tb_news_comments.comment_content is '내용';
 comment on column tb_news_comments.comment_date is '작성일';
 comment on column tb_news_comments.status is '상태';
+
+
+
 
 ---------------------- 팀원 -------------------------
 create table tb_collaborator(

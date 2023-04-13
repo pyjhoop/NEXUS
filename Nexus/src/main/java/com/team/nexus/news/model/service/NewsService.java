@@ -15,30 +15,35 @@ import com.team.nexus.news.model.vo.NewsReply;
 public class NewsService {
 	
 	@Autowired
-	private NewsDao newsdao;
+	private NewsDao newsDao;
 	
 	@Autowired
 	private SqlSessionTemplate sqlsession;
 
 	public ArrayList<News> selectList() {
-		return newsdao.selectList(sqlsession);
+		return newsDao.selectList(sqlsession);
 	}
 
 	public ArrayList<News> selectList(int page) {
-		return newsdao.selectList(sqlsession, page);
+		return newsDao.selectList(sqlsession, page);
 	}
 
 	public ArrayList<NewsReply> selectrList(int newsNo) {
 		System.out.println(newsNo);
-		return newsdao.selectrList(sqlsession, newsNo);
+		return newsDao.selectrList(sqlsession, newsNo);
 	}
 
 	public int newsReplyInsert(NewsReply nr) {
-		return newsdao.newsReplyInsert(sqlsession, nr);
+		return newsDao.newsReplyInsert(sqlsession, nr);
 	}
 
 	public int insertNews(News n) {
-		return newsdao.insertNews(sqlsession, n);
+		return newsDao.insertNews(sqlsession, n);
 	}
+
+	public News selectNews(int nNo) {
+		return newsDao.selectNews(sqlsession, nNo);
+	}
+
 
 }

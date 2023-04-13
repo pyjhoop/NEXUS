@@ -10,7 +10,7 @@
 		<result column="news_title" property="newsTitle"/>
 		<result column="news_content" property="newsContent"/>
 		<result column="CREATE_DATE" property="createDate"/>
-		<result column="change_name" property="changeName"/>
+		<result column="thumbnail" property="thumbnail"/>
 		<result column="profile" property="profile"/>
 	</resultMap>
 	
@@ -31,13 +31,13 @@
 			       , news_title
 			       , news_content
 			       , to_char(create_date,'YYYY-MM-DD') "CREATE_DATE"
-			       , change_name
+			       , thumbnail
 			       , profile
 			 from tb_news n
 			 join tb_member using(user_no)
 			 where n.status='Y'
 			 order by news_no desc)
-			 where rownum BETWEEN 1 and 5
+			 where rownum BETWEEN 1 and 12
 	</select>
 	
 	<select id="ajaxSelectList" resultMap="newsResultSet">
@@ -94,6 +94,7 @@
 		   , user_no
 		   , news_title
 		   , news_content
+		   , thumbnail
 		  )
 		  values
 		  (
@@ -101,8 +102,22 @@
 		   , #{userNo}
 		   , #{newsTitle}
 		   , #{newsContent}
+		   , #{thumbnail}
 		  )
 	</insert>
+	
+	<select id="seletNews" resultMap="newsResultSet">
+		select 
+		         news_no
+		       , user_name
+		       , news_title
+		       , news_content
+		       , to_char(create_date,'YYYY-MM-DD') "create_date"
+		  from tb_news n
+		  join tb_member using(user_no)
+		  where n.status = 'Y'
+		  and news_no =#{nNo}
+	</select>
 	
 	
 </mapper>
