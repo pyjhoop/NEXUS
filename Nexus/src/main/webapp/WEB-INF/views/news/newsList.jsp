@@ -42,7 +42,7 @@
 
 	                  <div class="card-body">
 	                      <h5 class="card-title">${ i.newsTitle }</h5>
-	                      <p class="card-text${i.newsNo}">
+	                      <p class="card-text${i.newsNo} card-text1">
 
                             <script>
                                 var htmlString = '${i.newsContent}';
@@ -72,7 +72,7 @@
 	                          <div class="heartwrap">
 
 	                            <i class='bx bxs-heart-circle'></i>
-	                            <span class="zzim${i.newsNo}">좋아요</span>
+	                            <span class="zzim${i.newsNo}">${i.likeCount}</span>
 
 	                          </div>
 	

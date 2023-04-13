@@ -14,6 +14,7 @@
 		<typeAlias type="com.team.nexus.calendar.model.vo.Calendar" alias="Calendar"/>
 		<typeAlias type="com.team.nexus.news.model.vo.News" alias="News"/>
 		<typeAlias type="com.team.nexus.news.model.vo.NewsReply" alias="NewsReply"/>
+		<typeAlias type="com.team.nexus.news.model.vo.Zzim" alias="Zzim"/>
 	</typeAliases>
 	
 	<!-- 

@@ -37,29 +37,16 @@
             </div>
 
             <div class="col-sm-10">
+              <input type="text" class="form-control" id="newsTitle" name="newsTitle" placeholder="Title" value="${ news.newsTitle }">
 
-             <c:choose>
-              	<c:when test="${ status eq 'E' }">
-    		          <input type="text" class="form-control" id="newsTitle" name="newsTitle" placeholder="Title" value="${ news.newsTitle }">
-              	</c:when>
-              	<c:otherwise>
-	                <input type="text" class="form-control" id="newsTitle" name="newsTitle" placeholder="Title">
-              	</c:otherwise>
-              </c:choose> 
 
             </div>
 
           </div>
 
-		    <c:choose>
-          <c:when test="${ status eq 'E' }">
-          </c:when>
-            <textarea name="newsContent" id="newsContent"></textarea>
-          <c:otherwise>
-            <textarea name="newsContent" id="newsContent"></textarea>
-          </c:otherwise>
-        </c:choose>
-
+          <textarea name="newsContent" id="newsContent"></textarea>
+		    
+          
           <input type="hidden" name="userNo" value="${loginUser.userNo}">
           <input type="hidden" name="newsContent" id="newsContent">
           <input type="hidden" name="thumbnail" id="thumbnail">
@@ -85,6 +72,12 @@
 
     </div>
 
+    <c:if test="${news.newsContent != null}">
+      <script>
+        let string = '${news.newsContent}';
+        $("#newsContent").summernote('pasteHTML',string);
+      </script>
+    </c:if>
 
   
 

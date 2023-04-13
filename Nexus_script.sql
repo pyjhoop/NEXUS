@@ -117,8 +117,18 @@ comment on column tb_news_comments.comment_content is '내용';
 comment on column tb_news_comments.comment_date is '작성일';
 comment on column tb_news_comments.status is '상태';
 
+---------------------- 뉴스 찜 -------------------------
+create table tb_news_zzim(
+    news_no	number,
+    user_no number,
+    update_date date,
+    status char(1)
+);
 
-
+comment on column tb_news_zzim.news_no is '뉴스번호';
+comment on column tb_news_zzim.user_no is '회원번호';
+comment on column tb_news_zzim.update_date is '수정날짜';
+comment on column tb_news_zzim.status is '상태';
 
 ---------------------- 팀원 -------------------------
 create table tb_collaborator(

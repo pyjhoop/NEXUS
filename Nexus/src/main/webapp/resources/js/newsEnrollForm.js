@@ -46,9 +46,6 @@ function confirm(){
 }
 
 
-
-
-
 // $(function)
 
 $(function(){

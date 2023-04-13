@@ -23,21 +23,17 @@
     </button>
 
 	<div class="container-xxl flex-grow-1 container-p-y cpadding">
-		<div class="totalWrap">
+		<div class="row">
 
-			<div class="zzimWrap">
-				<div>
-					<i class='bx bxs-heart-circle'></i>
-					<br>
-					<span>12</span>
-					<br> 
-					<i class='bx bxs-share-alt'></i>
-
-				</div>
-
+			<div class="zzimWrap col-md-1">
+	
+				<i class='bx bxs-heart-circle'></i>
+				<br>
+				<span class="likeCount">12</span>
+	
 			</div>
 	
-			<div class="card">
+			<div class="card col-lg-10 col-md-12 col-sm-12">
 				<div class="wrap">
 					<h1>${news.newsTitle }</h1>
 					<br>
@@ -51,7 +47,9 @@
 							<c:when test="${ loginUser.userName eq news.userNo }">
 								<div>
 									<a href="updateNews.p?nNo=${ news.newsNo }">수정하기</a>
-									<a href="#">삭제하기</a>
+									
+									<a href="#" data-bs-toggle="modal" data-bs-target="#basicModal">삭제하기</a>
+									
 								</div>
 							</c:when>
 						</c:choose>
@@ -60,11 +58,83 @@
 		
 					<p>${ news.newsContent }</p>
 				</div>
-			</div>
 
+				<div id="profileWrap">
+
+					<img src="${news.profile}" alt="작성자 프로필" id="profile">
+					<span>${news.userNo}</span>
+
+				</div>
+				<br> <br>
+				<hr>
+				<div id="replyWrap">
+
+					<span id="replyCount"><span>${count}</span>개의 댓글</span>
+					
+				</div>
+
+				<input type="hidden" name="commentWriter" value="${loginUser.userNo}" class="commentWriter">
+				<input type="hidden" name="newsNo" value="${news.newsNo}" class="newsNo">
+				<textarea name="reply" id="reply" class="form-control"></textarea>
+				
+				<div id="btnWrap">
+					<button class="btn btn-primary btnSubmit">댓글작성</button>
+				</div>
+
+				<div id="replyWrap1">
+					<c:forEach var="r" items="${ rlist }">
+						<div class="replyProfile">
+							<img src="${ r.profile }" alt="댓글작성자 프로필">
+							<div class="time">
+								<span class="writer">${ r.commentWriter }</span>
+								<span>${r.commentDate }</span>
+	
+							</div>
+						</div>
+						<div class="replyContent">
+							${r.commentContent }
+						</div>
+						<hr>
+					</c:forEach>
+				</div>
+			</div>
 		</div>
+
 	
 	</div>
+
+	<!-- 삭제 모달-->
+
+	<div class="modal fade" id="basicModal" tabindex="-1" style="display: none;" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel1">뉴스 삭제</h5>
+			  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+			  <h3>정말로 삭제하시겠습니까?</h3>
+			</div>
+			
+			<div align="center">
+
+				<form action="deleteNews" method="post">
+
+					<input type="hidden" name="newsNo" value="${news.newsNo}">
+					<button type="submit" class="btn btn-outline-danger">확인</button>
+					<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
+						취소
+					</button>
+
+				</form>
+					
+			</div>
+			<div class="modal-footer">
+			  
+			</div>
+		  </div>
+		</div>
+	  </div>
 
 </body>
 </html>

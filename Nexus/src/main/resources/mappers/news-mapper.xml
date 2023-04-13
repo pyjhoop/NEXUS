@@ -12,6 +12,7 @@
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="thumbnail" property="thumbnail"/>
 		<result column="profile" property="profile"/>
+		<result column="likeCount" property="likeCount"/>
 	</resultMap>
 	
 	<resultMap type="NewsReply" id="newsReplyResultSet">
@@ -29,14 +30,16 @@
 			         news_no
 			       , user_name 
 			       , news_title
-			       , news_content
-			       , to_char(create_date,'YYYY-MM-DD') "CREATE_DATE"
+			       , DBMS_LOB.SUBSTR(news_content, 1000, 1) as "news_content"
+                   , to_char(create_date,'YYYY-MM-DD') "CREATE_DATE"
 			       , thumbnail
 			       , profile
+                   , count(CASE WHEN z.status = 'Y' THEN 1 ELSE NULL END) as "likeCount"
 			 from tb_news n
 			 join tb_member using(user_no)
-			 where n.status='Y'
-			 order by news_no desc)
+             left join tb_news_zzim z using(news_no)
+             group by news_no, user_name, news_title, DBMS_LOB.SUBSTR(news_content, 1000, 1),to_char(create_date,'YYYY-MM-DD'), thumbnail, profile
+            order by news_no desc)
 			 where rownum BETWEEN 1 and 12
 	</select>
 	
@@ -66,7 +69,7 @@
 		from tb_news_comments  nc
 		join tb_member on(user_no = comment_writer)
 		where nc.status = 'Y'
-        and news_no = #{newsNo}
+        and news_no = #{nNo}
         order by comment_date asc
 	</select>
 	
@@ -113,11 +116,72 @@
 		       , news_title
 		       , news_content
 		       , to_char(create_date,'YYYY-MM-DD') "create_date"
+		       , profile
 		  from tb_news n
 		  join tb_member using(user_no)
 		  where n.status = 'Y'
 		  and news_no =#{nNo}
 	</select>
+	
+	<update id="deleteNews">
+		update tb_news
+			set status = 'N'
+			where news_no = #{newsNo}
+	</update>
+	
+	<select id="countrList" resultType="_int">
+		select 
+			count(*) as "count"
+		  from tb_news_comments
+	     where news_no =#{nNo}
+			   and status= 'Y'
+	</select>
+	
+	<select id="likeCount" resultType="_int">
+		select count(*) as "count"
+			from tb_news_zzim
+			where news_no = #{newsNo}
+			and user_no = #{userNo}
+	</select>
+	
+	<insert id="insertLike">
+		insert 
+			  into tb_news_zzim
+			  (
+			     news_no
+			   , user_no
+			   , update_date
+			   , status
+			  )
+			  values
+			  (
+			      #{newsNo}
+			    , #{userNo}
+			    , sysdate
+			    , 'Y'
+			  )
+	</insert>
+	
+	<update id="updateLike">
+		  update tb_news_zzim
+			  set status = 'Y'
+			  where news_no = #{newsNo}
+			  and user_no =#{userNo}
+	</update>
+	
+	<select id="totaLikeCount" resultType="_int">
+		select count(*) as "count"
+			from tb_news_zzim
+			where news_no = #{newsNo}
+			and status = 'Y'
+	</select>
+	
+	<update id="updateUnlike">
+		  update tb_news_zzim
+			  set status = 'N'
+			  where news_no = #{newsNo}
+			  and user_no =#{userNo}
+	</update>
 	
 	
 </mapper>

@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.team.nexus.news.model.service.NewsService;
 import com.team.nexus.news.model.vo.News;
 import com.team.nexus.news.model.vo.NewsReply;
+import com.team.nexus.news.model.vo.Zzim;
 
 @Controller
 public class NewsController {
@@ -158,11 +159,17 @@ public class NewsController {
 	public String newsDetailPage(int nNo, Model model) {
 		
 		News n = newsService.selectNews(nNo);
+		ArrayList<NewsReply> rlist = newsService.selectrList(nNo);
+		int count = newsService.countrList(nNo);
+		
 		
 		model.addAttribute("news", n);
+		model.addAttribute("rlist",rlist);
+		model.addAttribute("count",count);
 		
 		return "news/newsDetailPage";
 	}
+	
 	
 	@RequestMapping("updateNews.p")
 	public String updateNewsPage(int nNo, Model model) {
@@ -170,8 +177,51 @@ public class NewsController {
 		News n = newsService.selectNews(nNo);
 		model.addAttribute("news", n);
 		
-		System.out.println("수정 모델 "+n);
-		
 		return "news/newsEnrollForm";
 	}
+	
+	
+	@RequestMapping("deleteNews")
+	public String deleteNews(int newsNo) {
+		
+		int result = newsService.deleteNews(newsNo);
+		
+		if(result >0) {
+			return "redirect:news.p";
+		}else {
+			return "redirect:newsDetail.p?nNo="+newsNo;
+		}
+	}
+	
+	@RequestMapping("newsLike")
+	@ResponseBody
+	public String ajaxNewsLike(Zzim z) {
+		System.out.println(z);
+		// 있는지 조회부터
+		int result = newsService.likeCount(z);
+		
+		if(result>0) { //update
+			int upd = newsService.updateLike(z);
+		}else {//insert
+			int ins = newsService.insertLike(z);
+		}
+		
+		// newsNo에 찜한 개수
+		int total = newsService.totalLikeCount(z);
+		
+		return total+"";
+		
+	}
+	
+	@RequestMapping("newsUnlike")
+	@ResponseBody
+	public String ajaxNewsUnlike(Zzim z) {
+		
+		int result =newsService.updateUnlike(z);
+		
+		int total = newsService.totalLikeCount(z);
+		
+		return total+"";
+	}
+	
 }
