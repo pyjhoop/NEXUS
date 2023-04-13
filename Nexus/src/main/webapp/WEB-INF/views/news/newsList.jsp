@@ -72,7 +72,7 @@
 	                          <div class="heartwrap">
 
 	                            <i class='bx bxs-heart-circle'></i>
-	                            <span>10</span>
+	                            <span class="zzim${i.newsNo}">좋아요</span>
 
 	                          </div>
 	
