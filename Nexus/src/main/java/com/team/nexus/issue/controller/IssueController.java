@@ -1,12 +1,13 @@
 package com.team.nexus.issue.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.team.nexus.issue.model.service.IssueServiceImpl;
-import com.team.nexus.issue.model.vo.Issue;
 
 @Controller
 public class IssueController {
@@ -29,7 +30,7 @@ public class IssueController {
 	
 	
 	@RequestMapping("issueDetail.mini")
-	public String selectBoard(int ino, Model model) {
+	public String selectIssue(int ino, Model model) {
 		
 		
 //			Issue is = iService.selectIssue(ino);
@@ -47,5 +48,22 @@ public class IssueController {
 		return "issue/issueDetail";
 		
 	}
+	
+	
+	
+	@RequestMapping("issueDelete.mini")
+	public String deleteIssue(HttpSession session) {
+		session.setAttribute("alertMsg", "성공적으로 이슈가 삭제되었습니다");
+		
+		return "redirect:issueShow.mini";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

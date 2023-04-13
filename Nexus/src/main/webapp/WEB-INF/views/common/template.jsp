@@ -30,12 +30,14 @@
 <meta name="description" content="" />
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
 
 
 <!-- jQuery and Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 <script src="../../../resources/js/apexcharts.js"></script>
 <script src="../../../resources/js/bootstrap.js"></script>
 
@@ -84,16 +86,46 @@
 	src="${pageContext.request.contextPath}/resources/assets/js/config.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
- <!-- chatbot -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/css/chat.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/css/home.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- chatbot -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/static/css/chat.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/static/css/home.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- jquery-->
+
+
+<!-- 알람창 JavaScript -->
+<script
+	src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+<!-- 알람창 CSS -->
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+<!--  알람창 Default theme -->
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+<!--  알람창 Semantic UI theme -->
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+
+
 
 </head>
 
 <body>
+
+
+	<c:if test="${not empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+
 
 	<!-- Layout wrapper -->
 	<div class="layout-wrapper layout-content-navbar">
@@ -113,47 +145,42 @@
 
 				<div class="menu-inner-shadow"></div>
 
-          <ul class="menu-inner py-1">
-            <!-- Dashboard -->
-            <li class="menu-item active">
-              <a href="main.p" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Home</div>
-              </a>
-            </li>
-             <li class="menu-item" id="repository">
-              <a href="repository.p" class="menu-link">
-              	<i class="menu-icon tf-icons bx bxl-github"></i>
-                <div data-i18n="Basic">Repository</div>
-              </a>
-            </li>
-            <!-- Components -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Project</span></li>
-            <!-- Cards -->
-            <li class="menu-item">
-              <a href="issueShow.mini" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Issue</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="User interface">Milestone</div>
-              </a>
-            </li>
+				<ul class="menu-inner py-1">
+					<!-- Dashboard -->
+					<li class="menu-item active"><a href="main.p"
+						class="menu-link"> <i
+							class="menu-icon tf-icons bx bx-home-circle"></i>
+							<div data-i18n="Analytics">Home</div>
+					</a></li>
+					<li class="menu-item" id="repository"><a href="repository.p"
+						class="menu-link"> <i class="menu-icon tf-icons bx bxl-github"></i>
+							<div data-i18n="Basic">Repository</div>
+					</a></li>
+					<!-- Components -->
+					<li class="menu-header small text-uppercase"><span
+						class="menu-header-text">Project</span></li>
+					<!-- Cards -->
+					<li class="menu-item"><a href="issueShow.mini"
+						class="menu-link"> <i
+							class="menu-icon tf-icons bx bx-collection"></i>
+							<div data-i18n="Basic">Issue</div>
+					</a></li>
+					<li class="menu-item"><a href="#" class="menu-link"> <i
+							class="menu-icon tf-icons bx bx-box"></i>
+							<div data-i18n="User interface">Milestone</div>
+					</a></li>
 
 					<li class="menu-item"><a href="#" class="menu-link"> <i
 							class="menu-icon tf-icons bx bx-copy"></i>
 							<div data-i18n="Extended UI">Kanban</div>
 					</a></li>
 
-					<li class="menu-item news"><a href="news.p" class="menu-link"> <i
-							class="menu-icon tf-icons bx bx-detail"></i>
+					<li class="menu-item news"><a href="news.p" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-detail"></i>
 							<div data-i18n="Form Elements">News</div>
 					</a></li>
-					<li class="menu-item"><a href="selectCal.ih" class="menu-link"> <i
-							class="menu-icon tf-icons bx bxs-calendar"></i>
+					<li class="menu-item"><a href="selectCal.ih" class="menu-link">
+							<i class="menu-icon tf-icons bx bxs-calendar"></i>
 							<div data-i18n="Tables">Calendar</div>
 					</a></li>
 					<!-- Misc -->
@@ -165,8 +192,7 @@
 							<div data-i18n="Support">Chatting</div>
 					</a></li>
 					<li class="menu-item"><a href="#" target="_blank"
-						class="menu-link"> <i
-							class="menu-icon tf-icons bx bx-bot"></i>
+						class="menu-link"> <i class="menu-icon tf-icons bx bx-bot"></i>
 							<div data-i18n="Support">Chattbot</div>
 					</a></li>
 					<li class="menu-item"><a href="personal.me" target="_blank"
@@ -217,7 +243,12 @@
 						<ul class="navbar-nav flex-row align-items-center ms-auto">
 							<!-- Place this tag where you want the button to render. -->
 							<li class="nav-item 1h-1 me-4"><a href="javascript:void(0);"
-								class="menu-link "> <i class='menu-icon tf-icons bx bx-bell'></i>
+								class="menu-link position-relative"> 
+								<!-- ### 알람온 숫자만큼 뜨게 바꾸기 -->
+								<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+										99+ <span class="visually-hidden">unread messages</span>
+								</span> <i class='menu-icon tf-icons bx bx-bell'></i>
+
 							</a></li>
 
 							<!-- User -->
@@ -228,7 +259,7 @@
 										<img src="${loginUser.profile }" alt
 											class="w-px-40 h-px-40 rounded-circle" />
 									</div>
-								</a>
+							</a>
 								<ul class="dropdown-menu dropdown-menu-end">
 									<li><a class="dropdown-item" href="#">
 											<div class="d-flex">
@@ -278,86 +309,92 @@
 						</ul>
 					</div>
 				</nav>
-				
-	<!-- CHAT BAR BLOCK to be changed to a bubble-->
-    <div class="chat-bar-collapsible">
-        <button id="chat-button" type="button" class="collapsible">Chat with us!
-            <i id="chat-icon" style="color: #fff;" class="fa fa-fw fa-comments-o"></i>
-        </button>
 
-        <div class="content">
-            <div class="full-chat-block">
-                <!-- Message Container -->
-                <div class="outer-container">
-                    <div class="chat-container">
-                        <!-- Messages -->
-                        <div id="chatbox">
-                            <h5 id="chat-timestamp"></h5>
-                            <p id="botStarterMessage" class="botText"><span>Loading...</span></p>
-                        </div>
+				<!-- CHAT BAR BLOCK to be changed to a bubble-->
+				<div class="chat-bar-collapsible">
+					<button id="chat-button" type="button" class="collapsible">
+						Chat with us! <i id="chat-icon" style="color: #fff;"
+							class="fa fa-fw fa-comments-o"></i>
+					</button>
 
-                        <!-- User input box -->
-                        <div class="chat-bar-input-block">
-                            <div id="userInput">
-                                <input id="textInput" class="input-box" type="text" name="msg"
-                                    placeholder="Tap 'Enter' to send a message">
-                                <p></p>
-                            </div>
+					<div class="content">
+						<div class="full-chat-block">
+							<!-- Message Container -->
+							<div class="outer-container">
+								<div class="chat-container">
+									<!-- Messages -->
+									<div id="chatbox">
+										<h5 id="chat-timestamp"></h5>
+										<p id="botStarterMessage" class="botText">
+											<span>Loading...</span>
+										</p>
+									</div>
 
-                            <div class="chat-bar-icons">
-                                <i id="chat-icon" style="color: crimson;" class="fa fa-fw fa-heart"
-                                    onclick="heartButton()"></i>
-                                <i id="chat-icon" style="color: #333;" class="fa fa-fw fa-send"
-                                    onclick="sendButton()"></i>
-                            </div>
-                        </div>
+									<!-- User input box -->
+									<div class="chat-bar-input-block">
+										<div id="userInput">
+											<input id="textInput" class="input-box" type="text"
+												name="msg" placeholder="Tap 'Enter' to send a message">
+											<p></p>
+										</div>
 
-                        <div id="chat-bar-bottom">
-                            <p></p>
-                        </div>
+										<div class="chat-bar-icons">
+											<i id="chat-icon" style="color: crimson;"
+												class="fa fa-fw fa-heart" onclick="heartButton()"></i> <i
+												id="chat-icon" style="color: #333;" class="fa fa-fw fa-send"
+												onclick="sendButton()"></i>
+										</div>
+									</div>
 
-                    </div>
-                </div>
+									<div id="chat-bar-bottom">
+										<p></p>
+									</div>
 
-            </div>
-        </div>
+								</div>
+							</div>
 
-    </div>
+						</div>
+					</div>
 
-	<!-- Core JS -->
-	<!-- build:js assets/vendor/js/core.js -->
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/vendor/libs/jquery/jquery.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/vendor/libs/popper/popper.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/vendor/js/bootstrap.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+				</div>
 
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/vendor/js/menu.js"></script>
-	<!-- endbuild -->
+				<!-- Core JS -->
+				<!-- build:js assets/vendor/js/core.js -->
+				<script
+					src="${pageContext.request.contextPath}/resources/assets/vendor/libs/jquery/jquery.js"></script>
+				<script
+					src="${pageContext.request.contextPath}/resources/assets/vendor/libs/popper/popper.js"></script>
+				<script
+					src="${pageContext.request.contextPath}/resources/assets/vendor/js/bootstrap.js"></script>
+				<script
+					src="${pageContext.request.contextPath}/resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-	<!-- Vendors JS -->
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+				<script
+					src="${pageContext.request.contextPath}/resources/assets/vendor/js/menu.js"></script>
+				<!-- endbuild -->
 
-	<!-- Main JS -->
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+				<!-- Vendors JS -->
+				<script
+					src="${pageContext.request.contextPath}/resources/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
-	<!-- Page JS -->
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/js/dashboards-analytics.js"></script>
+				<!-- Main JS -->
+				<script
+					src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
-	<!-- Place this tag in your head or just before your close body tag. -->
-	<script async defer src="https://buttons.github.io/buttons.js"></script>
-	
-	 <!-- chatbot -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/static/scripts/responses.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/static/scripts/chat.js"></script>
+				<!-- Page JS -->
+				<script
+					src="${pageContext.request.contextPath}/resources/assets/js/dashboards-analytics.js"></script>
+
+				<!-- Place this tag in your head or just before your close body tag. -->
+				<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+				<!-- chatbot -->
+				<script
+					src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+				<script
+					src="${pageContext.request.contextPath}/resources/static/scripts/responses.js"></script>
+				<script
+					src="${pageContext.request.contextPath}/resources/static/scripts/chat.js"></script>
 </body>
 
 </html>
