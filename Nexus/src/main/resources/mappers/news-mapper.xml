@@ -112,7 +112,7 @@
 		       , user_name
 		       , news_title
 		       , news_content
-		       , create_date
+		       , to_char(create_date,'YYYY-MM-DD') "create_date"
 		  from tb_news n
 		  join tb_member using(user_no)
 		  where n.status = 'Y'

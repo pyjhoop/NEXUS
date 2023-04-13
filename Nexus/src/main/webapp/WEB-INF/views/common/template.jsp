@@ -181,6 +181,8 @@
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
+
+				<button class="btn btn-outline-primary" id="enroll" style="visibility: hidden;">뉴스작성</button>
                 <li class="nav-item 1h-1 me-4">
                   <a href="javascript:void(0);" class="menu-link ">
                   <i class='menu-icon tf-icons bx bx-bell'></i>
