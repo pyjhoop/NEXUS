@@ -6,14 +6,27 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
+<jsp:include page="../common/template.jsp"/>
+
+<!-- ajax -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 <!-- jQuery 라이브러리 -->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  
-<!-- Include stylesheet -->
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-<!-- Include the Quill library -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<!-- summernote -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/resources/js/summernote-ko-KR.js"></script>
+
+<script src="${pageContext.request.contextPath}/resources/js/newsEnrollForm.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/newsEnrollForm.css">
+
+
+
         
         
 
@@ -89,7 +102,7 @@ button {
 	margin-top:50px;
 }
 label{
-	font-size: 20px;
+	font-size: 16px;
 }
 #stackInputCard::placeholder {
   color: #a4aab1;
@@ -102,14 +115,13 @@ label{
 </style>
 </head>
 <body>
-<jsp:include page="../common/template.jsp"/>
 
+
+	<form action="insertNews" method="post" style="height: 100%;">
 <div id="body">
-
-	<form>
-		<div class="col-md-6" style="width:73%; height:100%; margin: auto;">
-                  <div class="card mb-4">
-                    <h4 class="card-header" ><b>기본 정보 입력</b></h4>
+		<div class="col-md-6" style="width:94%; height:100%; margin: auto;">
+                  <div class="card mb-4" style="width: 100%; margin: auto;">
+                    <h4 class="card-header"  ><b>정보 입력</b></h4>
                     <div class="card-body demo-vertical-spacing demo-only-element" style="height: 1800px;"><br>
                     
                     <label><b>제목</b></label>
@@ -175,85 +187,53 @@ label{
                        
                        
         <!-- quill 들어갈 자리 -->
-        <label ><b>자기소개</b></label>                
-       <div id="standalone-container" style="margin: 0;">
-      <div id="toolbar-container" style="width: 98%;">
-        <span class="ql-formats">
-          <select class="ql-font"></select>
-          <select class="ql-size"></select>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-bold"></button>
-          <button class="ql-italic"></button>
-          <button class="ql-underline"></button>
-          <button class="ql-strike"></button>
-        </span>
-        <span class="ql-formats">
-          <select class="ql-color"></select>
-          <select class="ql-background"></select>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-script" value="sub"></button>
-          <button class="ql-script" value="super"></button>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-header" value="1"></button>
-          <button class="ql-header" value="2"></button>
-          <button class="ql-blockquote"></button>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-list" value="ordered"></button>
-          <button class="ql-list" value="bullet"></button>
-          <button class="ql-indent" value="-1"></button>
-          <button class="ql-indent" value="+1"></button>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-direction" value="rtl"></button>
-          <select class="ql-align"></select>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-link"></button>
-          <button class="ql-image"></button>
-          <button class="ql-video"></button>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-clean"></button>
-        </span>
-      </div>
-      <div id="editor-container" style="height: 800px; width: 98%; "></div> <Br>
-      
-      <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center; margin-top: 80px">
+              <label ><b>자기소개</b></label>
+          <div class="container-xxl flex-grow-1 container-p-y cpadding" style="margin-right: 70px; padding: 0px; box-shadow: 0; border: 0px; margin-top: 0px;">
+      	  
+
+          <textarea name="newsContent" id="newsContent"></textarea>
+
+          <input type="hidden" name="userNo" value="${loginUser.userNo}">
+          <input type="hidden" name="newsContent" id="newsContent">
+          <input type="hidden" name="thumbnail" id="thumbnail">
+       
+      	</div>
+      	</div>
+     
+		
+    </div>
+          <div class="btns"  align="right">
+
+              <button type="submit" class="btn btn-outline-secondary">수정하기</button>
+              <button type="submit" class="btn btn-outline-danger">삭제하기</button>
+
+              <button type="submit" class="btn btn-outline-primary" onclick="return confirm();">제출하기</button>
+
+          </div>
+    
+     <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center; margin-top: 80px">
       	<button type="button" class="btn btn-outline-primary" style="font-size: 20px"><b>등록하기</b></button> &nbsp;
 		<button type="button" class="btn btn-outline-secondary" style="font-size: 20px"><b>취소</b></button>
       </div>
       
-		
     </div>
+    </div>
+    </div>
+    
 	</form>
 	
                       
-   <script>
-	var quill = new Quill('#editor-container', {
-		  modules: {
-		    formula: true,
-		    syntax: true,
-		    toolbar: '#toolbar-container'
-		  },
-		  placeholder: '게시물을 작성해주세요.',
-		  theme: 'snow'
-		});
-</script>
+  
                       
                       
                       
                       
-                    </div>
-                  </div>
-                </div>
+                   
+                 
                
                 
                 
-    <!-- body태그 --></div> 
+  
 	 
     
     
