@@ -31,10 +31,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team.nexus.member.model.service.kakaoService;
+import com.team.nexus.member.model.service.GithubService;
 import com.team.nexus.member.model.service.MailSendService;
 import com.team.nexus.member.model.service.MemberService;
 import com.team.nexus.member.model.service.MemberServiceImpl;
 import com.team.nexus.member.model.vo.Member;
+
+import reactor.core.publisher.Mono;
 
 
 @PropertySource("classpath:git.properties")
@@ -60,81 +63,23 @@ public class MemberController {
     private kakaoService kakaoService;
 	
 	@Autowired
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	private GithubService gService;
+	
 	
 	private String token = "";
 	
 	@RequestMapping("callback.p")
 	public String getUserInfo(@RequestParam String code, HttpSession session) {
-	    System.out.println(code);
 	    
-	    RestTemplate restTemplate = new RestTemplate();
-	    HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+		// access_token 
+		String token = gService.getToken(code);
 	    
-        
-        
-	    String url = "https://github.com/login/oauth/access_token";
-	    
-	    JSONObject jsonObject = new JSONObject();
-	    jsonObject.put("client_id", gitId);
-	    jsonObject.put("client_secret", gitSecret);
-	    jsonObject.put("code", code);
-
-        HttpEntity<String> entity = new HttpEntity<String>(jsonObject.toString(), headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
-        String[] arr = response.getBody().split(",");
-        System.out.println(response.getBody());
-        ObjectMapper objectMapper = new ObjectMapper();
-        String token ="";
-        try {
-			JsonNode jsonNode = objectMapper.readTree(response.getBody());
-			token = jsonNode.get("access_token").asText();
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-        
-        
-        
-        session.setAttribute("token", token);
-        System.out.println(token);
-       
-        RestTemplate restTemplate1 = new RestTemplate();
-        
-        String url1 = "https://api.github.com/user";
-        HttpHeaders headers1 = new HttpHeaders();
-        headers1.set("Authorization", "Bearer "+token);
-        
-        HttpEntity<String> req = new HttpEntity<String>(headers1);
-        
-        ResponseEntity<String> res = restTemplate1.exchange(url1, HttpMethod.GET, req, String.class);
-        ObjectMapper om = new ObjectMapper();
-        
-        Member m = new Member();
-        
-        
-        
-        try {
-			JsonNode jn = om.readTree(res.getBody());
-			System.out.println(jn.asText());
-			System.out.println("id  : "+ jn.get("id").asText());
-			System.out.println("name : "+jn.get("name").asText());
-			System.out.println("url : "+ jn.get("avatar_url").asText());
-			m.setUserId(jn.get("id").asText());
-			m.setUserName(jn.get("name").asText());
-			m.setProfile(jn.get("avatar_url").asText());
-			m.setEmail(jn.get("email").asText());
-			m.setSocial("G");
-			
-			
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-        // 있는지 조회부터
+		// access_token을 이용한 유저 정보 얻어오기
+		Member m = gService.getUserInfo(token);
+		
+		
+		
         Member m1 = mService.selectMember(m);
-        
         
         // 조회된 결과 없을시 insert
         if(m1 == null) {
@@ -165,6 +110,13 @@ public class MemberController {
 	public String login() {
 		return "member/login";
 	}
+	
+	@RequestMapping("forgotPwd.p")
+	public String forgotPwd() {
+		return "member/forgotPwd";
+	}
+	
+	
 	
 	@RequestMapping(value="idCheck.me.p", method=RequestMethod.POST)
 	@ResponseBody
@@ -216,23 +168,34 @@ public class MemberController {
 		session.removeAttribute("loginUser");
 		return "redirect:login.p";
 	}
-	@RequestMapping("logout.p")
-    public String logout(HttpSession session){
-        session.removeAttribute("loginUser");
-        return "redirect:login.p";
-    }
 	
 	@RequestMapping("login.ih")
 	public String nexusLogin(Member m,HttpSession session,Model model) {
 		Member loginUser = mService.selectMember(m);
 		
-		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())){
+		if(loginUser != null && bcrypt.matches(m.getUserPwd(), loginUser.getUserPwd())){
 			session.setAttribute("loginUser", loginUser);
 			return "main";
 		}else {
 			model.addAttribute("errorMsg", "로그인 실패");
 			return "common/errorPage";
 		}
+	}
+	
+	@RequestMapping("resetPwd.p")
+	public String resetPwd(Member m, HttpSession session) {
+		
+		int count = mService.resetPwd(m);
+		
+		if(count>0) {
+			System.out.println("비번 변경 페이지 이동");
+			return "redirect:login.p";
+		}else {
+			System.out.println("정보가 일치지 않습니다.");
+			session.setAttribute("alertMsg", "정보가 일치하지 않습니다.");
+			return "redirect:forgotPwd.p";
+		}
 		
 	}
+	
 }

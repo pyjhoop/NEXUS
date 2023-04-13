@@ -30,4 +30,9 @@ public class MemberDao {
 	public void insertKaKao(SqlSessionTemplate sqlSession, HashMap<String, Object> userInfo) {
 		sqlSession.insert("memberMapper.insertKaKao", userInfo);
 	}
+
+
+	public int resetPwd(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.resetPwd", m);
+	}
 }

@@ -1,7 +1,7 @@
 $(function(){
     
     // 아이디 정규식 체크 영문자 시작 숫자포함 6~20
-    $("#userId").focusout(function(){
+    $("#userId").keyup(function(){
         $(".inf").remove();
         const idExp = /^[a-z]+[a-z0-9]{5,19}$/i
         const id = $(this).val();
@@ -35,7 +35,7 @@ $(function(){
     })
 
     // 비밀번호 정규식 체크 영문자 시작 숫자와 
-    $("#userPwd").focusout(function(){
+    $("#userPwd").keyup(function(){
         $(".inf1").remove();
         const regEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
         const pwd = $(this);
@@ -59,7 +59,7 @@ $(function(){
                 pwdFirm.after("<span class='text-primary inf2'>비밀번호가 일치합니다</span>")
                 pwdFirm.removeClass("dis")
                 pwdFirm.css("border-color","");
-            }else{
+            }else if((pwdFirm.val() != pwdRaw )){
                 pwdFirm.after("<span class='text-danger inf2'>비밀번호가 일치하지 않습니다</span>")
                 pwdFirm.addClass("dis");
             }

@@ -1,0 +1,13 @@
+.title{
+    width: 80px !important;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.note-editor{
+    margin: auto;
+}
+
+.hiddenp{
+    visibility: hidden;
+}

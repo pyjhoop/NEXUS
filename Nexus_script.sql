@@ -77,16 +77,15 @@ create table tb_news (
 	create_date date DEFAULT sysdate,
 	update_date date DEFAULT sysdate,
 	status	varchar2(3) default 'Y'	check(status in('Y','N')),
-	origin_name	varchar2(100)	NULL,
-	change_name	varchar2(100)	NULL
+    thumbnail varchar2(100)
 );
 
 create sequence seq_news
 nocache;
 
-insert into tb_news values(seq_news.nextval, 1,'오늘 하루 힘들다','지하철에서 빌런만났는데 힘드네요',sysdate,sysdate,'Y','qwe','qwe');
-insert into tb_news values(seq_news.nextval, 2,'배고프다','점심시간인데 왜 밥을 못먹게 합니까!!!',sysdate,sysdate,'Y','asdf','asdf');
-insert into tb_news values(seq_news.nextval, 3,'아니 지하철에서 시위좀 그만 합시다','제시간에 도착하고 싶어여ㅠㅠ',sysdate,sysdate,'Y','qwe','qwe');
+--insert into tb_news values(seq_news.nextval, 1,'오늘 하루 힘들다','지하철에서 빌런만났는데 힘드네요',sysdate,sysdate,'Y','asdf');
+--insert into tb_news values(seq_news.nextval, 2,'배고프다','점심시간인데 왜 밥을 못먹게 합니까!!!',sysdate,sysdate,'Y','asdf');
+--insert into tb_news values(seq_news.nextval, 3,'아니 지하철에서 시위좀 그만 합시다','제시간에 도착하고 싶어여ㅠㅠ',sysdate,sysdate,'Y','asdf');
 
 comment on column tb_news.news_no is '뉴스번호';
 comment on column tb_news.user_no is '회원번호';
@@ -95,8 +94,7 @@ comment on column tb_news.news_content is '내용';
 comment on column tb_news.create_date is '생성일';
 comment on column tb_news.update_date is '수정일';
 comment on column tb_news.status is '상태';
-comment on column tb_news.origin_name is '기존 파일명';
-comment on column tb_news.change_name is '변경된 파일명';
+comment on column tb_news.thumbnail is '썸네일';
 
 
 ---------------------- 뉴스 댓글 -------------------------
@@ -108,15 +106,19 @@ create table tb_news_comments(
     status varchar2(3) default 'Y' check(status in('Y','N'))
 );
 
-insert into tb_news_comments values(1, 'user01','ㅋㅋㅋㅋ',sysdate,'Y');
-insert into tb_news_comments values(1, 'user02','ㅋㅋㅋㅋ',sysdate,'Y');
-insert into tb_news_comments values(1, 'user03','ㅋㅋㅋㅋ',sysdate,'Y');
+--insert into tb_news_comments values(1, 'user01','ㅋㅋㅋㅋ',sysdate,'Y');
+--insert into tb_news_comments values(1, 'user02','ㅋㅋㅋㅋ',sysdate,'Y');
+--insert into tb_news_comments values(1, 'user03','ㅋㅋㅋㅋ',sysdate,'Y');
+
 
 comment on column tb_news_comments.news_no is '뉴스번호';
 comment on column tb_news_comments.comment_writer is '작성자 아이디';
 comment on column tb_news_comments.comment_content is '내용';
 comment on column tb_news_comments.comment_date is '작성일';
 comment on column tb_news_comments.status is '상태';
+
+
+
 
 ---------------------- 팀원 -------------------------
 create table tb_collaborator(
@@ -134,42 +136,36 @@ comment on column tb_collaborator.user_no is '회원번호';
 comment on column tb_collaborator.part is '역할';
 
 
----------------------- 캘린더 카테고리 -------------------------
-CREATE TABLE TB_CALENDAR_CATEGORY(
-   CATEGORY_NO NUMBER PRIMARY KEY,
-   CATEGORY_NAME VARCHAR2(30)
-);
-
-COMMENT ON COLUMN TB_CALENDAR_CATEGORY.CATEGORY_NO IS '카테고리 번호';
-COMMENT ON COLUMN TB_CALENDAR_CATEGORY.CATEGORY_NAME IS '카테고리 이름';
-
-INSERT INTO TB_CALENDAR_CATEGORY VALUES(1,'업무');
-INSERT INTO TB_CALENDAR_CATEGORY VALUES(2,'개인 일정');
-INSERT INTO TB_CALENDAR_CATEGORY VALUES(3,'소셜 일정');
-
 ---------------------- 캘린더 -------------------------
 
 CREATE TABLE TB_CALENDAR(
+   CALENDAR_NO NUMBER PRIMARY KEY,
    USER_NO NUMBER REFERENCES TB_MEMBER,
    SCHEDULE_TITLE VARCHAR2(100) NOT NULL,
-   START_DATE DATE NOT NULL,
-   END_DATE DATE NOT NULL,
+   START_DATE VARCHAR2(50) NOT NULL,
+   END_DATE VARCHAR2(50) NOT NULL,
    DATE_COLOR VARCHAR2(30),
    SCHEDULE_CONTENT VARCHAR2(1000),
-   CATEGORY_NO NUMBER REFERENCES TB_CALENDAR_CATEGORY
+   CATEGORY VARCHAR2(50),
+   TEXT_COLOR VARCHAR2(50),
+   ALL_DAY CHAR(1),
+   STATUS VARCHAR2(3) DEFAULT 'Y' CHECK(STATUS IN('Y','N'))
 );
 
+CREATE SEQUENCE SEQ_CALENDAR NOCACHE;
+
+COMMENT ON COLUMN TB_CALENDAR.CALENDAR_NO IS '일정 번호';
 COMMENT ON COLUMN TB_CALENDAR.USER_NO IS '회원 번호';
 COMMENT ON COLUMN TB_CALENDAR.SCHEDULE_TITLE IS '일정 제목';
 COMMENT ON COLUMN TB_CALENDAR.START_DATE IS '시작일';
 COMMENT ON COLUMN TB_CALENDAR.END_DATE IS '마감일';
 COMMENT ON COLUMN TB_CALENDAR.DATE_COLOR IS '색상';
 COMMENT ON COLUMN TB_CALENDAR.SCHEDULE_CONTENT IS '일정 내용';
-COMMENT ON COLUMN TB_CALENDAR.CATEGORY_NO IS '카테고리 번호';
+COMMENT ON COLUMN TB_CALENDAR.CATEGORY IS '카테고리';
+COMMENT ON COLUMN TB_CALENDAR.TEXT_COLOR IS '글색상';
+COMMENT ON COLUMN TB_CALENDAR.ALL_DAY IS '하루종일';
+COMMENT ON COLUMN TB_CALENDAR.STATUS IS '삭제여부';
 
-INSERT INTO TB_CALENDAR VALUES(1,'프로젝트 회의',SYSDATE,'2023-04-04','빨강','5시 NEXUS 회의',1);
-INSERT INTO TB_CALENDAR VALUES(2,'청소하기',SYSDATE,'2023-04-04','파랑','3시 집청소',2);
-INSERT INTO TB_CALENDAR VALUES(3,'준호 생일','2023-05-05','2023-05-05','초록','준호의 생일',3);
 
 
 ---------------------- 채팅방 -------------------------

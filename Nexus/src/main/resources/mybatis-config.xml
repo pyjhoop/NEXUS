@@ -11,6 +11,9 @@
 	<!-- 유의사항 미리 등록해두려면 반드시 해당 클래스가 존재해야 한다. -->
 	<typeAliases>
 		<typeAlias type="com.team.nexus.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.team.nexus.calendar.model.vo.Calendar" alias="Calendar"/>
+		<typeAlias type="com.team.nexus.news.model.vo.News" alias="News"/>
+		<typeAlias type="com.team.nexus.news.model.vo.NewsReply" alias="NewsReply"/>
 	</typeAliases>
 	
 	<!-- 
@@ -23,5 +26,7 @@
 	<!-- 유의사항 : 미리 등록해두려면 해당 mapper 파일이 진짜 존재하고 있는 상태여야함! 뿐만 아니라 namespace 등록까지 지정돼있어야 한다. -->
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/calendar-mapper.xml"/>
+		<mapper resource="/mappers/news-mapper.xml"/>
 	</mappers>
 </configuration>
