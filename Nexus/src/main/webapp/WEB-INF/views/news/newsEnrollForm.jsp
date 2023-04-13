@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
@@ -28,20 +29,36 @@
     <div class="container-xxl flex-grow-1 container-p-y cpadding">
       <div class="card cardcon">
 
-        <form action="insertNews" method="post" style="height: 100%;">
-
+        <form action="${status eq 'E' ? 'insertNews' : 'updateNews'}" method="post" style="height: 100%;">
+          
           <div class="row mb-3" style="margin-top: 15px;">
             <div class="title">
               TITLE
             </div>
 
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="newsTitle" name="newsTitle" placeholder="John Doe">
+
+             <c:choose>
+              	<c:when test="${ status eq 'E' }">
+    		          <input type="text" class="form-control" id="newsTitle" name="newsTitle" placeholder="Title" value="${ news.newsTitle }">
+              	</c:when>
+              	<c:otherwise>
+	                <input type="text" class="form-control" id="newsTitle" name="newsTitle" placeholder="Title">
+              	</c:otherwise>
+              </c:choose> 
+
             </div>
 
           </div>
 
-          <textarea name="newsContent" id="newsContent"></textarea>
+		    <c:choose>
+          <c:when test="${ status eq 'E' }">
+          </c:when>
+            <textarea name="newsContent" id="newsContent"></textarea>
+          <c:otherwise>
+            <textarea name="newsContent" id="newsContent"></textarea>
+          </c:otherwise>
+        </c:choose>
 
           <input type="hidden" name="userNo" value="${loginUser.userNo}">
           <input type="hidden" name="newsContent" id="newsContent">
@@ -49,10 +66,17 @@
 
           <div class="btns"  align="right">
 
-              <button type="submit" class="btn btn-outline-secondary">수정하기</button>
-              <button type="submit" class="btn btn-outline-danger">삭제하기</button>
-
-              <button type="submit" class="btn btn-outline-primary" onclick="return confirm();">제출하기</button>
+              
+              <c:choose>
+	              <c:when test="${ status eq 'E' }">
+		              <button type="reset" class="btn btn-outline-danger">초기화</button>
+		              <button type="submit" class="btn btn-outline-primary" onclick="return confirm();">제출하기</button>
+	              </c:when>
+	              <c:otherwise>
+	                  <button type="reset" class="btn btn-outline-danger">초기화</button>
+	                  <button type="submit" class="btn btn-outline-secondary">수정하기</button>
+	              </c:otherwise>
+              </c:choose>
 
           </div>
 

@@ -1,6 +1,11 @@
+.cpadding{
+    margin: auto;
+}
+
+
 .card{
     width: 1100px;
-    margin: auto;
+
     margin-top: 50px;
 }
 
@@ -10,6 +15,11 @@
 
 .subtitle{
     display: flex;
+    justify-content: space-between;
+}
+
+.subtitle>div>a{
+    margin-right: 10px;
 }
 
 .userNo{
@@ -20,7 +30,33 @@
     margin: 30px;
 }
 
+.totalWrap{
+   display: flex;
+   margin: auto;
+   width: 1100px;
+}
+
 .zzimWrap{
+    margin-top: 100px;
+    margin-right: 20px;
+    position: relative;
+   
+}
+
+.zzimWrap>div{
+ 
+}
+
+.zzimWrap i{
+    font-size: 3rem !important;
+}
+
+.zzimWrap span{
+    padding-left: 15px;
+}
+
+.up{
     position: fixed;
-    left: 500px;
+    bottom: 100px;
+    right: 140px;
 }

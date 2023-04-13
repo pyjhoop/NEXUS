@@ -63,7 +63,8 @@ public class NewsController {
 	}
 	
 	@RequestMapping("newsEnrollForm.p")
-	public String newsEnrollFormPage() {
+	public String newsEnrollFormPage(Model model) {
+		model.addAttribute("status", "E"); // E: Enroll
 		return "news/newsEnrollForm";
 	}
 	
@@ -161,5 +162,16 @@ public class NewsController {
 		model.addAttribute("news", n);
 		
 		return "news/newsDetailPage";
+	}
+	
+	@RequestMapping("updateNews.p")
+	public String updateNewsPage(int nNo, Model model) {
+		
+		News n = newsService.selectNews(nNo);
+		model.addAttribute("news", n);
+		
+		System.out.println("수정 모델 "+n);
+		
+		return "news/newsEnrollForm";
 	}
 }
