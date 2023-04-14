@@ -47,7 +47,6 @@
                             <script>
                                 var htmlString = '${i.newsContent}';
                                 var $html = $(htmlString);
-                                //console.log($html.find("img"));
                                 if($html.find("img").length >0){
                                     $html.find("img").remove();
                                 }
@@ -68,7 +67,7 @@
 
 	                          <div>
                                 <!-- 프로필 이미지-->
-                                  <img  src="${pageContext.request.contextPath}/resources/image/laoh.jpg" alt="" style="width: 25px; border-radius: 100%;">
+                                  <img  src="${i.profile}" alt="" style="width: 25px; border-radius: 100%;">
                                   &nbsp;by <span class="userName">${i.userNo}</span>
 	                          </div>
 
@@ -88,7 +87,7 @@
             
     </div>
     
-    <div id="observer" class="card" style="visibility: hidden;">더보기</div>
+    <div id="observer" class="card">더보기</div>
 
 
 

@@ -13,26 +13,28 @@ $(function(){
 
     })
 
-    //  // 무한 스크롤
-    //  const $observer = document.getElementById('observer');
+     // 무한 스크롤
+     const $observer = document.getElementById('observer');
             
-    //  const io = new IntersectionObserver((entries) => {
-         
-    //  if (entries[0].isIntersecting) {
-     
-     
-    //  $.ajax({
-    //      url:"ajaxNewsList.p",
-    //      data: {"page":page},
-    //      success:function(data){
+     const io = new IntersectionObserver((entries) => {
+         let page = 1;
+        if (entries[0].isIntersecting) {
+            page+=1;
+        
+        $.ajax({
+            url:"ajaxNewsList.p",
+            data: {"page":page},
+            success:function(data){
+                console.log(data);
 
-    //      }, error:function(){
-    //          console.log("ajax 오류 발생")
-    //      }
-    //  })
+            }, error:function(){
+                console.log("ajax 오류 발생")
+            }
+        })
 
-    //  }
-    //  });
-    //  io.observe($observer);
+        }else{
+        }
+        });
+     io.observe($observer);
 
 })
