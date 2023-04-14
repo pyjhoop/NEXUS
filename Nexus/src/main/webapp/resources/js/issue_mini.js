@@ -1,58 +1,99 @@
-
-// title 닉네임 or 이름이 튤립 토글로 출력되게 하는 코드
-const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
+$(function() {
+  // Initialize the profile list to be hidden
+  $('.profiles-list').hide();
+  
+  // Function to generate profile li elements based on selected options
+  function generateProfiles() {
+    // Get the selected options
+    var selectedOptions = $('#defaultSelect option:selected');
+    
+    // Clear the previous selected profile list
+    $('.profiles-list ul').empty();
+    
+    // Add the selected profile li elements
+    selectedOptions.each(function() {
+      var profileName = $(this).text();
+      var profileImgUrl = ''; // Add the profile image URL
+      var profileLi = '<li class="avatar avatar-m pull-up" title="' + profileName + '"><img src="' + profileImgUrl + '" alt="" class="rounded-circle" /></li>';
+      $('.profiles-list ul').append(profileLi);
+    });
+  }
+  
+  // Generate the profile list on select change
+  $('#defaultSelect').on('change', function() {
+    generateProfiles();
+    $('.profiles-list').show();
+  });
+  
+  // Toggle the profile list on label click
+  $('label[for="defaultSelect"]').on('click', function() {
+    $('.profiles-list').toggle();
+  });
+  
+  $('#create-issue-btn').on('click', function() {
+    // TODO: Submit the issue form
+  });
 });
 
 
-const wrapper = document.querySelector('.wrapper');
-const select = document.querySelector('.select');
-const options = document.querySelector('.options');
-const input = document.querySelector('.filter');//input element 
+// ------------------------- 멀티 input
 
-let countries =
-    ["가나", "가봉", "감비아", "과테말라", "그레나다", "그리스", "기니", "네덜란드", "대한민국"];
 
-select.addEventListener('click', function () {
-    let c = wrapper.className;
-    wrapper.classList.toggle('active');
-});
 
-input.addEventListener('keyup', function () {//input에 글자를 적을 때마다 event발생.
-    let arr = [];//사용자가 적은 값과 일치하는 국가명을 집어넣을 새로운 배열.
-    let searchWord = input.value;//사용자 입력값
 
-    if (searchWord.length > 0) {//사용자 입력값이 존재하는 경우
 
-        arr = countries.filter(data => { //filter메서드를 사용해서 arr로 보내는데 
-            return data.startsWith(searchWord);
-        }).map(data => `<li onclick="changeClickedName(this)">${data}</li>`).join("");
-        //map을 사용해서 데이터를 <li>태그로 감싼 것처럼 처리함.
-        //join함수를 사용해서 새배열(arr)에서 출력되는','를 없앰
-        options.innerHTML = arr ? arr : '<p>조회된 나라가 없습니다.</p>';
-        //조회되는 아이템이 없는 경우 보여주는 글귀 설정.
-    } else {
-        //사용자 입력값이 존재하지않는 경우
-        options.innerHTML = "";//조회아이템이 없는 경우 보여주는 태그 비워주고
-        addLi();//모든 국가명 보여주기
+// ---------------------------------------
+
+ /* ------------ 중간에 li 추가하는 거 작동 안됨! ------------ */
+      
+    
+      
+      
+      $(function() {
+    	  $('#defaultSelect').on('change', function() {
+    	    // Get the selected options
+    	    
+    	    console.log("하이");
+    	    
+    	    var selectedOptions = $('#defaultSelect option:selected');
+    	    
+    	    // Clear the previous selected profile list
+    	    $('.profiles-list ul').empty();
+    	    
+    	    // Add the selected profile li elements
+    	    selectedOptions.each(function() {
+    	      var profileName = $(this).text();
+    	      var profileImgUrl = ''; // Add the profile image URL
+    	      var profileLi = '<li class="avatar avatar-m pull-up" title="이혜민"><img src="../assets/img/avatars/5.png" alt="" class="rounded-circle" /> 이혜민 </li>';
+    	      $('.profiles-list ul').append(profileLi);
+    	    });
+    	    
+    	    // Show the profile list
+    	    $('.profiles-list').show();
+    	  });
+    	  
+    	  $('#create-issue-btn').on('click', function() {
+    	    // TODO: Submit the issue form
+    	  });
+    	});
+
+  
+      $(function() {
+    	    $('#defaultSelect').on('click', function() {
+    	      $('.form-select').toggleClass('opened');
+    	    });
+    	  });
+
+
+// ------------------------------------------
+
+// 수정 + 삭제 버튼 클릭시
+
+function postFormSubmit(num) {
+    if (num == 1) { // 수정하기 클릭시
+        $("#postForm").attr("action", "issueUpdate.mini").submit();
+
+    } else { // 삭제하기 클릭시
+        $("#postForm").attr("action", "issueDelete.mini").submit();
     }
-
-
-});//input keyup event.
-
-addLi();
-
-function addLi() {
-    countries.forEach(country => {
-        let li = `<li onclick="changeClickedName(this)">${country}</li>`;
-        options.insertAdjacentHTML("beforeend", li);
-    })
-}
-
-function changeClickedName(li) {//옵션(국가명) 선택시
-    input.value = "";//input 초기화.
-    addLi();//모든 국가명 보여주기
-    wrapper.classList.remove('active');//classList사용해서 active 클래스명 삭제. 
-    select.firstElementChild.innerText = li.innerText;//선택된 옵션 값이 선택영역에 적용되도록 함
 }
