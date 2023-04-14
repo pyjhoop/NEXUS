@@ -46,9 +46,6 @@ function confirm(){
 }
 
 
-
-
-
 // $(function)
 
 $(function(){
@@ -59,12 +56,25 @@ $(function(){
         maxHeight: null,
         focus: true,
         lang: "ko-KR",
+        toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['bold', 'italic', 'underline']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture', 'video','hr']],
+            ['height', ['height']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ],
         callbacks: {
           onImageUpload : function(files){
             sendFile(files[0],this);
           }
         }
      });
+
+
 
 })
 
