@@ -30,9 +30,6 @@
 				
 					<c:when test="${ check eq 1 }">
 						<i class='bx bxs-heart-circle text-primary'></i>
-						<script>
-					console.log(${check})
-				</script>
 					</c:when>
 					
 					<c:otherwise>

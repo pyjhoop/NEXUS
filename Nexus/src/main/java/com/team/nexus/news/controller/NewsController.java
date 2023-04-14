@@ -93,6 +93,8 @@ public class NewsController {
 	@ResponseBody
 	public String newsReplyInsert(NewsReply nr) {
 		//insert 후에 arraylist 조회
+		nr.setCommentContent(nr.getCommentContent().replace("\n", "<br>"));
+		nr.setCommentContent(nr.getCommentContent().replace("<br><br>", "<br>"));
 		int count = newsService.newsReplyInsert(nr);
 		//System.out.println(count);
 		

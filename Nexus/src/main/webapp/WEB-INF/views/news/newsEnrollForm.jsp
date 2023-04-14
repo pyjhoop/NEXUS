@@ -45,6 +45,16 @@
           </div>
 
           <textarea name="newsContent" id="newsContent"></textarea>
+          
+          <c:if test="${ !empty news }">
+          	<script>
+          		
+              let text = `${news.newsContent}`;
+              $("#newsContent").summernote('code',text)
+          	</script>
+          </c:if>
+
+         
 		    
           
           <input type="hidden" name="userNo" value="${loginUser.userNo}">

@@ -44,6 +44,24 @@ $(function(){
         }
 
     })
+
+
+
+    $("#reply").keyup(function(e){
+
+        if (e.which === 13 && !e.shiftKey) {
+            $(".btnSubmit").click();
+    
+    }
+    })
+
+    $("#reply").bind('keypress', function(event) {
+        if( event.which === 13 && event.shiftKey ) {
+            let text = $("#reply");
+            text.val(text.val()+'\n');
+        }
+    });
+
 })
 
 

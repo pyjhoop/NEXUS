@@ -38,6 +38,7 @@
 			 from tb_news n
 			 join tb_member using(user_no)
              left join tb_news_zzim z using(news_no)
+             where n.status='Y'
              group by news_no, user_name, news_title, DBMS_LOB.SUBSTR(news_content, 1000, 1),to_char(create_date,'YYYY-MM-DD'), thumbnail, profile
             order by news_no desc)
 			 where rownum BETWEEN 1 and 12
@@ -48,14 +49,17 @@
 			         news_no
 			       , user_name 
 			       , news_title
-			       , news_content
-			       , to_char(create_date,'YYYY-MM-DD') "CREATE_DATE"
-			       , change_name
+			       , DBMS_LOB.SUBSTR(news_content, 1000, 1) as "news_content"
+                   , to_char(create_date,'YYYY-MM-DD') "CREATE_DATE"
+			       , thumbnail
 			       , profile
+                   , count(CASE WHEN z.status = 'Y' THEN 1 ELSE NULL END) as "likeCount"
 			 from tb_news n
 			 join tb_member using(user_no)
-			 where n.status='Y'
-			 order by news_no desc
+             left join tb_news_zzim z using(news_no)
+             where n.status='Y'
+             group by news_no, user_name, news_title, DBMS_LOB.SUBSTR(news_content, 1000, 1),to_char(create_date,'YYYY-MM-DD'), thumbnail, profile
+            order by news_no desc
 			 
 	</select>
 	
