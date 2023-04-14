@@ -9,17 +9,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class News {
-
+public class Zzim {
 	private int newsNo;
 	private String userNo;
-	private String newsTitle;
-	private String newsContent;
-	private String createDate;
 	private String updateDate;
 	private String status;
-	private String originName;
-	private String thumbnail;
-	private String profile;
-	private int likeCount;
+	
 }

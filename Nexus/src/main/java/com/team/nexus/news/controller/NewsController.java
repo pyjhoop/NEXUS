@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.team.nexus.member.model.vo.Member;
 import com.team.nexus.news.model.service.NewsService;
 import com.team.nexus.news.model.vo.News;
 import com.team.nexus.news.model.vo.NewsReply;
+import com.team.nexus.news.model.vo.Zzim;
 
 @Controller
 public class NewsController {
@@ -63,7 +65,8 @@ public class NewsController {
 	}
 	
 	@RequestMapping("newsEnrollForm.p")
-	public String newsEnrollFormPage() {
+	public String newsEnrollFormPage(Model model) {
+		model.addAttribute("status", "E"); // E: Enroll
 		return "news/newsEnrollForm";
 	}
 	
@@ -154,12 +157,87 @@ public class NewsController {
 	}
 	
 	@RequestMapping("newsDetail.p")
-	public String newsDetailPage(int nNo, Model model) {
+	public String newsDetailPage(int nNo, Model model, HttpSession session) {
+		
+		int userNo = ((Member)session.getAttribute("loginUser")).getUserNo();
 		
 		News n = newsService.selectNews(nNo);
+		ArrayList<NewsReply> rlist = newsService.selectrList(nNo);
+		int count = newsService.countrList(nNo);
+		
+		// 로그인한 사람이 해당 뉴스에 좋아요를 했는지 확인하는 메서드
+		Zzim z = new Zzim();
+		z.setNewsNo(nNo);
+		z.setUserNo(userNo+"");
+		int check = newsService.likeCount1(z);
+		
+		int total = newsService.totalLikeCount(z);
+		
+		
+		
 		
 		model.addAttribute("news", n);
+		model.addAttribute("rlist",rlist);
+		model.addAttribute("count",count);
+		model.addAttribute("check",check);
+		model.addAttribute("total",total);
+		
 		
 		return "news/newsDetailPage";
 	}
+	
+	
+	@RequestMapping("updateNews.p")
+	public String updateNewsPage(int nNo, Model model) {
+		
+		News n = newsService.selectNews(nNo);
+		model.addAttribute("news", n);
+		
+		return "news/newsEnrollForm";
+	}
+	
+	
+	@RequestMapping("deleteNews")
+	public String deleteNews(int newsNo) {
+		
+		int result = newsService.deleteNews(newsNo);
+		
+		if(result >0) {
+			return "redirect:news.p";
+		}else {
+			return "redirect:newsDetail.p?nNo="+newsNo;
+		}
+	}
+	
+	@RequestMapping("newsLike")
+	@ResponseBody
+	public String ajaxNewsLike(Zzim z) {
+		System.out.println(z);
+		// 있는지 조회부터
+		int result = newsService.likeCount(z);
+		
+		if(result>0) { //update
+			int upd = newsService.updateLike(z);
+		}else {//insert
+			int ins = newsService.insertLike(z);
+		}
+		
+		// newsNo에 찜한 개수
+		int total = newsService.totalLikeCount(z);
+		
+		return total+"";
+		
+	}
+	
+	@RequestMapping("newsUnlike")
+	@ResponseBody
+	public String ajaxNewsUnlike(Zzim z) {
+		
+		int result =newsService.updateUnlike(z);
+		
+		int total = newsService.totalLikeCount(z);
+		
+		return total+"";
+	}
+	
 }

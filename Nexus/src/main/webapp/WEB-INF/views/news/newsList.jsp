@@ -42,7 +42,7 @@
 
 	                  <div class="card-body">
 	                      <h5 class="card-title">${ i.newsTitle }</h5>
-	                      <p class="card-text${i.newsNo}">
+	                      <p class="card-text${i.newsNo} card-text1">
 
                             <script>
                                 var htmlString = '${i.newsContent}';
@@ -51,6 +51,9 @@
                                 if($html.find("img").length >0){
                                     $html.find("img").remove();
                                 }
+								if($html.find("iframe").length>0){
+									$html.find("iframe").remove();
+								}
 
                                 $(".card-text${i.newsNo}").html($html.html());
                                 
@@ -66,13 +69,13 @@
 	                          <div>
                                 <!-- 프로필 이미지-->
                                   <img  src="${pageContext.request.contextPath}/resources/image/laoh.jpg" alt="" style="width: 25px; border-radius: 100%;">
-                                  &nbsp;by <span>${i.userNo}</span>
+                                  &nbsp;by <span class="userName">${i.userNo}</span>
 	                          </div>
 
 	                          <div class="heartwrap">
 
 	                            <i class='bx bxs-heart-circle'></i>
-	                            <span class="zzim${i.newsNo}">좋아요</span>
+	                            <span class="zzim${i.newsNo}">${i.likeCount}</span>
 
 	                          </div>
 	

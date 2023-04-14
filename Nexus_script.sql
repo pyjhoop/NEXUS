@@ -73,7 +73,7 @@ create table tb_news (
 	news_no	number primary key,
 	user_no	number references tb_member,
 	news_title	varchar2(1000)	NOT NULL,
-	news_content varchar2(4000)	NOT NULL,
+	news_content CLOB 	NOT NULL,
 	create_date date DEFAULT sysdate,
 	update_date date DEFAULT sysdate,
 	status	varchar2(3) default 'Y'	check(status in('Y','N')),
@@ -83,7 +83,7 @@ create table tb_news (
 create sequence seq_news
 nocache;
 
---insert into tb_news values(seq_news.nextval, 1,'오늘 하루 힘들다','지하철에서 빌런만났는데 힘드네요',sysdate,sysdate,'Y','asdf');
+insert into tb_news values(seq_news.nextval, 1,'오늘 하루 힘들다','지하철에서 빌런만났는데 힘드네요',sysdate,sysdate,'Y',null);
 --insert into tb_news values(seq_news.nextval, 2,'배고프다','점심시간인데 왜 밥을 못먹게 합니까!!!',sysdate,sysdate,'Y','asdf');
 --insert into tb_news values(seq_news.nextval, 3,'아니 지하철에서 시위좀 그만 합시다','제시간에 도착하고 싶어여ㅠㅠ',sysdate,sysdate,'Y','asdf');
 
@@ -117,8 +117,18 @@ comment on column tb_news_comments.comment_content is '내용';
 comment on column tb_news_comments.comment_date is '작성일';
 comment on column tb_news_comments.status is '상태';
 
+---------------------- 뉴스 찜 -------------------------
+create table tb_news_zzim(
+    news_no	number,
+    user_no number,
+    update_date date,
+    status char(1)
+);
 
-
+comment on column tb_news_zzim.news_no is '뉴스번호';
+comment on column tb_news_zzim.user_no is '회원번호';
+comment on column tb_news_zzim.update_date is '수정날짜';
+comment on column tb_news_zzim.status is '상태';
 
 ---------------------- 팀원 -------------------------
 create table tb_collaborator(
