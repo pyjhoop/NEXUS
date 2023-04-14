@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,138 +6,141 @@
 <title>Insert title here</title>
 
 <style>
-
-
-.input-group input{
-	width:80px;
+.input-group input {
+	width: 80px;
 }
 
-.total-box{
-  display: flex;
-   border-radius: 0.375rem;
-    height: 80%;
+.total-box {
+	display: flex;
+	border-radius: 0.375rem;
+	height: 80%;
 }
 
- .input-top {
-  display: flex;
-  margin-top:50px;
- 
- 
-  border-radius: 0.375rem;
-} 
+.input-top {
+	display: flex;
+	margin-top: 50px;
+	border-radius: 0.375rem;
+}
 
-
+.why {
+	width: 100%;
+	height: 100%;
+	background-color: white;
+}
 
 .editor-wrapper {
-  flex: 1 1 68%;
-  padding: 20px 20px;
-    background-color: white;
-    border-radius: 0.375rem;
+	width: 100%;
+	flex: 1 1 68%;
+	padding: 20px 20px;
+	height: 85%;
+	background-color: white;
+	border-radius: 0.375rem;
+}
+
+.editor {
+	width: 100%;
+}
+
+.btn-box {
+	width: 100%;
+	float: right;
+	margin-right: 10px;
 }
 
 .editor-label {
-  flex: 1 1 32%;
-  padding: 20px 20px;
-   background-color: white;
-   border-radius: 0.375rem;
+	flex: 1 1 32%;
+	padding: 20px 20px;
+	background-color: white;
+	border-radius: 0.375rem;
 }
 
- 
 /* 셀렉트 박스 css */
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 .wrapper {
-    width: 360px;
-    margin: 20px auto 0;
+	width: 360px;
+	margin: 20px auto 0;
 }
 
-.select,
-.options li {
-    display: flex;
-    cursor: pointer;
-    align-items: center;
+.select, .options li {
+	display: flex;
+	cursor: pointer;
+	align-items: center;
 }
 
 .select {
-    height: 60px;
-    padding: 0 20px;
-    background: #4285f4;
-    border-radius: 10px;
-    color: #ffffff;
-    justify-content: space-between;
+	height: 60px;
+	padding: 0 20px;
+	background: #4285f4;
+	border-radius: 10px;
+	color: #ffffff;
+	justify-content: space-between;
 }
 
 .content {
-    display: none;
-    background: #ffffff;
-    margin-top: 5px;
-    padding: 15px;
-    border-radius: 10px;
-      height: 300px;
+	display: none;
+	background: #ffffff;
+	margin-top: 5px;
+	padding: 15px;
+	border-radius: 10px;
+	height: 300px;
 }
 
 .active .content {
-    display: block;
-   
+	display: block;
 }
 
 .content .search-box {
-    position: relative;
+	position: relative;
 }
 
 .search-box .material-icons {
-    left: 15px;
-    line-height: 53px;
-    position: absolute;
+	left: 15px;
+	line-height: 53px;
+	position: absolute;
 }
 
 .search-box input {
-    height: 53px;
-    width: 100%;
-    outline: none;
-    font-size: 17px;
-    padding: 0 10px 0 43px;
-    border: 1px solid #aabb;
-    border-radius: 10px;
+	height: 53px;
+	width: 100%;
+	outline: none;
+	font-size: 17px;
+	padding: 0 10px 0 43px;
+	border: 1px solid #aabb;
+	border-radius: 10px;
 }
 
 .content .options {
-    margin-top: 10px;
-    max-height: 250px;
-    overflow-y: auto;
+	margin-top: 10px;
+	max-height: 250px;
+	overflow-y: auto;
 }
 
 .options::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-    border-radius: 25px;
+	background-color: #f1f1f1;
+	border-radius: 25px;
 }
 
 .options::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 25px;
+	background-color: #ccc;
+	border-radius: 25px;
 }
 
 .options li {
-    height: 50px;
-    padding: 0 13px;
-    border-radius: 7px;
+	height: 50px;
+	padding: 0 13px;
+	border-radius: 7px;
 }
 
 .options li:hover {
-    background: #f2f2f2;
+	background: #f2f2f2;
 }
 
-
 /* 만든거 css*/
-
-
-
-
 </style>
 
 
@@ -153,45 +155,53 @@
 </head>
 <body>
 
-	<jsp:include page="../common/template.jsp"/>
+	<jsp:include page="../common/template.jsp" />
 
 
 
 
-<div class="container input-top" style="margin-left: 0px; margin-right: 0px; height:70px;">
-  <div class="input-group mb-3" style="width: calc(100% - 5px);  display: flex;">
-    <span class="input-group-text" id="inputGroup-sizing-default" style="width: 100px;">이슈 제목</span>
-    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="flex: 1;" required>
-  </div>
-</div>
+	<div class="container input-top" style="margin-left: 0px; margin-right: 0px; height: 70px;">
+		<div class="input-group mb-3" style="width: calc(100% - 5px); display: flex;">
+			<span class="input-group-text" id="inputGroup-sizing-default" style="width: 100px;">이슈 제목</span>
+			<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="flex: 1;" name="issueTitle" id="title" required>
+		</div>
+	</div>
 
 
- <div class="container total-box" style="margin-left: 0px; margin-right: 0px;">
-  
+	<div class="container total-box" style="margin-left: 0px; margin-right: 0px;">
 
-  	<div class="editor-wrapper">
-	    <div id="editor">
-	
-	    </div>
-  	</div>
-  	<div class="editor-label">
-  
+		<div class="why">
+			<div class="editor-wrapper">
+				<div id="editor"></div>
+				<div class="btn-box">
+					<br>
+					<button type="submit" class="btn btn-outline-primary">등록</button>
+				</div>
+			</div>
+		</div>
 
-<div class="wrapper">
-  <div class="select">
-    <span>나라를 선택해주세요</span>
-    <span class="material-icons">expand_more</span>
-  </div><!--select-->
-  <div class="content">
-    <div class="search-box">
-      <span class="material-icons">search</span>     
-      <input class="filter" type="text" placeholder="검색">
-    </div><!--search box-->
-    <ul class="options">
-    </ul>
-  </div><!--content-->
-</div><!--wrapper-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!-- 구분선 -->
+
+		<div class="editor-label">
+
+			<div class="wrapper">
+				<div class="select">
+					<span>나라를 선택해주세요</span> <span class="material-icons">expand_more</span>
+				</div>
+				<!--select-->
+				<div class="content">
+					<div class="search-box">
+						<span class="material-icons">search</span>
+						<input class="filter" type="text" placeholder="검색">
+					</div>
+					<!--search box-->
+					<ul class="options">
+					</ul>
+				</div>
+				<!--content-->
+			</div>
+			<!--wrapper-->
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
 
@@ -199,11 +209,12 @@
 
 
 
-  	</div> <!-- editor-label -->
+		</div>
+		<!-- editor-label -->
 
-  </div>
+	</div>
 
-  <script>
+	<script>
       var editor = new toastui.Editor({
           el: document.querySelector('#editor'),
           height: '100%',
