@@ -74,5 +74,9 @@ public class NewsService {
 		return newsDao.updateUnlike(sqlsession,z);
 	}
 
+	public int likeCount1(Zzim z) {
+		return newsDao.likeCount1(sqlsession,z);
+	}
+
 
 }

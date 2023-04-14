@@ -26,10 +26,22 @@
 		<div class="row">
 
 			<div class="zzimWrap col-md-1">
-	
-				<i class='bx bxs-heart-circle'></i>
+				<c:choose>
+				
+					<c:when test="${ check eq 1 }">
+						<i class='bx bxs-heart-circle text-primary'></i>
+						<script>
+					console.log(${check})
+				</script>
+					</c:when>
+					
+					<c:otherwise>
+					
+						<i class='bx bxs-heart-circle'></i>
+					</c:otherwise>
+				</c:choose>
 				<br>
-				<span class="likeCount">12</span>
+				<span class="likeCount">${ total }</span>
 	
 			</div>
 	

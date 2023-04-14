@@ -70,6 +70,7 @@
 
 #profile{
     width: 130px;
+    height: 130px;
     border-radius: 100%;
 }
 #profileWrap>span{
@@ -147,4 +148,8 @@
 
 .likeCount{
     margin-left: 5px;
+}
+
+.bx-chevrons-up{
+    font-size: 2rem !important;
 }

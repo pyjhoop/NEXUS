@@ -144,6 +144,15 @@
 			and user_no = #{userNo}
 	</select>
 	
+	<select id="likeCount1" resultType="_int">
+		select count(*) as "count"
+			from tb_news_zzim
+			where news_no = #{newsNo}
+			and user_no = #{userNo}
+			and status = 'Y'
+	</select>
+	
+	
 	<insert id="insertLike">
 		insert 
 			  into tb_news_zzim
@@ -175,6 +184,7 @@
 			where news_no = #{newsNo}
 			and status = 'Y'
 	</select>
+	
 	
 	<update id="updateUnlike">
 		  update tb_news_zzim

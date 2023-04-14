@@ -51,6 +51,9 @@
                                 if($html.find("img").length >0){
                                     $html.find("img").remove();
                                 }
+								if($html.find("iframe").length>0){
+									$html.find("iframe").remove();
+								}
 
                                 $(".card-text${i.newsNo}").html($html.html());
                                 
@@ -66,7 +69,7 @@
 	                          <div>
                                 <!-- 프로필 이미지-->
                                   <img  src="${pageContext.request.contextPath}/resources/image/laoh.jpg" alt="" style="width: 25px; border-radius: 100%;">
-                                  &nbsp;by <span>${i.userNo}</span>
+                                  &nbsp;by <span class="userName">${i.userNo}</span>
 	                          </div>
 
 	                          <div class="heartwrap">
