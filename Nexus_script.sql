@@ -49,9 +49,9 @@ create table tb_member(
 create sequence seq_member
 nocache;
 
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user01','pass01','박연준','자바마스터','email01@kh.co.kr',null,null,'O',SYSDATE,null,'Y');
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user02','pass02','이혜민','DB의 달인','email02@kh.co.kr',null,null,'O',SYSDATE,null,'Y');
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user03','pass03','임철현','스프링의귀재','email03@kh.co.kr',null,null,'O',SYSDATE,null,'Y');
+INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user01','pass01','박연준','자바마스터','email01@kh.co.kr',null,'/nexus/resources/image/user-circle-solid-48.png','O',SYSDATE,null,'Y');
+INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user02','pass02','이혜민','DB의 달인','email02@kh.co.kr',null,'/nexus/resources/image/user-circle-solid-48.png','O',SYSDATE,null,'Y');
+INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user03','pass03','임철현','스프링의귀재','email03@kh.co.kr',null,'/nexus/resources/image/user-circle-solid-48.png','O',SYSDATE,null,'Y');
 
 
 COMMENT ON COLUMN TB_MEMBER.USER_NO IS '회원번호';
@@ -77,16 +77,15 @@ create table tb_news (
 	create_date date DEFAULT sysdate,
 	update_date date DEFAULT sysdate,
 	status	varchar2(3) default 'Y'	check(status in('Y','N')),
-	origin_name	varchar2(100)	NULL,
-	change_name	varchar2(100)	NULL
+    thumbnail varchar2(100)
 );
 
 create sequence seq_news
 nocache;
 
-insert into tb_news values(seq_news.nextval, 1,'오늘 하루 힘들다','지하철에서 빌런만났는데 힘드네요',sysdate,sysdate,'Y','qwe','qwe');
-insert into tb_news values(seq_news.nextval, 2,'배고프다','점심시간인데 왜 밥을 못먹게 합니까!!!',sysdate,sysdate,'Y','asdf','asdf');
-insert into tb_news values(seq_news.nextval, 3,'아니 지하철에서 시위좀 그만 합시다','제시간에 도착하고 싶어여ㅠㅠ',sysdate,sysdate,'Y','qwe','qwe');
+--insert into tb_news values(seq_news.nextval, 1,'오늘 하루 힘들다','지하철에서 빌런만났는데 힘드네요',sysdate,sysdate,'Y','asdf');
+--insert into tb_news values(seq_news.nextval, 2,'배고프다','점심시간인데 왜 밥을 못먹게 합니까!!!',sysdate,sysdate,'Y','asdf');
+--insert into tb_news values(seq_news.nextval, 3,'아니 지하철에서 시위좀 그만 합시다','제시간에 도착하고 싶어여ㅠㅠ',sysdate,sysdate,'Y','asdf');
 
 comment on column tb_news.news_no is '뉴스번호';
 comment on column tb_news.user_no is '회원번호';
@@ -95,8 +94,7 @@ comment on column tb_news.news_content is '내용';
 comment on column tb_news.create_date is '생성일';
 comment on column tb_news.update_date is '수정일';
 comment on column tb_news.status is '상태';
-comment on column tb_news.origin_name is '기존 파일명';
-comment on column tb_news.change_name is '변경된 파일명';
+comment on column tb_news.thumbnail is '썸네일';
 
 
 ---------------------- 뉴스 댓글 -------------------------
@@ -108,9 +106,9 @@ create table tb_news_comments(
     status varchar2(3) default 'Y' check(status in('Y','N'))
 );
 
-insert into tb_news_comments values(1, 'user01','ㅋㅋㅋㅋ',sysdate,'Y');
-insert into tb_news_comments values(1, 'user02','ㅋㅋㅋㅋ',sysdate,'Y');
-insert into tb_news_comments values(1, 'user03','ㅋㅋㅋㅋ',sysdate,'Y');
+--insert into tb_news_comments values(1, 'user01','ㅋㅋㅋㅋ',sysdate,'Y');
+--insert into tb_news_comments values(1, 'user02','ㅋㅋㅋㅋ',sysdate,'Y');
+--insert into tb_news_comments values(1, 'user03','ㅋㅋㅋㅋ',sysdate,'Y');
 
 
 comment on column tb_news_comments.news_no is '뉴스번호';
@@ -118,6 +116,9 @@ comment on column tb_news_comments.comment_writer is '작성자 아이디';
 comment on column tb_news_comments.comment_content is '내용';
 comment on column tb_news_comments.comment_date is '작성일';
 comment on column tb_news_comments.status is '상태';
+
+
+
 
 ---------------------- 팀원 -------------------------
 create table tb_collaborator(
@@ -191,10 +192,12 @@ CREATE TABLE TB_CHAT_USER(
 COMMENT ON COLUMN TB_CHAT_USER.USER_NO IS '회원 번호';
 COMMENT ON COLUMN TB_CHAT_USER.ROOM_NO IS '채팅방 번호';
 
-INSERT INTO TB_CHAT_USER VALUES(1,2);
-INSERT INTO TB_CHAT_USER VALUES(2,1);
-INSERT INTO TB_CHAT_USER VALUES(3,3);
-
+INSERT INTO TB_CHAT_USER VALUES(4,1);
+INSERT INTO TB_CHAT_USER VALUES(4,2);
+INSERT INTO TB_CHAT_USER VALUES(4,3);
+INSERT INTO TB_CHAT_USER VALUES(3,1);
+INSERT INTO TB_CHAT_USER VALUES(2,2);
+INSERT INTO TB_CHAT_USER VALUES(1,3);
 
 ---------------------- 채팅 -------------------------
 CREATE TABLE TB_CHATTING(
@@ -203,22 +206,25 @@ CREATE TABLE TB_CHATTING(
    CHATTING_CONTENT VARCHAR2(3000),
    ORIGIN_NAME VARCHAR2(500),
    CHANGE_NAME VARCHAR2(500),
-   CHAT_WRITER VARCHAR2(100) NOT NULL,
+   USER_NO NUMBER NOT NULL REFERENCES TB_MEMBER,
    CREATE_DATE DATE DEFAULT SYSDATE NOT NULL
 );
+
+CREATE SEQUENCE SEQ_CHATTING NOCACHE;
 
 COMMENT ON COLUMN TB_CHATTING.CHATTING_NO IS '채팅 번호';
 COMMENT ON COLUMN TB_CHATTING.ROOM_NO IS '채팅방 번호';
 COMMENT ON COLUMN TB_CHATTING.CHATTING_CONTENT IS '메세지 내용';
 COMMENT ON COLUMN TB_CHATTING.ORIGIN_NAME IS '원본 파일명';
 COMMENT ON COLUMN TB_CHATTING.CHANGE_NAME IS '바뀐 파일명';
-COMMENT ON COLUMN TB_CHATTING.CHAT_WRITER IS '작성자';
+COMMENT ON COLUMN TB_CHATTING.USER_NO IS '작성자';
 COMMENT ON COLUMN TB_CHATTING.CREATE_DATE IS '작성일자';
 
 
-INSERT INTO TB_CHATTING VALUES(1,1,'ㅎㅇㅎㅇ',NULL,NULL,'연준',SYSDATE);
-INSERT INTO TB_CHATTING VALUES(2,1,'ㅋㅋㅋㅋ',NULL,NULL,'혜민',SYSDATE);
-INSERT INTO TB_CHATTING VALUES(3,2,'철현의 코딩일지..',NULL,NULL,'철현',SYSDATE);
+INSERT INTO TB_CHATTING VALUES(1,1,'ㅎㅇㅎㅇ',NULL,NULL,1,SYSDATE);
+INSERT INTO TB_CHATTING VALUES(2,1,'ㅋㅋㅋㅋ',NULL,NULL,2,SYSDATE);
+INSERT INTO TB_CHATTING VALUES(3,2,'철현의 코딩일지..',NULL,NULL,3,SYSDATE);
+INSERT INTO TB_CHATTING VALUES(4,1,'철현의 코딩일지..',NULL,NULL,4,SYSDATE);
 
 --------------------------------------------------
 --------------     ISSUE 관련 	------------------	
@@ -334,7 +340,7 @@ INSERT
 				, DEFAULT
 				, '레파지토리 ID 456'
 				, '알람 기능 구현'
-				, '하하하핳 잘 해야내야지 암요'
+				, '하하하K 잘 해야내야지 암요'
 				, 1 -- 회원 만든 아이디 넣어야해염
                 , 1
 
@@ -507,7 +513,7 @@ INSERT
 			(
 				
 				SEQ_ISU_REPLY_NO.NEXTVAL
-				, '두번째댓글 테스트중입니댱'
+				, '두번째댓글 테스트중입니?'
 				, 1
 				, SYSDATE
 				, DEFAULT
@@ -938,9 +944,3 @@ INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 2, 2, 'FLUERYOUNG', SYSDATE,
 INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 3, 3, '식사프로젝트', SYSDATE, SYSDATE, '2023-04-01', 'CLOSED');
 
 COMMIT;
-
-
-
-
-
-

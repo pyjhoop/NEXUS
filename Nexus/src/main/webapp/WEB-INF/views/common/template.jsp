@@ -225,7 +225,7 @@
 								<a class="nav-link dropdown-toggle hide-arrow"
 								href="javascript:void(0);" data-bs-toggle="dropdown">
 									<div class="avatar avatar-online">
-										<img src="${loginUser.profile }" alt
+									<img src="${loginUser.profile }" alt
 											class="w-px-40 h-px-40 rounded-circle" />
 									</div>
 								</a>
@@ -234,8 +234,9 @@
 											<div class="d-flex">
 												<div class="flex-shrink-0 me-3">
 													<div class="avatar avatar-online">
-														<img src="${loginUser.profile }" alt
-															class="w-px-40 h-auto rounded-circle" />
+											
+												<img src="${loginUser.profile }" alt
+														class="w-px-40 h-px-40 rounded-circle" />
 													</div>
 												</div>
 												<div class="flex-grow-1">
@@ -323,7 +324,9 @@
         </div>
 
     </div>
-
+	<script>
+	console.log("${pageContext.request.contextPath}");
+	</script>
 	<!-- Core JS -->
 	<!-- build:js assets/vendor/js/core.js -->
 	<script

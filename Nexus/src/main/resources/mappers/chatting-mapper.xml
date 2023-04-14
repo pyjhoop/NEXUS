@@ -23,7 +23,12 @@
  	</resultMap>
  	
  	<resultMap type="ChatMessage" id="chatMessageResultSet">
- 		<result column="room_no" property="roomNo"/>
+ 		<result column="chatting_no" property="chattingNo"/>
+ 		<result column="chatting_content" property="chattingContent"/>
+ 		<result column="user_no" property="userNo"/>
+ 		<result column="user_name" property="userName"/>
+ 		<result column="create_date" property="createDate"/>
+ 		<result column="profile" property="profile"/>
  	</resultMap>
  	
  	<select id="selectRoom" resultMap="chatRoomResultSet">
@@ -50,4 +55,20 @@
 	        and u.user_no != #{userNo}
  	</select>
  
+ 	<select id="selectMessage" resultMap="chatMessageResultSet">
+ 		select chatting_no
+	     , chatting_content
+	     , user_no
+	     , m.user_name
+	     , create_date
+	     , profile
+	    from tb_chatting c
+	    join tb_member m using(user_no) 
+	  where room_no = #{rno}
+ 	</select>
+ 	<insert id="insertMessage">
+ 		insert 
+ 			into tb_chatting
+ 			values(seq_chatting.nextval, #{roomNo}, #{chattingContent}, null , null, #{userNo}, sysdate)
+ 	</insert>
  </mapper>

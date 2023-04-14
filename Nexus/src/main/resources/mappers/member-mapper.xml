@@ -48,7 +48,7 @@
 		      , #{userName}
 		      , #{gender}
 		      , #{email}  
-		      , #{profile}
+		      , '/nexus/resources/image/user-circle-solid-48.png'
 		      , #{social}
 		    )
 	</insert>

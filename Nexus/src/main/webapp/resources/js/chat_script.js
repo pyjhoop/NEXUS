@@ -7,7 +7,7 @@
         this.$menuItem = $('#sidebar-menu a');
     };
 
-    function init() {
+   function init() {
         var $this = Sidemenu;
         $('#sidebar-menu a').on('click', function(e) {
             if ($(this).parent().hasClass('submenu')) {
@@ -261,7 +261,7 @@
         });
     }
     var chatAppTarget = $('.chat-window');
-    (function() {
+   (function() {
         if ($(window).width() > 991)
             chatAppTarget.removeClass('chat-slide');
         $(document).on("click", ".chat-window .chat-users-list a.media", function() {

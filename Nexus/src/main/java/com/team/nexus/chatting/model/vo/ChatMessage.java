@@ -16,10 +16,12 @@ import lombok.ToString;
 public class ChatMessage {
 	private int chattingNo;
 	private int roomNo;
-	private String chattingMessage;
+	private String chattingContent;
 	private Date createDate;
 	private String originName;
 	private String changeName;
 	private int userNo;
+	private String userName;
+	private String profile;
 	
 }

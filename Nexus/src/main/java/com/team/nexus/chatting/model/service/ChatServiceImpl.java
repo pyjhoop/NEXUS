@@ -27,8 +27,8 @@ public class ChatServiceImpl implements ChatService{
 
 	@Override
 	public int insertMessage(ChatMessage chatMessage) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return cDao.insertMessage(sqlSession, chatMessage);
 	}
 
 	@Override
