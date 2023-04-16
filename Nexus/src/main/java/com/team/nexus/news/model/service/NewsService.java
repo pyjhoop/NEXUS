@@ -78,5 +78,9 @@ public class NewsService {
 		return newsDao.likeCount1(sqlsession,z);
 	}
 
+	public int updateNews(News n) {
+		return newsDao.upateNews(sqlsession, n);
+	}
+
 
 }

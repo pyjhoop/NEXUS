@@ -211,6 +211,13 @@ public class NewsController {
 		}
 	}
 	
+	@RequestMapping("updateNews")
+	public String updateNews(News n) {
+
+		int result = newsService.updateNews(n);
+		return "redirect:news.p";
+	}
+	
 	@RequestMapping("newsLike")
 	@ResponseBody
 	public String ajaxNewsLike(Zzim z) {
