@@ -40,11 +40,14 @@ public class CalendarController {
 		return new Gson().toJson(list);
 	}
 	
+	@ResponseBody
 	@RequestMapping("insertCal.ih")
-	public void insertCalendar(Calendar cal, HttpSession session) {
+	public int insertCalendar(Calendar cal, HttpSession session) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		cal.setUserNo(loginUser.getUserNo());
-		cService.insertCalendar(cal);
+		int result = cService.insertCalendar(cal);
+		
+		return result;
 	}
 	
 	

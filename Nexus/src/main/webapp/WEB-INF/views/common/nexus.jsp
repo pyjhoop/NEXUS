@@ -309,10 +309,10 @@
 
 	<!-- kakao -->
        <div class="wrap">
-     <a class="kakao" href="https://kauth.kakao.com/oauth/authorize?client_id=c2b8f2ae81e7206df597a694d983c1ee&redirect_uri=http://localhost:8010/nexus/kakao&response_type=code">
-      	<div>카카오톡으로 간편로그인 </div>
-   	</a>
-</div>
+            <a class="kakao" href="https://kauth.kakao.com/oauth/authorize?client_id=c2b8f2ae81e7206df597a694d983c1ee&redirect_uri=http://localhost:8010/nexus/kakao&response_type=code">
+                <div>카카오톡으로 간편로그인 </div>
+            </a>
+        </div>
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->

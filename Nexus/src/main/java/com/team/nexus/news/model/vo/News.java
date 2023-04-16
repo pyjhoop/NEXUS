@@ -19,6 +19,7 @@ public class News {
 	private String updateDate;
 	private String status;
 	private String originName;
-	private String changeName;
+	private String thumbnail;
 	private String profile;
+	private int likeCount;
 }
