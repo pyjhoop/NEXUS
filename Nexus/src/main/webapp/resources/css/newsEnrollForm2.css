@@ -1,0 +1,27 @@
+.cpadding{
+    margin-top: 50px;
+}
+
+span, input{
+    display: block;
+    box-sizing: border-box;
+}
+#newsTitle{
+    
+    width: 95%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
+}
+
+/* .sbtn{
+    width: 10%;
+    margin-left: 88%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+} */
+
+.btns{
+    float: right;
+}

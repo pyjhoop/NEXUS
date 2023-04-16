@@ -74,8 +74,13 @@
                 <prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
 				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
             </props>
-      </property>
-      
+      </property>  
    </bean>
+   
+   <!-- 파일 업로드 관련 빈 등록 -->
+    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+    	<property name="maxUploadSize" value="100000000"/> <!-- 100Mb 이건 용량이 무제한이지만 제한둬야함 -->
+    	<property name="maxInMemorySize" value="100000000"/>
+    </bean>
 	
 </beans>

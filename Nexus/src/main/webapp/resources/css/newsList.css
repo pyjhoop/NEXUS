@@ -1,0 +1,51 @@
+.card-img-top{
+    height: 200px;
+}
+
+.userInfo{
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-text1{
+    height: 70px;
+    overflow: hidden;
+}
+
+.card-title{
+    font-weight: 800;
+    height: 20px;
+    overflow: hidden;
+}
+
+.bxs-heart-circle{
+    font-size: 1.5rem !important;
+}
+.heartwrap{
+    margin-top: 5px;
+}
+
+.cardWrap{
+    position: relative;
+    transition: top 0.3s ease-in-out;
+}
+
+.cardWrap:hover{
+    cursor: pointer;
+    top:-5px;
+}
+
+#enroll{
+    visibility: visible !important;
+    margin-right: 15px;
+}
+
+.up{
+    position: fixed;
+    bottom: 100px;
+    right: 70px;
+    font-size: 2rem !important;
+}
+.bx-chevrons-up{
+    font-size: 2rem !important;
+}

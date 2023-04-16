@@ -1,26 +1,26 @@
------------------»èÁ¦------------------
---Á¢¼ÓÀ¯ÀúÀÇ ¸ðµçÅ×ÀÌºí ¹× Á¦¾àÁ¶°Ç »èÁ¦
+-----------------ì‚­ì œ------------------
+--ì ‘ì†ìœ ì €ì˜ ëª¨ë“ í…Œì´ë¸” ë° ì œì•½ì¡°ê±´ ì‚­ì œ
 BEGIN
     FOR C IN (SELECT TABLE_NAME FROM USER_TABLES) LOOP
     EXECUTE IMMEDIATE ('DROP TABLE '||C.TABLE_NAME||' CASCADE CONSTRAINTS');
     END LOOP;
 END;
 /
---Á¢¼ÓÀ¯ÀúÀÇ ¸ðµç ½ÃÄö½º »èÁ¦
+--ì ‘ì†ìœ ì €ì˜ ëª¨ë“  ì‹œí€€ìŠ¤ ì‚­ì œ
 BEGIN
 FOR C IN (SELECT * FROM USER_SEQUENCES) LOOP
   EXECUTE IMMEDIATE 'DROP SEQUENCE '||C.SEQUENCE_NAME;
 END LOOP;
 END;
 /
---Á¢¼ÓÀ¯ÀúÀÇ ¸ðµç ºä »èÁ¦
+--ì ‘ì†ìœ ì €ì˜ ëª¨ë“  ë·° ì‚­ì œ
 BEGIN
 FOR C IN (SELECT * FROM USER_VIEWS) LOOP
   EXECUTE IMMEDIATE 'DROP VIEW '||C.VIEW_NAME;
 END LOOP;
 END;
 /
---Á¢¼ÓÀ¯ÀúÀÇ ¸ðµç Æ®¸®°Å »èÁ¦
+--ì ‘ì†ìœ ì €ì˜ ëª¨ë“  íŠ¸ë¦¬ê±° ì‚­ì œ
 BEGIN
 FOR C IN (SELECT * FROM USER_TRIGGERS) LOOP
   EXECUTE IMMEDIATE 'DROP TRIGGER '||C.TRIGGER_NAME;
@@ -28,9 +28,9 @@ END LOOP;
 END;
 /
 
--- Å×ÀÌºí »ý¼º
+-- í…Œì´ë¸” ìƒì„±
 
----------------------- È¸¿ø Å×ÀÌºí -------------------------
+---------------------- íšŒì› í…Œì´ë¸” -------------------------
 create table tb_member(
     user_no	number primary key,
 	user_id	varchar2(50) not null unique,
@@ -49,31 +49,31 @@ create table tb_member(
 create sequence seq_member
 nocache;
 
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user01','pass01','¹Ú¿¬ÁØ','ÀÚ¹Ù¸¶½ºÅÍ','email01@kh.co.kr',null,'/nexus/resources/image/user-circle-solid-48.png','O',SYSDATE,null,'Y');
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user02','pass02','ÀÌÇý¹Î','DBÀÇ ´ÞÀÎ','email02@kh.co.kr',null,'/nexus/resources/image/user-circle-solid-48.png','O',SYSDATE,null,'Y');
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user03','pass03','ÀÓÃ¶Çö','½ºÇÁ¸µÀÇ±ÍÀç','email03@kh.co.kr',null,'/nexus/resources/image/user-circle-solid-48.png','O',SYSDATE,null,'Y');
+INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user01','pass01','ë°•ì—°ì¤€','ìžë°”ë§ˆìŠ¤í„°','email01@kh.co.kr',null,'/nexus/resources/image/user-circle-solid-48.png','O',SYSDATE,null,'Y');
+INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user02','pass02','ì´í˜œë¯¼','DBì˜ ë‹¬ì¸','email02@kh.co.kr',null,'/nexus/resources/image/user-circle-solid-48.png','O',SYSDATE,null,'Y');
+INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user03','pass03','ìž„ì² í˜„','ìŠ¤í”„ë§ì˜ê·€ìž¬','email03@kh.co.kr',null,'/nexus/resources/image/user-circle-solid-48.png','O',SYSDATE,null,'Y');
 
 
-COMMENT ON COLUMN TB_MEMBER.USER_NO IS 'È¸¿ø¹øÈ£';
-COMMENT ON COLUMN TB_MEMBER.USER_ID IS '¾ÆÀÌµð';
-COMMENT ON COLUMN TB_MEMBER.USER_PWD IS 'ºñ¹Ð¹øÈ£';
-COMMENT ON COLUMN TB_MEMBER.USER_NAME IS 'È¸¿ø ÀÌ¸§';
-COMMENT ON COLUMN TB_MEMBER.USER_NICK IS '´Ð³×ÀÓ';
-COMMENT ON COLUMN TB_MEMBER.EMAIL IS 'ÀÌ¸ÞÀÏ';
-COMMENT ON COLUMN TB_MEMBER.PROFILE IS 'ÇÁ·ÎÇÊÁÖ¼Ò';
-COMMENT ON COLUMN TB_MEMBER.GENDER IS '¼ºº°';
-COMMENT ON COLUMN TB_MEMBER.SOCIAL IS '¼Ò¼È ¿©ºÎ';
-COMMENT ON COLUMN TB_MEMBER.ENROLL_DATE IS '°¡ÀÔÀÏ';
-COMMENT ON COLUMN TB_MEMBER.TOKEN IS 'ÅäÅ«';
-COMMENT ON COLUMN TB_MEMBER.STATUS IS 'Å»Åð¿©ºÎ';
+COMMENT ON COLUMN TB_MEMBER.USER_NO IS 'íšŒì›ë²ˆí˜¸';
+COMMENT ON COLUMN TB_MEMBER.USER_ID IS 'ì•„ì´ë””';
+COMMENT ON COLUMN TB_MEMBER.USER_PWD IS 'ë¹„ë°€ë²ˆí˜¸';
+COMMENT ON COLUMN TB_MEMBER.USER_NAME IS 'íšŒì› ì´ë¦„';
+COMMENT ON COLUMN TB_MEMBER.USER_NICK IS 'ë‹‰ë„¤ìž„';
+COMMENT ON COLUMN TB_MEMBER.EMAIL IS 'ì´ë©”ì¼';
+COMMENT ON COLUMN TB_MEMBER.PROFILE IS 'í”„ë¡œí•„ì£¼ì†Œ';
+COMMENT ON COLUMN TB_MEMBER.GENDER IS 'ì„±ë³„';
+COMMENT ON COLUMN TB_MEMBER.SOCIAL IS 'ì†Œì…œ ì—¬ë¶€';
+COMMENT ON COLUMN TB_MEMBER.ENROLL_DATE IS 'ê°€ìž…ì¼';
+COMMENT ON COLUMN TB_MEMBER.TOKEN IS 'í† í°';
+COMMENT ON COLUMN TB_MEMBER.STATUS IS 'íƒˆí‡´ì—¬ë¶€';
 
 
----------------------- ´º½º Å×ÀÌºí -------------------------
+---------------------- ë‰´ìŠ¤ í…Œì´ë¸” -------------------------
 create table tb_news (
 	news_no	number primary key,
 	user_no	number references tb_member,
 	news_title	varchar2(1000)	NOT NULL,
-	news_content varchar2(4000)	NOT NULL,
+	news_content CLOB 	NOT NULL,
 	create_date date DEFAULT sysdate,
 	update_date date DEFAULT sysdate,
 	status	varchar2(3) default 'Y'	check(status in('Y','N')),
@@ -83,21 +83,25 @@ create table tb_news (
 create sequence seq_news
 nocache;
 
---insert into tb_news values(seq_news.nextval, 1,'¿À´Ã ÇÏ·ç Èûµé´Ù','ÁöÇÏÃ¶¿¡¼­ ºô·±¸¸³µ´Âµ¥ Èûµå³×¿ä',sysdate,sysdate,'Y','asdf');
---insert into tb_news values(seq_news.nextval, 2,'¹è°íÇÁ´Ù','Á¡½É½Ã°£ÀÎµ¥ ¿Ö ¹äÀ» ¸ø¸Ô°Ô ÇÕ´Ï±î!!!',sysdate,sysdate,'Y','asdf');
---insert into tb_news values(seq_news.nextval, 3,'¾Æ´Ï ÁöÇÏÃ¶¿¡¼­ ½ÃÀ§Á» ±×¸¸ ÇÕ½Ã´Ù','Á¦½Ã°£¿¡ µµÂøÇÏ°í ½Í¾î¿©¤Ð¤Ð',sysdate,sysdate,'Y','asdf');
 
-comment on column tb_news.news_no is '´º½º¹øÈ£';
-comment on column tb_news.user_no is 'È¸¿ø¹øÈ£';
-comment on column tb_news.news_title is 'Á¦¸ñ';
-comment on column tb_news.news_content is '³»¿ë';
-comment on column tb_news.create_date is '»ý¼ºÀÏ';
-comment on column tb_news.update_date is '¼öÁ¤ÀÏ';
-comment on column tb_news.status is '»óÅÂ';
-comment on column tb_news.thumbnail is '½æ³×ÀÏ';
+--insert into tb_news values(seq_news.nextval, 1,'ì˜¤ëŠ˜ í•˜ë£¨ íž˜ë“¤ë‹¤','ì§€í•˜ì² ì—ì„œ ë¹ŒëŸ°ë§Œë‚¬ëŠ”ë° íž˜ë“œë„¤ìš”',sysdate,sysdate,'Y','asdf');
+
+--insert into tb_news values(seq_news.nextval, 1,'ì˜¤ëŠ˜ í•˜ë£¨ íž˜ë“¤ë‹¤','ì§€í•˜ì² ì—ì„œ ë¹ŒëŸ°ë§Œë‚¬ëŠ”ë° íž˜ë“œë„¤ìš”',sysdate,sysdate,'Y',null);
+
+--insert into tb_news values(seq_news.nextval, 2,'ë°°ê³ í”„ë‹¤','ì ì‹¬ì‹œê°„ì¸ë° ì™œ ë°¥ì„ ëª»ë¨¹ê²Œ í•©ë‹ˆê¹Œ!!!',sysdate,sysdate,'Y','asdf');
+--insert into tb_news values(seq_news.nextval, 3,'ì•„ë‹ˆ ì§€í•˜ì² ì—ì„œ ì‹œìœ„ì¢€ ê·¸ë§Œ í•©ì‹œë‹¤','ì œì‹œê°„ì— ë„ì°©í•˜ê³  ì‹¶ì–´ì—¬ã… ã… ',sysdate,sysdate,'Y','asdf');
+
+comment on column tb_news.news_no is 'ë‰´ìŠ¤ë²ˆí˜¸';
+comment on column tb_news.user_no is 'íšŒì›ë²ˆí˜¸';
+comment on column tb_news.news_title is 'ì œëª©';
+comment on column tb_news.news_content is 'ë‚´ìš©';
+comment on column tb_news.create_date is 'ìƒì„±ì¼';
+comment on column tb_news.update_date is 'ìˆ˜ì •ì¼';
+comment on column tb_news.status is 'ìƒíƒœ';
+comment on column tb_news.thumbnail is 'ì¸ë„¤ì¼';
 
 
----------------------- ´º½º ´ñ±Û -------------------------
+---------------------- ë‰´ìŠ¤ ëŒ“ê¸€ -------------------------
 create table tb_news_comments(
     news_no number references tb_news,
     comment_writer varchar2(50) not null,
@@ -106,37 +110,51 @@ create table tb_news_comments(
     status varchar2(3) default 'Y' check(status in('Y','N'))
 );
 
---insert into tb_news_comments values(1, 'user01','¤»¤»¤»¤»',sysdate,'Y');
---insert into tb_news_comments values(1, 'user02','¤»¤»¤»¤»',sysdate,'Y');
---insert into tb_news_comments values(1, 'user03','¤»¤»¤»¤»',sysdate,'Y');
+--insert into tb_news_comments values(1, 'user01','ã…‹ã…‹ã…‹ã…‹',sysdate,'Y');
+--insert into tb_news_comments values(1, 'user02','ã…‹ã…‹ã…‹ã…‹',sysdate,'Y');
+--insert into tb_news_comments values(1, 'user03','ã…‹ã…‹ã…‹ã…‹',sysdate,'Y');
 
 
-comment on column tb_news_comments.news_no is '´º½º¹øÈ£';
-comment on column tb_news_comments.comment_writer is 'ÀÛ¼ºÀÚ ¾ÆÀÌµð';
-comment on column tb_news_comments.comment_content is '³»¿ë';
-comment on column tb_news_comments.comment_date is 'ÀÛ¼ºÀÏ';
-comment on column tb_news_comments.status is '»óÅÂ';
+comment on column tb_news_comments.news_no is 'ë‰´ìŠ¤ë²ˆí˜¸';
+comment on column tb_news_comments.comment_writer is 'ìž‘ì„±ìž ì•„ì´ë””';
+comment on column tb_news_comments.comment_content is 'ë‚´ìš©';
+comment on column tb_news_comments.comment_date is 'ìž‘ì„±ì¼';
+comment on column tb_news_comments.status is 'ìƒíƒœ';
 
 
 
 
----------------------- ÆÀ¿ø -------------------------
+---------------------- ë‰´ìŠ¤ ì°œ -------------------------
+create table tb_news_zzim(
+    news_no	number,
+    user_no number,
+    update_date date,
+    status char(1)
+);
+
+comment on column tb_news_zzim.news_no is 'ë‰´ìŠ¤ë²ˆí˜¸';
+comment on column tb_news_zzim.user_no is 'íšŒì›ë²ˆí˜¸';
+comment on column tb_news_zzim.update_date is 'ìˆ˜ì •ë‚ ì§œ';
+comment on column tb_news_zzim.status is 'ìƒíƒœ';
+
+
+---------------------- íŒ€ì› -------------------------
 create table tb_collaborator(
     repository_no number not null,
     user_no number references tb_member,
     part varchar2(10)
 );
 
-insert into tb_collaborator values(1, 1, 'ÆÀÀå');
-insert into tb_collaborator values(1,2,'ÆÀ¿ø');
-insert into tb_collaborator values(1,3,'ÆÀ¿ø');
+insert into tb_collaborator values(1, 1, 'íŒ€ìž¥');
+insert into tb_collaborator values(1,2,'íŒ€ì›');
+insert into tb_collaborator values(1,3,'íŒ€ì›');
 
-comment on column tb_collaborator.repository_no is '·¹ÆÄÁöÅä¸® ¹øÈ£';
-comment on column tb_collaborator.user_no is 'È¸¿ø¹øÈ£';
-comment on column tb_collaborator.part is '¿ªÇÒ';
+comment on column tb_collaborator.repository_no is 'ë ˆíŒŒì§€í† ë¦¬ ë²ˆí˜¸';
+comment on column tb_collaborator.user_no is 'íšŒì›ë²ˆí˜¸';
+comment on column tb_collaborator.part is 'ì—­í• ';
 
 
----------------------- Ä¶¸°´õ -------------------------
+---------------------- ìº˜ë¦°ë” -------------------------
 
 CREATE TABLE TB_CALENDAR(
    CALENDAR_NO NUMBER PRIMARY KEY,
@@ -154,43 +172,43 @@ CREATE TABLE TB_CALENDAR(
 
 CREATE SEQUENCE SEQ_CALENDAR NOCACHE;
 
-COMMENT ON COLUMN TB_CALENDAR.CALENDAR_NO IS 'ÀÏÁ¤ ¹øÈ£';
-COMMENT ON COLUMN TB_CALENDAR.USER_NO IS 'È¸¿ø ¹øÈ£';
-COMMENT ON COLUMN TB_CALENDAR.SCHEDULE_TITLE IS 'ÀÏÁ¤ Á¦¸ñ';
-COMMENT ON COLUMN TB_CALENDAR.START_DATE IS '½ÃÀÛÀÏ';
-COMMENT ON COLUMN TB_CALENDAR.END_DATE IS '¸¶°¨ÀÏ';
-COMMENT ON COLUMN TB_CALENDAR.DATE_COLOR IS '»ö»ó';
-COMMENT ON COLUMN TB_CALENDAR.SCHEDULE_CONTENT IS 'ÀÏÁ¤ ³»¿ë';
-COMMENT ON COLUMN TB_CALENDAR.CATEGORY IS 'Ä«Å×°í¸®';
-COMMENT ON COLUMN TB_CALENDAR.TEXT_COLOR IS '±Û»ö»ó';
-COMMENT ON COLUMN TB_CALENDAR.ALL_DAY IS 'ÇÏ·çÁ¾ÀÏ';
-COMMENT ON COLUMN TB_CALENDAR.STATUS IS '»èÁ¦¿©ºÎ';
+COMMENT ON COLUMN TB_CALENDAR.CALENDAR_NO IS 'ì¼ì • ë²ˆí˜¸';
+COMMENT ON COLUMN TB_CALENDAR.USER_NO IS 'íšŒì› ë²ˆí˜¸';
+COMMENT ON COLUMN TB_CALENDAR.SCHEDULE_TITLE IS 'ì¼ì • ì œëª©';
+COMMENT ON COLUMN TB_CALENDAR.START_DATE IS 'ì‹œìž‘ì¼';
+COMMENT ON COLUMN TB_CALENDAR.END_DATE IS 'ë§ˆê°ì¼';
+COMMENT ON COLUMN TB_CALENDAR.DATE_COLOR IS 'ìƒ‰ìƒ';
+COMMENT ON COLUMN TB_CALENDAR.SCHEDULE_CONTENT IS 'ì¼ì • ë‚´ìš©';
+COMMENT ON COLUMN TB_CALENDAR.CATEGORY IS 'ì¹´í…Œê³ ë¦¬';
+COMMENT ON COLUMN TB_CALENDAR.TEXT_COLOR IS 'ê¸€ìƒ‰ìƒ';
+COMMENT ON COLUMN TB_CALENDAR.ALL_DAY IS 'í•˜ë£¨ì¢…ì¼';
+COMMENT ON COLUMN TB_CALENDAR.STATUS IS 'ì‚­ì œì—¬ë¶€';
 
 
 
----------------------- Ã¤ÆÃ¹æ -------------------------
+---------------------- ì±„íŒ…ë°© -------------------------
 CREATE TABLE TB_CHAT_ROOM(
    ROOM_NO NUMBER PRIMARY KEY,
    NUMBER_PARTICIPANTS NUMBER NOT NULL,
    CREATE_DATE DATE DEFAULT SYSDATE NOT NULL,
    STATUS VARCHAR2(3) DEFAULT 'Y' NOT NULL
 );
-COMMENT ON COLUMN TB_CHAT_ROOM.ROOM_NO IS 'Ã¤ÆÃ¹æ ¹øÈ£';
-COMMENT ON COLUMN TB_CHAT_ROOM.NUMBER_PARTICIPANTS IS 'Âü¿©ÀÎ¿ø';
-COMMENT ON COLUMN TB_CHAT_ROOM.CREATE_DATE IS '»ý¼ºÀÏÀÚ';
-COMMENT ON COLUMN TB_CHAT_ROOM.STATUS IS '»èÁ¦¿©ºÎ';
+COMMENT ON COLUMN TB_CHAT_ROOM.ROOM_NO IS 'ì±„íŒ…ë°© ë²ˆí˜¸';
+COMMENT ON COLUMN TB_CHAT_ROOM.NUMBER_PARTICIPANTS IS 'ì°¸ì—¬ì¸ì›';
+COMMENT ON COLUMN TB_CHAT_ROOM.CREATE_DATE IS 'ìƒì„±ì¼ìž';
+COMMENT ON COLUMN TB_CHAT_ROOM.STATUS IS 'ì‚­ì œì—¬ë¶€';
 
 INSERT INTO TB_CHAT_ROOM VALUES(1,2,SYSDATE,'Y');
 INSERT INTO TB_CHAT_ROOM VALUES(2,2,SYSDATE,'Y');
 INSERT INTO TB_CHAT_ROOM VALUES(3,2,SYSDATE,'Y');
 
----------------------- Ã¤ÆÃ¹æ È¸¿ø -------------------------
+---------------------- ì±„íŒ…ë°© íšŒì› -------------------------
 CREATE TABLE TB_CHAT_USER(
    USER_NO NUMBER NOT NULL REFERENCES TB_MEMBER,
    ROOM_NO NUMBER NOT NULL REFERENCES TB_CHAT_ROOM 
 );
-COMMENT ON COLUMN TB_CHAT_USER.USER_NO IS 'È¸¿ø ¹øÈ£';
-COMMENT ON COLUMN TB_CHAT_USER.ROOM_NO IS 'Ã¤ÆÃ¹æ ¹øÈ£';
+COMMENT ON COLUMN TB_CHAT_USER.USER_NO IS 'íšŒì› ë²ˆí˜¸';
+COMMENT ON COLUMN TB_CHAT_USER.ROOM_NO IS 'ì±„íŒ…ë°© ë²ˆí˜¸';
 
 INSERT INTO TB_CHAT_USER VALUES(4,1);
 INSERT INTO TB_CHAT_USER VALUES(4,2);
@@ -199,7 +217,7 @@ INSERT INTO TB_CHAT_USER VALUES(3,1);
 INSERT INTO TB_CHAT_USER VALUES(2,2);
 INSERT INTO TB_CHAT_USER VALUES(1,3);
 
----------------------- Ã¤ÆÃ -------------------------
+---------------------- ì±„íŒ… -------------------------
 CREATE TABLE TB_CHATTING(
    CHATTING_NO NUMBER PRIMARY KEY,
    ROOM_NO NUMBER NOT NULL REFERENCES TB_CHAT_ROOM,
@@ -212,22 +230,22 @@ CREATE TABLE TB_CHATTING(
 
 CREATE SEQUENCE SEQ_CHATTING NOCACHE;
 
-COMMENT ON COLUMN TB_CHATTING.CHATTING_NO IS 'Ã¤ÆÃ ¹øÈ£';
-COMMENT ON COLUMN TB_CHATTING.ROOM_NO IS 'Ã¤ÆÃ¹æ ¹øÈ£';
-COMMENT ON COLUMN TB_CHATTING.CHATTING_CONTENT IS '¸Þ¼¼Áö ³»¿ë';
-COMMENT ON COLUMN TB_CHATTING.ORIGIN_NAME IS '¿øº» ÆÄÀÏ¸í';
-COMMENT ON COLUMN TB_CHATTING.CHANGE_NAME IS '¹Ù²ï ÆÄÀÏ¸í';
-COMMENT ON COLUMN TB_CHATTING.USER_NO IS 'ÀÛ¼ºÀÚ';
-COMMENT ON COLUMN TB_CHATTING.CREATE_DATE IS 'ÀÛ¼ºÀÏÀÚ';
+COMMENT ON COLUMN TB_CHATTING.CHATTING_NO IS 'ì±„íŒ… ë²ˆí˜¸';
+COMMENT ON COLUMN TB_CHATTING.ROOM_NO IS 'ì±„íŒ…ë°© ë²ˆí˜¸';
+COMMENT ON COLUMN TB_CHATTING.CHATTING_CONTENT IS 'ë©”ì„¸ì§€ ë‚´ìš©';
+COMMENT ON COLUMN TB_CHATTING.ORIGIN_NAME IS 'ì›ë³¸ íŒŒì¼ëª…';
+COMMENT ON COLUMN TB_CHATTING.CHANGE_NAME IS 'ë°”ë€ íŒŒì¼ëª…';
+COMMENT ON COLUMN TB_CHATTING.USER_NO IS 'ìž‘ì„±ìž';
+COMMENT ON COLUMN TB_CHATTING.CREATE_DATE IS 'ìž‘ì„±ì¼ìž';
 
 
-INSERT INTO TB_CHATTING VALUES(1,1,'¤¾¤·¤¾¤·',NULL,NULL,1,SYSDATE);
-INSERT INTO TB_CHATTING VALUES(2,1,'¤»¤»¤»¤»',NULL,NULL,2,SYSDATE);
-INSERT INTO TB_CHATTING VALUES(3,2,'Ã¶ÇöÀÇ ÄÚµùÀÏÁö..',NULL,NULL,3,SYSDATE);
-INSERT INTO TB_CHATTING VALUES(4,1,'Ã¶ÇöÀÇ ÄÚµùÀÏÁö..',NULL,NULL,4,SYSDATE);
+INSERT INTO TB_CHATTING VALUES(1,1,'ã…Žã…‡ã…Žã…‡',NULL,NULL,1,SYSDATE);
+INSERT INTO TB_CHATTING VALUES(2,1,'ã…‹ã…‹ã…‹ã…‹',NULL,NULL,2,SYSDATE);
+INSERT INTO TB_CHATTING VALUES(3,2,'ì² í˜„ì˜ ì½”ë”©ì¼ì§€..',NULL,NULL,3,SYSDATE);
+INSERT INTO TB_CHATTING VALUES(4,1,'ì² í˜„ì˜ ì½”ë”©ì¼ì§€..',NULL,NULL,4,SYSDATE);
 
 --------------------------------------------------
---------------     ISSUE °ü·Ã 	------------------	
+--------------     ISSUE ê´€ë ¨ 	------------------	
 --------------------------------------------------
 
 CREATE TABLE TB_ISSUE (
@@ -248,21 +266,21 @@ CREATE TABLE TB_ISSUE (
 
 
 
-COMMENT ON COLUMN TB_ISSUE.ISSUE_NO IS 'ÀÌ½´¹øÈ£(±ê¿¡¼­¹Þ¾Æ¿È)';
-COMMENT ON COLUMN TB_ISSUE.LABEL IS 'ÀÌ½´ ¶óº§';
-COMMENT ON COLUMN TB_ISSUE.CREATE_DATE IS 'ÀÌ½´ »ý¼ºÀÏ';
-COMMENT ON COLUMN TB_ISSUE.MODIFY_DATE IS 'ÀÌ½´ ¼öÁ¤ÀÏ';
-COMMENT ON COLUMN TB_ISSUE.CLOSE_DATE IS 'ÀÌ½´ Á¾·áÀÏ';
-COMMENT ON COLUMN TB_ISSUE.STATUS IS 'ÀÌ½´ »óÅÂ°ª';
-COMMENT ON COLUMN TB_ISSUE.REPOSITORY_ID IS 'ÀÌ½´°¡ ¼ÓÇÑ ·¹ÆÄÁöÅä¸®';
-COMMENT ON COLUMN TB_ISSUE.MILESTONE_ID IS 'ÀÌ½´°¡ ¼ÓÇÑ ¸¶ÀÏ½ºÅæ';
-COMMENT ON COLUMN TB_ISSUE.ISSUE_TITLE IS 'ÀÌ½´ Á¦¸ñ';
-COMMENT ON COLUMN TB_ISSUE.ISSUE_CONTENT IS 'ÀÌ½´ ³»¿ë';
-COMMENT ON COLUMN TB_ISSUE.ISSUE_AUTHOR IS 'ÀÌ½´ ÀÛ¼ºÀÚ';
-COMMENT ON COLUMN TB_ISSUE.ISSUE_ASSIGNEE IS 'ÀÌ½´ ÇÒ´ç ¹ÞÀº »ç¶÷';
-COMMENT ON COLUMN TB_ISSUE.PRIORITY IS 'ÀÌ½´ ¿ì¼±¼øÀ§';
+COMMENT ON COLUMN TB_ISSUE.ISSUE_NO IS 'ì´ìŠˆë²ˆí˜¸(ê¹ƒì—ì„œë°›ì•„ì˜´)';
+COMMENT ON COLUMN TB_ISSUE.LABEL IS 'ì´ìŠˆ ë¼ë²¨';
+COMMENT ON COLUMN TB_ISSUE.CREATE_DATE IS 'ì´ìŠˆ ìƒì„±ì¼';
+COMMENT ON COLUMN TB_ISSUE.MODIFY_DATE IS 'ì´ìŠˆ ìˆ˜ì •ì¼';
+COMMENT ON COLUMN TB_ISSUE.CLOSE_DATE IS 'ì´ìŠˆ ì¢…ë£Œì¼';
+COMMENT ON COLUMN TB_ISSUE.STATUS IS 'ì´ìŠˆ ìƒíƒœê°’';
+COMMENT ON COLUMN TB_ISSUE.REPOSITORY_ID IS 'ì´ìŠˆê°€ ì†í•œ ë ˆíŒŒì§€í† ë¦¬';
+COMMENT ON COLUMN TB_ISSUE.MILESTONE_ID IS 'ì´ìŠˆê°€ ì†í•œ ë§ˆì¼ìŠ¤í†¤';
+COMMENT ON COLUMN TB_ISSUE.ISSUE_TITLE IS 'ì´ìŠˆ ì œëª©';
+COMMENT ON COLUMN TB_ISSUE.ISSUE_CONTENT IS 'ì´ìŠˆ ë‚´ìš©';
+COMMENT ON COLUMN TB_ISSUE.ISSUE_AUTHOR IS 'ì´ìŠˆ ìž‘ì„±ìž';
+COMMENT ON COLUMN TB_ISSUE.ISSUE_ASSIGNEE IS 'ì´ìŠˆ í• ë‹¹ ë°›ì€ ì‚¬ëžŒ';
+COMMENT ON COLUMN TB_ISSUE.PRIORITY IS 'ì´ìŠˆ ìš°ì„ ìˆœìœ„';
 
--- ½ÃÄö½º
+-- ì‹œí€€ìŠ¤
 CREATE SEQUENCE SEQ_ISSUE_NO NOCACHE;
 
 
@@ -277,7 +295,7 @@ ADD CONSTRAINT FK_ISU_AUTHOR FOREIGN KEY(ISSUE_AUTHOR) REFERENCES TB_MEMBER (USE
 
 
 
--- ¸ðµç°ª ³Ö±â - µðÆúÆ®
+-- ëª¨ë“ ê°’ ë„£ê¸° - ë””í´íŠ¸
 INSERT 
 	INTO 	TB_ISSUE
 			(
@@ -304,12 +322,12 @@ INSERT
 				, SYSDATE
 				, SYSDATE
 				, DEFAULT
-				, '·¹ÆÄÁöÅä¸® ID 123'
-				, '¸¶ÀÏ½ºÅæID 123'
-				, '¹ö±× ¼öÁ¤ ¿ä¸Á'
-				, '¾îÂ¼±¸ÀúÂ¼±¸ ¼öÁ¤ÇØÁÖ¼¼¿ä. »¡¸®¿ä ÇÁ·ÎÁ§Æ® ÁøÇà ºÒ°¡'
+				, 'ë ˆíŒŒì§€í† ë¦¬ ID 123'
+				, 'ë§ˆì¼ìŠ¤í†¤ID 123'
+				, 'ë²„ê·¸ ìˆ˜ì • ìš”ë§'
+				, 'ì–´ì©Œêµ¬ì €ì©Œêµ¬ ìˆ˜ì •í•´ì£¼ì„¸ìš”. ë¹¨ë¦¬ìš” í”„ë¡œì íŠ¸ ì§„í–‰ ë¶ˆê°€'
 				, 1
-				, 'ÆÀ¿øÀüÃ¼' -- ÆÀ¿øÀüÃ¼ÀÏ¶§´Â ¿ìÂ° ÇÒÁö
+				, 'íŒ€ì›ì „ì²´' -- íŒ€ì›ì „ì²´ì¼ë•ŒëŠ” ìš°ì§¸ í• ì§€
 				, 1
 			)
 	;
@@ -319,7 +337,7 @@ INSERT
 
 		
 
--- NULL »©°í ³Ö±â
+-- NULL ë¹¼ê³  ë„£ê¸°
 INSERT 
 	INTO 	TB_ISSUE
 			(
@@ -338,17 +356,17 @@ INSERT
 				 SEQ_ISSUE_NO.NEXTVAL
 				, DEFAULT
 				, DEFAULT
-				, '·¹ÆÄÁöÅä¸® ID 456'
-				, '¾Ë¶÷ ±â´É ±¸Çö'
-				, 'ÇÏÇÏÇÏK Àß ÇØ¾ß³»¾ßÁö ¾Ï¿ä'
-				, 1 -- È¸¿ø ¸¸µç ¾ÆÀÌµð ³Ö¾î¾ßÇØ¿°
+				, 'ë ˆíŒŒì§€í† ë¦¬ ID 456'
+				, 'ì•ŒëžŒ ê¸°ëŠ¥ êµ¬í˜„'
+				, 'í•˜í•˜í•˜K ìž˜ í•´ì•¼ë‚´ì•¼ì§€ ì•”ìš”'
+				, 1 -- íšŒì› ë§Œë“  ì•„ì´ë”” ë„£ì–´ì•¼í•´ì—¼
                 , 1
 
 			)
 	;
 
 	
--- ¸ðµç°ª ³Ö±â - ¼öÁ¤¹öÀü
+-- ëª¨ë“ ê°’ ë„£ê¸° - ìˆ˜ì •ë²„ì „
 INSERT 
 	INTO 	TB_ISSUE
 			(
@@ -375,12 +393,12 @@ INSERT
 				, '20230110'
 				, '20230210'
 				, 'N'
-				, '·¹ÆÄÁöÅä¸® ID 78910'
-				, '¸¶ÀÏ½ºÅæID 456'
-				, 'ÀÌ½´ ¾î·Á¿ý Èþ'
-				, 'ÈþÈþ ÈäÈä ·¦À»ÇÑ´Ù È«È«È«'
+				, 'ë ˆíŒŒì§€í† ë¦¬ ID 78910'
+				, 'ë§ˆì¼ìŠ¤í†¤ID 456'
+				, 'ì´ìŠˆ ì–´ë ¤ì›¡ íž'
+				, 'ížíž í‰í‰ ëž©ì„í•œë‹¤ í™í™í™'
 				, 3
-				, 'user02' -- ÆÀ¿øÀüÃ¼ÀÏ¶§´Â ¿ìÂ° ÇÒÁö
+				, 'user02' -- íŒ€ì›ì „ì²´ì¼ë•ŒëŠ” ìš°ì§¸ í• ì§€
 				, 2
 			)
 	;
@@ -388,7 +406,7 @@ INSERT
 	
 	
 --------------------------------------------------
--------------    ISSUE_REPLY °ü·Ã 	--------------
+-------------    ISSUE_REPLY ê´€ë ¨ 	--------------
 --------------------------------------------------
 
 CREATE TABLE TB_ISU_REPLY (
@@ -400,14 +418,14 @@ CREATE TABLE TB_ISU_REPLY (
 	REF_ISSUE_NO	NUMBER	NOT NULL
 );
 
-COMMENT ON COLUMN TB_ISU_REPLY.REPLY_NO IS '´ñ±Û ¹øÈ£';
-COMMENT ON COLUMN TB_ISU_REPLY.REPLY_CONTENT IS '´ñ±Û ³»¿ë';
-COMMENT ON COLUMN TB_ISU_REPLY.REPLY_WRITER IS '´ñ±Û ÀÛ¼ºÀÚ';
-COMMENT ON COLUMN TB_ISU_REPLY.CREATE_DATE IS '´ñ±Û ÀÛ¼ºÀÏ';
-COMMENT ON COLUMN TB_ISU_REPLY.STATUS IS '´ñ±Û »óÅÂ°ª';
-COMMENT ON COLUMN TB_ISU_REPLY.REF_ISSUE_NO IS 'ÂüÁ¶ ÀÌ½´ ¹øÈ£';
+COMMENT ON COLUMN TB_ISU_REPLY.REPLY_NO IS 'ëŒ“ê¸€ ë²ˆí˜¸';
+COMMENT ON COLUMN TB_ISU_REPLY.REPLY_CONTENT IS 'ëŒ“ê¸€ ë‚´ìš©';
+COMMENT ON COLUMN TB_ISU_REPLY.REPLY_WRITER IS 'ëŒ“ê¸€ ìž‘ì„±ìž';
+COMMENT ON COLUMN TB_ISU_REPLY.CREATE_DATE IS 'ëŒ“ê¸€ ìž‘ì„±ì¼';
+COMMENT ON COLUMN TB_ISU_REPLY.STATUS IS 'ëŒ“ê¸€ ìƒíƒœê°’';
+COMMENT ON COLUMN TB_ISU_REPLY.REF_ISSUE_NO IS 'ì°¸ì¡° ì´ìŠˆ ë²ˆí˜¸';
 
---½ÃÄö½º
+--ì‹œí€€ìŠ¤
 CREATE SEQUENCE SEQ_ISU_REPLY_NO NOCACHE;
 
 
@@ -424,7 +442,7 @@ ALTER TABLE TB_ISU_REPLY
 ADD CONSTRAINT FK_REPLY_WRITER FOREIGN KEY(REPLY_WRITER) REFERENCES TB_MEMBER (USER_NO);
 
 
--- ¸ðµç°ª ³Ö±â
+-- ëª¨ë“ ê°’ ë„£ê¸°
 
 INSERT 
 	INTO 	TB_ISU_REPLY
@@ -440,7 +458,7 @@ INSERT
 			(
 				
 				SEQ_ISU_REPLY_NO.NEXTVAL
-				, 'ÀÌ°Å ÇÏ±â½È¾î¿ë ´ã´ç ¹Ù²ãÁÖ¼¼¿ë'
+				, 'ì´ê±° í•˜ê¸°ì‹«ì–´ìš© ë‹´ë‹¹ ë°”ê¿”ì£¼ì„¸ìš©'
 				, 1
 				, DEFAULT
 				, DEFAULT
@@ -449,7 +467,7 @@ INSERT
 	;
 
 
--- NULL Á¦¿Ü °ª ³Ö±â
+-- NULL ì œì™¸ ê°’ ë„£ê¸°
 
 
 INSERT 
@@ -465,7 +483,7 @@ INSERT
 			(
 				
 				SEQ_ISU_REPLY_NO.NEXTVAL
-				, 'ÀÌ°Ô ¸Â³ª ½Í¾î¿ë~'
+				, 'ì´ê²Œ ë§žë‚˜ ì‹¶ì–´ìš©~'
 				, 2
 				, '20230314'
 				, 2
@@ -473,7 +491,7 @@ INSERT
 	;
 	
 	
--- ¸ðµç°ª ³Ö±â - ¼öÁ¤¹öÀü
+-- ëª¨ë“ ê°’ ë„£ê¸° - ìˆ˜ì •ë²„ì „
 
 INSERT 
 	INTO 	TB_ISU_REPLY
@@ -489,7 +507,7 @@ INSERT
 			(
 				
 				SEQ_ISU_REPLY_NO.NEXTVAL
-				, '¸Â¾Æ¿°?? ÀÌ°Ô???'
+				, 'ë§žì•„ì—¼?? ì´ê²Œ???'
 				, 1
 				, SYSDATE
 				, 'N'
@@ -497,7 +515,7 @@ INSERT
 			)
 	;
 	
--- ¸ðµç°ª ³Ö±â - ¼öÁ¤¹öÀü2
+-- ëª¨ë“ ê°’ ë„£ê¸° - ìˆ˜ì •ë²„ì „2
 
 INSERT 
 	INTO 	TB_ISU_REPLY
@@ -513,7 +531,7 @@ INSERT
 			(
 				
 				SEQ_ISU_REPLY_NO.NEXTVAL
-				, 'µÎ¹øÂ°´ñ±Û Å×½ºÆ®ÁßÀÔ´Ï?'
+				, 'ë‘ë²ˆì§¸ëŒ“ê¸€ í…ŒìŠ¤íŠ¸ì¤‘ìž…ë‹ˆ?'
 				, 1
 				, SYSDATE
 				, DEFAULT
@@ -525,7 +543,7 @@ INSERT
 
 
 --------------------------------------------------
--------------    ½Ç½Ã°£ ¾Ë¸² ¼­ºñ½º °ü·Ã 	--------------
+-------------    ì‹¤ì‹œê°„ ì•Œë¦¼ ì„œë¹„ìŠ¤ ê´€ë ¨ 	--------------
 --------------------------------------------------	
 
 
@@ -538,20 +556,20 @@ CREATE TABLE TB_NOTIFICATIONS (
 	STATUS char(1)	DEFAULT 'Y'	CHECK (STATUS IN ('Y','N')) 
 );
 
--- ½Ç½Ã°£ ¾Ë¸² Á¾ ´­·¶´Ù°¡ ¶¼¸é ´Ù NÃ³¸®? ¾Æ´Ô Á÷Á¢ X ´©¸¥°Ç¸¸ N Ã³¸®??
+-- ì‹¤ì‹œê°„ ì•Œë¦¼ ì¢… ëˆŒë €ë‹¤ê°€ ë–¼ë©´ ë‹¤ Nì²˜ë¦¬? ì•„ë‹˜ ì§ì ‘ X ëˆ„ë¥¸ê±´ë§Œ N ì²˜ë¦¬??
 
-COMMENT ON COLUMN TB_NOTIFICATIONS.user_no IS 'È¸¿ø ¹øÈ£';
-COMMENT ON COLUMN TB_NOTIFICATIONS.category_no IS 'Ä«Å×°í¸® ¹øÈ£ (ÀÌ½´,Ä£±¸,´º½º,°³ÀÎÈ«º¸,ÇÁ·ÎÁ§Æ®,¸¶ÀÏ½ºÅæ)';
-COMMENT ON COLUMN TB_NOTIFICATIONS.noti_content IS '½Ç½Ã°£ ¾Ë¸² ³»¿ë';
-COMMENT ON COLUMN TB_NOTIFICATIONS.ocu_time IS '½Ç½Ã°£ ¾Ë¸² ¹ß»ý ½Ã°£';
-COMMENT ON COLUMN TB_NOTIFICATIONS.post_no IS 'ÀÌ½´ ¹øÈ£';
-COMMENT ON COLUMN TB_NOTIFICATIONS.STATUS IS '½Ç½Ã°£ ¾Ë¸² »óÅÂ°ª';
+COMMENT ON COLUMN TB_NOTIFICATIONS.user_no IS 'íšŒì› ë²ˆí˜¸';
+COMMENT ON COLUMN TB_NOTIFICATIONS.category_no IS 'ì¹´í…Œê³ ë¦¬ ë²ˆí˜¸ (ì´ìŠˆ,ì¹œêµ¬,ë‰´ìŠ¤,ê°œì¸í™ë³´,í”„ë¡œì íŠ¸,ë§ˆì¼ìŠ¤í†¤)';
+COMMENT ON COLUMN TB_NOTIFICATIONS.noti_content IS 'ì‹¤ì‹œê°„ ì•Œë¦¼ ë‚´ìš©';
+COMMENT ON COLUMN TB_NOTIFICATIONS.ocu_time IS 'ì‹¤ì‹œê°„ ì•Œë¦¼ ë°œìƒ ì‹œê°„';
+COMMENT ON COLUMN TB_NOTIFICATIONS.post_no IS 'ì´ìŠˆ ë²ˆí˜¸';
+COMMENT ON COLUMN TB_NOTIFICATIONS.STATUS IS 'ì‹¤ì‹œê°„ ì•Œë¦¼ ìƒíƒœê°’';
 
 ALTER TABLE TB_NOTIFICATIONS
   ADD CONSTRAINT PK_USER_NO PRIMARY KEY (user_no);
   
   
- -- ¸ðµç°ª³Ö±â 
+ -- ëª¨ë“ ê°’ë„£ê¸° 
  INSERT 
 	INTO 	TB_NOTIFICATIONS
 			(
@@ -567,9 +585,9 @@ ALTER TABLE TB_NOTIFICATIONS
 				
 				1
 				, 2
-				, 'XXX´ÔÀÌ Ä£±¸ ½ÅÃ»À» Çß½À´Ï´Ù'
+				, 'XXXë‹˜ì´ ì¹œêµ¬ ì‹ ì²­ì„ í–ˆìŠµë‹ˆë‹¤'
 				, SYSDATE
-				, 2 -- ±× È¸¿øÀÇ Ä«Å×°í¸®¿¡ ÇØ´çµÇ´Â ÀÌ½´¸¦ ¾î¶»°Ô °¡Á®¿ÀÁö? ÄÃ·³¿¡ ³Ö´Â°Ô ¸Â³ª?
+				, 2 -- ê·¸ íšŒì›ì˜ ì¹´í…Œê³ ë¦¬ì— í•´ë‹¹ë˜ëŠ” ì´ìŠˆë¥¼ ì–´ë–»ê²Œ ê°€ì ¸ì˜¤ì§€? ì»¬ëŸ¼ì— ë„£ëŠ”ê²Œ ë§žë‚˜?
 				, DEFAULT
 			)
 	;
@@ -590,7 +608,7 @@ ALTER TABLE TB_NOTIFICATIONS
 				
 				2
 				, 1
-				, 'XXX´ÔÀÌ È¸¿ø´ÔÀ» @@@ ÇÁ·ÎÁ§Æ® ÀÌ½´¿¡ µî·ÏÇß½À´Ï´Ù'
+				, 'XXXë‹˜ì´ íšŒì›ë‹˜ì„ @@@ í”„ë¡œì íŠ¸ ì´ìŠˆì— ë“±ë¡í–ˆìŠµë‹ˆë‹¤'
 				, '20230401'
 				, 1
 				, 'Y'
@@ -612,7 +630,7 @@ ALTER TABLE TB_NOTIFICATIONS
 				
 				3
 				, 5
-				, '### ÇÁ·ÎÁ§Æ®¿¡ Âü°¡µÇ¾ú½À´Ï´Ù.'
+				, '### í”„ë¡œì íŠ¸ì— ì°¸ê°€ë˜ì—ˆìŠµë‹ˆë‹¤.'
 				, '20230403'
 				, 1
 				, 'N'
@@ -628,7 +646,7 @@ NOCACHE;
 CREATE SEQUENCE SEQ_QUESTION
 NOCACHE;
 
-------------- Áú¹®-----------------
+------------- ì§ˆë¬¸-----------------
 CREATE TABLE TB_QUESTION (
 	question_no number primary key,
 	inquiry_no number NOT NULL,
@@ -639,17 +657,17 @@ CREATE TABLE TB_QUESTION (
 
 
 
-COMMENT ON COLUMN TB_QUESTION.question_no IS 'Áú¹® ¹øÈ£';
-COMMENT ON COLUMN TB_QUESTION.inquiry_no IS '¹®ÀÇ ¹øÈ£';
-COMMENT ON COLUMN TB_QUESTION.question_content IS 'Áú¹® ³»¿ë';
-COMMENT ON COLUMN TB_QUESTION.question_date IS 'Áú¹® ³¯Â¥';
-COMMENT ON COLUMN TB_QUESTION.user_no IS '¹®ÀÇÇÑ È¸¿ø ¹øÈ£';
+COMMENT ON COLUMN TB_QUESTION.question_no IS 'ì§ˆë¬¸ ë²ˆí˜¸';
+COMMENT ON COLUMN TB_QUESTION.inquiry_no IS 'ë¬¸ì˜ ë²ˆí˜¸';
+COMMENT ON COLUMN TB_QUESTION.question_content IS 'ì§ˆë¬¸ ë‚´ìš©';
+COMMENT ON COLUMN TB_QUESTION.question_date IS 'ì§ˆë¬¸ ë‚ ì§œ';
+COMMENT ON COLUMN TB_QUESTION.user_no IS 'ë¬¸ì˜í•œ íšŒì› ë²ˆí˜¸';
 
-INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.nextval, '´Ô¾Æ ´ë´äÇØ', SYSDATE, 1);
-INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.currval, 'º¿ÁÖÁ¦¿¡ °³±¸¸² ¤»', SYSDATE, 1);
-INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.nextval, 'Å»Åð ¾îÄÉÇÏ³ª¿ä', SYSDATE, 2);
+INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.nextval, 'ë‹˜ì•„ ëŒ€ë‹µí•´', SYSDATE, 1);
+INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.currval, 'ë´‡ì£¼ì œì— ê°œêµ¬ë¦¼ ã…‹', SYSDATE, 1);
+INSERT INTO TB_QUESTION VALUES(SEQ_QUESTION.nextval, SEQ_INQUIRY.nextval, 'íƒˆí‡´ ì–´ì¼€í•˜ë‚˜ìš”', SYSDATE, 2);
 
-------------------- Ä£±¸ ------------------------------
+------------------- ì¹œêµ¬ ------------------------------
 
 CREATE TABLE TB_FRIEND (
 	user_no number references TB_MEMBER on delete cascade,
@@ -658,9 +676,9 @@ CREATE TABLE TB_FRIEND (
     primary key(user_no, user_add_no)
 );
 
-COMMENT ON COLUMN TB_FRIEND.user_no IS 'Ä£Ãß º¸³½ÀÌ ¹øÈ£';
-COMMENT ON COLUMN TB_FRIEND.user_add_no IS 'Ä£Ãß ¹ÞÀºÀÌ ¹øÈ£';
-COMMENT ON COLUMN TB_FRIEND.user_blocked IS 'Â÷´Ü  ¿©ºÎ("Y", "N")';
+COMMENT ON COLUMN TB_FRIEND.user_no IS 'ì¹œì¶” ë³´ë‚¸ì´ ë²ˆí˜¸';
+COMMENT ON COLUMN TB_FRIEND.user_add_no IS 'ì¹œì¶” ë°›ì€ì´ ë²ˆí˜¸';
+COMMENT ON COLUMN TB_FRIEND.user_blocked IS 'ì°¨ë‹¨  ì—¬ë¶€("Y", "N")';
 
 INSERT INTO TB_FRIEND VALUES(1, 2, DEFAULT);
 INSERT INTO TB_FRIEND VALUES(1, 3, DEFAULT);
@@ -734,35 +752,35 @@ CREATE TABLE "PJT_PR_BOARD" (
    "PJT_PR_FIELD"   VARCHAR2(100)     NULL
 );
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_NO" IS 'ÇÁÁ§È«º¸ °Ô½Ã±Û ¹øÈ£';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_NO" IS 'í”„ì í™ë³´ ê²Œì‹œê¸€ ë²ˆí˜¸';
 
 COMMENT ON COLUMN "PJT_PR_BOARD"."user_no" IS 'seq';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_TITLE" IS '°Ô½Ã±Û Á¦¸ñ';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_TITLE" IS 'ê²Œì‹œê¸€ ì œëª©';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_START" IS 'ÇÁ·ÎÁ§Æ® ½ÃÀÛÀÏ';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_START" IS 'í”„ë¡œì íŠ¸ ì‹œìž‘ì¼';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_PERIOD" IS '¿¹»ó ±â°£';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_PERIOD" IS 'ì˜ˆìƒ ê¸°ê°„';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_DEADLINE" IS 'ÀÎ¿ø¸ðÁý ¸¶°¨ÀÏ';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_DEADLINE" IS 'ì¸ì›ëª¨ì§‘ ë§ˆê°ì¼';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_STACK" IS '»ç¿ë ±â¼ú ½ºÅÃ';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_STACK" IS 'ì‚¬ìš© ê¸°ìˆ  ìŠ¤íƒ';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_FACE" IS 'ÁøÇà¹æ½Ä';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_FACE" IS 'ì§„í–‰ë°©ì‹';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CONTACT" IS '¿¬¶ô¹æ¹ý';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CONTACT" IS 'ì—°ë½ë°©ë²•';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CAPACITY" IS 'ÇÁ·ÎÁ§Æ® Á¤¿ø';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CAPACITY" IS 'í”„ë¡œì íŠ¸ ì •ì›';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CONTENT" IS 'ÇÁ·ÎÁ§Æ® ¼Ò°³±Û';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CONTENT" IS 'í”„ë¡œì íŠ¸ ì†Œê°œê¸€';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_RECRUITS" IS '¸ðÁýÀÎ¿ø';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_RECRUITS" IS 'ëª¨ì§‘ì¸ì›';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CREATEDATE" IS '°Ô½Ã±Û µî·ÏÀÏ';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CREATEDATE" IS 'ê²Œì‹œê¸€ ë“±ë¡ì¼';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."user_id" IS 'ÀÛ¼ºÀÚ ID';
+COMMENT ON COLUMN "PJT_PR_BOARD"."user_id" IS 'ìž‘ì„±ìž ID';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_FIELD" IS '¸ðÁýºÐ¾ß';
+COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_FIELD" IS 'ëª¨ì§‘ë¶„ì•¼';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "SAVED_PJT_PR" (
@@ -773,9 +791,9 @@ CREATE TABLE "SAVED_PJT_PR" (
 
 COMMENT ON COLUMN "SAVED_PJT_PR"."user_no" IS 'seq';
 
-COMMENT ON COLUMN "SAVED_PJT_PR"."PJT_PR_SAVED_DATE" IS 'ÂòÇÑ ³¯Â¥';
+COMMENT ON COLUMN "SAVED_PJT_PR"."PJT_PR_SAVED_DATE" IS 'ì°œí•œ ë‚ ì§œ';
 
-COMMENT ON COLUMN "SAVED_PJT_PR"."PJT_PR_NO" IS 'È«º¸ °Ô½Ã±Û ¹øÈ£';
+COMMENT ON COLUMN "SAVED_PJT_PR"."PJT_PR_NO" IS 'í™ë³´ ê²Œì‹œê¸€ ë²ˆí˜¸';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "PSN_PR_BOARD" (
@@ -790,19 +808,19 @@ CREATE TABLE "PSN_PR_BOARD" (
 );
 
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_NO" IS '°³ÀÎÈ«º¸ °Ô½Ã±Û ¹øÈ£';
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_NO" IS 'ê°œì¸í™ë³´ ê²Œì‹œê¸€ ë²ˆí˜¸';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_STACK" IS '±â¼ú½ºÅÃ';
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_STACK" IS 'ê¸°ìˆ ìŠ¤íƒ';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_CONTENT" IS 'ÀÚ±â¼Ò°³±Û';
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_CONTENT" IS 'ìžê¸°ì†Œê°œê¸€';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_AVLPRD" IS 'ÇÁ·ÎÁ§Æ® Âü¿© °¡´É±â°£';
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_AVLPRD" IS 'í”„ë¡œì íŠ¸ ì°¸ì—¬ ê°€ëŠ¥ê¸°ê°„';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_TITLE" IS '°Ô½Ã±Û Á¦¸ñ';
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_TITLE" IS 'ê²Œì‹œê¸€ ì œëª©';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_CONTACT" IS '¿¬¶ô¹æ¹ý';
+COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_CONTACT" IS 'ì—°ë½ë°©ë²•';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."user_id" IS 'ÀÛ¼ºÀÚ ID';
+COMMENT ON COLUMN "PSN_PR_BOARD"."user_id" IS 'ìž‘ì„±ìž ID';
 
 COMMENT ON COLUMN "PSN_PR_BOARD"."user_no" IS 'seq';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -815,7 +833,7 @@ CREATE TABLE "SAVED_PSN_PR" (
 
 COMMENT ON COLUMN "SAVED_PSN_PR"."user_no" IS 'seq';
 
-COMMENT ON COLUMN "SAVED_PSN_PR"."PSN_PR_SAVED_DATE" IS 'ÂòÇÑ ³¯Â¥';
+COMMENT ON COLUMN "SAVED_PSN_PR"."PSN_PR_SAVED_DATE" IS 'ì°œí•œ ë‚ ì§œ';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "PJT_PR_REPLY" (
@@ -827,15 +845,15 @@ CREATE TABLE "PJT_PR_REPLY" (
    "user_id"   number      NOT NULL
 );
 
-COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_NO2" IS 'ÇÁÁ§È«º¸ °Ô½Ã±Û ¹øÈ£';
+COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_NO2" IS 'í”„ì í™ë³´ ê²Œì‹œê¸€ ë²ˆí˜¸';
 
-COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_REPLY_DATE" IS '´ñ±ÛÀÛ¼ºÀÏ';
+COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_REPLY_DATE" IS 'ëŒ“ê¸€ìž‘ì„±ì¼';
 
-COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_REPLY_CONTENT" IS '´ñ±Û³»¿ë';
+COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_REPLY_CONTENT" IS 'ëŒ“ê¸€ë‚´ìš©';
 
-COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_NO" IS 'ÂüÁ¶°Ô½Ã±Û¹øÈ£';
+COMMENT ON COLUMN "PJT_PR_REPLY"."PJT_PR_NO" IS 'ì°¸ì¡°ê²Œì‹œê¸€ë²ˆí˜¸';
 
-COMMENT ON COLUMN "PJT_PR_REPLY"."user_id" IS '´ñ±ÛÀÛ¼ºÀÚ ID';
+COMMENT ON COLUMN "PJT_PR_REPLY"."user_id" IS 'ëŒ“ê¸€ìž‘ì„±ìž ID';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "PSN_PR_REPLY" (
@@ -847,17 +865,17 @@ CREATE TABLE "PSN_PR_REPLY" (
    "user_id"   number      NOT NULL
 );
 
-COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_NO" IS '´ñ±Û¹øÈ£';
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_NO" IS 'ëŒ“ê¸€ë²ˆí˜¸';
 
-COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_NO2" IS '°³ÀÎÈ«º¸ °Ô½Ã±Û ¹øÈ£';
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_NO2" IS 'ê°œì¸í™ë³´ ê²Œì‹œê¸€ ë²ˆí˜¸';
 
-COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_DATE" IS '´ñ±ÛÀÛ¼ºÀÏ';
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_DATE" IS 'ëŒ“ê¸€ìž‘ì„±ì¼';
 
-COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_CONTENT" IS '´ñ±Û³»¿ë';
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_REPLY_CONTENT" IS 'ëŒ“ê¸€ë‚´ìš©';
 
-COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_NO" IS 'ÂüÁ¶°Ô½Ã±Û¹øÈ£';
+COMMENT ON COLUMN "PSN_PR_REPLY"."PSN_PR_NO" IS 'ì°¸ì¡°ê²Œì‹œê¸€ë²ˆí˜¸';
 
-COMMENT ON COLUMN "PSN_PR_REPLY"."user_id" IS '´ñ±ÛÀÛ¼ºÀÚID';
+COMMENT ON COLUMN "PSN_PR_REPLY"."user_id" IS 'ëŒ“ê¸€ìž‘ì„±ìžID';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "PROJECT" (
@@ -868,15 +886,15 @@ CREATE TABLE "PROJECT" (
    "PJT_CREATOR"   varchar2(100)      NOT NULL
 );
 
-COMMENT ON COLUMN "PROJECT"."PJT_NO" IS 'ÇÁ·ÎÁ§Æ® ¹øÈ£';
+COMMENT ON COLUMN "PROJECT"."PJT_NO" IS 'í”„ë¡œì íŠ¸ ë²ˆí˜¸';
 
-COMMENT ON COLUMN "PROJECT"."PJT_TITLE" IS 'ÇÁ·ÎÁ§Æ® ÀÌ¸§';
+COMMENT ON COLUMN "PROJECT"."PJT_TITLE" IS 'í”„ë¡œì íŠ¸ ì´ë¦„';
 
-COMMENT ON COLUMN "PROJECT"."PJT_DATE" IS 'ÇÁ·ÎÁ§Æ® »ý¼ºÀÏ';
+COMMENT ON COLUMN "PROJECT"."PJT_DATE" IS 'í”„ë¡œì íŠ¸ ìƒì„±ì¼';
 
-COMMENT ON COLUMN "PROJECT"."PJT_ CONTENT" IS 'ÇÁ·ÎÁ§Æ® ¼³¸í';
+COMMENT ON COLUMN "PROJECT"."PJT_ CONTENT" IS 'í”„ë¡œì íŠ¸ ì„¤ëª…';
 
-COMMENT ON COLUMN "PROJECT"."PJT_CREATOR" IS 'ÇÁ·ÎÁ§Æ® »ý¼ºÀÚ';
+COMMENT ON COLUMN "PROJECT"."PJT_CREATOR" IS 'í”„ë¡œì íŠ¸ ìƒì„±ìž';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "MILESTONE" (
@@ -891,35 +909,35 @@ CREATE TABLE "MILESTONE" (
 );
 
 
-COMMENT ON COLUMN "MILESTONE"."milest_no" IS '¸¶ÀÏ½ºÅæ ¹øÈ£';
+COMMENT ON COLUMN "MILESTONE"."milest_no" IS 'ë§ˆì¼ìŠ¤í†¤ ë²ˆí˜¸';
 
 COMMENT ON COLUMN "MILESTONE"."user_no" IS 'seq';
 
-COMMENT ON COLUMN "MILESTONE"."PJT_NO" IS 'ÇÁ·ÎÁ§Æ® ¹øÈ£';
+COMMENT ON COLUMN "MILESTONE"."PJT_NO" IS 'í”„ë¡œì íŠ¸ ë²ˆí˜¸';
 
-COMMENT ON COLUMN "MILESTONE"."milest_title" IS '¸¶ÀÏ½ºÅæ Á¦¸ñ';
+COMMENT ON COLUMN "MILESTONE"."milest_title" IS 'ë§ˆì¼ìŠ¤í†¤ ì œëª©';
 
-COMMENT ON COLUMN "MILESTONE"."milest_createdate" IS '¸¶ÀÏ½ºÅæ ÀÛ¼ºÀÏÀÚ';
+COMMENT ON COLUMN "MILESTONE"."milest_createdate" IS 'ë§ˆì¼ìŠ¤í†¤ ìž‘ì„±ì¼ìž';
 
-COMMENT ON COLUMN "MILESTONE"."milest_start" IS '¸¶ÀÏ½ºÅæ½ÃÀÛÀÏÀÚ';
+COMMENT ON COLUMN "MILESTONE"."milest_start" IS 'ë§ˆì¼ìŠ¤í†¤ì‹œìž‘ì¼ìž';
 
-COMMENT ON COLUMN "MILESTONE"."milest_end" IS '¸¶ÀÏ½ºÅæ Á¾·áÀÏÀÚ';
+COMMENT ON COLUMN "MILESTONE"."milest_end" IS 'ë§ˆì¼ìŠ¤í†¤ ì¢…ë£Œì¼ìž';
 
-COMMENT ON COLUMN "MILESTONE"."milest_status" IS '¸¶ÀÏ½ºÅæ »óÅÂ';
+COMMENT ON COLUMN "MILESTONE"."milest_status" IS 'ë§ˆì¼ìŠ¤í†¤ ìƒíƒœ';
 
-INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 1,  '¼îÇÎ¸ô ÇÁ·ÎÁ§Æ® ÆÀ¿ø±¸ÇØ¿ä', '4¿ù¸»', '3´ÞÁ¤µµ', '5¿ùÃÊ', 'ORACLE,JAVA', 'FULLºñ´ë¸é', '´ñ±Û´Þ¾ÆÁÖ¼¼¿ä', '10¸í³»¿Ü', 'ÀúÈñ´Â ¼îÇÎ¸ôÀ» °³¹ßÇÏ°íÀÚ ÇÕ´Ï´Ù', '3¸í', SYSDATE, 'user01', '¹é¿£µå');
+INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 1,  'ì‡¼í•‘ëª° í”„ë¡œì íŠ¸ íŒ€ì›êµ¬í•´ìš”', '4ì›”ë§', '3ë‹¬ì •ë„', '5ì›”ì´ˆ', 'ORACLE,JAVA', 'FULLë¹„ëŒ€ë©´', 'ëŒ“ê¸€ë‹¬ì•„ì£¼ì„¸ìš”', '10ëª…ë‚´ì™¸', 'ì €í¬ëŠ” ì‡¼í•‘ëª°ì„ ê°œë°œí•˜ê³ ìž í•©ë‹ˆë‹¤', '3ëª…', SYSDATE, 'user01', 'ë°±ì—”ë“œ');
 
-INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 2,  '°ÔÀÓÄ¿¹Â´ÏÆ¼ ÇÁ·ÎÁ§Æ® ÆÀ¿ø±¸ÇØ¿ä', '4¿ù15ÀÏ', '6°³¿ù', '4¿ù¸»', 'PYHTON,JAVASCRIPT', '´ë¸é', 'Ä«Åå¿ÀÇÂÃ¤ÆÃ¹æ', '5¸íÁ¤µµ', 'ÀúÈñ´Â °ÔÀÓÄ¿¹Â´ÏÆ¼¸¦ °³¹ßÇÏ°íÀÚ ÇÕ´Ï´Ù', '4¸í', SYSDATE, 'user02', 'ÇÁ·ÐÆ®¿£µå,¹é¿£µå');
+INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 2,  'ê²Œìž„ì»¤ë®¤ë‹ˆí‹° í”„ë¡œì íŠ¸ íŒ€ì›êµ¬í•´ìš”', '4ì›”15ì¼', '6ê°œì›”', '4ì›”ë§', 'PYHTON,JAVASCRIPT', 'ëŒ€ë©´', 'ì¹´í†¡ì˜¤í”ˆì±„íŒ…ë°©', '5ëª…ì •ë„', 'ì €í¬ëŠ” ê²Œìž„ì»¤ë®¤ë‹ˆí‹°ë¥¼ ê°œë°œí•˜ê³ ìž í•©ë‹ˆë‹¤', '4ëª…', SYSDATE, 'user02', 'í”„ë¡ íŠ¸ì—”ë“œ,ë°±ì—”ë“œ');
 
-INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 3,  '»çÀÌµå ÇÁ·ÎÁ§Æ® ÆÀ¿ø±¸ÇØ¿ä', '5¿ùÁß¼ø', '3°³¿ù', '5¿ùÃÊ', 'JAVA,SPRING', 'FULLºñ´ë¸é', '010-1234-5678', '10¸í', 'ÀúÈñ´Â Ä£¸ñÄ¿¹Â´ÏÆ¼¸¦ °³¹ßÇÏ°íÀÚ ÇÕ´Ï´Ù', '5¸í', SYSDATE, 'user03', '¹é¿£µå');
+INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 3,  'ì‚¬ì´ë“œ í”„ë¡œì íŠ¸ íŒ€ì›êµ¬í•´ìš”', '5ì›”ì¤‘ìˆœ', '3ê°œì›”', '5ì›”ì´ˆ', 'JAVA,SPRING', 'FULLë¹„ëŒ€ë©´', '010-1234-5678', '10ëª…', 'ì €í¬ëŠ” ì¹œëª©ì»¤ë®¤ë‹ˆí‹°ë¥¼ ê°œë°œí•˜ê³ ìž í•©ë‹ˆë‹¤', '5ëª…', SYSDATE, 'user03', 'ë°±ì—”ë“œ');
 
 INSERT INTO SAVED_PJT_PR VALUES (1, SYSDATE, 1);
 INSERT INTO SAVED_PJT_PR VALUES (2, SYSDATE,2);
 INSERT INTO SAVED_PJT_PR VALUES (3, SYSDATE,3);
 
-INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'AJAX,HTML,CSS,REACT', 'ÀÚ½ÅÀÖ½À´Ï´Ù', '4¿ùÁß¼ø~10¿ù¸»', 'ÇÁ·ÐÆ®¿£µå °³¹ßÀÚÀÔ´Ï´Ù', 'Ã¤ÆÃ', 'user01', 1 );
-INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'ORACLE,JAVA,SPRING', '¹é¿£µå ÇÁ·ÎÁ§Æ® Âü¿©°æ·Â ¸¹½À´Ï´Ù.','4¿ùÃÊ ÀÌÈÄ', '¹é¿£µå °³¹ßÀÚÀÔ´Ï´Ù', '010-1234-5678', 'user02', 2 );
-INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'FLUTTER,JAVA,CSS,FIGMA', 'ÀÚ½ÅÀÖ½À´Ï´Ù', '4¿ù¸»~', 'Ç®½ºÅÃ °³¹ßÀÚÀÔ´Ï´Ù', 'Ã¤ÆÃ', 'user02', 3 );
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'AJAX,HTML,CSS,REACT', 'ìžì‹ ìžˆìŠµë‹ˆë‹¤', '4ì›”ì¤‘ìˆœ~10ì›”ë§', 'í”„ë¡ íŠ¸ì—”ë“œ ê°œë°œìžìž…ë‹ˆë‹¤', 'ì±„íŒ…', 'user01', 1 );
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'ORACLE,JAVA,SPRING', 'ë°±ì—”ë“œ í”„ë¡œì íŠ¸ ì°¸ì—¬ê²½ë ¥ ë§ŽìŠµë‹ˆë‹¤.','4ì›”ì´ˆ ì´í›„', 'ë°±ì—”ë“œ ê°œë°œìžìž…ë‹ˆë‹¤', '010-1234-5678', 'user02', 2 );
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'FLUTTER,JAVA,CSS,FIGMA', 'ìžì‹ ìžˆìŠµë‹ˆë‹¤', '4ì›”ë§~', 'í’€ìŠ¤íƒ ê°œë°œìžìž…ë‹ˆë‹¤', 'ì±„íŒ…', 'user02', 3 );
 
 INSERT INTO SAVED_PSN_PR VALUES(1, 1, SYSDATE );
 
@@ -927,20 +945,21 @@ INSERT INTO SAVED_PSN_PR VALUES(2, 2, SYSDATE );
 
 INSERT INTO SAVED_PSN_PR VALUES(3, 3, SYSDATE );
 
-INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 1, SYSDATE, 'Àú °ü½ÉÀÖ½À´Ï´Ù', 1, 1 );
-INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 2, SYSDATE, '010-1234-5677 ¿¬¶ôÁÖ¼¼¿ä', 2, 2 );
-INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 3, SYSDATE, 'Àç¹Õ¾îº¸¿©¿ä!', 3, 3 );
+INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 1, SYSDATE, 'ì € ê´€ì‹¬ìžˆìŠµë‹ˆë‹¤', 1, 1 );
+INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 2, SYSDATE, '010-1234-5677 ì—°ë½ì£¼ì„¸ìš”', 2, 2 );
+INSERT INTO PJT_PR_REPLY VALUES (SEQ_PJT_PR_REPLY.NEXTVAL, 3, SYSDATE, 'ìž¬ë°Œì–´ë³´ì—¬ìš”!', 3, 3 );
 
-INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 1, SYSDATE, 'ÇÁ·ÎÁ§Æ® ±¸ÇÏ¼Ì¾î¿ä?', 1, 1 );
-INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 2, SYSDATE, 'ÇÁ·ÐÆ®µµ °¡´ÉÇÏ¼¼¿ä?', 2, 2 );
-INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 3, SYSDATE, '4¿ù20ÀÏºÎÅÍ °¡´ÉÇÏ¼¼¿ä?', 3, 3 );
+INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 1, SYSDATE, 'í”„ë¡œì íŠ¸ êµ¬í•˜ì…¨ì–´ìš”?', 1, 1 );
+INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 2, SYSDATE, 'í”„ë¡ íŠ¸ë„ ê°€ëŠ¥í•˜ì„¸ìš”?', 2, 2 );
+INSERT INTO PSN_PR_REPLY VALUES(SEQ_PSN_PR_REPLY.NEXTVAL, 3, SYSDATE, '4ì›”20ì¼ë¶€í„° ê°€ëŠ¥í•˜ì„¸ìš”?', 3, 3 );
 
-INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'OVCOS', SYSDATE, '´Þ¸®±â!', 'USER01' );
-INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'FLUERYOUNG', SYSDATE, '²ÉÆÈ±â!', 'USER02' );
-INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'MEAL', SYSDATE, '¹ä¸Ô±â!', 'USER03' );
+INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'OVCOS', SYSDATE, 'ë‹¬ë¦¬ê¸°!', 'USER01' );
+INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'FLUERYOUNG', SYSDATE, 'ê½ƒíŒ”ê¸°!', 'USER02' );
+INSERT INTO PROJECT VALUES(SEQ_PROJECT_NO.NEXTVAL, 'MEAL', SYSDATE, 'ë°¥ë¨¹ê¸°!', 'USER03' );
 
-INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 1, 1, '´Þ¸®±âÇÁÁ§ ÁøÃ´µµ', SYSDATE, SYSDATE, '2023-07-15', 'OPEN');
+INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 1, 1, 'ë‹¬ë¦¬ê¸°í”„ì  ì§„ì²™ë„', SYSDATE, SYSDATE, '2023-07-15', 'OPEN');
 INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 2, 2, 'FLUERYOUNG', SYSDATE, SYSDATE, '2023-09-17', 'OPEN');
-INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 3, 3, '½Ä»çÇÁ·ÎÁ§Æ®', SYSDATE, SYSDATE, '2023-04-01', 'CLOSED');
+INSERT INTO MILESTONE VALUES(SEQ_MILEST_NO.NEXTVAL, 3, 3, 'ì‹ì‚¬í”„ë¡œì íŠ¸', SYSDATE, SYSDATE, '2023-04-01', 'CLOSED');
 
 COMMIT;
+
