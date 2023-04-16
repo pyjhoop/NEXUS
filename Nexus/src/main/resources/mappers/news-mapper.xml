@@ -197,5 +197,14 @@
 			  and user_no =#{userNo}
 	</update>
 	
+	<update id="updateNews">
+		update tb_news
+		   set news_title = #{newsTitle},
+		       news_content = #{newsContent},
+		       update_date = sysdate,
+		       thumbnail = #{thumbnail}
+		  where news_no = #{newsNo}
+	</update>
+	
 	
 </mapper>

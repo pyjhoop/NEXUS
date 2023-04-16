@@ -74,5 +74,9 @@ public class NewsDao {
 		return sqlsession.selectOne("newsMapper.likeCount1", z);
 	}
 
+	public int upateNews(SqlSessionTemplate sqlsession, News n) {
+		return sqlsession.update("newsMapper.updateNews", n);
+	}
+
 	
 }
