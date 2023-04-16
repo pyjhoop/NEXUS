@@ -24,8 +24,10 @@ public class CalendarServiceImpl implements CalendarService {
 	}
 
 	@Override
-	public void insertCalendar(Calendar cal) {
-		cDao.insertCalendar(sqlSession, cal);
+	public int insertCalendar(Calendar cal) {
+		int result = cDao.insertCalendar(sqlSession, cal);
+		
+		return result;
 	}
 
 	@Override

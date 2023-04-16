@@ -1,0 +1,152 @@
+.profile{
+    width: 45px;
+    height: 45px;
+}
+
+.username{
+    font-weight: 800;
+    margin-left: 10px;
+}
+.profile1{
+    padding-left: 0px !important;
+    margin-left: 13px;
+}
+
+.firstrow{
+    background-color: rgb(240, 248, 254);
+}
+
+
+.imgp{
+    width: 500px;
+    height: 600px;
+}
+.imgplace{
+    width: 100%;
+    height:100%;
+    padding: 40px;
+}
+
+.title{
+    font-weight: 800;
+    font-size: 1.3rem;
+}
+
+.contents{
+    width: 100%;
+    height: 500px;
+}
+.contents>div{
+    width: 100%;
+    height: 100%;
+    margin: 20px;
+    overflow-y: auto;
+}
+
+.inputreply{
+    position: absolute;
+    display: flex;
+    bottom: 40px;
+    width: 100%;
+}
+
+.inputreply>img{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+.inputreply>input{
+    margin-left: 20px;
+    width: 60% !important;
+}
+
+
+.reImg{
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+}
+
+.rediv{
+    margin-left: 10px;
+}
+
+.reWriter{
+    font-weight: 800;
+    margin-right: 20px;
+}
+
+.reply{
+    overflow: auto;
+    height: 330px;
+}
+.reply::-webkit-scrollbar{
+    width: 10px;
+}
+
+/* 스크롤바 막대 설정*/
+.reply::-webkit-scrollbar-thumb{
+    background-color: rgb(102, 101, 101);
+    /* 스크롤바 둥글게 설정    */
+    border-radius: 10px;    
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.reply::-webkit-scrollbar-track{
+    background-color: rgba(0,0,0,0);
+}
+
+
+
+.ct{
+	width:80%;
+	margin:auto;
+}
+
+.inputreply .bx{
+    font-size: 1.9rem;
+}
+
+.rounded-pill>span{
+    font-size: 2rem;
+}
+
+.rounded-pill{
+    position: fixed;
+    right: 200px;
+    bottom: 100px;
+}
+.sub {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+.sub button {
+    margin-left: auto;
+    margin-right: 11vw;
+    margin-top: 30px;
+  }
+
+  .contents>div{
+    width: 96%;
+    height: 96%;
+  }
+
+  .contents>div::-webkit-scrollbar{
+    width: 10px;
+    
+}
+
+/* 스크롤바 막대 설정*/
+.contents>div::-webkit-scrollbar-thumb{
+    background-color: rgb(102, 101, 101);
+    /* 스크롤바 둥글게 설정    */
+    border-radius: 10px;    
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.contents>div::-webkit-scrollbar-track{
+    background-color: rgba(0,0,0,0);
+}

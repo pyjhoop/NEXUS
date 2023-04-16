@@ -15,8 +15,10 @@ public class CalendarDao {
 		return (ArrayList)sqlSession.selectList("calendarMapper.selectCalendar", userNo);
 	}
 	
-	public void insertCalendar(SqlSessionTemplate sqlSession, Calendar cal) {
-		sqlSession.insert("calendarMapper.insertCalendar", cal);
+	public int insertCalendar(SqlSessionTemplate sqlSession, Calendar cal) {
+		int result = sqlSession.insert("calendarMapper.insertCalendar", cal);
+		
+		return result;
 	}
 	
 	public void dropSchedule(SqlSessionTemplate sqlSession, Calendar cal) {

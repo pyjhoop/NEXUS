@@ -6,103 +6,88 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/news.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/newsList.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/newsList.css">
 </head>
 <body>
-	<jsp:include page="../common/template.jsp"/>
-    <div class="container-xxl flex-grow-1 container-p-y cpadding">
-        <button type="button" class="btn btn-primary">작성</button>
-		<c:forEach var="i" items="${list }" varStatus="status">
-	        <div class="card mb-5 ct">
-	            <div class="firstrow" style="display: flex;">
-	                <div class="col-md-2 col-4 profile1" style="display: flex;">
-	                    <img src="${i.profile}" alt="프로필" class="profile rounded-circle">
-	                    <span class="username d-flex align-items-center justify-content-center">${i.userNo}</span>
-	                </div>
-	                <div class="col-md-5 col-4 d-flex align-items-center justify-content-center title">${ i.newsTitle }</div>
-	                <div class="col-md-5 col-4 d-flex align-items-center justify-content-center">${ i.createDate }</div>
-                
-	            </div>
-                
-	            
-	            <div class="row">
-	                <div class="col-md-6 imgp" style="padding-right: 0px;"><img src="${pageContext.request.contextPath}/resources/image/laoh.jpg" alt="" class="imgplace"></div>
-	                <div class="col-md-6" style="padding: 40px;">
-	                    <div class="contents">
-	                        ${ i.newsContent }
-	                    </div>
-                        <div class="divider">
-                            <div class="divider-text">댓글</div>
-                          </div>
-	                    <div class="reply">
-                            
+    
+    <jsp:include page="../common/template.jsp"/>
 
-	                    	<c:choose>
-	                    		<c:when test="${ status.count eq 1 }">
-			                    	<c:forEach var="j" items="${allList[0]}">
-			                    		${ j.commentContent }
-			                    		<br>
-			                    	</c:forEach>
-	                    		</c:when>
-	                    		<c:when test="${ status.count eq 2 }">
-			                    	<c:forEach var="j" items="${allList[1]}">
-			                    		${ j.commentContent }
-			                    		<br>
-			                    	</c:forEach>
-	                    		</c:when>
-	                    		<c:when test="${ status.count eq 3 }">
-			                    	<c:forEach var="j" items="${allList[2]}">
-                                        <div style="display: flex;">
-                                            <img alt="" src="${pageContext.request.contextPath}/resources/image/laoh.jpg" class="reImg">
-                                            <div class="rediv">
-                                                <span class="reWriter">${ j.commentWriter }</span>
-                                                <span class="reDate">${ j.commentDate }</span>
-                                                <br>
-                                               <span class="reComment">
-                                                   ${j.commentContent }
-                                               </span>
+    <button type="button" class="btn btn-lg rounded-pill btn-icon btn-outline-primary up">
+        <span class="tf-icons bx bx-chevrons-up"></span>
+    </button>
 
-                                            </div>
-                                        </div>
-			                    		<br>
-			                    	</c:forEach>
-	                    		</c:when>
-	                    		<c:when test="${ status.count eq 4 }">
-			                    	<c:forEach var="j" items="${allList[3]}">
-			                    		${ j.commentContent }
-			                    		<br>
-			                    	</c:forEach>
-	                    		</c:when>
-	                    		<c:when test="${ status.count eq 5 }">
-			                    	<c:forEach var="j" items="${allList[4]}">
-			                    		${ j.commentContent }
-			                    		<br>
-			                    	</c:forEach>
-	                    		</c:when>
-	                    	</c:choose>
-	                    	
-	                    </div>
-	                    <div class="inputreply">
-	                        <img src="${loginUser.profile}" alt="">
-	                        <input type="text" class="form-control" id="inputtext" placeholder="댓글 작성" aria-describedby="defaultFormControlHelp">
-	                        <button type="button" class="btn btn-primary re">입력</button>
-	                    </div>
-	                </div>
+    
+
+    <div class="container-xxl flex-grow-1 container-p-y cpadding mt-5">
+
+        <div class="row mb-5">
+
+        	<c:forEach var="i" items="${ list }">
+	            <div class="col-md-4 col-sm-6 col-lg-3 mb-5 cardWrap" onclick="location.href='newsDetail.p?nNo=${i.newsNo}'">
+	                <div class="card h-100">
+	                	
+                      <c:choose>
+
+                      	<c:when test="${ not empty i.thumbnail }">
+		                  <img class="card-img-top" src="${ i.thumbnail }" alt="Card image cap">
+                      	</c:when>
+
+                      	<c:otherwise>
+		                  <img class="card-img-top" src="resources/image/logo3.png" alt="Card image cap">
+                      	</c:otherwise>
+
+                      </c:choose>
+
+	                  <div class="card-body">
+	                      <h5 class="card-title">${ i.newsTitle }</h5>
+	                      <p class="card-text${i.newsNo} card-text1">
+
+                            <script>
+                                var htmlString = '${i.newsContent}';
+                                var $html = $(htmlString);
+                                if($html.find("img").length >0){
+                                    $html.find("img").remove();
+                                }
+								if($html.find("iframe").length>0){
+									$html.find("iframe").remove();
+								}
+
+                                $(".card-text${i.newsNo}").html($html.html());
+                                
+                            </script>
+	                          
+	                          
+	                      </p>
+	                      ${ i.createDate}
+	                      <hr>
+
+	                      <div class="userInfo">
+
+	                          <div>
+                                <!-- 프로필 이미지-->
+                                  <img  src="${i.profile}" alt="" style="width: 25px; border-radius: 100%;">
+                                  &nbsp;by <span class="userName">${i.userNo}</span>
+	                          </div>
+
+	                          <div class="heartwrap">
+
+	                            <i class='bx bxs-heart-circle'></i>
+	                            <span class="zzim${i.newsNo}">${i.likeCount}</span>
+
+	                          </div>
 	
+	                      </div>
+	                  </div>
+	                </div>
 	            </div>
-	        </div>
-		</c:forEach>
-        <div class="list"></div>
-       
+        	</c:forEach>
+        </div>
             
-      <div id="observer" class="card">더보기</div>
     </div>
-
- 
-
-		
+    
+    <div id="observer" class="card">더보기</div>
 
 
 

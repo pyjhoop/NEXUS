@@ -1,0 +1,33 @@
+@charset "UTF-8";
+.alarm a{
+	padding-left : 20px;
+}
+.alarm.unchecked{
+	background-color : rgb(212, 238, 255);
+	transition : background-color 5000ms;
+}
+#alarmList{
+	padding : 0;
+}
+
+#alarmDropdown{
+	max-height : 400px;
+	overflow-y : auto;
+}
+.alarmsender.profile{
+	width : 45px;
+	height : 45px;
+}
+#alarmHeader .btn{
+	margin-top : -7px;
+}
+
+.boxsize{
+	display: inline-block;
+	padding: 3px 20px;
+}
+
+.spanbox{
+	padding: 3px 20px 3px 0px;
+	/*위 오른쪽 아래 왼쪽*/
+}
