@@ -11,35 +11,35 @@
         </style>
 
 
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/i18n/defaults-*.min.js"></script>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/i18n/defaults-*.min.js"></script>
 
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/issue_select.css">
-        <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css">
-        <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/issue_mini.js"></script>
-
-
-        <!-- 테스트 중인 js,css -->
-
-        <!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/issue_test.css"> -->
-        <!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-multiselect.css"> -->
-        <script src="${pageContext.request.contextPath}/resources/js/issue_test.js"></script>
-
-        <script src="${pageContext.request.contextPath}/resources/js/comboTreePlugin.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-multiselect2.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/issue_select.css">
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css">
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/issue_mini.js"></script>
 
 
+<!-- 테스트 중인 js,css -->
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/issue_test.css">
+<!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-multiselect.css"> -->
+<script src="${pageContext.request.contextPath}/resources/js/issue_test.js"></script>
+
+<script src="${pageContext.request.contextPath}/resources/js/comboTreePlugin.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap-multiselect2.js"></script>
 
 
-    </head>
 
-    <body>
 
-        <jsp:include page="../common/template.jsp" />
+</head>
+
+<body>
+    
+    <jsp:include page="../common/template.jsp" />
 
 
 
