@@ -19,6 +19,8 @@
 		<typeAlias type="com.team.nexus.chatting.model.vo.ChatMessage" alias="ChatMessage"/>
 		<typeAlias type="com.team.nexus.chatting.model.vo.ChatUser" alias="ChatUser"/>
 		
+		<typeAlias type="com.team.nexus.repository.model.vo.Repository" alias="Repository"/>
+		
 
 		<typeAlias type="com.team.nexus.news.model.vo.Zzim" alias="Zzim"/>
 

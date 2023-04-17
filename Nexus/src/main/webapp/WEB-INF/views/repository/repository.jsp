@@ -57,5 +57,44 @@
          
         </div>
     </div>
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="basicModal" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form action="enrollRepo.p" method="get">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">Repository 등록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col mb-3">
+                        <label for="userName" class="form-label">User</label>
+                        <input type="text" name="userName" id="userName" class="form-control" placeholder="Enter Name">
+                      </div>
+                    </div>
+                    <div class="row g-2">
+                      <div class="col mb-0">
+                        <label for="repoName" class="form-label">Repository</label>
+                        <input type="text" name="repoName" id="repoName" class="form-control" placeholder="Enter Repository">
+                      </div>
+      
+                    </div>
+                    <input type="hidden" name="userNo" value="${ loginUser.userNo }">
+                    <input type="hidden" name="token" value="${ loginUser.token }">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                      Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </div>
+
+            </form>
+        </div>
+      </div>
 </body>
 </html>

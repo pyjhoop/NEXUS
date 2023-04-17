@@ -223,6 +223,13 @@
 
 						
 						<button class="btn btn-outline-primary" id="enroll" style="visibility:hidden;">뉴스등록</button>
+						<button type="button" id="repobtn" style="display: none;" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+							new repository
+						</button>
+
+						<!-- Modal -->
+						
+
 						<!-- Place this tag where you want the button to render. -->
 						<li class="nav-item 1h-1 me-4">
 							<!-- <a href="javascript:void(0);"class="menu-link position-relative">  --> <a class="nav-link dropdown-toggle hide-arrow menu-link " href="javascript:void(0);" data-bs-toggle="dropdown" style="padding-top: 0px; padding-bottom: 0px; width: 35px;">
