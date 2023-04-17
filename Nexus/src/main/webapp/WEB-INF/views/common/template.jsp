@@ -72,105 +72,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/css/chat.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/css/home.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<body>
-
-	<!-- Layout wrapper -->
-	<div class="layout-wrapper layout-content-navbar">
-		<div class="layout-container">
-			<!-- Menu -->
 
 
-
-				<div class="menu-inner-shadow"></div>
-
-          <ul class="menu-inner py-1">
-            <!-- Dashboard -->
-            <li class="menu-item active">
-              <a href="main.p" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Home</div>
-              </a>
-            </li>
-             <li class="menu-item" id="repository">
-              <a href="repository.p" class="menu-link">
-              	<i class="menu-icon tf-icons bx bxl-github"></i>
-                <div data-i18n="Basic">Repository</div>
-              </a>
-            </li>
-            <!-- Components -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Project</span></li>
-            <!-- Cards -->
-            <li class="menu-item">
-              <a href="issueShow.mini" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Issue</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="User interface">Milestone</div>
-              </a>
-            </li>
-
-					<li class="menu-item"><a href="#" class="menu-link"> <i
-							class="menu-icon tf-icons bx bx-copy"></i>
-							<div data-i18n="Extended UI">Kanban</div>
-					</a></li>
-
-					<li class="menu-item news"><a href="news.p" class="menu-link"> <i
-							class="menu-icon tf-icons bx bx-detail"></i>
-							<div data-i18n="Form Elements">News</div>
-					</a></li>
-					<li class="menu-item"><a href="selectCal.ih" class="menu-link"> <i
-							class="menu-icon tf-icons bx bxs-calendar"></i>
-							<div data-i18n="Tables">Calendar</div>
-					</a></li>
-					<!-- Misc -->
-					<li class="menu-header small text-uppercase"><span
-						class="menu-header-text">Team</span></li>
-					<li class="menu-item"><a href="selectChat.ih" 
-						class="menu-link"> <i
-							class="menu-icon tf-icons bx bx-message-rounded-dots"></i>
-							<div data-i18n="Support">Chatting</div>
-					</a></li>
-					<li class="menu-item"><a href="#" target="_blank"
-						class="menu-link"> <i
-							class="menu-icon tf-icons bx bx-bot"></i>
-							<div data-i18n="Support">Chattbot</div>
-					</a></li>
-					<li class="menu-item"><a href="personal.me" target="_blank"
-						class="menu-link"> <i
-							class="menu-icon tf-icons  bx bxs-megaphone"></i>
-							<div data-i18n="Documentation">Personal Pr</div>
-					</a></li>
-					<li class="menu-item"><a href="javascript:void(0);"
-						class="menu-link "> <i class="menu-icon tf-icons bx bxs-group"></i>
-							<div data-i18n="Form Layouts">Recruit</div>
-					</a></li>
-					<li class="menu-item"><a href="javascript:void(0);"
-						class="menu-link"> <i
-							class="menu-icon tf-icons bx bx-user-plus"></i>
-							<div data-i18n="Form Elements">Friend</div>
-					</a></li>
-				</ul>
-
-			</aside>
-			<!-- / Menu -->
-
-			<!-- Layout container -->
-			<div class="layout-page">
-				<!-- Navbar -->
-
-				<nav
-					class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-					id="layout-navbar">
-					<div
-						class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-						<a class="nav-item nav-link px-0 me-xl-4"
-							href="javascript:void(0)"> <i class="bx bx-menu bx-sm"></i>
-						</a>
-					</div>
 
 			<!-- 알람창 JavaScript -->
 			<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
@@ -254,7 +157,7 @@
 									</a></li>
 								<!-- Misc -->
 								<li class="menu-header small text-uppercase"><span class="menu-header-text">Team</span></li>
-								<li class="menu-item"><a href="#" target="_blank" class="menu-link">
+								<li class="menu-item"><a href="selectChat.ih" class="menu-link">
 										<i class="menu-icon tf-icons bx bx-message-rounded-dots"></i>
 										<div data-i18n="Support">Chatting</div>
 									</a></li>

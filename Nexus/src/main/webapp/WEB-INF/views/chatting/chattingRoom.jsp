@@ -87,11 +87,34 @@
 	</div>
 	</div>
 	</div>
-	<div class="chat-body">
-	<div class="chat-scroll">
-	<ul class="list-unstyled">
 	
-	</ul>
+	<div class="chat-users-list">
+	<div class="chat-scroll">
+	<c:forEach var="r" items="${rList}">
+	<a href="roomDetail.ih?rno=${r.roomNo }" class="media d-flex">
+	<div class="media-img-wrap">
+	<div class="avatar avatar-away">
+	<img src="assets/img/profiles/avatar-05.jpg" alt="" class="avatar-img rounded-circle">
+	</div>
+	</div>
+	<div class="media-body">
+	<div>
+	<div class="user-name">
+	<c:forEach var="u" items="${uList}">
+	<c:if test="${ r.roomNo eq u.roomNo }">
+	${u.userName}
+	</c:if>
+	</c:forEach>
+	</div>
+	<div class="user-last-chat">Give me a full explanation about our project</div>
+	</div>
+	<div>
+	<div class="last-chat-time block">7:30 PM</div>
+	<div class="badge badge-success badge-pill">3</div>
+	</div>
+	</div>
+	</a>
+	</c:forEach>
 	</div>
 	</div>
 	<div class="chat-footer">
@@ -108,6 +131,7 @@
 	</div>
 	</div>
 	</div>
+	
 	</div>
 	</div>
 	</div>
