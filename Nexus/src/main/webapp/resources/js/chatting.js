@@ -114,6 +114,7 @@ chatSocket.onmessage = function(e) {
         "<img src= " +
         chatMessage.profile + 
         " class='w-px-40 h-px-40 rounded-circle'>"+
+        "class='avatar-img rounded-circle'>" +
         "</div>" +
         "<div class='media-body'>" +
         "<div class='msg-box'>" +

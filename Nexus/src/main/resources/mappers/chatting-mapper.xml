@@ -66,6 +66,7 @@
 	    join tb_member m using(user_no) 
 	  where room_no = #{rno}
 	  order by chatting_no asc
+
  	</select>
  	<insert id="insertMessage">
  		insert 
