@@ -140,6 +140,7 @@ public class MemberController {
 		
 		m.setUserPwd(bcrypt.encode(m.getUserPwd()));
 		m.setSocial("O");
+		m.setProfile("/nexus/resources/image/user-circle-solid-48.png");
 		
 		int result = mService.insertMember(m);
 		if(result>0) {
