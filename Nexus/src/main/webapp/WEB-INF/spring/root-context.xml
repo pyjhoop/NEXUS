@@ -79,8 +79,8 @@
    
    <!-- 파일 업로드 관련 빈 등록 -->
     <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
-    	<property name="maxUploadSize" value="100000000"/> <!-- 100Mb 이건 용량이 무제한이지만 제한둬야함 -->
-    	<property name="maxInMemorySize" value="100000000"/>
+    	<property name="maxUploadSize" value="1000000000"/> <!-- 100Mb 이건 용량이 무제한이지만 제한둬야함 -->
+    	<property name="maxInMemorySize" value="1000000000"/>
     </bean>
 	
 </beans>

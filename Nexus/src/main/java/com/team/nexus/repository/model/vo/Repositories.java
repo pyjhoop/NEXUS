@@ -9,10 +9,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Repository {
-
+public class Repositories {
+	
+	private int repoNo;
 	private int userNo;
 	private String userName;
 	private String repoName;
 	private String token;
+	private String repoStatus;
+	private String status;
 }
