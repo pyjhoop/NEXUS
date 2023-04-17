@@ -6,4 +6,7 @@ $(function(){
     $(".active").removeClass("active");
     $("#repository").addClass("active")
 
+    $("#enroll").text("news repository")
+    $("#enroll").css("visibility", "visible")
 })
+

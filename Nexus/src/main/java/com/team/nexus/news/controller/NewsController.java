@@ -93,6 +93,8 @@ public class NewsController {
 	@ResponseBody
 	public String newsReplyInsert(NewsReply nr) {
 		//insert 후에 arraylist 조회
+		nr.setCommentContent(nr.getCommentContent().replace("\n", "<br>"));
+		nr.setCommentContent(nr.getCommentContent().replace("<br><br>", "<br>"));
 		int count = newsService.newsReplyInsert(nr);
 		//System.out.println(count);
 		
@@ -207,6 +209,13 @@ public class NewsController {
 		}else {
 			return "redirect:newsDetail.p?nNo="+newsNo;
 		}
+	}
+	
+	@RequestMapping("updateNews")
+	public String updateNews(News n) {
+
+		int result = newsService.updateNews(n);
+		return "redirect:news.p";
 	}
 	
 	@RequestMapping("newsLike")
