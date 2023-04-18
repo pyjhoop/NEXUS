@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.team.nexus.chatting.model.vo.ChatMessage;
 import com.team.nexus.chatting.model.vo.ChatRoom;
 import com.team.nexus.chatting.model.vo.ChatUser;
+import com.team.nexus.member.model.vo.Member;
 
 @Repository
 public class ChatDao {
@@ -26,5 +27,18 @@ public class ChatDao {
 	
 	public int insertMessage(SqlSessionTemplate sqlSession, ChatMessage chatMessage) {
 		return sqlSession.insert("chattingMapper.insertMessage", chatMessage);
+	}
+	public ArrayList<Member> searchUser(SqlSessionTemplate sqlSession,String search){
+		return (ArrayList)sqlSession.selectList("chattingMapper.searchUser", search);
+	}
+	public int createRoom(SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("chattingMapper.createRoom");
+	}
+	public void insertChatUser(SqlSessionTemplate sqlSession, ChatUser c) {
+		sqlSession.insert("chattingMapper.insertChatUser",c);
+	}
+	
+	public int createGroupRoom(SqlSessionTemplate sqlSession,ChatRoom c) {
+		return sqlSession.insert("chattingMapper.createGroupRoom",c);
 	}
 }

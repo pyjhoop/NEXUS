@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.team.nexus.chatting.model.vo.ChatMessage;
 import com.team.nexus.chatting.model.vo.ChatRoom;
 import com.team.nexus.chatting.model.vo.ChatUser;
+import com.team.nexus.member.model.vo.Member;
 
 public interface ChatService {
 
@@ -16,5 +17,13 @@ public interface ChatService {
 	 
 	 ArrayList<ChatMessage> selectMessage(int rno);
 	
-
+	 ArrayList<Member> searchUser(String search);
+	 
+	 int createRoom();
+	 
+	 void insertChatUser(int user);
+	 
+	 void insertChatGroupUser(int user);
+	 
+	 int createGroupRoom(ChatRoom c);
 }

@@ -47,7 +47,6 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
 		// TextMessage : 웹소켓을 이용해 전달된 텍스트가 담겨있는 객체
 		// payload : 전송되는 데이터 (Json객체)
-		System.out.println("성공?");
 		logger.info("전달된 메세지; : " + message.getPayload()); 
 		
 		// Jackson-databind : ObjectMapper 를 이용해서 JSON형태로 넘어온 데이터를 특정VO필드에 맞게 자동매핑

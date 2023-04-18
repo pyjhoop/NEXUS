@@ -23,4 +23,6 @@ public class ChatRoom {
 	private int count;
 	private int userNo;
 	private String userName;
+	private String originName;
+	private String changeName;
 }

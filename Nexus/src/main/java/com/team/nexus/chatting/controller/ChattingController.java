@@ -1,7 +1,13 @@
 package com.team.nexus.chatting.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.stream.Stream;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.team.nexus.chatting.model.service.ChatServiceImpl;
 import com.team.nexus.chatting.model.vo.ChatMessage;
@@ -26,29 +35,102 @@ public class ChattingController {
 	
 	@RequestMapping("selectChat.ih")
 	public String selectChattingRoom(HttpSession session, Model model) {
-		Member loginUser = (Member)session.getAttribute("loginUser");
-		int userNo = loginUser.getUserNo();
-		ArrayList<ChatRoom> rList = cService.selectRoom(userNo);
-		ArrayList<ChatUser> uList = cService.selectRoomUser(userNo);
-		model.addAttribute("rList",rList);
-		model.addAttribute("uList",uList);
-		System.out.println(rList);
-		System.out.println(uList);
+		modularity(session, model);
+		
 		return "chatting/chattingRoom";
 	}
 	
 	@RequestMapping("roomDetail.ih")
 	public String selectRoomDetail(int rno, HttpSession session, Model model) {
+		ArrayList<ChatMessage> cList = cService.selectMessage(rno); 
+		modularity(session, model);
+		model.addAttribute("cList",cList);
+		model.addAttribute("rno", rno);
+		return "chatting/chattingRoomDetail";
+	}
+	
+	@RequestMapping("search.ih")
+	public String searchUser(String search, HttpSession session, Model model) {
+		modularity(session, model);
+		ArrayList<Member> mList = cService.searchUser(search);
+		model.addAttribute("mList",mList);
+		return "chatting/chattingRoom";
+	}
+	
+	public void modularity(HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNo = loginUser.getUserNo();
-		ArrayList<ChatMessage> cList = cService.selectMessage(rno); 
 		ArrayList<ChatRoom> rList = cService.selectRoom(userNo);
 		ArrayList<ChatUser> uList = cService.selectRoomUser(userNo);
 		model.addAttribute("rList",rList);
 		model.addAttribute("uList",uList);
-		model.addAttribute("cList",cList);
-		model.addAttribute("rno", rno);
-		System.out.println(cList);
-		return "chatting/chattingRoomDetail";
+	}
+	
+	@RequestMapping("createRoom.ih")
+	public String createRoom(int checkNo, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int[] cUser = {loginUser.getUserNo(), checkNo};
+		int result = cService.createRoom();
+		if(result>0) {
+			for(int c : cUser) {
+				cService.insertChatUser(c);
+			}
+			return "redirect:/selectChat.ih";
+		}else {
+			return "errorPage";
+		}
+	}
+	
+	@RequestMapping("groupRoom.ih")
+	public String createGroupRoom(String uno, ChatRoom c, MultipartFile upfile, HttpSession session, Model model) {
+		int[] users = Stream.of(uno.split(",")).mapToInt(Integer::parseInt).toArray();
+		if(!upfile.getOriginalFilename().equals("")) {
+			String changeName = saveFile(upfile, session);
+			c.setOriginName(upfile.getOriginalFilename());
+			c.setChangeName("resources/uploadFiles/"+changeName);
+		}else {
+			c.setChangeName("resources/image/group-soild-60.png");
+		}
+		
+		c.setNumberParticipants(users.length);
+		int result = cService.createGroupRoom(c);
+		if(result>0) {
+			for(int u : users) {
+				cService.insertChatGroupUser(u);
+			}
+			return "redirect:/selectChat.ih";
+		}else {
+			return "errorPage";
+		}
+	}
+	
+	public String saveFile(MultipartFile upfile, HttpSession session) {
+
+		// 파일명 수정 작업 후 서버에 업로드 시키기 ("flower.png" => "20230331101821332.png")
+		String originName = upfile.getOriginalFilename(); // flower.png
+		
+		// "20230331101855" (년월일시분초)
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		// 랜덤한 숫자 5자리
+		int ranNum = (int)(Math.random() * 90000 + 10000); // 10000~99999 사이
+		
+		// 확장자
+		String ext = originName.substring(originName.lastIndexOf("."));
+		
+		// 최종 수정명
+		String changeName = currentTime + ranNum + ext;
+		
+		// 업로드 시키고자 하는 폴더의 물리적인 경로를 알아내기
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/"); // "/" 쓰면 webapp 가리킨다
+		
+		// 서버에 파일을 업로드
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return changeName;
 	}
 }

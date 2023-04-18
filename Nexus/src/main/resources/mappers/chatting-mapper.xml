@@ -13,6 +13,8 @@
  		<result column="count" property="count"/>
  		<result column="user_no" property="userNo"/>
  		<result column="user_name" property="userName"/>
+ 		<result column="origin_name" property="originName"/>
+ 		<result column="change_name" property="changeName"/>
  	</resultMap>
  	
  	<resultMap type="ChatUser" id="chatUserResultSet">
@@ -20,6 +22,7 @@
  		<result column="user_no" property="userNo"/>
  		<result column="user_name" property="userName"/>
  		<result column="profile" property="profile"/>
+ 		<result column="status" property="status"/>
  	</resultMap>
  	
  	<resultMap type="ChatMessage" id="chatMessageResultSet">
@@ -31,8 +34,28 @@
  		<result column="profile" property="profile"/>
  	</resultMap>
  	
+ 	<resultMap type="Member" id="memberResultSet">
+		<result column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_pwd" property="userPwd"/>
+		<result column="user_name" property="userName"/>
+		<result column="user_nick" property="userNick"/>
+		<result column="email" property="email"/>
+		<result column="profile" property="profile"/>
+		<result column="gender" property="gender"/>
+		<result column="social" property="social"/>
+		<result column="enroll_date" property="enrollDate"/>
+		<result column="token" property="token"/>
+		<result column="status" property="status"/>
+	</resultMap>
+ 	
  	<select id="selectRoom" resultMap="chatRoomResultSet">
- 	select *
+ 	select 
+ 		  room_no
+ 		, number_participants
+ 		, origin_name
+ 		, change_name
+ 		, room_title
 		from tb_chat_room r
 		join tb_chat_user u using(room_no)
 		where u.user_no = #{userNo}
@@ -53,6 +76,7 @@
 	                            where u.user_no = #{userNo}
 	                                and r.status = 'Y')
 	        and u.user_no != #{userNo}
+	        and u.status = 'S'
  	</select>
  
  	<select id="selectMessage" resultMap="chatMessageResultSet">
@@ -71,5 +95,29 @@
  		insert 
  			into tb_chatting
  			values(seq_chatting.nextval, #{roomNo}, #{chattingContent}, null , null, #{userNo}, sysdate)
+ 	</insert>
+ 	
+ 	<select id="searchUser" resultMap="memberResultSet">
+ 		select *
+ 		from tb_member
+ 		where user_name like '%${search}%'
+ 			and status = 'Y'
+ 	</select>
+ 	
+ 	<insert id="createRoom">
+ 		insert
+ 			into tb_chat_room
+ 			values(SEQ_CHAT_ROOM.NEXTVAL,2,sysdate,'Y',null,null,null)
+ 	</insert>
+ 	<insert id="insertChatUser">
+ 		insert
+ 			into tb_chat_user
+ 			values(#{userNo},seq_chat_room.currval,#{status},0)
+ 	</insert>
+ 	
+ 	<insert id="createGroupRoom">
+ 		insert 
+ 			into tb_chat_room
+ 			values(SEQ_CHAT_ROOM.NEXTVAL,#{numberParticipants},sysdate,'Y',#{originName},#{changeName},#{roomTitle})
  	</insert>
  </mapper>
