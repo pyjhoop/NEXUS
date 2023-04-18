@@ -10,11 +10,11 @@
 <style>
 #mainBody{
 	height: 2500px;
-	width: 85%;
+	width: 100%;
 	margin:auto;
 }
 #stacks{
-	width:89%;
+	width:100%;
 	margin:auto;
 	padding-top:25px;
 	padding-bottom:50px;
@@ -22,7 +22,7 @@
 	padding-right:20px;
 }
 #prs{
-	width:89%;
+	width:100%;
 	height:50px;
 	margin:auto;
 	padding-top:50px;
@@ -296,7 +296,7 @@ hr{
 
 
 <div id="stacks">
-<div class="col-xl-6" style="width: 90%; margin: auto;" >
+<div class="col-xl-6" style="width: 100% !important; margin: auto;" >
                   <h6 class="text-muted"></h6>
                   <div class="nav-align-top mb-4" >
                     <ul class="nav nav-tabs nav-fill" role="tablist" style="margin-bottom: 0;" >

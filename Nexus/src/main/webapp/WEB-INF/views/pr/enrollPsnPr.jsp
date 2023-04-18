@@ -22,7 +22,7 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/summernote-ko-KR.js"></script>
 
-<script src="${pageContext.request.contextPath}/resources/js/newsEnrollForm.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/personalPrBoard.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/newsEnrollForm.css">
 
 
@@ -127,19 +127,19 @@ label{
                     <label><b>제목</b></label>
                       <div class="input-group" >
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
-                        <input type="text" class="form-control" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon11">
+                        <input type="text" class="form-control" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon11" required>
                       </div> <br>
                       
                        <label ><b>프로젝트 참여 가능기간</b></label>
                       <div class="input-group" >
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
-                        <input  style="margin-top:0px;" type="text" class="form-control" placeholder="프로젝트 참여 가능기간을 입력해주세요 (ex-5월말부터 가능 or 6월중순부터 6개월간 가능 등)" aria-label="Username" aria-describedby="basic-addon11">
+                        <input  style="margin-top:0px;" type="text" class="form-control" placeholder="프로젝트 참여 가능기간을 입력해주세요 (ex-5월말부터 가능 or 6월중순부터 6개월간 가능 등)" aria-label="Username" aria-describedby="basic-addon11" required>
                       </div><br>
                       
                       <label ><b>연락 수단</b></label>
                       <div class="input-group">
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
-                        <input type="text" class="form-control" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11">
+                        <input type="text" class="form-control" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11" required>
                       </div><br>
 					
                     
@@ -194,7 +194,7 @@ label{
           <textarea name="newsContent" id="newsContent"></textarea>
 
           <input type="hidden" name="userNo" value="${loginUser.userNo}">
-          <input type="hidden" name="newsContent" id="newsContent">
+          <input type="hidden" name="personalPrContent" id="personalPrContent" required>
           <input type="hidden" name="thumbnail" id="thumbnail">
        
       	</div>
