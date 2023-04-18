@@ -291,7 +291,7 @@ hr{
 <body>
 <jsp:include page="../common/template.jsp"/>
 
-<div id="mainBody">
+<div id="mainBody" style="width: 100%;">
 
 
 

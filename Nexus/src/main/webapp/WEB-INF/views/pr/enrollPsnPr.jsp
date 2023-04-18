@@ -118,8 +118,8 @@ label{
 
 
 	<form action="insertNews" method="post" style="height: 100%;">
-<div id="body">
-		<div class="col-md-6" style="width:94%; height:100%; margin: auto;">
+<div id="body" style="margin: 0px; margin-top: 30px;">
+		<div class="col-md-6" style="width:97%; height:100%;  max-width: 100%; margin: auto; margin-left: 103px;">
                   <div class="card mb-4" style="width: 100%; margin: auto;">
                     <h4 class="card-header"  ><b>정보 입력</b></h4>
                     <div class="card-body demo-vertical-spacing demo-only-element" style="height: 1800px;"><br>
@@ -145,8 +145,8 @@ label{
                     
                    <label ><b>기술 스택</b></label>    
                    <div class="input-group">
-                       		<multi-input>
-			      <input id="stackInputCard" list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요.">
+                   <multi-input>
+			      <input id="stackInputCard" list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
 			      <datalist id="speakers">
 			        <option value="AWS"></option>
 			        <option value="Django"></option>
@@ -188,7 +188,7 @@ label{
                        
         <!-- quill 들어갈 자리 -->
               <label ><b>자기소개</b></label>
-          <div class="container-xxl flex-grow-1 container-p-y cpadding" style="margin-right: 70px; padding: 0px; box-shadow: 0; border: 0px; margin-top: 0px;">
+          <div class="container-xxl flex-grow-1 container-p-y cpadding" style="margin-right: 70px; padding: 0px; box-shadow: 0; border: 0px; margin-top: 0px !important; padding-top: 20px !important; ">
       	  
 
           <textarea name="newsContent" id="newsContent"></textarea>
