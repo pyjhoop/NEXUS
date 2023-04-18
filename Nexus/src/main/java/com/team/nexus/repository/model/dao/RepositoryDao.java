@@ -22,4 +22,8 @@ public class RepositoryDao {
 		return (ArrayList)sqlSession.selectList("repoMapper.selectRepoList", userNo);
 	}
 
+	public Repositories selectRepo(SqlSessionTemplate sqlSession, int rNo) {
+		return sqlSession.selectOne("repoMapper.selectRepo", rNo);
+	}
+
 }

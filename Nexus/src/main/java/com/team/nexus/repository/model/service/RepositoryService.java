@@ -26,4 +26,8 @@ public class RepositoryService {
 		return rDao.selectRepoList(sqlSession,userNo);
 	}
 
+	public Repositories selectRepo(int rNo) {
+		return rDao.selectRepo(sqlSession, rNo);
+	}
+
 }
