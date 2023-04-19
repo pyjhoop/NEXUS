@@ -226,12 +226,14 @@
 										<button class="btn btn-outline-primary" id="enroll" style="visibility:hidden;">뉴스등록</button>
 										<!-- Place this tag where you want the button to render. -->
 										<li class="nav-item 1h-1 me-4">
-											<!-- <a href="javascript:void(0);"class="menu-link position-relative">  --> <a class="nav-link dropdown-toggle hide-arrow menu-link " href="javascript:void(0);" data-bs-toggle="dropdown" style="padding-top: 0px; padding-bottom: 0px; width: 35px;">
+											<!-- <a href="javascript:void(0);"class="menu-link position-relative">  -->
+												<a class="nav-link dropdown-toggle hide-arrow menu-link " href="javascript:void(0);" data-bs-toggle="dropdown" style="padding-top: 0px; padding-bottom: 0px; width: 35px;">
 												<!-- ### 알람온 숫자만큼 뜨게 바꾸기 -->
 
 												<!-- ### 알람오면 bx-data 클래스 추가하기 +  (종 흔들림 애니메니션) -->
 												<!-- </span> <i class="menu-icon tf-icons bx bx-bell bx-tada bx-md"></i> -->
-												<span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1"> <span class="visually-hidden">unread messages</span></span> <i class="menu-icon tf-icons bx bx-bell bx-md "></i>
+												<span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1"> 
+												<span class="visually-hidden">unread messages</span></span> <i class="menu-icon tf-icons bx bx-bell bx-md "></i>
 
 												<!-- <span class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
 									9 <span class="visually-hidden">unread messages</span>
