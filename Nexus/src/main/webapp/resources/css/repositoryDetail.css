@@ -26,3 +26,8 @@
     width: 90%;
     margin: auto;
 }
+
+.clcik1:hover{
+    cursor: pointer;
+    
+}

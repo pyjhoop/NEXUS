@@ -41,23 +41,49 @@
                                 <div class="progress-bar ${array[status.index] } shadow-none" role="progressbar" style="width: ${value}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                             </c:forEach>
                             </div>
-                              
+                            
                             <c:forEach var="i" items="${map }" varStatus="status">
-
+                            
                             	<p class="circle ${array[status.index] }"></p>
                                 <h4> ${ i }%</h4>
-                              
+                            
                             </c:forEach>
                
                         </div>
 
                     </div>
                 </div>
+                <input type="hidden" name="hiddenpath" id="hiddenpath" value="">
                 <div class="card">
                     <div id="pathWrap">
-                        ${repo.userName} / ${repo.repoName}
+                    	<span id="totalPath">${repo.userName} / <a href="#">${repo.repoName}</a></span>
+                        <br> <br>
                         
-                        ${readme }
+                       	<div class="clear">
+
+                            <c:forEach var="i" items="${ list }">
+                                
+                                <c:choose>
+                                    <c:when test="${i.type eq 'file' }">
+                                        <div>
+                                            <img alt="파일 이미지" src="resources/image/file.png" width="30px">
+                                            <a class="clcik1" href="${i.download_url }" target="_blank">${i.name }</a>
+                                            
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div>
+                                            <img alt="폴더 이미지" src="resources/image/folder.png" width="30px">
+                                            <span class="folder">${i.name }</span>
+                                        </div>
+                                    </c:otherwise>
+                                
+                                </c:choose>
+                                <hr>
+                            </c:forEach> 
+
+                        </div>
+                       
                     </div>
                 </div>
             </div>

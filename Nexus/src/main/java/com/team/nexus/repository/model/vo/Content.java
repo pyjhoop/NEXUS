@@ -14,9 +14,15 @@ import lombok.ToString;
 @Setter
 @ToString
 @AllArgsConstructor
-public class Content {
+public class Content implements Comparable<Content>{
 	
 	private String name;
 	private String download_url;
 	private String type;
+	
+	
+	@Override
+	public int compareTo(Content o) {
+		return this.type.compareTo(o.type);
+	}
 }
