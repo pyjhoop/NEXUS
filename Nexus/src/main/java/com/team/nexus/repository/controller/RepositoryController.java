@@ -42,6 +42,8 @@ import com.team.nexus.member.model.vo.Member;
 import com.team.nexus.repository.model.service.RepositoryService;
 import com.team.nexus.repository.model.vo.Content;
 import com.team.nexus.repository.model.vo.Repositories;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
 
 @Controller
 public class RepositoryController {
@@ -115,32 +117,69 @@ public class RepositoryController {
 			
 			
 			jsonNode = obj.readTree(response);
-			
+			String findMd = "";
 			for(int i = 0; i<jsonNode.size(); i++) {
 				
 				//System.out.println(jsonNode.get(i));
 				String name = jsonNode.get(i).get("name").asText();
 				String downloadUrl = jsonNode.get(i).get("download_url").asText();
 				String type = jsonNode.get(i).get("type").asText();
+				String size = Math.round(jsonNode.get(i).get("size").asDouble()*10/1000)/10.0+ "KB";
+				if(name.indexOf(".md")!= -1) {
+					findMd = downloadUrl;
+				}
 				
-				list.add(new Content(name, downloadUrl,type));
+				list.add(new Content(name, downloadUrl,type,size));
 			}
 			
 			Collections.sort(list);
 			
 			
-			System.out.println(list);
+//			System.out.println(list);
 			
 			// .md 있으면 밑에 추가해야하고
+			System.out.println(".md:"+findMd);
 			
+			String text = "";
+			if(findMd.length()>0) {
+				
+				text = getPathContents1(findMd, session);
+//				
+		        
+			}
 			
 			// 멤버 정보를 가져와야 한다.
+			
+			String url2 = repo.getUserName()+"/";
+			url2+= repo.getRepoName()+"/collaborators";
+			
+			String members = getPathContents(url2, session);
+			ArrayList<Member> mList = new ArrayList<Member>();
+			
+			jsonNode = obj.readTree(members);
+			for(int i = 0; i<jsonNode.size(); i++) {
+				Member m = new Member();
+				System.out.println(jsonNode.get(i));
+				String userName = jsonNode.get(i).get("login").asText();
+				String avatarUrl = jsonNode.get(i).get("avatar_url").asText();
+				String roleName = jsonNode.get(i).get("role_name").asText();
+				m.setUserName(userName);
+				m.setProfile(avatarUrl);
+				m.setRollName(roleName);
+				
+				mList.add(m);
+			}
+			
+			System.out.println(mList);
+			
 			
 			
 			// model에 데이터 추가
 			model.addAttribute("list",list);
 			model.addAttribute("map",map);
 			model.addAttribute("repo",repo);
+			model.addAttribute("text",text);
+			model.addAttribute("mList",mList);
 			
 			br.close();
 			urlConnection.disconnect();
@@ -225,11 +264,37 @@ public class RepositoryController {
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 		
-		System.out.println(response.getBody());
+//		System.out.println(response.getBody());
 		
 		
 		
 		return response.getBody();
+	}
+	
+	public String getPathContents1(String path, HttpSession session){
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String url =path;
+		
+		System.out.println("url : "+url);
+		
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+		
+		System.out.println(response.getBody());
+		String text = response.getBody();
+		
+	    Parser parser = Parser.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        String html = renderer.render(parser.parse(text));
+//        System.out.println(html);
+	
+		
+		
+		return html;
 	}
 	
 	
@@ -248,6 +313,10 @@ public class RepositoryController {
 		
 		ArrayList<Content> contArray = gson.fromJson(response, listType);
 		
+		for(Content c: contArray) {
+			c.setSize(Math.round(Integer.parseInt(c.getSize())*10/1000)/10.0+ "KB");
+		}
+		
 		Collections.sort(contArray);
 //		
 //		
@@ -258,6 +327,13 @@ public class RepositoryController {
 		return gson.toJson(contArray);
 		
 		
+	}
+	
+	@RequestMapping(value = "getMdFile", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String getMdFile(String url, HttpSession session) {
+		String text = getPathContents1(url, session);
+		return text;
 	}
 	
 	

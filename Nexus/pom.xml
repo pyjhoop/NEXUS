@@ -261,6 +261,13 @@
 		    <version>2.6</version>
 		</dependency>
 		
+		<dependency>
+		    <groupId>com.vladsch.flexmark</groupId>
+		    <artifactId>flexmark</artifactId>
+		    <version>0.62.2</version>
+		</dependency>
+		
+		
 	</dependencies>
     <build>
         <plugins>

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -19,6 +20,7 @@ public class Content implements Comparable<Content>{
 	private String name;
 	private String download_url;
 	private String type;
+	private String size;
 	
 	
 	@Override

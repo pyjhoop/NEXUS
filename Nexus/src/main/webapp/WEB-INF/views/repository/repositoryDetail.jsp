@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/repositoryDetail.css">
 
 <script src="${ pageContext.request.contextPath }/resources/js/repositoryDetail.js"></script>
+
 </head>
 <body>
 	<jsp:include page="../common/template.jsp"/>
@@ -54,9 +55,9 @@
                     </div>
                 </div>
                 <input type="hidden" name="hiddenpath" id="hiddenpath" value="">
-                <div class="card">
+                <div class="card mb-5">
                     <div id="pathWrap">
-                    	<span id="totalPath">${repo.userName} / <a href="#">${repo.repoName}</a></span>
+                    	<span id="totalPath">${repo.userName}/<span class="origin" id="${repo.userName}/${repo.repoName}/contents">${repo.repoName}</span></span>
                         <br> <br>
                         
                        	<div class="clear">
@@ -66,8 +67,16 @@
                                 <c:choose>
                                     <c:when test="${i.type eq 'file' }">
                                         <div>
-                                            <img alt="파일 이미지" src="resources/image/file.png" width="30px">
-                                            <a class="clcik1" href="${i.download_url }" target="_blank">${i.name }</a>
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <img alt="파일 이미지" src="resources/image/file.png" width="30px">
+                                                    <a class="clcik1" href="${i.download_url }" target="_blank">${i.name }</a>
+
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <span>${i.size}</span>
+                                                </div>
+                                            </div>
                                             
                                         </div>
                                     </c:when>
@@ -75,6 +84,7 @@
                                         <div>
                                             <img alt="폴더 이미지" src="resources/image/folder.png" width="30px">
                                             <span class="folder">${i.name }</span>
+                                            
                                         </div>
                                     </c:otherwise>
                                 
@@ -83,16 +93,68 @@
                             </c:forEach> 
 
                         </div>
+
                        
                     </div>
                 </div>
+
+                <div class="card mdFile">
+
+                    <div>
+
+                        ${text}
+
+                    </div>
+
+                </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4">
-                <div class="card">
-                    asdf
+                <div class="card mb-5">
+                    <h2>NEXUS</h2>
+                    <p>설명충 ....</p>
                 </div>
+
+                <div class="card mb-5">
+
+                    <div style="width: 90%; margin: auto; margin-top: 10px; margin-bottom: 10px;">
+                        <h3>프로젝트 관리자</h3>
+                        <c:forEach var="i" items="${mList }">
+                            <c:if test="${i.rollName eq 'admin' }">
+                                <div style="display:flex; margin-left: 20px;">
+                                    <img src="${i.profile}" alt="" width="50px" height="50px" style="border-radius: 100%; float: left; display: block;">
+                                    <span style="line-height: 50px; margin-left: 10px;">${i.userName}</span>
+    
+                                </div>
+    
+                            </c:if>
+                        </c:forEach>
+
+                    </div>
+                </div>
+
+                <div class="card mb-5">
+
+                    <div style="width: 90%; margin: auto; margin-top: 10px; margin-bottom: 10px;">
+                        <h3>참여 멤버</h3>
+                        <c:forEach var="i" items="${mList }">
+                            
+                            <div style="display:flex; margin-left: 20px;">
+                                <img src="${i.profile}" alt="" width="50px" height="50px" style="border-radius: 100%; float: left; display: block;">
+                                <span style="line-height: 50px; margin-left: 10px;">${i.userName}</span>
+
+                            </div>
+                            <br>
+    
+                          
+                        </c:forEach>
+
+                    </div>
+
+                </div>
+                
             </div>
         </div>
     </div>
+   
 </body>
 </html>

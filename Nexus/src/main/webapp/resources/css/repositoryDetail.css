@@ -29,5 +29,29 @@
 
 .clcik1:hover{
     cursor: pointer;
-    
+}
+
+.back{
+    color: #696cff;
+}
+.back:hover{
+    cursor: pointer;
+}
+
+.folder:hover{
+    cursor: pointer;
+}
+
+.origin{
+    color: #696cff;
+}
+
+.origin:hover{
+    cursor: pointer;
+}
+
+.mdFile>div{
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
 }
