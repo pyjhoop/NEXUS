@@ -105,6 +105,7 @@
     height: 80px;
     margin: auto;
     resize: none;
+    line-height: 0.8;
 }
 
 #btnWrap{

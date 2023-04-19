@@ -19,8 +19,8 @@ public class NewsDao {
 	}
 
 	public ArrayList<News> selectList(SqlSessionTemplate sqlsession, int page) {
-		int offset = (page-1)*5;
-		int limit = 5;
+		int offset = (page-1)*12;
+		int limit = 12;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlsession.selectList("newsMapper.ajaxSelectList", null, rowBounds);
@@ -72,6 +72,10 @@ public class NewsDao {
 
 	public int likeCount1(SqlSessionTemplate sqlsession, Zzim z) {
 		return sqlsession.selectOne("newsMapper.likeCount1", z);
+	}
+
+	public int upateNews(SqlSessionTemplate sqlsession, News n) {
+		return sqlsession.update("newsMapper.updateNews", n);
 	}
 
 	
