@@ -25,4 +25,6 @@ public class ChatRoom {
 	private String userName;
 	private String originName;
 	private String changeName;
+	private String lastChat;
+	private Date lastDate;
 }

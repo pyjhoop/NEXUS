@@ -35,6 +35,10 @@
     display: inline-block;
     position: relative;
 }
+ .chat-window .chat-cont-right .chat-body .media .avatar {
+    height: 30px;
+    width: 40px;
+}
  </style>
 </head>
 <body>
@@ -92,24 +96,42 @@
 	</div>
 	<div class="chat-cont-right">
 	<div class="chat-header">
-	<a id="back_user_list" href="javascript:void(0)" class="back-user-list">
+	<a id="back_user_list" href="" class="back-user-list">
 	<i class="bx bx-chevron-left"></i>
 	</a>
+	<c:choose>
+	<c:when test="${cr.roomTitle != null}">
 	<div class="media d-flex">
 	<div class="media-img-wrap">
 	<div class="avatar avatar-online">
-	<img src="assets/img/profiles/usermain.jpg" alt="" class="avatar-img rounded-circle">
+	<img src="${cr.changeName }" alt="" class="avatar-img rounded-circle">
 	</div>
 	</div>
 	<div class="media-body">
-	<div class="user-name">Brian Johnson</div>
-	<div class="user-status">online</div>
+	<div class="user-name">${cr.roomTitle }</div>
 	</div>
 	</div>
+	</c:when>
+	<c:otherwise>
+	<div class="media d-flex">
+	<div class="media-img-wrap">
+	<div class="avatar avatar-online">
+	<img src="${cu.profile }" alt="" class="avatar-img rounded-circle">
+	</div>
+	</div>
+	<div class="media-body">
+	<div class="user-name">${cu.userName }</div>
+	</div>
+	</div>
+	</c:otherwise>
+	</c:choose>
+
+	
+	
 	</div>
 	<div class="chat-body">
-	<div class="chat-scroll">
-	<ul class="list-unstyled">
+	<div class="chat-scroll" id="room-scroll">
+	<ul class="list-unstyled" id="room-scroll2">
 	<c:forEach var="c" items="${cList }">
 	<c:if test="${c.userNo eq loginUser.userNo }">
 	<li class="media sent">
@@ -133,6 +155,7 @@
 	<li class="media d-flex received">
 	<div class="avatar">
 	<img src="${c.profile }" alt="" class="w-px-40 h-px-40 rounded-circle">
+	<div style="font-size:3px">${c.userName }</div>
 	</div>
 	<div class="media-body">
 	<div class="msg-box">
@@ -183,7 +206,7 @@
         const userNo = "${loginUser.userNo}";
         const userEmail = "${loginUser.email}";
         const userName = "${loginUser.userName}";
-        const roomNo = "${rno}";
+        const roomNo = "${cr.roomNo}";
         const profile = "${loginUser.profile}";
         const contextPath = "${contextPath}";
 

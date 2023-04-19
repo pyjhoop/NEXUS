@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,11 +42,13 @@ public class ChattingController {
 	}
 	
 	@RequestMapping("roomDetail.ih")
-	public String selectRoomDetail(int rno, HttpSession session, Model model) {
-		ArrayList<ChatMessage> cList = cService.selectMessage(rno); 
+	public String selectRoomDetail(ChatRoom cr,ChatUser cu , HttpSession session, Model model) {
+		ArrayList<ChatMessage> cList = cService.selectMessage(cr.getRoomNo()); 
 		modularity(session, model);
 		model.addAttribute("cList",cList);
-		model.addAttribute("rno", rno);
+		model.addAttribute("cr", cr);
+		model.addAttribute("rno", cr.getRoomNo());
+		model.addAttribute("cu",cu);
 		return "chatting/chattingRoomDetail";
 	}
 	
@@ -62,6 +65,7 @@ public class ChattingController {
 		int userNo = loginUser.getUserNo();
 		ArrayList<ChatRoom> rList = cService.selectRoom(userNo);
 		ArrayList<ChatUser> uList = cService.selectRoomUser(userNo);
+		System.out.println(rList);
 		model.addAttribute("rList",rList);
 		model.addAttribute("uList",uList);
 	}
@@ -82,14 +86,15 @@ public class ChattingController {
 	}
 	
 	@RequestMapping("groupRoom.ih")
-	public String createGroupRoom(String uno, ChatRoom c, MultipartFile upfile, HttpSession session, Model model) {
+	public String createGroupRoom(@ModelAttribute("loginUser") Member loginUser,String uno, ChatRoom c, MultipartFile upfile, HttpSession session, Model model) {
+		System.out.println(uno);
 		int[] users = Stream.of(uno.split(",")).mapToInt(Integer::parseInt).toArray();
 		if(!upfile.getOriginalFilename().equals("")) {
 			String changeName = saveFile(upfile, session);
 			c.setOriginName(upfile.getOriginalFilename());
 			c.setChangeName("resources/uploadFiles/"+changeName);
 		}else {
-			c.setChangeName("resources/image/group-soild-60.png");
+			c.setChangeName("/nexus/resources/image/group-solid-60.png");
 		}
 		
 		c.setNumberParticipants(users.length);

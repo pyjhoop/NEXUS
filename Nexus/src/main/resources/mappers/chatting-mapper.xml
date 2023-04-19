@@ -15,6 +15,8 @@
  		<result column="user_name" property="userName"/>
  		<result column="origin_name" property="originName"/>
  		<result column="change_name" property="changeName"/>
+ 		<result column="last_chat" property="lastChat"/>
+ 		<result column="last_date" property="lastDate"/>
  	</resultMap>
  	
  	<resultMap type="ChatUser" id="chatUserResultSet">
@@ -23,6 +25,7 @@
  		<result column="user_name" property="userName"/>
  		<result column="profile" property="profile"/>
  		<result column="status" property="status"/>
+ 		<result column="count" property="count"/>
  	</resultMap>
  	
  	<resultMap type="ChatMessage" id="chatMessageResultSet">
@@ -56,6 +59,8 @@
  		, origin_name
  		, change_name
  		, room_title
+ 		, last_chat
+ 		, last_date
 		from tb_chat_room r
 		join tb_chat_user u using(room_no)
 		where u.user_no = #{userNo}
@@ -67,7 +72,8 @@
 	    u.user_no,
 	    room_no,
 	    user_name,
-	    profile
+	    profile,
+	    count
 	from tb_chat_user u 
 	join  tb_member m on(u.user_no = m.user_no)
 	where room_no in (select room_no
@@ -107,7 +113,7 @@
  	<insert id="createRoom">
  		insert
  			into tb_chat_room
- 			values(SEQ_CHAT_ROOM.NEXTVAL,2,sysdate,'Y',null,null,null)
+ 			values(SEQ_CHAT_ROOM.NEXTVAL,2,sysdate,'Y',null,null,null,null,null)
  	</insert>
  	<insert id="insertChatUser">
  		insert
@@ -118,6 +124,21 @@
  	<insert id="createGroupRoom">
  		insert 
  			into tb_chat_room
- 			values(SEQ_CHAT_ROOM.NEXTVAL,#{numberParticipants},sysdate,'Y',#{originName},#{changeName},#{roomTitle})
+ 			values(SEQ_CHAT_ROOM.NEXTVAL,#{numberParticipants},sysdate,'Y',#{originName},#{changeName},#{roomTitle},null,null)
  	</insert>
+ 	
+ 	<update id="updateMessage">
+ 		update
+ 			tb_chat_room
+ 		set last_chat = #{chattingContent},
+ 			last_date = sysdate
+ 		where room_no = #{roomNo}
+ 	</update>
+ 	<update id="unreadMessage">
+ 		update
+ 			tb_chat_user
+ 		set count = count + 1
+ 		where room_no = #{roomNo}
+ 		and user_no != #{userNo}
+ 	</update>
  </mapper>

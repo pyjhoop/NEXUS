@@ -174,7 +174,7 @@
 	<div class="chat-scroll">
 	<c:forEach var="r" items="${rList}">
 	<c:if test="${r.numberParticipants > 2 }">
-	<a href="roomDetail.ih?rno=${r.roomNo }" class="card-body d-flex">
+	<a href="roomDetail.ih?roomNo=${r.roomNo }&roomTitle=${r.roomTitle}&changeName=${r.changeName}" class="card-body d-flex">
 	<div class="media-img-wrap">
 	<div class="avatar avatar-away">
 	<img src="${ r.changeName }" alt="" class="avatar-img rounded-circle">
@@ -185,10 +185,10 @@
 	<div class="user-name">
 	${r.roomTitle}
 	</div>
-	<div class="user-last-chat">Give me a full explanation about our project</div>
+	<div class="user-last-chat">${r.lastChat }</div>
 	</div>
 	<div>
-	<div class="last-chat-time block">7:30 PM</div>
+	<div class="last-chat-time block">${r.lastDate }</div>
 	<div class="badge badge-success badge-pill">3</div>
 	</div>
 	</div>
@@ -197,7 +197,7 @@
 	</c:if>
 	<c:forEach var="u" items="${uList}">
 	<c:if test="${ r.roomNo eq u.roomNo }">
-	<a href="roomDetail.ih?rno=${r.roomNo }" class="card-body d-flex">
+	<a href="roomDetail.ih?roomNo=${r.roomNo }&userName=${u.userName}&profile=${u.profile}" class="card-body d-flex">
 	<div class="media-img-wrap">
 	<div class="avatar avatar-away">
 	<img src="${ u.profile }" alt="" class="avatar-img rounded-circle">
@@ -208,11 +208,11 @@
 	<div class="user-name">
 	${u.userName}
 	</div>
-	<div class="user-last-chat">Give me a full explanation about our project</div>
+	<div class="user-last-chat">${r.lastChat }</div>
 	</div>
 	<div>
-	<div class="last-chat-time block">7:30 PM</div>
-	<div class="badge badge-success badge-pill">3</div>
+	<div class="last-chat-time block">${r.lastDate }</div>
+	<div class="badge badge-success badge-pill">${u.count }</div>
 	</div>
 	</div>
 	</a>
@@ -285,11 +285,13 @@
 	
 	<script>
 	let checkNo = new Array();
+	let count = 0;
 	$("#create-room").click(function(){
 		if($('input:checkbox[name=chat-check]:checked').length >= 2){
-			$('input:checkbox[name=chat-check]').each(function(i) {
+			$('input:checkbox[name=chat-check]').each(function() {
 				if($(this).is(":checked")==true){
-			    	checkNo[i] = $(this).val();
+			    	checkNo[count] = $(this).val();
+			    	count++;
 			    }
 			});
 				checkNo.push("${loginUser.userNo}");

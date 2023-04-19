@@ -18,4 +18,5 @@ public class ChatUser {
 	private String userName;
 	private String profile;
 	private String status;
+	private int count;
 }

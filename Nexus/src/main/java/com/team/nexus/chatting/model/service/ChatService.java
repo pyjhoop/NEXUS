@@ -26,4 +26,8 @@ public interface ChatService {
 	 void insertChatGroupUser(int user);
 	 
 	 int createGroupRoom(ChatRoom c);
+	 
+	 int updateMessage(ChatMessage chatMessage);
+	 
+	 int unreadMessage(ChatMessage chatMessage);
 }

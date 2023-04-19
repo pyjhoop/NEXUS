@@ -77,4 +77,14 @@ public class ChatServiceImpl implements ChatService{
 		
 	}
 
+	@Override
+	public int updateMessage(ChatMessage chatMessage) {
+		return cDao.updateMessage(sqlSession, chatMessage);
+	}
+
+	@Override
+	public int unreadMessage(ChatMessage chatMessage) {
+		return cDao.unreadMessage(sqlSession,chatMessage);
+	}
+
 }

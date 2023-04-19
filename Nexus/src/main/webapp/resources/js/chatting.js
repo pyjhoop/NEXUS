@@ -74,7 +74,11 @@ chatSocket.onmessage = function(e) {
 
     // 전달받은 메세지를 JS객체로 변환
     const chatMessage = JSON.parse(e.data); // js객체로 변환.
-    console.log(chatMessage);
+    if(chatMessage.userNo == 0){
+
+    }else{
+
+    
     /*
     	<li>
     		[<b></b>]
@@ -128,17 +132,18 @@ chatSocket.onmessage = function(e) {
     }
 
     // 채팅창
-    const displayChatting = document.getElementsByClassName("display-chatting")[0];
+    const displayChatting = document.getElementsByClassName("chat-body")[0];
     console.log(myChatting);
      // 채팅창에 채팅 추가
      $('.list-unstyled').append(myChatting);
      //inputChatting.value = "";
 
     // 채팅창을 제일밑으로 내리기
-    displayChatting.scrollTop = displayChatting.scrollHeight;
+    $('#room-scroll2').scrollTop($('#room-scroll2').prop('scrollHeight'));
+   // displayChatting.scrollTop = displayChatting.scrollHeight;
     // scrollTop : 스크롤 이동
     // scrollHeight : 스크롤이되는 요소의 전체 높이.
-
+    }
 };
 
 function getCurrentTime() {

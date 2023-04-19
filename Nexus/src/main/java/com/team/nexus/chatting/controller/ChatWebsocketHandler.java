@@ -57,13 +57,16 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 		//logger.info(chatMessage);
         
 		// 전달 받은 채팅메세지를 db에 삽입
+		System.out.println(chatMessage);
 		int result = cService.insertMessage(chatMessage);
+		int result2 =  cService.updateMessage(chatMessage);
+		int count = 0;
 		if(result > 0) {
 			// 같은방에 접속중인 클라이언트에게 전달받은 메세지를 보내기
 			for(WebSocketSession s : sessions) {
 				//반복을 진행중인 websocketSession안에 담겨있는 방번호
-				System.out.println((Integer)s.getAttributes().get("rno"));
 				int roomNo = (Integer)s.getAttributes().get("rno");
+				
             	
 				//메세지에 담겨있는 채팅방 번호와 chatRoomNo가 같은지 비교
 				if(chatMessage.getRoomNo() == roomNo) {
@@ -71,7 +74,13 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 					
 				 	// s.sendMessage(new TextMessage( message.getPayload()));
 					s.sendMessage(new TextMessage( new Gson().toJson(chatMessage )));
+					count++;
 				}
+			}
+			if(count == 1) {
+				int result3= cService.unreadMessage(chatMessage);
+				chatMessage.setUserNo(0);
+				session.sendMessage(new TextMessage( new Gson().toJson(chatMessage)));
 			}
         
 		}

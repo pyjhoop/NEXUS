@@ -41,4 +41,12 @@ public class ChatDao {
 	public int createGroupRoom(SqlSessionTemplate sqlSession,ChatRoom c) {
 		return sqlSession.insert("chattingMapper.createGroupRoom",c);
 	}
+	
+	public int updateMessage(SqlSessionTemplate sqlSession,ChatMessage chatMessage) {
+		return sqlSession.update("chattingMapper.updateMessage", chatMessage);
+	}
+	
+	public int unreadMessage(SqlSessionTemplate sqlSession,ChatMessage chatMessage) {
+		return sqlSession.update("chattingMapper.unreadMessage", chatMessage);
+	}
 }
