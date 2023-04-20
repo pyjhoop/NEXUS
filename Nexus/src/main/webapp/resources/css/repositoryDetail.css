@@ -1,10 +1,10 @@
 #repoImg{
-    width: 70%;
+    width: 60%;
 }
 
 #repoPath{
     font-size: 2rem;
-    margin-left: 60px;
+    margin-left: 30px;
     font-weight: bold;
     color: black;
 }
@@ -23,8 +23,12 @@
 }
 
 #pathWrap{
-    width: 90%;
+    width: 70%;
     margin: auto;
+}
+
+.size{
+    text-align: right;
 }
 
 .clcik1:hover{
