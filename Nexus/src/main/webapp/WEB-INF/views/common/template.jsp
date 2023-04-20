@@ -246,7 +246,9 @@
 											<ul class="dropdown-menu dropdown-menu-end">
 
 
-												<li><a class="dropdown-item" href="#"> ### 개의 새로운 알림이 있습니다 </a></li>
+												<li class="alermLi"><span class="dropdown-item alermA" href="#"> ### 개의 새로운 알림이 있습니다 </span>
+												<button type="button" class="btn btn-outline-danger btn-sm">CLEAN</button>
+												</li>
 												<li>
 													<div class="dropdown-divider"></div>
 												</li>

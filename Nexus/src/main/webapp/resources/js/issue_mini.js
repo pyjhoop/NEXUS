@@ -97,3 +97,6 @@ function postFormSubmit(num) {
         $("#postForm").attr("action", "issueDelete.mini").submit();
     }
 }
+
+
+

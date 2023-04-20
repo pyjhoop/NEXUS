@@ -138,16 +138,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap
             <!-- ---------------------------------------------- -->
 
 
-
-            <div class="line">
-                <input type="text" id="test1" autocomplete="off" placeholder="Multiple Select">
-            </div>
-            <div class="line">
-                <input type="text" id="test2" autocomplete="off" placeholder="Multiple Select">
-            </div>
-
-
-
+<select multiple>
+  <option value="option1">Option 1</option>
+  <option value="option2">Option 2</option>
+  <option value="option3">Option 3</option>
+</select>
 
 
 
