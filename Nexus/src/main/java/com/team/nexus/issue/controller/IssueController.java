@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.team.nexus.issue.model.service.IssueServiceImpl;
@@ -71,29 +73,29 @@ public class IssueController {
 	      JsonArray itemArr = bodyObj.getAsJsonArray("items");
 	      
 	      
-	      ArrayList<AirVo> list = new ArrayList<>();
+//	      ArrayList<AirVo> list = new ArrayList<>();
 	      
 	      
-	      for(int i = 0; i<itemArr.size(); i++) {
-	          JsonObject item = itemArr.get(i).getAsJsonObject();
-//	          System.out.println(item);
-	          
-	          AirVo air = new AirVo();
-	          air.setStationName(item.get("stationName").getAsString());
-	          air.setDataTime(item.get("dataTime").getAsString());
-	          air.setKhaiValue(item.get("khaiValue").getAsString());
-	          air.setPm10Value(item.get("pm10Value").getAsString());
-	          air.setSo2Value(item.get("so2Value").getAsString());
-	          air.setCoValue(item.get("coValue").getAsString());
-	          air.setNo2Value(item.get("no2Value").getAsString());
-	          air.setO3Value(item.get("o3Value").getAsString());
-	          
-	          list.add(air);
-	       }
-	       
-	       for(AirVo a: list) {
-	          System.out.println(a);
-	       }
+//	      for(int i = 0; i<itemArr.size(); i++) {
+//	          JsonObject item = itemArr.get(i).getAsJsonObject();
+////	          System.out.println(item);
+//	          
+//	          AirVo air = new AirVo();
+//	          air.setStationName(item.get("stationName").getAsString());
+//	          air.setDataTime(item.get("dataTime").getAsString());
+//	          air.setKhaiValue(item.get("khaiValue").getAsString());
+//	          air.setPm10Value(item.get("pm10Value").getAsString());
+//	          air.setSo2Value(item.get("so2Value").getAsString());
+//	          air.setCoValue(item.get("coValue").getAsString());
+//	          air.setNo2Value(item.get("no2Value").getAsString());
+//	          air.setO3Value(item.get("o3Value").getAsString());
+//	          
+//	          list.add(air);
+//	       }
+//	       
+//	       for(AirVo a: list) {
+//	          System.out.println(a);
+//	       }
 	       
 	       //5. 다 사용한 스트림 반납
 	       br.close();
