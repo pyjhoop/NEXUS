@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="repoMapper">
+
+	<resultMap type="Repositories" id="repoResultSet">
+		<result column="repo_no" property="repoNo"/>
+		<result column="user_no" property="userNo"/>
+		<result column="user_name" property="userName"/>
+		<result column="repo_name" property="repoName"/>
+		<result column="repo_status" property="repoStatus"/>
+		<result column="status" property="status"/>
+	</resultMap>
+
+	<insert id="insertRepo">
+		insert 
+		  into tb_repository
+		  (
+		  	 repo_no
+		   , user_no
+		   , user_name
+		   , repo_name
+		   , repo_status
+		  )
+		  values
+		  (
+		     seq_repository.nextval
+		   , #{userNo}
+		   , #{userName}
+		   , #{repoName}
+		   , #{repoStatus}
+		  
+		  )
+	</insert>
+	
+	<select id="selectRepoList" resultMap="repoResultSet">
+		select 
+				repo_no
+			  , user_no
+			  , user_name
+			  , repo_name
+			  , repo_status
+	      from tb_repository
+	      where user_no = #{userNo}
+	      and status = 'N' 
+	</select>
+	
+	<select id="selectRepo" resultMap="repoResultSet">
+		select
+				user_name
+			  , repo_name
+		  from tb_repository
+		  where repo_no = #{rNo}
+	</select>
+	
+	
+</mapper>

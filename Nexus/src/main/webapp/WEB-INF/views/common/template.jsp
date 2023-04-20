@@ -124,17 +124,19 @@
 			<div class="app-brand demo">
 				<a href="main.p" class="app-brand-link">
 					<span class="app-brand-text demo menu-text fw-bolder ms-2">NEXUS</span>
+					<span style="margin-left: 5px; margin-top: 5px;">(${repoName})</span>
 				</a>
 				<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
 					<i class="bx bx-chevron-left bx-sm align-middle"></i>
 				</a>
 			</div>
 
+
 			<div class="menu-inner-shadow"></div>
 
 			<ul class="menu-inner py-1">
 				<!-- Dashboard -->
-				<li class="menu-item active">
+				<li class="menu-item">
 					<a href="main.p" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-home-circle"></i>
 						<div data-i18n="Analytics">Home</div>
@@ -223,6 +225,13 @@
 
 						
 						<button class="btn btn-outline-primary" id="enroll" style="visibility:hidden;">뉴스등록</button>
+						<button type="button" id="repobtn" style="display: none;" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+							new repository
+						</button>
+
+						<!-- Modal -->
+						
+
 						<!-- Place this tag where you want the button to render. -->
 						<li class="nav-item 1h-1 me-4">
 							<!-- <a href="javascript:void(0);"class="menu-link position-relative">  --> <a class="nav-link dropdown-toggle hide-arrow menu-link " href="javascript:void(0);" data-bs-toggle="dropdown" style="padding-top: 0px; padding-bottom: 0px; width: 35px;">
