@@ -1,4 +1,12 @@
 $(function(){
+    //코드에디터 설정
+    
+    $("#repository").addClass('active');
+
+    
+
+
+
     
     function getContent(path, currPath){
         $.ajax({
@@ -32,7 +40,7 @@ $(function(){
                            + '<div class="row">'
                            + '<div class="col-lg-8">'
                            + '<img alt="파일 이미지" src="resources/image/file.png" width="30px">'
-                           + '<a class="clcik1" href="'+obj[i].download_url+'" target="_blank">'+obj[i].name+'</a>'
+                           + '<span class="clcik1" id="'+obj[i].download_url+'" target="_blank">'+obj[i].name+'</span>'
                            + '</div>'
                            + '<div class="col-lg-4">'
                            + '<span>'+obj[i].size+'</span>'
@@ -71,6 +79,8 @@ $(function(){
             let repoPath = $("#repoPath").text()+"/contents";
 
             value = "";
+            var path1 = repoPath;
+
             for(let i in arr){
                 if(i==0){
                     value+="<span>"+arr[i]+"</span>"
@@ -78,7 +88,8 @@ $(function(){
                     value+="<span class='origin' id='"+repoPath+"'>"+'/'+arr[i]+"</span>"
                 }else if(arr[i]=='contents'){
                 }else{
-                    value+="<span class='back' id="+path+">"+'/'+arr[i]+"</span>";
+                    path1+="/"+arr[i];
+                    value+="<span class='back' id="+path1+">"+'/'+arr[i]+"</span>";
                 }
 
             }
@@ -87,7 +98,7 @@ $(function(){
             
             // 객체배열 
             const obj = JSON.parse(data);
-            // console.log(obj)
+            console.log(obj)
             $(".clear").empty();
 
             let value1 = "";
@@ -103,7 +114,7 @@ $(function(){
                            + '<div class="row">'
                            + '<div class="col-lg-8">'
                            + '<img alt="파일 이미지" src="resources/image/file.png" width="30px">'
-                           + '<a class="clcik1" href="'+obj[i].download_url+'" target="_blank">'+obj[i].name+'</a>'
+                           + '<span class="clcik1" id="'+obj[i].download_url+'" target="_blank">'+obj[i].name+'</span>'
                            + '</div>'
                            + '<div class="col-lg-4">'
                            + '<span>'+obj[i].size+'</span>'
@@ -120,6 +131,59 @@ $(function(){
 
             $(".clear").html(value1);
             
+        }, error:function(){
+            console.log("실패")
+        }
+        })
+    }
+
+    function getFileContent(path, name){
+        $.ajax({
+        url:"ajaxFileContent",
+        data:{path:path},
+        success:function(data){
+            //console.log("성공")
+            console.log(data);
+
+            // $("#batch_content").empty();
+            $(".CodeMirror").remove();
+
+            var ex = "";
+
+            var num = true;
+
+            switch(name){
+                case 'java': ex='text/x-java'; break;
+                case 'sql': ex = 'text/x-sql'; break;
+                case 'md': ex='text/x-markdown'; num=false; break;
+                case 'css': ex = "css"; break;
+                case 'js' : ex = 'javascript'; break;
+                case 'jsp' : ex='text/html'; break;
+                case 'xml' : ex='text/xml'; break;
+            }
+
+            var textarea = document.getElementById('batch_content');
+            // 에디터 설정
+
+            var editor = CodeMirror.fromTextArea(textarea, {
+                lineNumbers: num,  //왼쪽 라인넘버 표기
+                lineWrapping: true, //줄바꿈. 음.. break-word;
+                theme: "darcula",   //테마는 맘에드는 걸로.
+                mode: ex, //모드는 sql 모드
+                val: 'dsa'
+            });
+
+    
+            editor.setSize("100%", "700px");
+
+            editor.setValue(data);
+           
+            $("#lmodal").click();
+            setTimeout(function() {
+                $(".CodeMirror-lines").click();
+                console.log("클릭")
+              }, 500);
+
         }, error:function(){
             console.log("실패")
         }
@@ -187,6 +251,23 @@ $(function(){
     $(document).on("click",".origin",function(){
         let path = $(this).attr('id');
         getbackContent(path);
+    })
+
+    $(document).on("click",".clcik1",function(){
+        let path = $(this).attr("id");
+        let ex = $(this).text().lastIndexOf(".");
+
+        let name = $(this).text().substr(ex+1);
+        console.log(name)
+        getFileContent(path, name);
+
+        // 모달 관련
+    // $(".clcik1").click(function(){
+    //     let url = $(this).attr("id");
+    //     console.log(url)
+    //     $("#lmodal").click();
+    //     $("#exLargeModal").click();
+    // })
     })
 
 

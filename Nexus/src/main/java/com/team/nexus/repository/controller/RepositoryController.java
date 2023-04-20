@@ -74,6 +74,9 @@ public class RepositoryController {
 		url+= repo.getRepoName()+"/languages";
 		String token = ((Member)(session.getAttribute("loginUser"))).getToken();
 		
+		session.setAttribute("repository", repo.getUserName()+"/"+repo.getRepoName());
+		session.setAttribute("repoName", repo.getRepoName());
+		
 		try {
 			URL requestUrl = new URL(url);
 			
@@ -297,6 +300,25 @@ public class RepositoryController {
 		return html;
 	}
 	
+	public String getPathContents2(String path, HttpSession session){
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String url =path;
+		
+		System.out.println("url : "+url);
+		
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+		
+		System.out.println(response.getBody());
+		String text = response.getBody();
+	
+		return text;
+	}
+	
 	
 	@RequestMapping("ajaxGetContent")
 	@ResponseBody
@@ -333,6 +355,13 @@ public class RepositoryController {
 	@ResponseBody
 	public String getMdFile(String url, HttpSession session) {
 		String text = getPathContents1(url, session);
+		return text;
+	}
+	
+	@RequestMapping(value="ajaxFileContent", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String ajaxGetFileContent(String path, HttpSession session) {
+		String text = getPathContents2(path, session);
 		return text;
 	}
 	

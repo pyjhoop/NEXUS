@@ -21,15 +21,18 @@
         <div class="row mb-5">
 			<c:forEach var="i" items="${ list }">
 
-          <div class="col-lg-3 col-md-12 col-6 mb-4">
+          <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
               <div class="card">
-                <a href="repoDetail.p?rNo=${ i.repoNo }">
-                  <h4 class="fw-bold py-3 mb-3">
-                      <span class="text-muted fw-light">${ i.userName } /</span> ${ i.repoName }
-                  </h4>
-                  ${ i.repoStatus }
+                <div class="pl-3">
+                  <a href="repoDetail.p?rNo=${ i.repoNo }">
+                    <h4 class="fw-bold py-3 mb-3">
+                        <span class="text-muted fw-light">${ i.userName } /</span> ${ i.repoName }
+                    </h4>
+                    ${ i.repoStatus }
+  
+                  </a>
 
-                </a>
+                </div>
               </div>
             </div>
 

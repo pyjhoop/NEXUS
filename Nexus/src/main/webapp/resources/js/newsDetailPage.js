@@ -1,4 +1,6 @@
 $(function(){
+    $(".news").addClass("active");
+
     $(".rounded-pill").click(function(){
                 
         var location = document.querySelector("body").offsetTop;

@@ -1,4 +1,7 @@
 $(function(){
+
+    $(".news").addClass("active");
+    
     //위로가기 버튼
     $(".rounded-pill").click(function(){
                 
