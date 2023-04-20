@@ -95,16 +95,19 @@
 						<thead>
 							<tr>
 								<th>
-									<button type="button" class="btn btn-outline-primary">전체</button>
+									<button type="button" class="btn btn-outline-success btn-sm">진행 중</button>
 								</th>
 								<th>
-									<button type="button" class="btn btn-outline-success">진행 중</button>
+									<button type="button" class="btn btn-outline-secondary btn-sm">종료</button>
 								</th>
 								<th>
-									<button type="button" class="btn btn-outline-secondary">종료</button>
+									<button type="button" class="btn btn-outline-primary btn-sm">전체</button>
 								</th>
+								
+								<th>생성일</th>
+								
 								<th>
-									<select class="form-select" aria-label="Default select example">
+									<select class="form-select form-select-sm" aria-label="Default select example">
 										<option selected>라벨</option>
 										<option value="1">버그</option>
 										<option value="2">문서작성</option>
@@ -117,9 +120,9 @@
 
 
 								<th>
-									<select class="form-select" aria-label="Default select example">
+									<select class="form-select form-select-sm" aria-label="Default select example">
 										<option selected>작성자</option>
-										<!-- 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? -->
+										<!-- 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? ### -->
 										<option value="mini">혜민</option>
 										<option value="jun">연준</option>
 										<option value="ho">인호</option>
@@ -128,7 +131,7 @@
 									</select>
 								</th>
 								<th>
-									<select class="form-select" aria-label="Default select example">
+									<select class="form-select form-select-sm" aria-label="Default select example">
 										<option selected>우선순위</option>
 										<option value="1">젤 먼저</option>
 										<option value="2">되도록이면 빨리</option>
@@ -137,7 +140,7 @@
 									</select>
 								</th>
 								<th>
-									<select class="form-select" aria-label="Default select example">
+									<select class="form-select form-select-sm" aria-label="Default select example">
 										<option selected>담당자</option>
 										<!-- ### 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? -->
 										<option value="mini">혜민</option>
@@ -159,6 +162,9 @@
 								<td colspan="3">
 									<i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>이슈 제목</strong>
 								</td>
+								
+								<!-- 이슈 생성일 ### -->
+								<td></td>
 
 								<td>
 									<span class="badge bg-label-primary me-1">버그</span>
@@ -166,7 +172,8 @@
 
 								<td>
 									<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="이혜민"><img src="../assets/img/avatars/5.png" alt="" class="rounded-circle" /></li>
+									<!-- 여기서 토글했을때 이름뜰려면 title에 속성 바꿔야함 ### -->
+										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="이혜민"><img src="${loginUser.profile }" alt="" class="rounded-circle" /></li>
 
 									</ul>
 								</td>
@@ -176,7 +183,7 @@
 								</td>
 								<td>
 									<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="이혜민"><img src="../assets/img/avatars/5.png" alt="" class="rounded-circle" /></li>
+										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="이혜민"><img src="${loginUser.profile }" alt="" class="rounded-circle" /></li>
 										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="왈왈왈"><img src="../assets/img/avatars/6.png" alt="" class="rounded-circle" /></li>
 										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="테스트"><img src="../assets/img/avatars/7.png" alt="" class="rounded-circle" /></li>
 									</ul>
@@ -208,6 +215,11 @@
 									<i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>여기 클릭하세용 </strong>
 								</td>
 
+								<!-- 이슈 생성일 ### -->
+								<td></td>
+								
+
+		
 								<td>
 									<span class="badge bg-label-primary me-1">개발환경</span>
 								</td>
