@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="personalprMapper">
+<resultMap type="Psn_Pr_Board" id="psnPrBoardResultSet">
+		<result column="PSN_PR_NO" property="psnPrNo"/>
+		<result column="PSN_PR_STACK" property="psnPrStack"/>
+		<result column="PSN_PR_CONTENT" property="psnPrContent"/>
+		<result column="PSN_PR_AVLPRD" property="psnPrAvlprd"/>
+		<result column="PSN_PR_TITLE" property="psnPrTitle"/>
+		<result column="PSN_PR_CONTACT" property="psnPrContact"/>
+		<result column="user_id" property="profile"/>
+		<result column="user_no" property="profile"/>
+		<result column="CRAETE_DATE" property="createDate"/>
+	</resultMap>
+	
+</mapper>	
