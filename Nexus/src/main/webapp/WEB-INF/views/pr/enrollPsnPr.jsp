@@ -6,7 +6,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../common/template.jsp"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/personalPr.css">
 
 <!-- ajax -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -15,6 +17,10 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  
 
+
+
+
+
 <!-- summernote -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
@@ -22,12 +28,6 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/summernote-ko-KR.js"></script>
 
-<script src="${pageContext.request.contextPath}/resources/js/newsEnrollForm.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/newsEnrollForm.css">
-
-
-
-        
         
 
 <style>
@@ -112,14 +112,18 @@ label{
 	width: 170px;
 	height: 60px;
 }
+.note-editor>button{
+	border-color: gray !important;
+	width: 200px;
+}
 </style>
 </head>
 <body>
 
 
-	<form action="insertNews" method="post" style="height: 100%;">
-<div id="body">
-		<div class="col-md-6" style="width:94%; height:100%; margin: auto;">
+<form action="insertPersonalPr" method="post" style="height: 100%;">
+<div id="body" style="margin: 0px; margin-top: 30px;">
+		<div class="col-md-6" style="width:97%; height:100%;  max-width: 100%; margin: auto; margin-left: 103px;">
                   <div class="card mb-4" style="width: 100%; margin: auto;">
                     <h4 class="card-header"  ><b>정보 입력</b></h4>
                     <div class="card-body demo-vertical-spacing demo-only-element" style="height: 1800px;"><br>
@@ -127,26 +131,26 @@ label{
                     <label><b>제목</b></label>
                       <div class="input-group" >
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
-                        <input type="text" class="form-control" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon11">
+                        <input type="text" class="form-control" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon11" required>
                       </div> <br>
                       
                        <label ><b>프로젝트 참여 가능기간</b></label>
                       <div class="input-group" >
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
-                        <input  style="margin-top:0px;" type="text" class="form-control" placeholder="프로젝트 참여 가능기간을 입력해주세요 (ex-5월말부터 가능 or 6월중순부터 6개월간 가능 등)" aria-label="Username" aria-describedby="basic-addon11">
+                        <input  style="margin-top:0px;" type="text" class="form-control" placeholder="프로젝트 참여 가능기간을 입력해주세요 (ex-5월말부터 가능 or 6월중순부터 6개월간 가능 등)" aria-label="Username" aria-describedby="basic-addon11" required>
                       </div><br>
                       
                       <label ><b>연락 수단</b></label>
                       <div class="input-group">
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
-                        <input type="text" class="form-control" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11">
+                        <input type="text" class="form-control" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11" required>
                       </div><br>
 					
                     
                    <label ><b>기술 스택</b></label>    
                    <div class="input-group">
-                       		<multi-input>
-			      <input id="stackInputCard" list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요.">
+                   <multi-input>
+			      <input id="stackInputCard" list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
 			      <datalist id="speakers">
 			        <option value="AWS"></option>
 			        <option value="Django"></option>
@@ -186,34 +190,59 @@ label{
                        
                        
                        
-        <!-- quill 들어갈 자리 -->
+        <!-- summerNote 들어갈 자리 -->
               <label ><b>자기소개</b></label>
-          <div class="container-xxl flex-grow-1 container-p-y cpadding" style="margin-right: 70px; padding: 0px; box-shadow: 0; border: 0px; margin-top: 0px;">
+         <%--  <div class="container-xxl flex-grow-1 container-p-y cpadding" style="margin-right: 70px; padding: 0px; box-shadow: 0; border: 0px; margin-top: 0px !important; padding-top: 20px !important; ">
       	  
 
           <textarea name="newsContent" id="newsContent"></textarea>
+          
+          <c:if test="${ !empty news }">
+          	<script>
+          		
+              let text = `${news.newsContent}`;
+              $("#newsContent").summernote('code',text)
+          	</script>
+            <input type="hidden" name="newsNo", value="${news.newsNo }">
+          </c:if>
 
           <input type="hidden" name="userNo" value="${loginUser.userNo}">
-          <input type="hidden" name="newsContent" id="newsContent">
+          <input type="hidden" name="personalPrContent" id="personalPrContent" required>
           <input type="hidden" name="thumbnail" id="thumbnail">
        
+      	</div> --%>
+      	<textarea id="prContent" name="prContent" ></textarea>
+      	
+      	
+      	<script type="text/javascript">
+      	$(document).ready(function() {
+      	  $('#prContent').summernote();
+      	});
+      	</script>
+      	 <input type="hidden" name="prNo", value="${personalPr.prNo }">
+      	  <input type="hidden" name="userNo" value="${loginUser.userNo}">
+          <input type="hidden" name="prContent" id="prContent">
+          <input type="hidden" name="thumbnail" id="thumbnail">
+      	
       	</div>
-      	</div>
+      	
+      	<c:if test="${personalPr.prContent != null}">
+      <script>
+        let string = '${personalPr.prContent}';
+        $("#"prContent").summernote('pasteHTML',string);
+      </script>
+    </c:if>
      
 		
     </div>
-          <div class="btns"  align="right">
-
-              <button type="submit" class="btn btn-outline-secondary">수정하기</button>
-              <button type="submit" class="btn btn-outline-danger">삭제하기</button>
-
+    
+         <!--  <div class="btns"  align="right">
               <button type="submit" class="btn btn-outline-primary" onclick="return confirm();">제출하기</button>
-
-          </div>
+          </div> -->
     
      <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center; margin-top: 80px">
-      	<button type="button" class="btn btn-outline-primary" style="font-size: 20px"><b>등록하기</b></button> &nbsp;
-		<button type="button" class="btn btn-outline-secondary" style="font-size: 20px"><b>취소</b></button>
+      	<button type="submit" class="btn btn-outline-primary" style="font-size: 20px" onclick="return confirm();"><b>등록하기</b></button> &nbsp;
+		<button type="submit" class="btn btn-outline-secondary" style="font-size: 20px"><b>취소</b></button>
       </div>
       
     </div>

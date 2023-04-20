@@ -10,11 +10,11 @@
 <style>
 #mainBody{
 	height: 2500px;
-	width: 85%;
+	width: 100%;
 	margin:auto;
 }
 #stacks{
-	width:89%;
+	width:100%;
 	margin:auto;
 	padding-top:25px;
 	padding-bottom:50px;
@@ -22,7 +22,7 @@
 	padding-right:20px;
 }
 #prs{
-	width:89%;
+	width:100%;
 	height:50px;
 	margin:auto;
 	padding-top:50px;
@@ -286,17 +286,46 @@ hr{
 	margin-top:0px;
 	margin-bottom:0px;
 }
-
+.card{
+	margin: 10px;
+	float: left;
+}
+#prList{
+	width: 100%;
+	height: 1500px !important;
+}
+.card{
+	width: 264px;
+	/* height: 229.984px; */
+	height: 260px;
+}
+.card-body{
+	display: block;
+}
+.card-text{
+	width: 216px;
+	height: 103px;
+}
+.card-title{
+	width: 216px;
+	/* height: 19.797px; */
+	height:40px;
+	 overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box; 
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 </style>
 <body>
 <jsp:include page="../common/template.jsp"/>
 
-<div id="mainBody">
+<div id="mainBody" style="width: 100%;">
 
 
 
-<div id="stacks">
-<div class="col-xl-6" style="width: 90%; margin: auto;" >
+<!-- <div id="stacks">
+<div class="col-xl-6" style="width: 100% !important; margin: auto;" >
                   <h6 class="text-muted"></h6>
                   <div class="nav-align-top mb-4" >
                     <ul class="nav nav-tabs nav-fill" role="tablist" style="margin-bottom: 0;" >
@@ -366,7 +395,7 @@ hr{
 							<li class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/jest.svg" alt="Jest"><span>Jest</span></li></ul>
 							</ul>
 						<div class="SelectedLanguage_selectedWrapper__2StUQ"><ul class="SelectedLanguage_selectedLanguages__DYJjl"></ul></div>
-						<!-- <div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div> -->
+						<div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div>
 						</section>
                       </div>
                       <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
@@ -382,7 +411,7 @@ hr{
 							<li class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/nodejs.svg" alt="Nodejs"><span>Nodejs</span></li>
 							</ul>
 						<div class="SelectedLanguage_selectedWrapper__2StUQ"><ul class="SelectedLanguage_selectedLanguages__DYJjl"></ul></div>
-						<!-- <div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div> -->
+						<div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div>
 						</section>
                       </div>
                       <div class="tab-pane fade" id="navs-justified-messages" role="tabpanel">
@@ -405,7 +434,7 @@ hr{
 							<li class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/python.svg" alt="Python"><span>Python</span></li>
 							</ul>
 						<div class="SelectedLanguage_selectedWrapper__2StUQ"><ul class="SelectedLanguage_selectedLanguages__DYJjl"></ul></div>
-						<!-- <div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div> -->
+						<div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div>
 						</section>
                       </div>
                       <div class="tab-pane fade" id="navs-justified-mobile" role="tabpanel">
@@ -420,7 +449,7 @@ hr{
 							<li class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/unity.svg" alt="Unity"><span>Unity</span></li>
 							</ul>
 						<div class="SelectedLanguage_selectedWrapper__2StUQ"><ul class="SelectedLanguage_selectedLanguages__DYJjl"></ul></div>
-						<!-- <div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div> -->
+						<div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div>
 						</section>
                       </div>
                       <div class="tab-pane fade" id="navs-justified-etc" role="tabpanel">
@@ -435,28 +464,101 @@ hr{
 							<li class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/jest.svg" alt="Jest"><span>Jest</span></li></ul>
 							</ul>
 						<div class="SelectedLanguage_selectedWrapper__2StUQ"><ul class="SelectedLanguage_selectedLanguages__DYJjl"></ul></div>
-						<!-- <div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div> -->
+						<div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div>
 						</section>
                       </div>
                     </div>
                   </div>
                 </div>
-
-
-
-
-
-
-
-
-
-</div>
+</div> -->
 
 
 <div id="prs">
 <a href="enrollPsnPr.pr">새 글 쓰기</a>
 </div>
 
+<div id="shell" style="margin-left: 105px; display: block;">
+ <div class="card" style="width: 16.5rem;">
+  <div class="card-body">
+    <h5 class="card-title"><b>가나다라마바상</b></h5>
+    <h6 class="card-subtitle mb-2 text-muted">제목가나다라마바사아\하</h6>
+    <p class="card-text">.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+<div class="card" style="width: 16.5rem;">
+  <div class="card-body">
+    <h6 class="card-subtitle mb-2 text-muted">아이디 들어갈자리</h6>
+    <h5 class="card-title"><b>소개입니다.아라라라라라라라ㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴddddddddddddddddddddddddddddddddㅇ</b></h5>
+    <p class="card-text">모집분류,기술스택</p>
+    <p>작성일자, 시간</p>
+    
+  </div>
+</div>
+<div class="card" style="width: 16.5rem;">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+<div class="card" style="width: 16.5rem;">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+<div class="card" style="width: 16.5rem;">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+<div class="card" style="width: 16.5rem;">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+<div class="card" style="width: 16.5rem;">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+<div class="card" style="width: 16.5rem;">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+
+</div>
+
+
+
+
+
+
+
 
 
 
@@ -465,7 +567,7 @@ hr{
 
 </div>
 
-<script>
+<!-- <script>
 		var seeAll = document.getElementById( "seeAll" );
 		var seeFront1 = document.getElementById("seeFront");
 		var seeBack = document.getElementById("seeBack");
@@ -483,7 +585,7 @@ hr{
         seeAll.style.fontSize="25px";
     }
  
-</script>
+</script> -->
 
 
 
