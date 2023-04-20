@@ -100,7 +100,7 @@
 					<div class="btn-box">
 						<br>
 						<a type="submit" class="btn btn-outline-primary" onclick="return confirm();">제출하기</a>
-						<a type="reset" class="btn btn-outline-danger">초기화</a>
+					
 
 					</div>
 				</div>
