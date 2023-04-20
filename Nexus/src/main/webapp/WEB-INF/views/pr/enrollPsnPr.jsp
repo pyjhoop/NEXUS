@@ -116,6 +116,17 @@ label{
 	border-color: gray !important;
 	width: 200px;
 }
+.dropdown-item{
+	text-align: center;
+	color: #697a8d;
+}
+.dropdown-toggle::after{
+	border-color:#d9dee3 !important;
+}
+select {
+    /* appearance:none;
+    background:url('../img/icon_select_arrow.png') no-repeat right 1px center; */
+}
 </style>
 </head>
 <body>
@@ -145,6 +156,21 @@ label{
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
                         <input type="text" class="form-control" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11" required>
                       </div><br>
+                      
+                     
+                     <label ><b>희망 분야</b></label> <br>
+					<select style="background-color: transparent; color: #a4aab1; border-color: #d9dee3; width: 310px; height: 50px; box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4); border-radius: 6px; text-align: center;">
+						<option value="" selected="selected" style="display: none;">희망하는 분야를 선택해주세요</option>
+						<option value="FRONT-END">FRONT-END</option>
+						<option value="BACK-END">BACK-END</option>
+						<option value="FULL-STACK">FULL-STACK</option>
+						<option value="MOBILE">MOBILE</option>
+						<option value="ETC">ETC</option>
+						<option value="선택안함">선택안함</option>
+					</select><br><br>
+					
+					
+                     
 					
                     
                    <label ><b>기술 스택</b></label>    

@@ -15,4 +15,13 @@
 		<result column="CRAETE_DATE" property="createDate"/>
 	</resultMap>
 	
+	
+	<select id="selectPersonalPr" resultMap="psnPrBoardResultSet">
+		select 
+	
+	
+	
+	</select>
+	
+	
 </mapper>	
