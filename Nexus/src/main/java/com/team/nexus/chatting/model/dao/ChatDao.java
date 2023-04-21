@@ -28,8 +28,8 @@ public class ChatDao {
 	public int insertMessage(SqlSessionTemplate sqlSession, ChatMessage chatMessage) {
 		return sqlSession.insert("chattingMapper.insertMessage", chatMessage);
 	}
-	public ArrayList<Member> searchUser(SqlSessionTemplate sqlSession,String search){
-		return (ArrayList)sqlSession.selectList("chattingMapper.searchUser", search);
+	public ArrayList<Member> searchUser(SqlSessionTemplate sqlSession,Member m){
+		return (ArrayList)sqlSession.selectList("chattingMapper.searchUser", m);
 	}
 	public int createRoom(SqlSessionTemplate sqlSession) {
 		return sqlSession.insert("chattingMapper.createRoom");
@@ -48,5 +48,33 @@ public class ChatDao {
 	
 	public int unreadMessage(SqlSessionTemplate sqlSession,ChatMessage chatMessage) {
 		return sqlSession.update("chattingMapper.unreadMessage", chatMessage);
+	}
+	
+	public ArrayList<ChatUser> selectUnreadMessage(SqlSessionTemplate sqlSession,int userNo){
+		return (ArrayList)sqlSession.selectList("chattingMapper.selectUnreadMessage", userNo);
+	}
+	
+	public int readMessage(SqlSessionTemplate sqlSession,ChatUser cu) {
+		return sqlSession.update("chattingMapper.readMessage", cu);
+	}
+	
+	public ArrayList<ChatRoom> updateRoom(SqlSessionTemplate sqlSession,int userNo){
+		return (ArrayList)sqlSession.selectList("chattingMapper.updateRoom", userNo);
+	}
+	
+	public ChatUser checkUser(SqlSessionTemplate sqlSession,ChatMessage chatMessage) {
+		return sqlSession.selectOne("chattingMapper.checkUser", chatMessage);
+	}
+	
+	public int inviteUser(SqlSessionTemplate sqlSession,ChatMessage chatMessage) {
+		return sqlSession.insert("chattingMapper.inviteUser", chatMessage);
+	}
+	
+	public Member selectMember(SqlSessionTemplate sqlSession,int userNo) {
+		return sqlSession.selectOne("chattingMapper.selectMember", userNo);
+	}
+	
+	public void firstEntry(SqlSessionTemplate sqlSession,Member m) {
+		sqlSession.insert("chattingMapper.firstEntry", m);
 	}
 }

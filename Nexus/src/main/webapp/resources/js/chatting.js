@@ -1,12 +1,15 @@
 //1. 페이지 로딩 완료시 채팅창을 맨 아래로 내리기.
 // 즉시 실행함수. IIFE
-(function() {
-    const displayChatting = document.getElementsByClassName("list-unstyled")[0];
 
+
+$(function() {
+    var displayChatting = document.getElementsByClassName("list-unstyled")[0];
+   
+  
     if (displayChatting != null) {
-        displayChatting.scrollTop = displayChatting.scrollHeight;
-    }
-})();
+         displayChatting.scrollTop = displayChatting.scrollHeight;
+     }
+});
 
 
 
@@ -74,32 +77,18 @@ chatSocket.onmessage = function(e) {
 
     // 전달받은 메세지를 JS객체로 변환
     const chatMessage = JSON.parse(e.data); // js객체로 변환.
-    if(chatMessage.userNo == 0){
-
-    }else{
-
-    
-    /*
-    	<li>
-    		[<b></b>]
-    		<p>메세지</p>
-    		<span>메세지 보낸 날짜</span>
-    	</li>
-    */
-   
-    
-
-    // //span태그 추가
-    // const span = document.createElement("span");
-    // span.classList.add("chatDate");
-
-    // span.innerText = getCurrentTime();
-
-    // // 내가 쓴 채팅 
-    // // 남이 쓴 채팅 
-
-    //내가쓴 채팅
     let myChatting = "";
+
+    if(chatMessage.invite == 'O'){
+        myChatting = "<li class='chat-invite'>" +
+        chatMessage.userName + 
+        "님이 입장하셨습니다." +
+        "</li>";
+    }else if(chatMessage.invite == 'X'){
+        alert('이미 이 채팅방에 존재하는 유저입니다!');
+        return;
+    }else{
+    //내가쓴 채팅
     if (chatMessage.userNo == userNo) {
          myChatting = "<li class='media sent'>" +
         "<div class='media-body2'>" +
@@ -108,6 +97,15 @@ chatSocket.onmessage = function(e) {
         "<p>" + 
         chatMessage.chattingContent +
         "</p>" +
+        "<ul class='chat-msg-info'>" +
+        "<li>" +
+        "<div class='chat-time'>" +
+        "<span>" +
+        chatMessage.today +
+        "</span>" +
+        "</div>" +
+        "</li>" +
+        "</ul>" +
         "</div>" +
         "</div>" +
         "</div>" +
@@ -118,6 +116,9 @@ chatSocket.onmessage = function(e) {
         "<img src= " +
         chatMessage.profile + 
         " class='w-px-40 h-px-40 rounded-circle'>"+
+        "<div id='cnt-name'>" +
+        chatMessage.userName + 
+        "</div>" +
         "</div>" +
         "<div class='media-body'>" +
         "<div class='msg-box'>" +
@@ -125,14 +126,23 @@ chatSocket.onmessage = function(e) {
         "<p>" + 
         chatMessage.chattingContent +
         "</p>" +
+        "<ul class='chat-msg-info'>" +
+        "<li>" +
+        "<div class='chat-time'>" +
+        "<span>" +
+        chatMessage.today +
+        "</span>" +
+        "</div>" +
+        "</li>" +
+        "</ul>" +
         "</div>" +
         "</div>" +
         "</div>" +
         "</li>";
     }
-
+    }
     // 채팅창
-    const displayChatting = document.getElementsByClassName("chat-body")[0];
+    displayChatting = document.getElementsByClassName("chat-body")[0];
     console.log(myChatting);
      // 채팅창에 채팅 추가
      $('.list-unstyled').append(myChatting);
@@ -143,24 +153,6 @@ chatSocket.onmessage = function(e) {
    // displayChatting.scrollTop = displayChatting.scrollHeight;
     // scrollTop : 스크롤 이동
     // scrollHeight : 스크롤이되는 요소의 전체 높이.
-    }
+
 };
 
-function getCurrentTime() {
-
-    const now = new Date();
-
-    const time = now.getFullYear() + "년 " +
-        addZero(now.getMonth() + 1) + "월 " +
-        addZero(now.getDate()) + "일 " +
-        addZero(now.getHours()) + ":" +
-        addZero(now.getMinutes()) + ":" +
-        addZero(now.getSeconds()) + " ";
-
-    return time;
-}
-
-// 10보다 작은수가 매개변수로 들어오는경우 앞에 0을 붙여서 반환해주는함수.
-function addZero(number) {
-    return number < 10 ? "0" + number : number;
-}

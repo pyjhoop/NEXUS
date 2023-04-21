@@ -25,5 +25,6 @@ public class Member {
 	private Date enrollDate;
 	private String token;
 	private String status;
+	private String search;
 	
 }

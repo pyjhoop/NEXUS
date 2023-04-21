@@ -45,8 +45,8 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public ArrayList<Member> searchUser(String search) {
-		return cDao.searchUser(sqlSession,search);
+	public ArrayList<Member> searchUser(Member m) {
+		return cDao.searchUser(sqlSession,m);
 	}
 
 	@Override
@@ -86,5 +86,44 @@ public class ChatServiceImpl implements ChatService{
 	public int unreadMessage(ChatMessage chatMessage) {
 		return cDao.unreadMessage(sqlSession,chatMessage);
 	}
+
+	@Override
+	public ArrayList<ChatUser> selectUnreadMessage(int userNo) {
+		return cDao.selectUnreadMessage(sqlSession, userNo);
+	}
+
+	@Override
+	public int readMessage(ChatUser cu) {
+		return cDao.readMessage(sqlSession, cu);
+	}
+
+	@Override
+	public ArrayList<ChatRoom> updateRoom(int userNo) {
+		return cDao.updateRoom(sqlSession, userNo);
+	}
+
+	@Override
+	public ChatUser checkUser(ChatMessage chatMessage) {
+		return cDao.checkUser(sqlSession,chatMessage);
+	}
+
+	@Override
+	public int inviteUser(ChatMessage chatMessage) {
+		return cDao.inviteUser(sqlSession,chatMessage);
+	}
+
+	@Override
+	public Member selectMember(int userNo) {
+		return cDao.selectMember(sqlSession,userNo);
+	}
+
+	@Override
+	public void firstEntry(Member m) {
+		m.setUserName(m.getUserName()+"님이 입장하였습니다.");
+		cDao.firstEntry(sqlSession,m);
+		
+	}
+
+	
 
 }

@@ -68,6 +68,10 @@
 	#hidden-btn{
 	display:none;
 	}
+	.chat-window .chat-cont-right .chat-footer {
+	padding: 30px 15px;
+	}
+	
  </style>
 </head>
 <body>
@@ -85,18 +89,17 @@
 	<i class="bx bx-plus-circle"></i>
 	</div>
 	</div>
-	<form action="search.ih">
 	<div class="chat-search">
 	<div class="input-group">
 	<div class="input-group-prepend">
 	<i class="bx bx-search-alt-2"></i>
 	</div>
 	<input type="text" class="form-control" name="search" placeholder="Search" id="selectUser">
+	<button class="btn rounded-pill btn-outline-secondary" id="search-btn">검색</button>
 	</div>
-	</form>
 	</div>
 	<div class="chat-users-list">
-	<div class="chat-scroll">
+	<div class="chat-scroll" id="search-user">
 	<c:choose>
 	<c:when test="${empty mList }">
 	<c:forEach var="r" items="${rList}">
@@ -141,6 +144,7 @@
 	</div>
 	<div>
 	<input type="Checkbox" class="form-check-input" name="chat-check" value="${m.userNo }">
+	
 	</div>
 	</div>
 	</div>
@@ -153,7 +157,7 @@
 	</div>
 	</div>
 	</div>
-	<div class="chat-cont-right" style="max-width: 65%;">
+	<div class="chat-cont-right" style="max-width: 65%; ">
 	<div class="chat-header">
 	<a id="back_user_list" href="" class="back-user-list">
 	<i class="bx bx-chevron-left"></i>
@@ -189,14 +193,18 @@
 	</div>
 	<div>
 	<div class="last-chat-time block">${r.lastDate }</div>
-	<div class="badge badge-success badge-pill">3</div>
+	<c:forEach var="cu" items="${cuList }">
+	<c:if test="${r.roomNo eq cu.roomNo}">
+	<div class="badge badge-success badge-pill">${cu.count }</div>
+	</c:if>
+	</c:forEach>
 	</div>
 	</div>
 	</a>
 	<hr class="m-0">
 	</c:if>
 	<c:forEach var="u" items="${uList}">
-	<c:if test="${ r.roomNo eq u.roomNo }">
+	<c:if test="${ r.roomNo eq u.roomNo}">
 	<a href="roomDetail.ih?roomNo=${r.roomNo }&userName=${u.userName}&profile=${u.profile}" class="card-body d-flex">
 	<div class="media-img-wrap">
 	<div class="avatar avatar-away">
@@ -212,7 +220,11 @@
 	</div>
 	<div>
 	<div class="last-chat-time block">${r.lastDate }</div>
-	<div class="badge badge-success badge-pill">${u.count }</div>
+	<c:forEach var="cu" items="${cuList }">
+	<c:if test="${r.roomNo eq cu.roomNo}">
+	<div class="badge badge-success badge-pill">${cu.count }</div>
+	</c:if>
+	</c:forEach>
 	</div>
 	</div>
 	</a>
@@ -221,6 +233,9 @@
 	</c:forEach>
 	</c:forEach>
 	</div>
+	</div>
+	<div class="chat-footer">
+	
 	</div>
 	</div>
 	</div>
@@ -307,10 +322,87 @@
 			});
 		}
 	});
+	
+	$(function(){
+		 updateRoom();
+		
+		setInterval(updateRoom, 2000);
+		
+	});
+	
+	function updateRoom(){
+		$.ajax({
+			url:"updateRoom.ih",
+			success:function(result){
+				
+				for(let i in result){
+					$(".user-last-chat").eq(i).text(result[i].lastChat);
+					$(".last-chat-time block").eq(i).text(result[i].lastDate);
+					$(".badge-success").eq(i).text(result[i].count);
+					if(result[i].count != 0){
+					$(".badge-success").eq(i).show();	
+					}else{
+					$(".badge-success").eq(i).hide();
+					}
+				}
+			}
+		})
+		
+	}
+	
+	 $("#search-btn").click(function(){
+     	console.log($("#selectUser").val());
+     	$.ajax({
+     		url:"search.ih",
+     		data:{
+     			search:$("#selectUser").val(),
+     			userNo:'${loginUser.userNo}'
+     		},
+     		success:function(result){
+     			console.log(result);
+     			
+     			let value = "";
+     			
+     			for(let i in result){
+     				value += "<div class='card-body d-flex'>" +
+     				   "<div class='media-img-wrap'>" +
+     			       "<div class='avatar avatar-away'>" +
+     				   "<img src= " +
+     				    result[i].profile + 
+     				   " class='avatar-img rounded-circle'>" +
+     				   "</div>"	+
+     				   "</div>" +
+     			       "<div class='media-body2'>" +
+     				   "<div>" +
+     				   "<div class='user-name'>" +
+     				   result[i].userName +
+     				   "</div>" + 
+     				   "</div>" +
+     				   "<div>" +
+     				   "<input type='Checkbox' class= " +
+     				   "'form-check-input'" +
+     				   " name='chat-check' value=" +
+     				   result[i].userNo +
+     				   ">" +
+     				   "</div>" +
+     				   "</div>" +
+     				   "</div>" +
+     				   "<hr class='m-0'>";
+     			}
+     			
+     			console.log(value);
+     			
+     		$("#search-user").html(value);
+     		}, error:function(){
+     			console.log('ajax 실패');
+     		}
+     	})
+     });
+	
 	</script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>
+	<!--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>-->
 	<script src="${pageContext.request.contextPath}/resources/js/feather.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.slimscroll.min.js""></script>
 	<!-- <script src="${pageContext.request.contextPath}/resources/js/chat_script.js"></script> -->

@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
- <link rel="stylesheet" href='${pageContext.request.contextPath}/resources/css/bootstrap.min.css' />
+ <!-- <link rel="stylesheet" href='${pageContext.request.contextPath}/resources/css/bootstrap.min.css' />  -->
  <link rel="stylesheet" href='${pageContext.request.contextPath}/resources/css/fontawesome.min.css' />
  <link rel="stylesheet" href='${pageContext.request.contextPath}/resources/css/all.min.css' />
  <link rel="stylesheet" href='${pageContext.request.contextPath}/resources/css/chat_style.css' />
@@ -39,6 +40,49 @@
     height: 30px;
     width: 40px;
 }
+  #cnt-name {
+  	font-size: 3px;
+  }
+  .bx {
+    vertical-align: middle;
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  .media-img-wrap {
+    margin-right: 15px;
+    position: relative;
+}
+  .media2 {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 15px;
+    transition: all .2s ease 0s;
+}
+  .user-name {
+    color: #333;
+    text-transform: capitalize;
+}
+  .media-body2 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.list-unstyled {
+            width: 100%;
+            height: 495px;
+            overflow: auto;
+            /*스크롤 처럼*/
+            list-style: none;
+            padding: 10px 10px;
+            z-index: 1;
+            positon: absoulte;
+
+        }
+   .chat-invite {
+   	font-size: 14px;
+    margin: 1.875rem 0;
+    text-align: center;
+   }      
  </style>
 </head>
 <body>
@@ -52,55 +96,75 @@
 	<div class="chat-cont-left">
 	<div class="chat-header">
 	<span>Chats</span>
-	<a href="javascript:void(0)" class="chat-compose">
+	<div class="chat-compose" id="create-room">
 	<i class="bx bx-plus-circle"></i>
-	</a>
 	</div>
-	<form class="chat-search">
+	</div>
+	
+	<div class="chat-search">
 	<div class="input-group">
 	<div class="input-group-prepend">
-	<i class="bx bx-search-alt-2"></i>
+	<div class="bx bx-search-alt-2"></div>
 	</div>
-	<input type="text" class="form-control" placeholder="Search">
+	<input type="text" class="form-control" name="search" placeholder="Search" id="selectUser">
+	<button class="btn rounded-pill btn-outline-secondary" id="search-btn">검색</button>
 	</div>
-	</form>
+	
+	</div>
 	<div class="chat-users-list">
-	<div class="chat-scroll">
+	<div class="chat-scroll" id="search-user">
+	<c:choose>
+	<c:when test="${empty mList }">
 	<c:forEach var="r" items="${rList}">
-	<a href="roomDetail.ih?rno=${r.roomNo }" class="media d-flex">
+	<c:forEach var="u" items="${uList}">
+	<c:if test="${ r.roomNo eq u.roomNo }">
+	<div class="card-body d-flex">
 	<div class="media-img-wrap">
 	<div class="avatar avatar-away">
 	<img src="assets/img/profiles/avatar-05.jpg" alt="" class="avatar-img rounded-circle">
 	</div>
 	</div>
-	<div class="media-body">
-	<div>
-	<div class="user-name">
-	<c:forEach var="u" items="${uList}">
-	<c:if test="${ r.roomNo eq u.roomNo }">
-	${u.userName}
+	<div class="media-body2">
+	<div class="user-name">${u.userName}</div>
+	<input type="radio" class="form-check-input" name="chat-check" value="${u.userNo}">
+	</div>
+	</div>
+	<hr class="m-0">
 	</c:if>
 	</c:forEach>
-	</div>
-	<div class="user-last-chat">Give me a full explanation about our project</div>
-	</div>
-	<div>
-	<div class="last-chat-time block">7:30 PM</div>
-	<div class="badge badge-success badge-pill">3</div>
-	</div>
-	</div>
-	</a>
 	</c:forEach>
+	</c:when>
+	<c:otherwise>
+	<c:forEach var="m" items="${ mList }">
+	<c:if test="${ loginUser.userNo != m.userNo }">
+	<div class="card-body d-flex">
+	<div class="media-img-wrap">
+	<div class="avatar avatar-away">
+	<img src="${m.profile }" alt="" class="avatar-img rounded-circle">
+	</div>
+	</div>
+	<div class="media-body2">
+	<div class="user-name">
+	${m.userName}
+	</div>
+	<input type="radio" class="form-check-input" name="chat-check" value="${m.userNo }">
+	</div>
+	</div>
+	<hr class="m-0">
+	</c:if>
+	</c:forEach>
+	</c:otherwise>
+	</c:choose>
+	
 	</div>
 	</div>
 	</div>
 	<div class="chat-cont-right">
-	<div class="chat-header">
 	<a id="back_user_list" href="" class="back-user-list">
-	<i class="bx bx-chevron-left"></i>
 	</a>
 	<c:choose>
 	<c:when test="${cr.roomTitle != null}">
+	<div class="chat-header">
 	<div class="media d-flex">
 	<div class="media-img-wrap">
 	<div class="avatar avatar-online">
@@ -111,8 +175,31 @@
 	<div class="user-name">${cr.roomTitle }</div>
 	</div>
 	</div>
+	<div class="chat-options">
+	<div class="btn-group">
+	<a
+                            href="";
+                            class="btn-icon dropdown-toggle hide-arrow"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+              <i class='bx bx-dots-vertical-rounded' style="font-size: 1.6rem;"></i>
+    </a>
+	 <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="javascript:history.back(-1);">뒤로가기</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);">채팅방 나가기</a></li>
+                            <li>
+                              <hr class="dropdown-divider" />
+                            </li>
+                            <li><div class="dropdown-item" href="" id="invite">초대하기</div></li>
+                          </ul>
+	</div>
+	</div>
+	</div>
 	</c:when>
 	<c:otherwise>
+	<div class="chat-header">
 	<div class="media d-flex">
 	<div class="media-img-wrap">
 	<div class="avatar avatar-online">
@@ -123,16 +210,38 @@
 	<div class="user-name">${cu.userName }</div>
 	</div>
 	</div>
+	<div class="chat-options">
+
+    <div class="btn-group">
+	<a
+                            href="";
+                            class="btn-icon dropdown-toggle hide-arrow"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+              <i class='bx bx-dots-vertical-rounded' style="font-size: 1.6rem;"></i>
+    </a>
+	 <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="javascript:history.back(-1);">뒤로가기</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);">채팅방 나가기</a></li>
+     </ul>
+	</div>
+	</div>
+	</div>
 	</c:otherwise>
 	</c:choose>
-
-	
-	
-	</div>
 	<div class="chat-body">
-	<div class="chat-scroll" id="room-scroll">
+
 	<ul class="list-unstyled" id="room-scroll2">
 	<c:forEach var="c" items="${cList }">
+	<c:choose>
+	<c:when test="${c.invite eq 'O' }">
+	<li class="chat-invite">
+	${ c.chattingContent }
+	</li>
+	</c:when>
+	<c:otherwise>
 	<c:if test="${c.userNo eq loginUser.userNo }">
 	<li class="media sent">
 	<div class="media-body2">
@@ -155,7 +264,7 @@
 	<li class="media d-flex received">
 	<div class="avatar">
 	<img src="${c.profile }" alt="" class="w-px-40 h-px-40 rounded-circle">
-	<div style="font-size:3px">${c.userName }</div>
+	<div id="cnt-name">${c.userName }</div>
 	</div>
 	<div class="media-body">
 	<div class="msg-box">
@@ -173,9 +282,12 @@
 	</div>
 	</li>
 	</c:if>
+	</c:otherwise>
+	</c:choose>
+	
 	</c:forEach>
 	</ul>
-	</div>
+	
 	</div>
 	<div class="chat-footer">
 	<div class="input-group">
@@ -209,6 +321,7 @@
         const roomNo = "${cr.roomNo}";
         const profile = "${loginUser.profile}";
         const contextPath = "${contextPath}";
+      
 
         // /chat이라는 요청주소로 통신할수있는 webSocket 객체 생성 --> /spring/chat
         let chatSocket = new SockJS("http://localhost:8010/nexus/chat");
@@ -218,14 +331,80 @@
         * 전이중 통신 (full duplex) : 두대의 단말기가 데이터를 동시에 송/수신하기위해 각각 독립된 회선을 사용하는 통신방식
         * HTML5 , JAVA7버전 이상, SPRING 4버전이상에서 지원.
         */
+        
+        $("#search-btn").click(function(){
+        	console.log($("#selectUser").val());
+        	$.ajax({
+        		url:"searchPlus.ih",
+        		data:{
+        			search:$("#selectUser").val(),
+        			userNo:userNo
+        		},
+        		success:function(result){
+        			console.log(result);
+        			
+        			let value = "";
+        			
+        			for(let i in result){
+        				value += "<div class='card-body d-flex'>" +
+        				   "<div class='media-img-wrap'>" +
+        			       "<div class='avatar avatar-away'>" +
+        				   "<img src= " +
+        				    result[i].profile + 
+        				   " class='avatar-img rounded-circle'>" +
+        				   "</div>"	+
+        				   "</div>" +
+        			       "<div class='media-body2'>" +
+        				   "<div class='user-name'>" +
+        				   result[i].userName +
+        				   "</div>" +
+        				   "<input type='radio' class= " +
+        				   "'form-check-input'" +
+        				   " name='chat-check' value=" +
+        				   result[i].userNo +
+        				   ">" +
+        				   "</div>" +
+        				   "</div>" +
+        				   "<hr class='m-0'>";
+        			}
+        			
+        			console.log(value);
+        			
+        		$("#search-user").html(value);
+        		}, error:function(){
+        			console.log('ajax 실패');
+        		}
+        	})
+        });
+        let checkName = "";
+        	$("#invite").click(function(){
+        		$('input:radio[name=chat-check]').each(function() {
+    				if($(this).is(":checked")==true){
+    					checkName = $(this).parent().find('.user-name').text();
+		        			const chatMessage = {
+		        				"userNo": $(this).val(),
+		        				"userName": checkName,
+		        				"roomNo": roomNo,
+		        				"invite": 'O'
+		        			};
+		        				console.log(chatMessage);
+		        					        	 
+		        		chatSocket.send(JSON.stringify(chatMessage));
+    			    }
+		        		
+        		});
+    			
+		        		
+        	});
+        	
     </script>
 
 	
 	
-	<script src="${pageContext.request.contextPath}/resources/js/chatting.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>
+	<!--  <script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>-->
 	<script src="${pageContext.request.contextPath}/resources/js/feather.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.slimscroll.min.js""></script>
+	<script src="${pageContext.request.contextPath}/resources/js/chatting.js"></script>
 	<!--  <script src="${pageContext.request.contextPath}/resources/js/chat_script.js"></script>-->
 </body>
 </html>

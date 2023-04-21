@@ -17,7 +17,7 @@ public interface ChatService {
 	 
 	 ArrayList<ChatMessage> selectMessage(int rno);
 	
-	 ArrayList<Member> searchUser(String search);
+	 ArrayList<Member> searchUser(Member m);
 	 
 	 int createRoom();
 	 
@@ -30,4 +30,18 @@ public interface ChatService {
 	 int updateMessage(ChatMessage chatMessage);
 	 
 	 int unreadMessage(ChatMessage chatMessage);
+	 
+	 ArrayList<ChatUser> selectUnreadMessage(int userNo);
+	 
+	 int readMessage(ChatUser cu);
+	 
+	 ArrayList<ChatRoom> updateRoom(int userNo);
+	 
+	 ChatUser checkUser(ChatMessage chatMessage);
+	 
+	 int inviteUser(ChatMessage chatMessage);
+	 
+	 Member selectMember(int userNo);
+	 
+	 void firstEntry(Member m);
 }

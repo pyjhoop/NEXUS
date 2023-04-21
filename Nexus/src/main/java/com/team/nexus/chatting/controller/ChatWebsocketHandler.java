@@ -1,6 +1,7 @@
 package com.team.nexus.chatting.controller;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +20,7 @@ import com.team.nexus.calendar.model.service.CalendarServiceImpl;
 import com.team.nexus.chatting.model.service.ChatService;
 import com.team.nexus.chatting.model.service.ChatServiceImpl;
 import com.team.nexus.chatting.model.vo.ChatMessage;
+import com.team.nexus.chatting.model.vo.ChatUser;
 
 
 
@@ -51,13 +53,30 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 		
 		// Jackson-databind : ObjectMapper 를 이용해서 JSON형태로 넘어온 데이터를 특정VO필드에 맞게 자동매핑
 		ObjectMapper objectMapper = new ObjectMapper();
-        
+		ChatUser checkUser = null;
 		ChatMessage chatMessage = objectMapper.readValue(message.getPayload(), ChatMessage.class);
-		chatMessage.setCreateDate(new Date(System.currentTimeMillis()));
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String now_dt = format.format(new Date(System.currentTimeMillis()));
+		chatMessage.setToday(now_dt);
 		//logger.info(chatMessage);
-        
 		// 전달 받은 채팅메세지를 db에 삽입
 		System.out.println(chatMessage);
+		if(chatMessage.getInvite() != null) {
+			checkUser = cService.checkUser(chatMessage);
+			if(checkUser != null) {
+				chatMessage.setInvite("X");
+				session.sendMessage(new TextMessage( new Gson().toJson(chatMessage )));
+				return;
+			}else {
+				int invite = cService.inviteUser(chatMessage);
+				chatMessage.setChattingContent(chatMessage.getUserName()+"님이 입장하였습니다.");
+				System.out.println("chatmessage: "+ chatMessage );
+				int inviteChatting = cService.insertMessage(chatMessage);
+				session.sendMessage(new TextMessage( new Gson().toJson(chatMessage )));
+				return;
+			}
+		}
+		
 		int result = cService.insertMessage(chatMessage);
 		int result2 =  cService.updateMessage(chatMessage);
 		int count = 0;
@@ -77,12 +96,22 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 					count++;
 				}
 			}
-			if(count == 1) {
+				if(chatMessage.getInvite() == null) {
 				int result3= cService.unreadMessage(chatMessage);
-				chatMessage.setUserNo(0);
-				session.sendMessage(new TextMessage( new Gson().toJson(chatMessage)));
-			}
-        
+				for(WebSocketSession s : sessions) {
+					ChatUser cu = new ChatUser();
+					int roomNo = (Integer)s.getAttributes().get("rno");
+					int userNo = (Integer)s.getAttributes().get("uno");
+					cu.setRoomNo(roomNo);
+					cu.setUserNo(userNo);
+
+				
+					int result4= cService.readMessage(cu);
+						
+					
+				}
+			
+				}
 		}
     }
 }

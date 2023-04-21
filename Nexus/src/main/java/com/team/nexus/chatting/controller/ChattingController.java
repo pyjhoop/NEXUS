@@ -15,11 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.google.gson.Gson;
 import com.team.nexus.chatting.model.service.ChatServiceImpl;
 import com.team.nexus.chatting.model.vo.ChatMessage;
 import com.team.nexus.chatting.model.vo.ChatRoom;
@@ -27,7 +29,7 @@ import com.team.nexus.chatting.model.vo.ChatUser;
 import com.team.nexus.member.model.vo.Member;
 
 @Controller
-@SessionAttributes({"rno", "rList"})
+@SessionAttributes({"rno", "rList", "uno"})
 
 public class ChattingController {
 	
@@ -43,29 +45,43 @@ public class ChattingController {
 	
 	@RequestMapping("roomDetail.ih")
 	public String selectRoomDetail(ChatRoom cr,ChatUser cu , HttpSession session, Model model) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int userNo = loginUser.getUserNo();
+		cu.setUserNo(userNo);
+		cu.setRoomNo(cr.getRoomNo());
+		int result = cService.readMessage(cu);
 		ArrayList<ChatMessage> cList = cService.selectMessage(cr.getRoomNo()); 
 		modularity(session, model);
 		model.addAttribute("cList",cList);
 		model.addAttribute("cr", cr);
+		model.addAttribute("uno", userNo);
 		model.addAttribute("rno", cr.getRoomNo());
 		model.addAttribute("cu",cu);
 		return "chatting/chattingRoomDetail";
 	}
 	
-	@RequestMapping("search.ih")
-	public String searchUser(String search, HttpSession session, Model model) {
-		modularity(session, model);
-		ArrayList<Member> mList = cService.searchUser(search);
-		model.addAttribute("mList",mList);
-		return "chatting/chattingRoom";
+	@ResponseBody
+	@RequestMapping(value="search.ih", produces = "application/json; charset=utf-8")
+	public String searchUser(Member m) {
+		ArrayList<Member> list = cService.searchUser(m);
+		return new Gson().toJson(list);
+	}
+	@ResponseBody
+	@RequestMapping(value="searchPlus.ih", produces = "application/json; charset=utf-8")
+	public String searchUserPlus(Member m) {
+		ArrayList<Member> list = cService.searchUser(m);
+		return new Gson().toJson(list);
 	}
 	
 	public void modularity(HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNo = loginUser.getUserNo();
+		System.out.println(userNo);
 		ArrayList<ChatRoom> rList = cService.selectRoom(userNo);
 		ArrayList<ChatUser> uList = cService.selectRoomUser(userNo);
-		System.out.println(rList);
+		ArrayList<ChatUser> cuList = cService.selectUnreadMessage(userNo);
+		System.out.println(cuList);
+		model.addAttribute("cuList", cuList);
 		model.addAttribute("rList",rList);
 		model.addAttribute("uList",uList);
 	}
@@ -87,7 +103,6 @@ public class ChattingController {
 	
 	@RequestMapping("groupRoom.ih")
 	public String createGroupRoom(@ModelAttribute("loginUser") Member loginUser,String uno, ChatRoom c, MultipartFile upfile, HttpSession session, Model model) {
-		System.out.println(uno);
 		int[] users = Stream.of(uno.split(",")).mapToInt(Integer::parseInt).toArray();
 		if(!upfile.getOriginalFilename().equals("")) {
 			String changeName = saveFile(upfile, session);
@@ -102,11 +117,23 @@ public class ChattingController {
 		if(result>0) {
 			for(int u : users) {
 				cService.insertChatGroupUser(u);
+				Member m = cService.selectMember(u);
+				cService.firstEntry(m);
 			}
 			return "redirect:/selectChat.ih";
 		}else {
 			return "errorPage";
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="updateRoom.ih", produces = "application/json; charset=utf-8")
+	public String updateRoom(HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int userNo = loginUser.getUserNo();
+		ArrayList<ChatRoom> list = cService.updateRoom(userNo);
+		
+		return new Gson().toJson(list);
 	}
 	
 	public String saveFile(MultipartFile upfile, HttpSession session) {

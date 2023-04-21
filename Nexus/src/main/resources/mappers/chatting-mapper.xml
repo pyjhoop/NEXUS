@@ -35,6 +35,7 @@
  		<result column="user_name" property="userName"/>
  		<result column="create_date" property="createDate"/>
  		<result column="profile" property="profile"/>
+ 		<result column="invite" property="invite"/>
  	</resultMap>
  	
  	<resultMap type="Member" id="memberResultSet">
@@ -92,6 +93,7 @@
 	     , m.user_name
 	     , create_date
 	     , profile
+	     , invite
 	    from tb_chatting c
 	    join tb_member m using(user_no) 
 	  where room_no = #{rno}
@@ -100,13 +102,14 @@
  	<insert id="insertMessage">
  		insert 
  			into tb_chatting
- 			values(seq_chatting.nextval, #{roomNo}, #{chattingContent}, null , null, #{userNo}, sysdate)
+ 			values(seq_chatting.nextval, #{roomNo}, #{chattingContent}, null , null, #{userNo}, sysdate,#{invite})
  	</insert>
  	
  	<select id="searchUser" resultMap="memberResultSet">
  		select *
  		from tb_member
  		where user_name like '%${search}%'
+ 			and user_no != #{userNo}
  			and status = 'Y'
  	</select>
  	
@@ -141,4 +144,62 @@
  		where room_no = #{roomNo}
  		and user_no != #{userNo}
  	</update>
+ 	<select id="selectUnreadMessage" resultMap="chatUserResultSet">
+ 	select 
+	    u.user_no,
+	    room_no,
+	    count
+	from tb_chat_user u 
+	join  tb_member m on(u.user_no = m.user_no)
+	where room_no in (select room_no
+	                            from tb_chat_room r
+	                            join tb_chat_user u using(room_no)
+	                            where u.user_no = #{userNo}
+	                                and r.status = 'Y')
+	        and u.user_no = #{userNo}
+ 	</select>
+ 	<update id="readMessage">
+ 		update
+ 			tb_chat_user
+ 		set count = 0
+ 		where room_no = #{roomNo}
+ 			and user_no = #{userNo}
+ 	</update>
+ 	<select id="updateRoom" resultMap="chatRoomResultSet" >
+ 		select 
+ 		  room_no
+ 		, number_participants
+ 		, origin_name
+ 		, change_name
+ 		, room_title
+ 		, last_chat
+ 		, last_date
+        , u.count
+		from tb_chat_room r
+		join tb_chat_user u using(room_no)
+		where u.user_no = #{userNo}
+   	 and r.status = 'Y'
+ 	</select>
+ 	<select id="checkUser" resultMap="chatUserResultSet">
+ 	 	select *
+ 	 	from tb_chat_user
+ 	 	where user_no = #{userNo}
+ 	 		and room_no = #{roomNo}	
+ 	</select>
+ 	<insert id="inviteUser">
+ 		insert
+ 			into tb_chat_user
+ 			values(#{userNo},#{roomNo},'G',0)
+ 	</insert>
+ 	<select id="selectMember" resultMap="memberResultSet">
+ 		select *
+ 		from tb_member
+ 		where user_no = #{userNo}
+ 		and status = 'Y'
+ 	</select>
+ 	<insert id="firstEntry">
+ 		insert 
+ 			into tb_chatting
+ 			values(seq_chatting.nextval, seq_chat_room.currval, #{userName}, null , null, #{userNo}, sysdate,'O')
+ 	</insert>
  </mapper>
