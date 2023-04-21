@@ -43,7 +43,7 @@
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8">
                 <div class="card mb-5">
-                    <div class="row">
+                    <div class="row mt-3 mb-3" style="width: 80%; margin: auto;">
                         <div class="col-lg-7 col-md-7 col-sm-7">
                             <img src="resources/image/github_repo.png" id="repoImg" alt="">
                             <br>
@@ -60,7 +60,7 @@
                             <c:forEach var="i" items="${map }" varStatus="status">
                             
                             	<p class="circle ${array[status.index] }"></p>
-                                <h4> ${ i }%</h4>
+                                <h5> ${ i }%</h5>
                             
                             </c:forEach>
                
@@ -68,9 +68,11 @@
 
                     </div>
                 </div>
+
                 <input type="hidden" name="hiddenpath" id="hiddenpath" value="">
+
                 <div class="card mb-5">
-                    <div id="pathWrap">
+                    <div id="pathWrap" class="mt-4 mb-4">
                     	<span id="totalPath">${repo.userName}/<span class="origin" id="${repo.userName}/${repo.repoName}/contents">${repo.repoName}</span></span>
                         <br> <br>
                         
@@ -82,13 +84,13 @@
                                     <c:when test="${i.type eq 'file' }">
                                         <div>
                                             <div class="row">
-                                                <div class="col-lg-8">
+                                                <div class="col-lg-10">
                                                     <img alt="파일 이미지" src="resources/image/file.png" width="30px">
                                                     <span class="clcik1" id="${i.download_url }" target="_blank">${i.name }</span>
 
                                                 </div>
-                                                <div class="col-lg-4">
-                                                    <span>${i.size}</span>
+                                                <div class="col-lg-2 size">
+                                                    <span >${i.size}</span>
                                                 </div>
                                             </div>
                                             
@@ -178,7 +180,7 @@
         <div class="modal-dialog modal-xl" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel4">Code(안보일시 클릭한번 해주세요)</h5>
+              <h3 class="modal-title" id="exampleModalLabel4">Code</h3>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -187,6 +189,7 @@
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                 Close
               </button>
+              <button id="lmodal">dddddd</button>
               
             </div>
           </div>

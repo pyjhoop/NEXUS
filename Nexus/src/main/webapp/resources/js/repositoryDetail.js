@@ -162,6 +162,9 @@ $(function(){
                 case 'xml' : ex='text/xml'; break;
             }
 
+            $("#lmodal").click(); // 모달 띄움
+
+
             var textarea = document.getElementById('batch_content');
             // 에디터 설정
 
@@ -176,13 +179,11 @@ $(function(){
     
             editor.setSize("100%", "700px");
 
-            editor.setValue(data);
-           
-            $("#lmodal").click();
+            
             setTimeout(function() {
-                $(".CodeMirror-lines").click();
-                console.log("클릭")
-              }, 500);
+                
+                editor.setValue(data);
+              }, 250);
 
         }, error:function(){
             console.log("실패")
