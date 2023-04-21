@@ -15,9 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.team.nexus.issue.model.service.IssueServiceImpl;
+import com.team.nexus.issue.model.vo.GitIssue;
 import com.team.nexus.member.model.vo.Member;
 
 @Controller
@@ -30,8 +32,10 @@ public class IssueController {
 	
 //	@ResponseBody
 	@RequestMapping(value="issueShow.mini", produces="application/json; charset=utf-8")
-	public String issueList(HttpSession session,Member m) throws IOException {
+	public String issueList(HttpSession session,Member m ,Model model) throws IOException {
 		
+		
+//		/*
 		String token = ((Member)(session.getAttribute("loginUser"))).getToken();
 		
 //		String OWNER = "";	// 레파지토리 작성자
@@ -39,12 +43,14 @@ public class IssueController {
 //		
 //		String url = " https://api.github.com/repos/" + OWNER + "/" + REPO + "/issues";
 		
-		String url = "https://api.github.com/repos/pyjhoop/NEXUS/issues?state=all";
+		String url = "https://api.github.com/repos/pyjhoop/NEXUS/issues?state=closed";
 		
 		
 		URL requestUrl = new URL(url);
 		
 		HttpURLConnection urlConnection = (HttpURLConnection)requestUrl.openConnection();
+		
+		urlConnection.setRequestProperty("Authorization", "Bearer "+token);
 		
 		urlConnection.setRequestMethod("GET");
 		
@@ -59,61 +65,79 @@ public class IssueController {
 	      }
 		
 		
-	      JsonObject totalObj = JsonParser.parseString(responseText).getAsJsonObject();
+//	      System.out.println(responseText);
+	      
+	      JsonArray arr = JsonParser.parseString(responseText).getAsJsonArray();
+	      
+//	      System.out.println(arr);
 	      
 	      
+	      ArrayList<GitIssue> list = new ArrayList<GitIssue>();
 	      
-	      //----------------
-	      JsonObject responseObj = totalObj.getAsJsonObject("response"); // response의 value를 담아줄거다.
+	      for(int i=0; i<arr.size(); i++) {
+  	  
+	    	  
+	    	// Inside the for loop
+	    	  GitIssue git = new GitIssue();
+
+	    	  // Set title
+	    	  git.setTitle(arr.get(i).getAsJsonObject().get("title").getAsString());
+
+	    	  // Set labels (as an array of strings)
+	    	  JsonArray labelsArr = arr.get(i).getAsJsonObject().get("labels").getAsJsonArray();
+	    	  String[] labels = new String[labelsArr.size()];
+	    	  for (int j = 0; j < labelsArr.size(); j++) {
+	    	      labels[j] = labelsArr.get(j).getAsJsonObject().get("name").getAsString();
+	    	  }
+	    	  git.setLabels(labels);
+
+	    	  // Set state
+	    	  git.setState(arr.get(i).getAsJsonObject().get("state").getAsString());
+
+	    	  // Set milestone
+	    	  JsonElement milestoneElem = arr.get(i).getAsJsonObject().get("milestone");
+	    	  if (!milestoneElem.isJsonNull()) {
+	    	      JsonObject milestoneObj = milestoneElem.getAsJsonObject();
+	    	      git.setMilestone(milestoneObj.get("title").getAsString());
+	    	  }
+
+	    	  // Set number
+	    	  git.setNumber(arr.get(i).getAsJsonObject().get("number").getAsInt());
+
+	    	  // Set assignees (as an array of strings)
+	    	  JsonArray assigneesArr = arr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
+	    	  String[] assignees = new String[assigneesArr.size()];
+	    	  for (int j = 0; j < assigneesArr.size(); j++) {
+	    	      JsonObject assigneeObj = assigneesArr.get(j).getAsJsonObject();
+	    	      assignees[j] = assigneeObj.get("login").getAsString();
+	    	  }
+	    	  git.setAssignees(assignees);
+
+	    	  // Set createdAt
+	    	  git.setCreatedAt(arr.get(i).getAsJsonObject().get("created_at").getAsString());
+
+	    	  // Set updatedAt
+	    	  git.setUpdatedAt(arr.get(i).getAsJsonObject().get("updated_at").getAsString());
+
+	    	  // Set closedAt (if it's not null)
+	    	  JsonElement closedAtElem = arr.get(i).getAsJsonObject().get("closed_at");
+	    	  if (!closedAtElem.isJsonNull()) {
+	    	      git.setClosedAt(closedAtElem.getAsString());
+	    	  }
+
+	    	  // Set issueId
+	    	  git.setIssudId(arr.get(i).getAsJsonObject().get("id").getAsString());
+
+	    	  // Set user (as a string)
+	    	  JsonObject userObj = arr.get(i).getAsJsonObject().get("user").getAsJsonObject();
+	    	  git.setUser(userObj.get("login").getAsString());
+
+	    	  list.add(git);
+
 	      
-	      JsonObject bodyObj = responseObj.getAsJsonObject("body");
-		
-	      int totalCount = bodyObj.get("totalCount").getAsInt();
-		
-	      JsonArray itemArr = bodyObj.getAsJsonArray("items");
+	      }
 	      
-	      
-//	      ArrayList<AirVo> list = new ArrayList<>();
-	      
-	      
-//	      for(int i = 0; i<itemArr.size(); i++) {
-//	          JsonObject item = itemArr.get(i).getAsJsonObject();
-////	          System.out.println(item);
-//	          
-//	          AirVo air = new AirVo();
-//	          air.setStationName(item.get("stationName").getAsString());
-//	          air.setDataTime(item.get("dataTime").getAsString());
-//	          air.setKhaiValue(item.get("khaiValue").getAsString());
-//	          air.setPm10Value(item.get("pm10Value").getAsString());
-//	          air.setSo2Value(item.get("so2Value").getAsString());
-//	          air.setCoValue(item.get("coValue").getAsString());
-//	          air.setNo2Value(item.get("no2Value").getAsString());
-//	          air.setO3Value(item.get("o3Value").getAsString());
-//	          
-//	          list.add(air);
-//	       }
-//	       
-//	       for(AirVo a: list) {
-//	          System.out.println(a);
-//	       }
-	       
-	       //5. 다 사용한 스트림 반납
-	       br.close();
-	       urlConnection.disconnect();
-	       
-	    
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
+	      model.addAttribute("list", list);
 		
 		return "issue/issueList";
 	}

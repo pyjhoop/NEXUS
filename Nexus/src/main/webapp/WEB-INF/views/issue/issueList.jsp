@@ -130,15 +130,7 @@
 										<option value="jun">준호</option>
 									</select>
 								</th>
-								<th>
-									<select class="form-select form-select-sm" aria-label="Default select example">
-										<option selected>우선순위</option>
-										<option value="1">젤 먼저</option>
-										<option value="2">되도록이면 빨리</option>
-										<option value="3">중간</option>
-										<option value="4">천천히</option>
-									</select>
-								</th>
+				
 								<th>
 									<select class="form-select form-select-sm" aria-label="Default select example">
 										<option selected>담당자</option>
@@ -157,30 +149,30 @@
 
 
 							<!-- 한바퀴  -->
+							
+							<c:forEach var="i" items="${list }">
 
 							<tr>
 								<td colspan="3">
-									<i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>이슈 제목</strong>
+									<i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${i.title}</strong>
 								</td>
 								
 								<!-- 이슈 생성일 ### -->
-								<td></td>
+								<td>${i.createdAt }</td>
 
 								<td>
-									<span class="badge bg-label-primary me-1">버그</span>
+									<span class="badge bg-label-primary me-1">${i.labels }</span>
 								</td>
 
 								<td>
 									<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
 									<!-- 여기서 토글했을때 이름뜰려면 title에 속성 바꿔야함 ### -->
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="이혜민"><img src="${loginUser.profile }" alt="" class="rounded-circle" /></li>
+										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${user.login }"><img src="${loginUser.profile }" alt="" class="rounded-circle" /></li>
 
 									</ul>
 								</td>
 
-								<td>
-									<span class="badge bg-label-primary me-1">Active</span>
-								</td>
+							
 								<td>
 									<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
 										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="이혜민"><img src="${loginUser.profile }" alt="" class="rounded-circle" /></li>
@@ -204,61 +196,10 @@
 									</div>
 								</td>
 							</tr>
-
+</c:forEach>
 							<!-- 한바퀴  -->
 
-							<!-- 한바퀴  -->
-
-							<tr>
-								<input type="hidden" class="ino" value="1">
-								<td colspan="3">
-									<i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>여기 클릭하세용 </strong>
-								</td>
-
-								<!-- 이슈 생성일 ### -->
-								<td></td>
-								
-
-		
-								<td>
-									<span class="badge bg-label-primary me-1">개발환경</span>
-								</td>
-
-								<td>
-									<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="닉네임"><img src="../assets/img/avatars/5.png" alt="" class="rounded-circle" /></li>
-
-									</ul>
-								</td>
-
-								<td>
-									<span class="badge bg-label-primary me-1">Active</span>
-								</td>
-								<td>
-									<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="벌써"><img src="../assets/img/avatars/5.png" alt="" class="rounded-circle" /></li>
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="12시"><img src="../assets/img/avatars/6.png" alt="" class="rounded-circle" /></li>
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="오예"><img src="../assets/img/avatars/7.png" alt="" class="rounded-circle" /></li>
-									</ul>
-								</td>
-								<td>
-									<div class="dropdown">
-										<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-											<i class="bx bx-dots-vertical-rounded"></i>
-										</button>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="javascript:void(0);">
-												<i class="bx bx-edit-alt me-1"></i> Edit
-											</a>
-											<a class="dropdown-item" href="javascript:void(0);">
-												<i class="bx bx-trash me-1"></i> Delete
-											</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-
-							<!-- 한바퀴  -->
+						
 						</tbody>
 					</table>
 				</div>
