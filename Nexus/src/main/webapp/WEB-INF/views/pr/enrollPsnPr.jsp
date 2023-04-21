@@ -173,8 +173,9 @@ select {
                      
 					
                     
-                   <label ><b>기술 스택</b></label>    
-                   <div class="input-group">
+                   <label ><b>기술 스택</b></label>  
+ 					
+                   <div class="input-group" style="border: none; box-shadow: none;">
                    <multi-input>
 			      <input id="stackInputCard" list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
 			      <datalist id="speakers">
@@ -211,10 +212,11 @@ select {
 			        <option value="Zest"></option>
 			      </datalist>
 			    </multi-input>
-                       </div><br>
-                       
-                       
-                       
+                       <button id="get1" type="button">Get</button>
+                       </div>
+                       <p id="values" "></p>
+                       <script src="${pageContext.request.contextPath}/resources/js/multi-input.js"></script>
+						
                        
         <!-- summerNote 들어갈 자리 -->
               <label ><b>자기소개</b></label>
@@ -262,18 +264,33 @@ select {
 		
     </div>
     
-         <!--  <div class="btns"  align="right">
-              <button type="submit" class="btn btn-outline-primary" onclick="return confirm();">제출하기</button>
-          </div> -->
+        <script src="${pageContext.request.contextPath}/resources/js/script1.js"></script>
     
      <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center; margin-top: 80px">
-      	<button type="submit" class="btn btn-outline-primary" style="font-size: 20px" onclick="return confirm();"><b>등록하기</b></button> &nbsp;
+      	<button type="submit" id="submitButton" class="btn btn-outline-primary" style="font-size: 20px" onclick="return confirm();"><b>등록하기</b></button> &nbsp;
 		<button type="submit" class="btn btn-outline-secondary" style="font-size: 20px"><b>취소</b></button>
       </div>
       
     </div>
     </div>
     </div>
+    
+    <!-- <script>
+    const getButton = document.getElementById('get');
+    const multiInput = document.querySelector('multi-input'); 
+    const values = document.querySelector('#values'); 
+
+    getButton.onclick = () => {
+      if (multiInput.getValues().length > 0) {
+        values.textContent = `${multiInput.getValues().join(',')}`;
+      } else {
+        values.textContent = 'Got noo12ne  :`^(.'; 
+      }
+    }
+
+    document.querySelector('input').focus();
+    
+    </script> -->
     
 	</form>
 	
@@ -301,8 +318,7 @@ select {
 
 
 
-<script src="./././resources/js/multi-input.js"></script>
-  <script src="./././resources/js/script.js"></script>
+
 
 </body>
 </html>

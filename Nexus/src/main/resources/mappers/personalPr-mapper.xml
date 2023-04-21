@@ -17,10 +17,19 @@
 	
 	
 	<select id="selectPersonalPr" resultMap="psnPrBoardResultSet">
-		select 
-	
-	
-	
+		select
+			 PSN_PR_NO
+			,PSN_PR_STACK
+			,PSN_PR_CONTENT
+			,PSN_PR_AVLPRD
+			,PSN_PR_TITLE
+			,PSN_PR_CONTACT
+			,CREATE_DATE
+			,USER_NO
+			,CATEGORY
+			FROM PSN_PR_BOARD
+			JOIN TB_MEMBER USING (USER_NO)
+			ORDER BY CREATE_DATE DESC
 	</select>
 	
 	
