@@ -45,6 +45,10 @@
 	margin-left: auto;
 	margin-right: 5vw;
 }
+
+a{
+	color : rgb(31, 29, 29)
+}
 </style>
 
 
@@ -94,53 +98,62 @@
 					<table class="table" id="issueTable">
 						<thead>
 							<tr>
+								<form action="" method="get" align="center">
 								<th>
-									<button type="button" class="btn btn-outline-success btn-sm">진행 중</button>
+									<button type="submit" name="state" value="open" class="btn btn-outline-success btn-sm">진행 중</button>
 								</th>
 								<th>
-									<button type="button" class="btn btn-outline-secondary btn-sm">종료</button>
+									<button type="submit" name="state" value="closed" class="btn btn-outline-secondary btn-sm">종료</button>
 								</th>
 								<th>
-									<button type="button" class="btn btn-outline-primary btn-sm">전체</button>
+									<button type="submit" name="state" value="all" class="btn btn-outline-primary btn-sm">전체</button>
 								</th>
+
+								</form>
 								
 								<th>생성일</th>
 								
 								<th>
-									<select class="form-select form-select-sm" aria-label="Default select example">
-										<option selected>라벨</option>
-										<option value="1">버그</option>
-										<option value="2">문서작성</option>
-										<option value="3">베포 관려</option>
-										<option value="4">기능</option>
-										<option value="5">개발 환경</option>
-										<option value="6">기타 등등</option>
-									</select>
+									<form action="" method="get" align="center">
+										<select class="form-select form-select-sm" aria-label="Default select example">
+											<option selected>라벨</option>
+											<option value="1">버그</option>
+											<option value="2">문서작성</option>
+											<option value="3">베포 관려</option>
+											<option value="4">기능</option>
+											<option value="5">개발 환경</option>
+											<option value="6">기타 등등</option>
+										</select>
+									</form>
 								</th>
 
 
 								<th>
-									<select class="form-select form-select-sm" aria-label="Default select example">
-										<option selected>작성자</option>
-										<!-- 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? ### -->
-										<option value="mini">혜민</option>
-										<option value="jun">연준</option>
-										<option value="ho">인호</option>
-										<option value="hyeon">철현</option>
-										<option value="jun">준호</option>
-									</select>
+									<form action="" method="get" align="center">
+										<select class="form-select form-select-sm" aria-label="Default select example">
+											<option selected>작성자</option>
+											<!-- 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? ### -->
+											<option value="mini">혜민</option>
+											<option value="jun">연준</option>
+											<option value="ho">인호</option>
+											<option value="hyeon">철현</option>
+											<option value="jun">준호</option>
+										</select>
+									</form>
 								</th>
 				
 								<th>
-									<select class="form-select form-select-sm" aria-label="Default select example">
-										<option selected>담당자</option>
-										<!-- ### 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? -->
-										<option value="mini">혜민</option>
-										<option value="jun">연준</option>
-										<option value="ho">인호</option>
-										<option value="hyeon">철현</option>
-										<option value="jun">준호</option>
-									</select>
+									<form action="" method="get" align="center">
+										<select class="form-select form-select-sm" aria-label="Default select example">
+											<option selected>담당자</option>
+											<!-- ### 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? -->
+											<option value="mini">혜민</option>
+											<option value="jun">연준</option>
+											<option value="ho">인호</option>
+											<option value="hyeon">철현</option>
+											<option value="jun">준호</option>
+										</select>
+									</form>
 								</th>
 								<th>마일스톤</th>
 							</tr>
@@ -154,7 +167,8 @@
 
 							<tr>
 								<td colspan="3">
-									<i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${i.title}</strong>
+									<input type="hidden" value="${i.number}">
+									<i class="fab fa-angular fa-lg text-danger me-3"></i> <a href=""></a><strong>${i.title}</strong></a>
 								</td>
 								
 								<!-- 이슈 생성일 ### -->
@@ -167,7 +181,7 @@
 								<td>
 									<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
 									<!-- 여기서 토글했을때 이름뜰려면 title에 속성 바꿔야함 ### -->
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${user.login }"><img src="${loginUser.profile }" alt="" class="rounded-circle" /></li>
+										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${i.user }"><img src="${loginUser.profile }" alt="" class="rounded-circle" /></li>
 
 									</ul>
 								</td>

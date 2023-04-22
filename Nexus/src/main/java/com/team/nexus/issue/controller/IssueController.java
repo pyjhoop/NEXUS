@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -32,7 +33,7 @@ public class IssueController {
 	
 //	@ResponseBody
 	@RequestMapping(value="issueShow.mini", produces="application/json; charset=utf-8")
-	public String issueList(HttpSession session,Member m ,Model model) throws IOException {
+	public String issueList(HttpSession session,Member m ,Model model, @RequestParam(required = false) String state) throws IOException {
 		
 		
 //		/*
@@ -43,7 +44,16 @@ public class IssueController {
 //		
 //		String url = " https://api.github.com/repos/" + OWNER + "/" + REPO + "/issues";
 		
-		String url = "https://api.github.com/repos/pyjhoop/NEXUS/issues?state=closed";
+		String url = "";
+		
+	
+		if(state != null) {
+			 url = "https://api.github.com/repos/pyjhoop/NEXUS/issues?state=" + state;
+		}else {
+			url = "https://api.github.com/repos/pyjhoop/NEXUS/issues?state=open";
+		}
+		
+		
 		
 		
 		URL requestUrl = new URL(url);
@@ -132,7 +142,9 @@ public class IssueController {
 	    	  JsonObject userObj = arr.get(i).getAsJsonObject().get("user").getAsJsonObject();
 	    	  git.setUser(userObj.get("login").getAsString());
 
-	    	  list.add(git);
+	    	// Set user profile
+//	    	  String profileUrl = userObj.get("html_url").getAsString();
+//	    	  git.setProfile(profileUrl);
 
 	      
 	      }

@@ -24,7 +24,7 @@ public class GitIssue {
 	private String closedAt;  	// 종료일
 	private String issudId;   	// 이슈아이디
 	private String user; 		// 작성자
-	
+	private String profile;		// 프로필
 	
 	
 	
