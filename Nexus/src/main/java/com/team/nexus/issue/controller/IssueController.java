@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -31,7 +33,7 @@ public class IssueController {
 
 	
 	
-//	@ResponseBody
+
 	@RequestMapping(value="issueShow.mini", produces="application/json; charset=utf-8")
 	public String issueList(HttpSession session,Member m ,Model model, @RequestParam(required = false) String state) throws IOException {
 		
@@ -115,17 +117,42 @@ public class IssueController {
 	    	  git.setNumber(arr.get(i).getAsJsonObject().get("number").getAsInt());
 
 	    	  // Set assignees (as an array of strings)
+//	    	  JsonArray assigneesArr = arr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
+//	    	  String[] assignees = new String[assigneesArr.size()];
+//	    	  for (int j = 0; j < assigneesArr.size(); j++) {
+//	    	      JsonObject assigneeObj = assigneesArr.get(j).getAsJsonObject();
+//	    	      assignees[j] = assigneeObj.get("login").getAsString();
+//	    	  }
+//	    	  git.setAssignees(assignees);
+	    	  
+	    	  
+	    	// Set assignees (as an array of strings)
 	    	  JsonArray assigneesArr = arr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
 	    	  String[] assignees = new String[assigneesArr.size()];
+	    	  String[] assigneeProfiles = new String[assigneesArr.size()]; // 이슈 담당자 프로필
 	    	  for (int j = 0; j < assigneesArr.size(); j++) {
 	    	      JsonObject assigneeObj = assigneesArr.get(j).getAsJsonObject();
 	    	      assignees[j] = assigneeObj.get("login").getAsString();
+	    	      assigneeProfiles[j] = assigneeObj.get("avatar_url").getAsString(); // 이슈 담당자 프로필
 	    	  }
 	    	  git.setAssignees(assignees);
+	    	  git.setAssigneeProfiles(assigneeProfiles); // 이슈 담당자 프로필 설정
 
-	    	  // Set createdAt
-	    	  git.setCreatedAt(arr.get(i).getAsJsonObject().get("created_at").getAsString());
+	    	  
+	    	  
+	    	  
 
+	    	 
+	    	// Set createdAt (with only the date)
+	    	  String createdDateTimeString = arr.get(i).getAsJsonObject().get("created_at").getAsString();
+	    	  LocalDateTime createdDateTime = LocalDateTime.parse(createdDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
+	    	  String createdDateString = createdDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    	  git.setCreatedAt(createdDateString);
+
+	    	  
+	    	  
+	    	  
+	    	  
 	    	  // Set updatedAt
 	    	  git.setUpdatedAt(arr.get(i).getAsJsonObject().get("updated_at").getAsString());
 
@@ -143,13 +170,14 @@ public class IssueController {
 	    	  git.setUser(userObj.get("login").getAsString());
 
 	    	// Set user profile
-//	    	  String profileUrl = userObj.get("html_url").getAsString();
-//	    	  git.setProfile(profileUrl);
+	    	  String userProfileUrl = userObj.get("avatar_url").getAsString();
+	    	  git.setProfile(userProfileUrl);
 
-	      
+	    	  list.add(git);
 	      }
 	      
 	      model.addAttribute("list", list);
+	      
 		
 		return "issue/issueList";
 	}

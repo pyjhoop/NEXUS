@@ -18,7 +18,7 @@ public class GitIssue {
 	private String state;	  	// open - closed - all
 	private String milestone; 	// 마일스톤
 	private int number;		  	// 이슈 생성 번호
-	private String[] assignees; // 담당자
+
 	private String createdAt; 	// 생성일
 	private String updatedAt; 	// 수정일
 	private String closedAt;  	// 종료일
@@ -27,6 +27,8 @@ public class GitIssue {
 	private String profile;		// 프로필
 	
 	
+	 private String[] assignees;    // 이슈 담당자 이름
+	 private String[] assigneeProfiles; // 이슈 담당자 프로필 경로
 	
 	
 	

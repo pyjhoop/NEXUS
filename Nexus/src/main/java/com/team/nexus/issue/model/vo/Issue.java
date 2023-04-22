@@ -25,8 +25,8 @@ public class Issue {
 	 private String issueAuthor;	// 이슈 작성자
 	 private String issueAssigne;	// 이슈 할당 받은 사람
 	 private String priority;		// 이슈 우선순위(중요도)
+	 private String profile;		// 이슈 프로필 (담당자)
 	
 	
-	
-	
+
 }
