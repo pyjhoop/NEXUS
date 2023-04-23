@@ -28,33 +28,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/i18n/defaults-ko_KR.min.js"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../../resources/css/core_issue_mini.css">
-<link rel="stylesheet" href="../../../resources/css/apex-charts.css">
-<link rel="stylesheet" href="../../../resources/css/theme-default.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/core_issue_mini.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/apex-charts.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/theme-default.css">
 
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/issue_select.css">
 
 <style>
-.luda {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
 
-.luda a {
-	margin-left: auto;
-	margin-right: 5vw;
-}
-
-a {
-	color: rgb(31, 29, 29)
-}
-
-
-
-table {
-    width: 100%;
-}
 </style>
 
 
@@ -170,11 +151,10 @@ table {
 
 								<tr>
 									<td colspan="3" style="width:26%" >
-										<input type="hidden" value="${i.number}">
-										<i class="fab fa-angular fa-lg text-danger me-3"></i>
-										<a href=""></a>
-										<strong>${i.title}</strong>
-										</a>
+										<a href="issueDetail.mini?ino=${i.number}" class="textA">
+											<i class="fab fa-angular fa-lg text-danger me-3"></i>
+											<strong>${i.title}</strong>
+											</a>
 									</td>
 
 
@@ -228,16 +208,18 @@ table {
 
 
 									<td style="width:10%;">
+									<!-- 마일스톤 클릭시 해당 마일스톤으로 이동 ###   -->
 										<div class="dropdown">
-											<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+										${i.milestone }
+											<button type="button" class="btn p-0 dropdown-toggle hide-arrow ${empty i.milestone ? 'invisible' : ''}" data-bs-toggle="dropdown">
 												<i class="bx bx-dots-vertical-rounded"></i>
 											</button>
 											<div class="dropdown-menu">
 												<a class="dropdown-item" href="javascript:void(0);">
-													<i class="bx bx-edit-alt me-1"></i> Edit
+													<i class="bx bx-send me-1"></i> 이동
 												</a>
 												<a class="dropdown-item" href="javascript:void(0);">
-													<i class="bx bx-trash me-1"></i> Delete
+													<i class="bx bx-trash me-1"></i> 삭제
 												</a>
 											</div>
 										</div>
@@ -265,13 +247,18 @@ table {
 					return new bootstrap.Tooltip(tooltipTriggerEl);
 				});
 
+			
+				
+				
 				$(function() {
-					$("#issueTable>tbody>tr").click(
-							function() {
-								location.href = "issueDetail.mini?ino="
-										+ $(this).find(".ino").val();
-							});
-				});
+					  $("#boardList>tbody>tr").click(function() {
+					    var ino = $(this).find('input[name="ino"]').val();
+					    location.href = "issueDetail.mini?ino=" + ino;
+					  });
+					});
+
+				
+				
 			</script>
 
 
@@ -279,7 +266,7 @@ table {
 
 
 
-			<script src="../../../resources/js/issue_mini.js"></script>
+		
 
 
 

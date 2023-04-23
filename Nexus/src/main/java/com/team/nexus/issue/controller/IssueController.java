@@ -11,12 +11,22 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -31,92 +41,81 @@ public class IssueController {
 	@Autowired
 	private IssueServiceImpl iService;
 
-	
-	
+	@RequestMapping(value = "issueShow.mini", produces = "application/json; charset=utf-8")
+	public String issueList(HttpSession session, Member m, Model model, @RequestParam(required = false) String state)
+			throws IOException {
 
-	@RequestMapping(value="issueShow.mini", produces="application/json; charset=utf-8")
-	public String issueList(HttpSession session,Member m ,Model model, @RequestParam(required = false) String state) throws IOException {
-		
-		
 //		/*
-		String token = ((Member)(session.getAttribute("loginUser"))).getToken();
-		
+		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
+
 //		String OWNER = "";	// 레파지토리 작성자
 //		String REPO = ""; // 레파지토리
 //		
 //		String url = " https://api.github.com/repos/" + OWNER + "/" + REPO + "/issues";
-		
+
 		String url = "";
-		
-	
-		if(state != null) {
-			 url = "https://api.github.com/repos/pyjhoop/NEXUS/issues?state=" + state;
-		}else {
+
+		if (state != null) {
+			url = "https://api.github.com/repos/pyjhoop/NEXUS/issues?state=" + state;
+		} else {
 			url = "https://api.github.com/repos/pyjhoop/NEXUS/issues?state=open";
 		}
-		
-		
-		
-		
+
 		URL requestUrl = new URL(url);
-		
-		HttpURLConnection urlConnection = (HttpURLConnection)requestUrl.openConnection();
-		
-		urlConnection.setRequestProperty("Authorization", "Bearer "+token);
-		
+
+		HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
+
+		urlConnection.setRequestProperty("Authorization", "Bearer " + token);
+
 		urlConnection.setRequestMethod("GET");
-		
-		
-		 BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-	      
-	      String line;
-	      String responseText="";
-	      
-	      while((line = br.readLine()) !=null) {
-	         responseText += line;
-	      }
-		
-		
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+		String line;
+		String responseText = "";
+
+		while ((line = br.readLine()) != null) {
+			responseText += line;
+		}
+
 //	      System.out.println(responseText);
-	      
-	      JsonArray arr = JsonParser.parseString(responseText).getAsJsonArray();
-	      
+
+		JsonArray arr = JsonParser.parseString(responseText).getAsJsonArray();
+
 //	      System.out.println(arr);
-	      
-	      
-	      ArrayList<GitIssue> list = new ArrayList<GitIssue>();
-	      
-	      for(int i=0; i<arr.size(); i++) {
-  	  
-	    	  
-	    	// Inside the for loop
-	    	  GitIssue git = new GitIssue();
 
-	    	  // Set title
-	    	  git.setTitle(arr.get(i).getAsJsonObject().get("title").getAsString());
+		ArrayList<GitIssue> list = new ArrayList<GitIssue>();
 
-	    	  // Set labels (as an array of strings)
-	    	  JsonArray labelsArr = arr.get(i).getAsJsonObject().get("labels").getAsJsonArray();
-	    	  String[] labels = new String[labelsArr.size()];
-	    	  for (int j = 0; j < labelsArr.size(); j++) {
-	    	      labels[j] = labelsArr.get(j).getAsJsonObject().get("name").getAsString();
-	    	  }
-	    	  git.setLabels(labels);
+		for (int i = 0; i < arr.size(); i++) {
 
-	    	  // Set state
-	    	  git.setState(arr.get(i).getAsJsonObject().get("state").getAsString());
+			// Inside the for loop
+			GitIssue git = new GitIssue();
 
-	    	  // Set milestone
-	    	  JsonElement milestoneElem = arr.get(i).getAsJsonObject().get("milestone");
-	    	  if (!milestoneElem.isJsonNull()) {
-	    	      JsonObject milestoneObj = milestoneElem.getAsJsonObject();
-	    	      git.setMilestone(milestoneObj.get("title").getAsString());
-	    	  }
+			// Set title
+			git.setTitle(arr.get(i).getAsJsonObject().get("title").getAsString());
 
-	    	  // Set number
-	    	  git.setNumber(arr.get(i).getAsJsonObject().get("number").getAsInt());
+			// Set labels (as an array of strings)
+			JsonArray labelsArr = arr.get(i).getAsJsonObject().get("labels").getAsJsonArray();
+			String[] labels = new String[labelsArr.size()];
+			for (int j = 0; j < labelsArr.size(); j++) {
+				labels[j] = labelsArr.get(j).getAsJsonObject().get("name").getAsString();
+			}
+			git.setLabels(labels);
 
-	    	  // Set assignees (as an array of strings)
+			// Set state
+			git.setState(arr.get(i).getAsJsonObject().get("state").getAsString());
+
+			// Set milestone
+			JsonElement milestoneElem = arr.get(i).getAsJsonObject().get("milestone");
+			if (!milestoneElem.isJsonNull()) {
+				JsonObject milestoneObj = milestoneElem.getAsJsonObject();
+				git.setMilestone(milestoneObj.get("title").getAsString());
+			}
+
+			// Set number
+			git.setNumber(arr.get(i).getAsJsonObject().get("number").getAsInt());
+
+			// Set assignees (as an array of strings)
 //	    	  JsonArray assigneesArr = arr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
 //	    	  String[] assignees = new String[assigneesArr.size()];
 //	    	  for (int j = 0; j < assigneesArr.size(); j++) {
@@ -124,84 +123,148 @@ public class IssueController {
 //	    	      assignees[j] = assigneeObj.get("login").getAsString();
 //	    	  }
 //	    	  git.setAssignees(assignees);
-	    	  
-	    	  
-	    	// Set assignees (as an array of strings)
-	    	  JsonArray assigneesArr = arr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
-	    	  String[] assignees = new String[assigneesArr.size()];
-	    	  String[] assigneeProfiles = new String[assigneesArr.size()]; // 이슈 담당자 프로필
-	    	  for (int j = 0; j < assigneesArr.size(); j++) {
-	    	      JsonObject assigneeObj = assigneesArr.get(j).getAsJsonObject();
-	    	      assignees[j] = assigneeObj.get("login").getAsString();
-	    	      assigneeProfiles[j] = assigneeObj.get("avatar_url").getAsString(); // 이슈 담당자 프로필
-	    	  }
-	    	  git.setAssignees(assignees);
-	    	  git.setAssigneeProfiles(assigneeProfiles); // 이슈 담당자 프로필 설정
 
-	    	  
-	    	  
-	    	  
+			// Set assignees (as an array of strings)
+			JsonArray assigneesArr = arr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
+			String[] assignees = new String[assigneesArr.size()];
+			String[] assigneeProfiles = new String[assigneesArr.size()]; // 이슈 담당자 프로필
+			for (int j = 0; j < assigneesArr.size(); j++) {
+				JsonObject assigneeObj = assigneesArr.get(j).getAsJsonObject();
+				assignees[j] = assigneeObj.get("login").getAsString();
+				assigneeProfiles[j] = assigneeObj.get("avatar_url").getAsString(); // 이슈 담당자 프로필
+			}
+			git.setAssignees(assignees);
+			git.setAssigneeProfiles(assigneeProfiles); // 이슈 담당자 프로필 설정
 
-	    	 
-	    	// Set createdAt (with only the date)
-	    	  String createdDateTimeString = arr.get(i).getAsJsonObject().get("created_at").getAsString();
-	    	  LocalDateTime createdDateTime = LocalDateTime.parse(createdDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
-	    	  String createdDateString = createdDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    	  git.setCreatedAt(createdDateString);
+			// Set createdAt (with only the date)
+			String createdDateTimeString = arr.get(i).getAsJsonObject().get("created_at").getAsString();
+			LocalDateTime createdDateTime = LocalDateTime.parse(createdDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
+			String createdDateString = createdDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			git.setCreatedAt(createdDateString);
 
-	    	  
-	    	  
-	    	  
-	    	  
-	    	  // Set updatedAt
-	    	  git.setUpdatedAt(arr.get(i).getAsJsonObject().get("updated_at").getAsString());
+			// Set updatedAt
+			git.setUpdatedAt(arr.get(i).getAsJsonObject().get("updated_at").getAsString());
 
-	    	  // Set closedAt (if it's not null)
-	    	  JsonElement closedAtElem = arr.get(i).getAsJsonObject().get("closed_at");
-	    	  if (!closedAtElem.isJsonNull()) {
-	    	      git.setClosedAt(closedAtElem.getAsString());
-	    	  }
+			// Set closedAt (if it's not null)
+			JsonElement closedAtElem = arr.get(i).getAsJsonObject().get("closed_at");
+			if (!closedAtElem.isJsonNull()) {
+				git.setClosedAt(closedAtElem.getAsString());
+			}
 
-	    	  // Set issueId
-	    	  git.setIssudId(arr.get(i).getAsJsonObject().get("id").getAsString());
+			// Set issueId
+			git.setIssudId(arr.get(i).getAsJsonObject().get("id").getAsString());
 
-	    	  // Set user (as a string)
-	    	  JsonObject userObj = arr.get(i).getAsJsonObject().get("user").getAsJsonObject();
-	    	  git.setUser(userObj.get("login").getAsString());
+			// Set user (as a string)
+			JsonObject userObj = arr.get(i).getAsJsonObject().get("user").getAsJsonObject();
+			git.setUser(userObj.get("login").getAsString());
 
-	    	// Set user profile
-	    	  String userProfileUrl = userObj.get("avatar_url").getAsString();
-	    	  git.setProfile(userProfileUrl);
+			// Set user profile
+			String userProfileUrl = userObj.get("avatar_url").getAsString();
+			git.setProfile(userProfileUrl);
 
-	    	  list.add(git);
-	      }
-	      
-	      model.addAttribute("list", list);
-	      
-		
+			list.add(git);
+		}
+
+		model.addAttribute("list", list);
+
 		return "issue/issueList";
 	}
 
 	@RequestMapping("issueEnroll.mini")
 	public String issueEnrollForm() {
+		
+		
+		
 		return "issue/issueEnrollView";
 	}
 
-	@RequestMapping("issueDetail.mini")
-	public String selectIssue(int ino, Model model) {
+	@RequestMapping(value = "createIssue.mi", produces = "application/json; charset=utf-8")
+	public String insertIssue(@RequestParam String title, @RequestParam(required = false) String body,
+			@RequestParam(required = false) String assignees, HttpSession session) {
 
-//			Issue is = iService.selectIssue(ino);
-//			
-//			if( is != null) {
-//				model.addAttribute("is",is);
-//				return "issue/issueDetail";
-//			}else {
-//				model.addAttribute("errorMsg", "이슈 상세 페이지 보기 실패!");
-//				return "common/errorPage";
-//				
-//			}
+		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
 
-		return "issue/issueDetail";
+//		https://api.github.com/repos/{owner}/{repo}/issues 변수로 각 받아와서 코드 수정해야함
+		String apiUrl = "https://api.github.com/repos/pyjhoop/NEXUS/issues";
+
+		// Create a JSON object for the issue payload
+		JSONObject issueJson = new JSONObject();
+		issueJson.put("title", title);
+		issueJson.put("body", body);
+		JSONArray assigneesArray = new JSONArray();
+		assigneesArray.add(assignees);
+		issueJson.put("assignees", assigneesArray);
+		
+		
+		
+		System.out.println(title);
+		System.out.println(body);
+		System.out.println(assignees);
+		
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "Bearer " + token);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> requestEntity = new HttpEntity<String>(issueJson.toString(), headers);
+
+		// Send a POST request to the GitHub API
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, String.class);
+		HttpStatus responseStatus = responseEntity.getStatusCode();
+
+		if (responseStatus != HttpStatus.CREATED) {
+			throw new RuntimeException("Failed to create issue on GitHub API: " + responseStatus.toString());
+		}
+
+		return "issue/issueList";
+	}
+
+	@RequestMapping(value="issueDetail.mini", produces = "application/json; charset=utf-8")
+	public String selectIssue(@RequestParam String ino, HttpSession session, Model model) {
+
+		 try {
+		        String token = ((Member) session.getAttribute("loginUser")).getToken();
+		        String apiUrl = "https://api.github.com/repos/pyjhoop/NEXUS/issues/" + ino;
+
+		        RestTemplate restTemplate = new RestTemplate();
+		        HttpHeaders headers = new HttpHeaders();
+		        headers.set("Authorization", "Bearer " + token);
+		        headers.setContentType(MediaType.APPLICATION_JSON);
+		        HttpEntity<String> requestEntity = new HttpEntity<>("", headers);
+		        ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, requestEntity, String.class);
+		        HttpStatus responseStatus = responseEntity.getStatusCode();
+
+		        if (responseStatus != HttpStatus.OK) {
+		            throw new RuntimeException("Failed to retrieve issue data from GitHub API: " + responseStatus.toString());
+		        }
+
+		        Gson gson = new Gson();
+		        JsonObject issueJson = gson.fromJson(responseEntity.getBody(), JsonObject.class);
+		        String title = issueJson.get("title").getAsString();
+		        String body = issueJson.get("body").getAsString();
+		        String state = issueJson.get("state").getAsString();
+		        String assignee = "";
+		        if (!issueJson.get("assignee").isJsonNull()) {
+		            assignee = issueJson.get("assignee").getAsJsonObject().get("login").getAsString();
+		        }
+		        JsonArray labelsArray = issueJson.getAsJsonArray("labels");
+		        String[] labels = new String[labelsArray.size()];
+		        for (int i = 0; i < labelsArray.size(); i++) {
+		            labels[i] = labelsArray.get(i).getAsJsonObject().get("name").getAsString();
+		        }
+
+
+		        model.addAttribute("title", title);
+		        model.addAttribute("body", body);
+		        model.addAttribute("state", state);
+		        model.addAttribute("assignee", assignee);
+		        model.addAttribute("labels", labels);
+
+		        return "issue/issueDetail";
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        return "error";
+		    }
 
 	}
 
