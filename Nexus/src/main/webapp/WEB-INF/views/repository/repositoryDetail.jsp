@@ -28,6 +28,7 @@
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/repositoryDetail.css">
 <script src="${ pageContext.request.contextPath }/resources/js/repositoryDetail.js"></script>
 
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 </head>
 <body>
 	<jsp:include page="../common/template.jsp"/>
@@ -125,14 +126,23 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4">
-                <div class="card mb-5">
-                    <h2>NEXUS</h2>
-                    <p>설명충 ....</p>
+                <div class="card mb-5 repoCont">
+                    <div style="width: 90%; margin: auto; margin-top: 20px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h2>${repo.repoName }</h2>
+                            <div>
+                                <button type="button" class="btnM"  data-bs-toggle="modal" data-bs-target="#basicModal">
+                                <img src="resources/image/settings.png" alt="" width="30px">
+                                </button>
+                            </div>
+                        </div>
+                        <p>${repo.repoContent}</p>
+                    </div>
                 </div>
 
                 <div class="card mb-5">
 
-                    <div style="width: 90%; margin: auto; margin-top: 10px; margin-bottom: 10px;">
+                    <div style="width: 90%; margin: auto; margin-top: 20px; margin-bottom: 20px;">
                         <h3>프로젝트 관리자</h3>
                         <c:forEach var="i" items="${mList }">
                             <c:if test="${i.rollName eq 'admin' }">
@@ -150,8 +160,12 @@
 
                 <div class="card mb-5">
 
-                    <div style="width: 90%; margin: auto; margin-top: 10px; margin-bottom: 10px;">
-                        <h3>참여 멤버</h3>
+                    <div style="width: 90%; margin: auto; margin-top: 20px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h3>참여 멤버</h3>
+                            <div><a href=""><img src="resources/image/settings.png" alt="" width="30px"></a></div>
+
+                        </div>
                         <c:forEach var="i" items="${mList }">
                             
                             <div style="display:flex; margin-left: 20px;">
@@ -171,6 +185,34 @@
             </div>
         </div>
     </div>
+
+    <!-- 프로젝트 정보  -->
+    <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel1">${repo.repoName } Content</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <input type="hidden" name="repoNo" id="repoNo1" value="${repo.repoNo }">
+                  <textarea name="repoContent" id="repoContent" style="width: 100%; height: 200px; resize: none;">${repo.repoContent}</textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" id="close1" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                  <button type="button" id="repoConsub" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+
+      </div>
+
+
+
+
 
     <button type="button" id="lmodal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exLargeModal">
         Extra Large
