@@ -30,4 +30,13 @@ public class RepositoryService {
 		return rDao.selectRepo(sqlSession, rNo);
 	}
 
+	public int updateRepoContent(Repositories repo) {
+		return rDao.updateRepoContent(sqlSession, repo);
+	}
+
+	public String getRepoContent(Repositories repo) {
+		return rDao.getRepoContent(sqlSession, repo);
+	}
+
+
 }

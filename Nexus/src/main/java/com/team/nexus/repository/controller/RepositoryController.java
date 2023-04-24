@@ -175,6 +175,8 @@ public class RepositoryController {
 			
 			System.out.println(mList);
 			
+			session.setAttribute("RepoMembers", mList);
+			
 			
 			
 			// model에 데이터 추가
@@ -363,6 +365,17 @@ public class RepositoryController {
 	public String ajaxGetFileContent(String path, HttpSession session) {
 		String text = getPathContents2(path, session);
 		return text;
+	}
+	
+	@RequestMapping(value="updateRepoContent.p", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String updateRepoContent(Repositories repo) {
+		
+		int result = repoService.updateRepoContent(repo);
+		
+		String text = repoService.getRepoContent(repo);
+		return text;
+		
 	}
 	
 	

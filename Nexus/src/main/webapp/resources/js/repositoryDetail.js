@@ -3,6 +3,23 @@ $(function(){
     
     $("#repository").addClass('active');
 
+    $("#repoConsub").click(function(){
+        var con = $("#repoContent").val();
+        var no = $("#repoNo1").val();
+
+        $.ajax({
+            url:"updateRepoContent.p",
+            data:{repoNo:no, repoContent:con},
+            success:function(data){
+                console.log(data);
+                $("#close1").click();
+                $(".repoCont p").html(data);
+            }, error:function(){
+
+            }
+        })
+    })
+
     
 
 

@@ -26,4 +26,13 @@ public class RepositoryDao {
 		return sqlSession.selectOne("repoMapper.selectRepo", rNo);
 	}
 
+	public int updateRepoContent(SqlSessionTemplate sqlSession, Repositories repo) {
+		return sqlSession.update("repoMapper.updateRepoContent", repo);
+	}
+
+	public String getRepoContent(SqlSessionTemplate sqlSession, Repositories repo) {
+		return sqlSession.selectOne("repoMapper.getRepoContent", repo);
+	}
+
+
 }
