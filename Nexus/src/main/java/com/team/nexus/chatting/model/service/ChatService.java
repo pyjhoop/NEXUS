@@ -19,7 +19,7 @@ public interface ChatService {
 	
 	 ArrayList<Member> searchUser(Member m);
 	 
-	 int createRoom();
+	 int createRoom(Member m);
 	 
 	 void insertChatUser(int user);
 	 
@@ -51,5 +51,7 @@ public interface ChatService {
 	 
 	 ChatUser selectHideUser(ChatMessage chatMessage); 
 	 
-	 int displayRoom(ChatMessage chatMessage);
+	 int displayRoom(ChatUser cu);
+	 
+	 ChatUser opponentUser(ChatMessage chatMessage);
 }

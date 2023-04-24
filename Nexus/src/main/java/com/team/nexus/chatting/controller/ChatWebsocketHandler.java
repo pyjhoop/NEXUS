@@ -104,7 +104,8 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 		
 		int result = cService.insertMessage(chatMessage);
 		int result2 =  cService.updateMessage(chatMessage);
-		int displayRoom = cService.displayRoom(chatMessage);	
+		ChatUser opponent = cService.opponentUser(chatMessage);
+		int displayRoom = cService.displayRoom(opponent);	
 		int count = 0;
 		if(result > 0) {
 			// 같은방에 접속중인 클라이언트에게 전달받은 메세지를 보내기

@@ -116,7 +116,7 @@
  	<insert id="createRoom">
  		insert
  			into tb_chat_room
- 			values(SEQ_CHAT_ROOM.NEXTVAL,2,sysdate,'Y',null,null,null,null,null)
+ 			values(SEQ_CHAT_ROOM.NEXTVAL,2,sysdate,'Y',null,#{profile},#{userName},null,null)
  	</insert>
  	<insert id="insertChatUser">
  		insert
@@ -171,7 +171,7 @@
  		, number_participants
  		, origin_name
  		, change_name
- 		, room_title
+ 		, replace(room_title,' ','') as "room_title"
  		, last_chat
  		, last_date
         , u.count
@@ -179,6 +179,8 @@
 		join tb_chat_user u using(room_no)
 		where u.user_no = #{userNo}
    	 and r.status = 'Y'
+   	 and (u.status = 'S' or u.status='G')
+   	 order by last_date desc nulls last
  	</select>
  	<select id="checkUser" resultMap="chatUserResultSet">
  	 	select *
@@ -240,4 +242,11 @@
  		where room_no = #{roomNo}
  			and user_no = #{userNo}
  	</update>
+ 	<select id="opponentUser" resultMap="chatUserResultSet">
+ 		select *
+ 	 	from tb_chat_user
+ 	 	where user_no != #{userNo}
+ 	 		and room_no = #{roomNo}	
+ 	 		and (status = 'S' or status='H')
+ 	</select>
  </mapper>

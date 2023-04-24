@@ -175,63 +175,9 @@
 	</div>
 	
 	<div class="chat-users-list">
-	<div class="chat-scroll">
-	<c:forEach var="r" items="${rList}">
-	<c:if test="${r.numberParticipants > 2 }">
-	<a href="roomDetail.ih?roomNo=${r.roomNo }&roomTitle=${r.roomTitle}&changeName=${r.changeName}" class="card-body d-flex">
-	<div class="media-img-wrap">
-	<div class="avatar avatar-away">
-	<img src="${ r.changeName }" alt="" class="avatar-img rounded-circle">
-	</div>
-	</div>
-	<div class="media-body2">
-	<div>
-	<div class="user-name">
-	${r.roomTitle}
-	</div>
-	<div class="user-last-chat">${r.lastChat }</div>
-	</div>
-	<div>
-	<div class="last-chat-time block">${r.lastDate }</div>
-	<c:forEach var="cu" items="${cuList }">
-	<c:if test="${r.roomNo eq cu.roomNo}">
-	<div class="badge badge-success badge-pill">${cu.count }</div>
-	</c:if>
-	</c:forEach>
-	</div>
-	</div>
-	</a>
-	<hr class="m-0">
-	</c:if>
-	<c:forEach var="u" items="${uList}">
-	<c:if test="${ r.roomNo eq u.roomNo && r.numberParticipants <= 2 }">
-	<a href="roomDetail.ih?roomNo=${r.roomNo }&userName=${u.userName}&profile=${u.profile}&userNo=${u.userNo}" class="card-body d-flex">
-	<div class="media-img-wrap">
-	<div class="avatar avatar-away">
-	<img src="${ u.profile }" alt="" class="avatar-img rounded-circle">
-	</div>
-	</div>
-	<div class="media-body2">
-	<div>
-	<div class="user-name">
-	${u.userName}
-	</div>
-	<div class="user-last-chat">${r.lastChat }</div>
-	</div>
-	<div>
-	<div class="last-chat-time block">${r.lastDate }</div>
-	<c:forEach var="cu" items="${cuList }">
-	<c:if test="${r.roomNo eq cu.roomNo}">
-	<div class="badge badge-success badge-pill">${cu.count }</div>
-	</c:if>
-	</c:forEach>
-	</div>
-	</div>
-	</a>
-	<hr class="m-0">
-	</c:if>
-	</c:forEach>
-	</c:forEach>
+	<div class="chat-scroll" id="room-list">
+	
+	
 	</div>
 	</div>
 	<div class="chat-footer">
@@ -334,20 +280,77 @@
 		$.ajax({
 			url:"updateRoom.ih",
 			success:function(result){
+				console.log(1);
+				let value = "";
 				
 				for(let i in result){
-					$(".user-last-chat").eq(i).text(result[i].lastChat);
-					$(".last-chat-time block").eq(i).text(result[i].lastDate);
-					$(".badge-success").eq(i).text(result[i].count);
+					value += "<a href=" 
+					     + "roomDetail.ih?roomNo="
+					     + result[i].roomNo
+					     + "&changeName="
+					     + result[i].changeName
+					     + "&numberParticipants="
+					     + result[i].numberParticipants
+					     + "&roomTitle="
+					     + result[i].roomTitle
+					 	 + " class='card-body d-flex'>"
+						 + "<div class='media-img-wrap'>"
+						 + "<div class='avatar avatar-away'>"
+						 + "<img src="
+						 + result[i].changeName
+						 + " class='avatar-img rounded-circle'>"
+						 + "</div>"
+						 + "</div>"
+						 + "<div class='media-body2'>"
+					     + "<div>"
+						 + "<div class='user-name'>"
+					     + result[i].roomTitle
+						 + "</div>"
+						 + "<div class='user-last-chat'>"
+						 + result[i].lastChat
+						 + "</div>"
+						 + "</div>"
+					 	 + "<div>"
+					     + "<div class='last-chat-time block'>"
+						 + result[i].lastDate
+						 + "</div>"
+						 + "<div class='badge badge-success badge-pill'>"
+						 + result[i].count
+						 + "</div>"
+						 + "</div>"
+						 + "</div>"
+						 + "</a>"
+						 + "<hr class='m-0'>";
+
+					//$(".user-last-chat").eq(i).text(result[i].lastChat);
+					//$(".last-chat-time block").eq(i).text(result[i].lastDate);
+					//$(".badge-success").eq(i).text(result[i].count);
+					
+					
+					
+					}
+				console.log(value);
+				$("#room-list").html(value);
+				for(let i in result){
 					if(result[i].count != 0){
 					$(".badge-success").eq(i).show();	
 					}else{
 					$(".badge-success").eq(i).hide();
 					}
+					if(result[i].lastChat != null){
+					$(".last-chat-time").eq(i).show();	
+					}else{
+					$(".last-chat-time").eq(i).html("")	
+					}
+					if(result[i].lastChat != null){
+					$(".user-last-chat").eq(i).show();	
+					}else{
+					$(".user-last-chat").eq(i).hide();	
+					}
 				}
-			}
-		})
-		
+				}
+				
+		});
 	}
 	
 	 $("#search-btn").click(function(){

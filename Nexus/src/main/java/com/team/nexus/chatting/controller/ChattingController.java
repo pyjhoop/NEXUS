@@ -47,12 +47,11 @@ public class ChattingController {
 	public String selectRoomDetail(ChatRoom cr,ChatUser cu , HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNo = loginUser.getUserNo();
-		int yourNo = cu.getUserNo();
 		cu.setUserNo(userNo);
 		int result = cService.readMessage(cu);
 		ArrayList<ChatMessage> cList = cService.selectMessage(cr.getRoomNo()); 
 		modularity(session, model);
-		model.addAttribute("yourNo", yourNo);
+		System.out.println("cr : " + cr);
 		model.addAttribute("cu",cu);
 		model.addAttribute("cList",cList);
 		model.addAttribute("cr", cr);
@@ -90,7 +89,8 @@ public class ChattingController {
 	public String createRoom(int checkNo, HttpSession session) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int[] cUser = {loginUser.getUserNo(), checkNo};
-		int result = cService.createRoom();
+		Member m = cService.selectMember(checkNo);
+		int result = cService.createRoom(m);
 		if(result>0) {
 			for(int c : cUser) {
 				cService.insertChatUser(c);
@@ -132,12 +132,13 @@ public class ChattingController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNo = loginUser.getUserNo();
 		ArrayList<ChatRoom> list = cService.updateRoom(userNo);
-		
+		System.out.println(list);
 		return new Gson().toJson(list);
 	}
 	
 	@RequestMapping("exitRoom.ih")
 	public String hideRoom(ChatUser cu){
+		//ChatUser opponent = cService.opponentUser(cu);
 		int hideRoom = cService.hideRoom(cu);
 		
 		return "redirect:/selectChat.ih";

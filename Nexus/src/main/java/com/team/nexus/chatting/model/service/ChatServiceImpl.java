@@ -50,8 +50,8 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public int createRoom() {
-		return cDao.createRoom(sqlSession);
+	public int createRoom(Member m) {
+		return cDao.createRoom(sqlSession, m);
 	}
 
 	@Override
@@ -140,8 +140,13 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public int displayRoom(ChatMessage chatMessage) {
-		return cDao.displayRoom(sqlSession,chatMessage);
+	public int displayRoom(ChatUser cu) {
+		return cDao.displayRoom(sqlSession,cu);
+	}
+
+	@Override
+	public ChatUser opponentUser(ChatMessage chatMessage) {
+		return cDao.opponentUser(sqlSession,chatMessage);
 	}
 
 	

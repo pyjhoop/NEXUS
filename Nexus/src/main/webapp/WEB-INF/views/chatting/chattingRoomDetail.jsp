@@ -163,7 +163,7 @@
 	<a id="back_user_list" href="" class="back-user-list">
 	</a>
 	<c:choose>
-	<c:when test="${cr.roomTitle != null}">
+	<c:when test="${cr.numberParticipants > 2}">
 	<div class="chat-header">
 	<div class="media d-flex">
 	<div class="media-img-wrap">
@@ -203,11 +203,11 @@
 	<div class="media d-flex">
 	<div class="media-img-wrap">
 	<div class="avatar avatar-online">
-	<img src="${cu.profile }" alt="" class="avatar-img rounded-circle">
+	<img src="${cr.changeName  }" alt="" class="avatar-img rounded-circle">
 	</div>
 	</div>
 	<div class="media-body">
-	<div class="user-name">${cu.userName }</div>
+	<div class="user-name">${cr.roomTitle  }</div>
 	</div>
 	</div>
 	<div class="chat-options">
@@ -224,7 +224,7 @@
 	 <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="javascript:history.back(-1);">뒤로가기</a></li>
                             <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="exitRoom.ih?roomNo=${ rno }&userNo=${yourNo}">채팅방 나가기</a></li>
+                            <li><a class="dropdown-item" href="exitRoom.ih?roomNo=${ rno }&userNo=${loginUser.userNo}">채팅방 나가기</a></li>
      </ul>
 	</div>
 	</div>
