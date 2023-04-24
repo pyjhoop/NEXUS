@@ -26,7 +26,7 @@
 
 
 <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/favicon/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -225,6 +225,10 @@
 									<ul class="navbar-nav flex-row align-items-center ms-auto">
 										
 										<button class="btn btn-outline-primary" id="enroll" style="visibility:hidden;">뉴스등록</button>
+										
+										<button type="button" id="repobtn" style="display: none;" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+											new repository
+										</button>
 										<!-- Place this tag where you want the button to render. -->
 										<li class="nav-item 1h-1 me-4">
 											<!-- <a href="javascript:void(0);"class="menu-link position-relative">  -->

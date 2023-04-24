@@ -9,6 +9,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/newsList.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/newsList.css">
+
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 </head>
 <body>
     

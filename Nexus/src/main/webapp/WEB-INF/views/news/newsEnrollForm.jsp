@@ -23,7 +23,7 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/summernote-ko-KR.js"></script>
 
-
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 
 </head>
 <body>
