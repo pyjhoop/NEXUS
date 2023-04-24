@@ -56,7 +56,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap
                         <div class="btn-box">
                             <br>
                             <button type="button" class="btn btn-outline-secondary" >수정하기</button>
-                            <button type="button" class="btn btn-outline-danger">삭제하기</button>
+                            <button type="button" class="btn btn-outline-danger">종료하기</button>
 
                         </div>
                     </div>
@@ -81,15 +81,18 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap
 			
 			<div>
 
-<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-  <c:forEach items="${assignees}" var="a" varStatus="loop">
-  
-  	<p>${assignees[a]}123</p>
+   <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+  <c:forEach items="${assignees}" var="a">
+  <p>${assignees}</p>
+  <p>${a }</p>
     <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${assignee}">
       <img src="${assigneeProfiles[loop.index]}" alt="" class="rounded-circle" />
     </li>
   </c:forEach>
 </ul>
+
+</ul>
+
 
 
 

@@ -1,28 +1,29 @@
-// $(function () {
-//   // Initialize the profile list to be hidden
-//   $(".profiles-list").hide();
+/*
+$(function () {
+  // Initialize the profile list to be hidden
+  $(".profiles-list").hide();
 
-//   // Function to generate profile li elements based on selected options
-//   function generateProfiles() {
-//     // Get the selected options
-//     var selectedOptions = $("#defaultSelect option:selected");
+  // Function to generate profile li elements based on selected options
+  function generateProfiles() {
+    // Get the selected options
+    var selectedOptions = $("#defaultSelect option:selected");
 
-//     // Clear the previous selected profile list
-//     $(".profiles-list ul").empty();
+    // Clear the previous selected profile list
+    $(".profiles-list ul").empty();
 
-//     // Add the selected profile li elements
-//     selectedOptions.each(function () {
-//       var profileName = $(this).text();
-//       var profileImgUrl = ""; // Add the profile image URL
-//       var profileLi =
-//         '<li class="avatar avatar-m pull-up" title="' +
-//         profileName +
-//         '"><img src="' +
-//         profileImgUrl +
-//         '" alt="" class="rounded-circle" /></li>';
-//       $(".profiles-list ul").append(profileLi);
-//     });
-//   }
+    // Add the selected profile li elements
+    selectedOptions.each(function () {
+      var profileName = $(this).text();
+      var profileImgUrl = ""; // Add the profile image URL
+      var profileLi =
+        '<li class="avatar avatar-m pull-up" title="' +
+        profileName +
+        '"><img src="' +
+        profileImgUrl +
+        '" alt="" class="rounded-circle" /></li>';
+      $(".profiles-list ul").append(profileLi);
+    });
+  }
 
   // Generate the profile list on select change
   $("#defaultSelect").on("change", function () {
@@ -39,6 +40,8 @@
     // TODO: Submit the issue form
   });
 });
+
+*/
 
 // ------------------------- 멀티 input
 

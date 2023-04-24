@@ -42,6 +42,7 @@ public class IssueController {
 
 	@Autowired
 	private IssueServiceImpl iService;
+	
 
 	@RequestMapping(value = "issueShow.mini", produces = "application/json; charset=utf-8")
 	public String issueList(HttpSession session, Member m, Model model, @RequestParam(required = false) String state)
@@ -310,4 +311,24 @@ public class IssueController {
 		return "redirect:issueShow.mini";
 	}
 
+	
+	
+	
+	@RequestMapping(value="")
+	public String updateIssue() {
+		// 이슈 상태 변경을 위한 JSON 데이터 생성
+		JSONObject json = new JSONObject();
+		json.put("state", "closed");
+
+		// GitHub API에 PATCH 요청 보내기
+		String apiUrl = "https://api.github.com/repos/pyjhoop/NEXUS/issues/" + ino;
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "Bearer " + token);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> requestEntity = new HttpEntity<>(json.toString(), headers);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.PATCH, requestEntity, String.class);
+
+	}
+	
+	
 }
