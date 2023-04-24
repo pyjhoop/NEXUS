@@ -38,6 +38,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
+import com.team.nexus.issue.model.vo.Label;
 import com.team.nexus.member.model.vo.Member;
 import com.team.nexus.repository.model.service.RepositoryService;
 import com.team.nexus.repository.model.vo.Content;
@@ -173,10 +174,33 @@ public class RepositoryController {
 				mList.add(m);
 			}
 			
-			System.out.println(mList);
 			
+			// 레파지토리 멤버 세션에 저장
 			session.setAttribute("RepoMembers", mList);
 			
+			// 라벨 추가 
+			String url3 = repo.getUserName()+"/";
+			url3 += repo.getRepoName()+"/labels";
+			
+			String labelResponse = getPathContents(url3, session);
+			
+			jsonNode = obj.readTree(labelResponse);
+			
+			ArrayList<Label> lList = new ArrayList<Label>();
+			
+			for(int i = 0; i<jsonNode.size(); i++) {
+				
+				
+				String id = jsonNode.get(i).get("id").asText();
+				String name = jsonNode.get(i).get("name").asText();
+				String color = jsonNode.get(i).get("color").asText();
+				String description = jsonNode.get(i).get("description").asText();
+				
+				Label l = new Label(id, name, color, description);
+				lList.add(l);
+			}
+			
+			System.out.println(lList);
 			
 			
 			// model에 데이터 추가
