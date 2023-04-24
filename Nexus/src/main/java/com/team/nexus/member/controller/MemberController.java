@@ -40,7 +40,6 @@ import com.team.nexus.member.model.vo.Member;
 import reactor.core.publisher.Mono;
 
 
-@PropertySource("classpath:git.properties")
 @Controller
 public class MemberController {
 	
@@ -52,12 +51,7 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
-	
-	@Value("${git.id}")
-	private String gitId;
-	
-	@Value("${git.secret}")
-	private String gitSecret;
+
 	
 	@Autowired
     private kakaoService kakaoService;
@@ -76,7 +70,6 @@ public class MemberController {
 	    
 		// access_token을 이용한 유저 정보 얻어오기
 		Member m = gService.getUserInfo(token);
-		
 		
 		
         Member m1 = mService.selectMember(m);
@@ -150,6 +143,7 @@ public class MemberController {
 		}
 		return "redirect:login.p";
 	}
+	
 	
 	@RequestMapping(value = "/kakao", method = RequestMethod.GET, produces = "application/hal+json; charset=UTF-8" )
 	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, HttpSession session) throws Throwable {
