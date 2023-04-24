@@ -1,16 +1,18 @@
 package com.team.nexus.pr.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.team.nexus.pr.model.dao.PersonalDao;
+import com.team.nexus.pr.model.vo.PageInfo;
+import com.team.nexus.pr.model.vo.PersonalPr;
 
-public class PersonalPrService {
+public interface PersonalPrService {
 	
-	@Autowired
-	private PersonalDao personalDao;
+	int selectListCount();
+	ArrayList<PersonalPr> selectPersonalPr(PageInfo pi);
 	
-	@Autowired
-	private SqlSessionTemplate sqlsession;
 
 }

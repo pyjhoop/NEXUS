@@ -7,10 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.team.nexus.news.model.vo.News;
 import com.team.nexus.pr.model.dao.PersonalDao;
 import com.team.nexus.pr.model.service.PersonalPrService;
+import com.team.nexus.pr.model.service.PersonalPrServiceImpl;
+import com.team.nexus.pr.model.vo.PageInfo;
+import com.team.nexus.pr.model.vo.Pagination;
 import com.team.nexus.pr.model.vo.PersonalPr;
 
 @Controller
@@ -22,6 +28,8 @@ public class PersonalPrController {
 	/*
 	 * @Autowired private PersonalDao personalDao;
 	 */
+	@Autowired
+	private PersonalPrServiceImpl pService;
 	
 	@Autowired
 	private SqlSessionTemplate sqlsession;
@@ -32,39 +40,34 @@ public class PersonalPrController {
 	 */
 	
 	@RequestMapping("personal.me")
-	public String persoanlForm() {
+	public ModelAndView selectPrList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+		int listCount = pService.selectListCount();
 		
-		return "pr/personalPr";
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<PersonalPr> list = pService.selectPersonalPr(pi);
+		
+		
+		mv.addObject("pi", pi).addObject("list", list).setViewName("pr/personalPr");
+		
+		
+		return mv;
+		
+		/*return "pr/personalPr";*/
 	}
 	
 	
 	
-	/*
-	 * @RequestMapping("personal.me") public String persoanlForm(Model model) {
-	 * ArrayList<News> list = PersonalPrService.selectList();
-	 * model.addAttribute("list", list);
-	 * 
-	 * return "pr/personalPr"; }
-	 */
+	
+	
+	
+	
 	
 	@RequestMapping("enrollPsnPr.pr")
 	public String enrollPsnPr() {
 		return "pr/enrollPsnPr";
 	}
 	
-	/*
-	 * @RequestMapping("newsEnrollForm.p") public String newsEnrollFormPage(Model
-	 * model) { model.addAttribute("status", "E"); // E: Enroll return
-	 * "news/newsEnrollForm"; }
-	 */
 	
-	/*
-	 * @RequestMapping("insertPersonalPr") public String insertPersonalPr(PersonalPr
-	 * P) {
-	 * 
-	 * 
-	 * }
-	 */
 	
 	
 	

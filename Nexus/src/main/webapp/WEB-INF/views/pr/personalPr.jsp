@@ -9,11 +9,11 @@
 </head>
 <style>
 #mainBody{
-	/* height: 2500px; */
+	height: 2500px; 
 	width: 100%;
 	margin:auto;
 	margin-top: 10px !important;
-	margin-bottom: 200px !important;
+	margin-bottom: 0px !important;
 }
 #stacks{
 	width:100%;
@@ -25,7 +25,7 @@
 }
 #prs{
 	width:100%;
-	height:5px;
+	height:2.5%;
 	margin:auto;
 	padding-top:10px;
 }
@@ -531,7 +531,7 @@ hr{
 </button>
 </div>
 
-<div id="shell" style="margin-left: 105px; display: block;">
+<div id="shell" style="margin-left: 105px; display: block; height: 2100px;">
  <div class="card" style="width: 16.5rem;">
   <div class="card-body">
     <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
@@ -740,264 +740,14 @@ hr{
     
   </div>
 </div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
 
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
+<div id="page" style="width: 100%; height:100px; border: 1px solid black; margin-bottom: 300px;">
 </div>
+
+</div> <!-- main body div -->
+
 
 <!-- <script>
 		var seeAll = document.getElementById( "seeAll" );

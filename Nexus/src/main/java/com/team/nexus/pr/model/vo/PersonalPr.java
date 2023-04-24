@@ -16,10 +16,10 @@ public class PersonalPr {
 	private String psnPrContent;
 	private String psnPrAvlPrd;
 	private String psnPrTitle;
-	private String psnPrContatct;
-	private String userId;
-	private int userNo;
+	private String psnPrContact;
 	private String createDate;
+	private int userNo;
+	private String category;
 
 
 }
