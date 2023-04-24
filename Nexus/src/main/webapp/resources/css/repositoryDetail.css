@@ -63,3 +63,8 @@
 #lmodal{
     visibility: hidden;
 }
+
+.btnM{
+    border: none;
+    background-color: white;
+}

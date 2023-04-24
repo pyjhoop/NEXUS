@@ -13,6 +13,8 @@
 <script src="${ pageContext.request.contextPath }/resources/js/repository.js"></script>
 
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/repository.css">
+
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 </head>
 <body>
 	<jsp:include page="../common/template.jsp"/>
