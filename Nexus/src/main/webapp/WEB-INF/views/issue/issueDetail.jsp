@@ -78,6 +78,24 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap
 
 		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">이슈 담당자</label>
+			
+			<div>
+
+<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+  <c:forEach items="${assignees}" var="a" varStatus="loop">
+  
+  	<p>${assignees[a]}123</p>
+    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${assignee}">
+      <img src="${assigneeProfiles[loop.index]}" alt="" class="rounded-circle" />
+    </li>
+  </c:forEach>
+</ul>
+
+
+
+
+			</div>
+			
 			<select id="defaultSelect" class="form-select" name="assignees">
 				<option>이슈 담당자</option>
 				<option value="libiho" type="checkbox">One</option>

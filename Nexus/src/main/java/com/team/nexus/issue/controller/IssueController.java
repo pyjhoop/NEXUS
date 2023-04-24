@@ -8,6 +8,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -178,6 +180,7 @@ public class IssueController {
 		return "issue/issueEnrollView";
 	}
 
+	
 	@RequestMapping(value = "createIssue.mi", produces = "application/json; charset=utf-8")
 	public String insertIssue(@RequestParam String title, @RequestParam(required = false) String body,
 			@RequestParam(required = false) String assignees, HttpSession session) {
@@ -192,8 +195,8 @@ public class IssueController {
 		issueJson.put("title", title);
 		issueJson.put("body", body);
 		JSONArray assigneesArray = new JSONArray();
-		assigneesArray.add(assignees);
-		issueJson.put("assignees", assigneesArray);
+		//assigneesArray.add(assignees);
+		// issueJson.put("assignees", assigneesArray);
 		
 		
 		
@@ -216,57 +219,89 @@ public class IssueController {
 			throw new RuntimeException("Failed to create issue on GitHub API: " + responseStatus.toString());
 		}
 
-		return "issue/issueList";
+		return "redirect:issueShow.mini";
 	}
 
+	
+	
 	@RequestMapping(value="issueDetail.mini", produces = "application/json; charset=utf-8")
 	public String selectIssue(@RequestParam String ino, HttpSession session, Model model) {
+	    try {
+	        String token = ((Member) session.getAttribute("loginUser")).getToken();
+	        String apiUrl = "https://api.github.com/repos/pyjhoop/NEXUS/issues/" + ino;
 
-		 try {
-		        String token = ((Member) session.getAttribute("loginUser")).getToken();
-		        String apiUrl = "https://api.github.com/repos/pyjhoop/NEXUS/issues/" + ino;
+	        RestTemplate restTemplate = new RestTemplate();
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.set("Authorization", "Bearer " + token);
+	        headers.setContentType(MediaType.APPLICATION_JSON);
+	        HttpEntity<String> requestEntity = new HttpEntity<>("", headers);
+	        ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, requestEntity, String.class);
+	        HttpStatus responseStatus = responseEntity.getStatusCode();
 
-		        RestTemplate restTemplate = new RestTemplate();
-		        HttpHeaders headers = new HttpHeaders();
-		        headers.set("Authorization", "Bearer " + token);
-		        headers.setContentType(MediaType.APPLICATION_JSON);
-		        HttpEntity<String> requestEntity = new HttpEntity<>("", headers);
-		        ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, requestEntity, String.class);
-		        HttpStatus responseStatus = responseEntity.getStatusCode();
+	        if (responseStatus != HttpStatus.OK) {
+	            throw new RuntimeException("Failed to retrieve issue data from GitHub API: " + responseStatus.toString());
+	        }
 
-		        if (responseStatus != HttpStatus.OK) {
-		            throw new RuntimeException("Failed to retrieve issue data from GitHub API: " + responseStatus.toString());
-		        }
+	        Gson gson = new GsonBuilder().setLenient().create();
+	        JsonObject issueJson = gson.fromJson(responseEntity.getBody(), JsonObject.class);
+	        String title = issueJson.get("title").getAsString();
 
-		        Gson gson = new Gson();
-		        JsonObject issueJson = gson.fromJson(responseEntity.getBody(), JsonObject.class);
-		        String title = issueJson.get("title").getAsString();
-		        String body = issueJson.get("body").getAsString();
-		        String state = issueJson.get("state").getAsString();
-		        String assignee = "";
-		        if (!issueJson.get("assignee").isJsonNull()) {
-		            assignee = issueJson.get("assignee").getAsJsonObject().get("login").getAsString();
-		        }
-		        JsonArray labelsArray = issueJson.getAsJsonArray("labels");
-		        String[] labels = new String[labelsArray.size()];
-		        for (int i = 0; i < labelsArray.size(); i++) {
-		            labels[i] = labelsArray.get(i).getAsJsonObject().get("name").getAsString();
-		        }
+	        // body branch processing null date
+	        JsonElement bodyElement = issueJson.get("body");
+	        String body = (bodyElement != null && !bodyElement.isJsonNull()) ? bodyElement.getAsString() : null;
+
+	        String state = issueJson.get("state").getAsString();
+
+	        // Retrieve assignees array
+	        JsonArray assigneesArray = issueJson.getAsJsonArray("assignees");
+	        List<String> assignees = new ArrayList<>();
+	        List<String> assigneeProfiles = new ArrayList<>(); // 이슈 담당자 프로필
+	        if (assigneesArray != null) {
+	            for (JsonElement assigneeElement : assigneesArray) {
+	                JsonObject assigneeObject = assigneeElement.getAsJsonObject();
+	                String assigneeLogin = assigneeObject.get("login").getAsString();
+	                assignees.add(assigneeLogin);
+	                assigneeProfiles.add(assigneeObject.get("avatar_url").getAsString());
+	            }
+	        }
 
 
-		        model.addAttribute("title", title);
-		        model.addAttribute("body", body);
-		        model.addAttribute("state", state);
-		        model.addAttribute("assignee", assignee);
-		        model.addAttribute("labels", labels);
+	        // Retrieve labels array
+	        JsonArray labelsArray = issueJson.getAsJsonArray("labels");
+	        List<String> labels = new ArrayList<>();
+	        if (labelsArray != null) {
+	            for (JsonElement labelElement : labelsArray) {
+	                JsonObject labelObject = labelElement.getAsJsonObject();
+	                String labelName = labelObject.get("name").getAsString();
+	                labels.add(labelName);
+	            }
+	        }
 
-		        return "issue/issueDetail";
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		        return "error";
-		    }
+	        // Retrieve issue manager's profile
+	        JsonObject userObject = issueJson.getAsJsonObject("user");
+	        String issueManagerName = userObject.get("login").getAsString();
+//	        String assigneeProfiles = userObject.get("avatar_url").getAsString();
 
+	        model.addAttribute("title", title);
+	        model.addAttribute("body", body);
+	        model.addAttribute("state", state);
+	        model.addAttribute("assignees", assignees);
+	        model.addAttribute("labels", labels);
+	        model.addAttribute("issueManagerName", issueManagerName);
+	        model.addAttribute("assigneeProfiles", assigneeProfiles);
+	        
+	        
+	        System.out.println(assignees + "@@@@@@@");
+	        System.out.println("###########"+assigneeProfiles);
+
+	        return "issue/issueDetail";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "common/error500";
+	    }
 	}
+
+
 
 	@RequestMapping("issueDelete.mini")
 	public String deleteIssue(HttpSession session) {
