@@ -15,6 +15,7 @@ public class Repositories  {
 	private int userNo;
 	private String userName;
 	private String repoName;
+	private String repoContent;
 	private String token;
 	private String repoStatus;
 	private String status;

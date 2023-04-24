@@ -9,6 +9,7 @@
 		<result column="user_no" property="userNo"/>
 		<result column="user_name" property="userName"/>
 		<result column="repo_name" property="repoName"/>
+		<result column="repo_content" property="repoContent"/>
 		<result column="repo_status" property="repoStatus"/>
 		<result column="status" property="status"/>
 	</resultMap>
@@ -21,6 +22,7 @@
 		   , user_no
 		   , user_name
 		   , repo_name
+		   , repo_content
 		   , repo_status
 		  )
 		  values
@@ -28,6 +30,7 @@
 		     seq_repository.nextval
 		   , #{userNo}
 		   , #{userName}
+		   , #{repoName}
 		   , #{repoName}
 		   , #{repoStatus}
 		  
@@ -48,10 +51,25 @@
 	
 	<select id="selectRepo" resultMap="repoResultSet">
 		select
-				user_name
+				repo_no
+			  ,	user_name
 			  , repo_name
+			  , repo_content
 		  from tb_repository
 		  where repo_no = #{rNo}
+	</select>
+	
+	<update id="updateRepoContent">
+		update tb_repository
+		   set repo_content = #{repoContent}
+		 where repo_No = #{repoNo}
+	</update>
+	
+	<select id="getRepoContent" resultType="string">
+		select 
+			   repo_content
+		  from tb_repository
+		 where repo_No = #{repoNo}
 	</select>
 	
 	
