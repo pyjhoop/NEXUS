@@ -28,23 +28,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/i18n/defaults-ko_KR.min.js"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../../resources/css/core_issue_mini.css">
-<link rel="stylesheet" href="../../../resources/css/apex-charts.css">
-<link rel="stylesheet" href="../../../resources/css/theme-default.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/core_issue_mini.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/apex-charts.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/theme-default.css">
 
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/issue_select.css">
 
 <style>
-.luda {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
 
-.luda a {
-	margin-left: auto;
-	margin-right: 5vw;
-}
 </style>
 
 
@@ -72,8 +63,7 @@
 
 
 
-			<br>
-			<br>
+			<br> <br>
 
 
 			<!-- Basic Bootstrap Table -->
@@ -84,9 +74,7 @@
 
 
 				<div class="luda">
-
 					<a class="btn btn-primary" href="issueEnroll.mini">이슈 등록</a>
-
 				</div>
 				<br>
 
@@ -94,61 +82,62 @@
 					<table class="table" id="issueTable">
 						<thead>
 							<tr>
-								<th>
-									<button type="button" class="btn btn-outline-success btn-sm">진행 중</button>
-								</th>
-								<th>
-									<button type="button" class="btn btn-outline-secondary btn-sm">종료</button>
-								</th>
-								<th>
-									<button type="button" class="btn btn-outline-primary btn-sm">전체</button>
-								</th>
-								
+								<form action="" method="get" align="center">
+									<th>
+										<button type="submit" name="state" value="open" class="btn btn-outline-success btn-sm">진행 중</button>
+									</th>
+									<th>
+										<button type="submit" name="state" value="closed" class="btn btn-outline-secondary btn-sm">종료</button>
+									</th>
+									<th>
+										<button type="submit" name="state" value="all" class="btn btn-outline-primary btn-sm">전체</button>
+									</th>
+
+								</form>
+
 								<th>생성일</th>
-								
+
 								<th>
-									<select class="form-select form-select-sm" aria-label="Default select example">
-										<option selected>라벨</option>
-										<option value="1">버그</option>
-										<option value="2">문서작성</option>
-										<option value="3">베포 관려</option>
-										<option value="4">기능</option>
-										<option value="5">개발 환경</option>
-										<option value="6">기타 등등</option>
-									</select>
+									<form action="" method="get" align="center">
+										<select class="form-select form-select-sm" aria-label="Default select example">
+											<option selected>라벨</option>
+											<option value="1">버그</option>
+											<option value="2">문서작성</option>
+											<option value="3">베포 관려</option>
+											<option value="4">기능</option>
+											<option value="5">개발 환경</option>
+											<option value="6">기타 등등</option>
+										</select>
+									</form>
 								</th>
 
 
 								<th>
-									<select class="form-select form-select-sm" aria-label="Default select example">
-										<option selected>작성자</option>
-										<!-- 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? ### -->
-										<option value="mini">혜민</option>
-										<option value="jun">연준</option>
-										<option value="ho">인호</option>
-										<option value="hyeon">철현</option>
-										<option value="jun">준호</option>
-									</select>
+									<form action="" method="get" align="center">
+										<select class="form-select form-select-sm" aria-label="Default select example">
+											<option selected>작성자</option>
+											<!-- 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? ### -->
+											<option value="mini">혜민</option>
+											<option value="jun">연준</option>
+											<option value="ho">인호</option>
+											<option value="hyeon">철현</option>
+											<option value="jun">준호</option>
+										</select>
+									</form>
 								</th>
+
 								<th>
-									<select class="form-select form-select-sm" aria-label="Default select example">
-										<option selected>우선순위</option>
-										<option value="1">젤 먼저</option>
-										<option value="2">되도록이면 빨리</option>
-										<option value="3">중간</option>
-										<option value="4">천천히</option>
-									</select>
-								</th>
-								<th>
-									<select class="form-select form-select-sm" aria-label="Default select example">
-										<option selected>담당자</option>
-										<!-- ### 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? -->
-										<option value="mini">혜민</option>
-										<option value="jun">연준</option>
-										<option value="ho">인호</option>
-										<option value="hyeon">철현</option>
-										<option value="jun">준호</option>
-									</select>
+									<form action="" method="get" align="center">
+										<select class="form-select form-select-sm" aria-label="Default select example">
+											<option selected>담당자</option>
+											<!-- ### 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? -->
+											<option value="mini">혜민</option>
+											<option value="jun">연준</option>
+											<option value="ho">인호</option>
+											<option value="hyeon">철현</option>
+											<option value="jun">준호</option>
+										</select>
+									</form>
 								</th>
 								<th>마일스톤</th>
 							</tr>
@@ -158,107 +147,88 @@
 
 							<!-- 한바퀴  -->
 
-							<tr>
-								<td colspan="3">
-									<i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>이슈 제목</strong>
-								</td>
-								
-								<!-- 이슈 생성일 ### -->
-								<td></td>
+							<c:forEach var="i" items="${list }">
 
-								<td>
-									<span class="badge bg-label-primary me-1">버그</span>
-								</td>
-
-								<td>
-									<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-									<!-- 여기서 토글했을때 이름뜰려면 title에 속성 바꿔야함 ### -->
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="이혜민"><img src="${loginUser.profile }" alt="" class="rounded-circle" /></li>
-
-									</ul>
-								</td>
-
-								<td>
-									<span class="badge bg-label-primary me-1">Active</span>
-								</td>
-								<td>
-									<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="이혜민"><img src="${loginUser.profile }" alt="" class="rounded-circle" /></li>
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="왈왈왈"><img src="../assets/img/avatars/6.png" alt="" class="rounded-circle" /></li>
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="테스트"><img src="../assets/img/avatars/7.png" alt="" class="rounded-circle" /></li>
-									</ul>
-								</td>
-								<td>
-									<div class="dropdown">
-										<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-											<i class="bx bx-dots-vertical-rounded"></i>
-										</button>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="javascript:void(0);">
-												<i class="bx bx-edit-alt me-1"></i> Edit
+								<tr>
+									<td colspan="3" style="width:26%" >
+										<a href="issueDetail.mini?ino=${i.number}" class="textA">
+											<i class="fab fa-angular fa-lg text-danger me-3"></i>
+											<strong>${i.title}</strong>
 											</a>
-											<a class="dropdown-item" href="javascript:void(0);">
-												<i class="bx bx-trash me-1"></i> Delete
-											</a>
+									</td>
+
+
+									<td style="width:9%;">${i.createdAt }</td>
+
+									<td style="width:32%;">
+										<c:forEach items="${i.labels}" var="label">
+											<c:choose>
+												<c:when test="${label eq 'bug'}">
+													<span class="badge rounded-pill bg-label-danger">${label}</span>
+												</c:when>
+												<c:when test="${label eq 'enhancement'}">
+													<span class="badge rounded-pill bg-label-info">${label}</span>
+												</c:when>
+												<c:when test="${label eq 'duplicate'}">
+													<span class="badge rounded-pill bg-label-dark">${label}</span>
+												</c:when>
+												<c:when test="${label eq 'documentation'}">
+													<span class="badge rounded-pill bg-label-primary">${label}</span>
+												</c:when>
+												<c:when test="${label eq 'invalid'}">
+													<span class="badge rounded-pill bg-label-warning">${label}</span>
+												</c:when>
+												<c:when test="${label eq 'help wanted'}">
+													<span class="badge rounded-pill bg-label-success">${label}</span>
+												</c:when>
+												<c:otherwise>
+													<span class="badge rounded-pill bg-label-secondary">${label}</span>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+
+									</td>
+
+									<td style="width:10%;">
+										<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+
+											<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${i.user }"><img src="${i.profile }" alt="" class="rounded-circle" /></li>
+
+										</ul>
+									</td>
+
+
+									<td style="width:13%;">
+										<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+											<c:forEach items="${i.assignees}" var="assignee" varStatus="loop">
+												<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${assignee}"><img src="${i.assigneeProfiles[loop.index]}" alt="" class="rounded-circle" /></li>
+											</c:forEach>
+										</ul>
+									</td>
+
+
+									<td style="width:10%;">
+									<!-- 마일스톤 클릭시 해당 마일스톤으로 이동 ###   -->
+										<div class="dropdown">
+										${i.milestone }
+											<button type="button" class="btn p-0 dropdown-toggle hide-arrow ${empty i.milestone ? 'invisible' : ''}" data-bs-toggle="dropdown">
+												<i class="bx bx-dots-vertical-rounded"></i>
+											</button>
+											<div class="dropdown-menu">
+												<a class="dropdown-item" href="javascript:void(0);">
+													<i class="bx bx-send me-1"></i> 이동
+												</a>
+												<a class="dropdown-item" href="javascript:void(0);">
+													<i class="bx bx-trash me-1"></i> 삭제
+												</a>
+											</div>
 										</div>
-									</div>
-								</td>
-							</tr>
-
+									</td>
+								</tr>
+							</c:forEach>
 							<!-- 한바퀴  -->
 
-							<!-- 한바퀴  -->
 
-							<tr>
-								<input type="hidden" class="ino" value="1">
-								<td colspan="3">
-									<i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>여기 클릭하세용 </strong>
-								</td>
-
-								<!-- 이슈 생성일 ### -->
-								<td></td>
-								
-
-		
-								<td>
-									<span class="badge bg-label-primary me-1">개발환경</span>
-								</td>
-
-								<td>
-									<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="닉네임"><img src="../assets/img/avatars/5.png" alt="" class="rounded-circle" /></li>
-
-									</ul>
-								</td>
-
-								<td>
-									<span class="badge bg-label-primary me-1">Active</span>
-								</td>
-								<td>
-									<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="벌써"><img src="../assets/img/avatars/5.png" alt="" class="rounded-circle" /></li>
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="12시"><img src="../assets/img/avatars/6.png" alt="" class="rounded-circle" /></li>
-										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="오예"><img src="../assets/img/avatars/7.png" alt="" class="rounded-circle" /></li>
-									</ul>
-								</td>
-								<td>
-									<div class="dropdown">
-										<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-											<i class="bx bx-dots-vertical-rounded"></i>
-										</button>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="javascript:void(0);">
-												<i class="bx bx-edit-alt me-1"></i> Edit
-											</a>
-											<a class="dropdown-item" href="javascript:void(0);">
-												<i class="bx bx-trash me-1"></i> Delete
-											</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-
-							<!-- 한바퀴  -->
 						</tbody>
 					</table>
 				</div>
@@ -271,28 +241,32 @@
 
 
 			<script>
+				const tooltipTriggerList = [].slice.call(document
+						.querySelectorAll('[data-bs-toggle="tooltip"]'));
+				tooltipTriggerList.map(function(tooltipTriggerEl) {
+					return new bootstrap.Tooltip(tooltipTriggerEl);
+				});
 
-      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        tooltipTriggerList.map(function (tooltipTriggerEl) {
-          return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
+			
+				
+				
+				$(function() {
+					  $("#boardList>tbody>tr").click(function() {
+					    var ino = $(this).find('input[name="ino"]').val();
+					    location.href = "issueDetail.mini?ino=" + ino;
+					  });
+					});
 
-        
-        
-        $(function() {
-        	  $("#issueTable>tbody>tr").click(function() {
-        	    location.href = "issueDetail.mini?ino=" + $(this).find(".ino").val();
-        	  });
-        	});
-
-     </script>
-
+				
+				
+			</script>
 
 
 
 
 
-			<script src="../../../resources/js/issue_mini.js"></script>
+
+		
 
 
 
