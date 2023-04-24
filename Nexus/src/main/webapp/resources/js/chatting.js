@@ -87,6 +87,16 @@ chatSocket.onmessage = function(e) {
     }else if(chatMessage.invite == 'X'){
         alert('이미 이 채팅방에 존재하는 유저입니다!');
         return;
+
+    }else if(chatMessage.invite == 'Z'){
+        myChatting = "<li class='chat-invite'>" +
+        chatMessage.userName + 
+        "님이 방을 나가셨습니다." +
+        "</li>";
+        if(chatMessage.userNo == userNo){
+            location.href="selectChat.ih";
+        }
+  
     }else{
     //내가쓴 채팅
     if (chatMessage.userNo == userNo) {

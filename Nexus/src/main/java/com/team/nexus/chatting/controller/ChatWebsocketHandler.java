@@ -62,23 +62,49 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 		// 전달 받은 채팅메세지를 db에 삽입
 		System.out.println(chatMessage);
 		if(chatMessage.getInvite() != null) {
-			checkUser = cService.checkUser(chatMessage);
-			if(checkUser != null) {
-				chatMessage.setInvite("X");
-				session.sendMessage(new TextMessage( new Gson().toJson(chatMessage )));
+			if(chatMessage.getInvite().equals("Z")) {
+				int exit = cService.exitRoom(chatMessage);
+				chatMessage.setChattingContent(chatMessage.getUserName()+"님이 방을 나가셨습니다.");
+				int inviteChatting = cService.insertMessage(chatMessage);
+				for(WebSocketSession s : sessions) {
+					int roomNo = (Integer)s.getAttributes().get("rno");
+					if(chatMessage.getRoomNo() == roomNo) {
+					
+						s.sendMessage(new TextMessage( new Gson().toJson(chatMessage )));
+					}
+				}
 				return;
 			}else {
-				int invite = cService.inviteUser(chatMessage);
-				chatMessage.setChattingContent(chatMessage.getUserName()+"님이 입장하였습니다.");
-				System.out.println("chatmessage: "+ chatMessage );
-				int inviteChatting = cService.insertMessage(chatMessage);
-				session.sendMessage(new TextMessage( new Gson().toJson(chatMessage )));
-				return;
+				checkUser = cService.checkUser(chatMessage);
+				if(checkUser != null) {
+					chatMessage.setInvite("X");
+					session.sendMessage(new TextMessage( new Gson().toJson(chatMessage )));
+					return;
+				}else{
+					
+					int invite = cService.inviteUser(chatMessage);
+					chatMessage.setChattingContent(chatMessage.getUserName()+"님이 입장하였습니다.");
+					System.out.println("chatmessage: "+ chatMessage );
+					int inviteChatting = cService.insertMessage(chatMessage);
+					for(WebSocketSession s : sessions) {
+						int roomNo = (Integer)s.getAttributes().get("rno");
+						if(chatMessage.getRoomNo() == roomNo) {
+						
+							s.sendMessage(new TextMessage( new Gson().toJson(chatMessage )));
+						}
+					}
+					return;
+				}
 			}
-		}
+					
+			}
+				
+			
+		
 		
 		int result = cService.insertMessage(chatMessage);
 		int result2 =  cService.updateMessage(chatMessage);
+		int displayRoom = cService.displayRoom(chatMessage);	
 		int count = 0;
 		if(result > 0) {
 			// 같은방에 접속중인 클라이언트에게 전달받은 메세지를 보내기
@@ -104,7 +130,6 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 					int userNo = (Integer)s.getAttributes().get("uno");
 					cu.setRoomNo(roomNo);
 					cu.setUserNo(userNo);
-
 				
 					int result4= cService.readMessage(cu);
 						

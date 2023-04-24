@@ -188,7 +188,7 @@
 	 <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="javascript:history.back(-1);">뒤로가기</a></li>
                             <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">채팅방 나가기</a></li>
+                            <li><div class="dropdown-item" href="" id="gRoom-exit">채팅방 나가기</div></li>
                             <li>
                               <hr class="dropdown-divider" />
                             </li>
@@ -224,7 +224,7 @@
 	 <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="javascript:history.back(-1);">뒤로가기</a></li>
                             <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">채팅방 나가기</a></li>
+                            <li><a class="dropdown-item" href="exitRoom.ih?roomNo=${ rno }&userNo=${yourNo}">채팅방 나가기</a></li>
      </ul>
 	</div>
 	</div>
@@ -236,7 +236,7 @@
 	<ul class="list-unstyled" id="room-scroll2">
 	<c:forEach var="c" items="${cList }">
 	<c:choose>
-	<c:when test="${c.invite eq 'O' }">
+	<c:when test="${c.invite eq 'O' || c.invite eq 'Z'}">
 	<li class="chat-invite">
 	${ c.chattingContent }
 	</li>
@@ -396,7 +396,17 @@
     			
 		        		
         	});
-        	
+        	$("#gRoom-exit").click(function(){
+        		const chatMessage = {
+        				"userNo" : userNo,
+        				"userName" : userName,
+        				"roomNo" : roomNo,
+        				"invite": 'Z'
+        		};
+        		console.log(chatMessage);
+        		chatSocket.send(JSON.stringify(chatMessage));
+        		
+        	});
     </script>
 
 	

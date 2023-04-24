@@ -202,4 +202,42 @@
  			into tb_chatting
  			values(seq_chatting.nextval, seq_chat_room.currval, #{userName}, null , null, #{userNo}, sysdate,'O')
  	</insert>
+ 	<delete id="exitRoom">
+ 		delete 
+ 			from tb_chat_user 
+ 		  where user_no = #{userNo}
+ 		  	and room_no = #{roomNo}
+ 	</delete>
+ 	<update id="hideRoom">
+ 		update
+ 			tb_chat_user
+ 		set status = 'H' 
+ 		where room_no = #{roomNo}
+ 			and user_no = #{userNo}
+ 	</update>
+ 	<select id="selectHideUser" resultMap="chatUserResultSet">
+ 		select 
+	    u.user_no,
+	    room_no,
+	    user_name,
+	    profile,
+	    count
+	from tb_chat_user u 
+	join  tb_member m on(u.user_no = m.user_no)
+	where room_no in (select room_no
+	                            from tb_chat_room r
+	                            join tb_chat_user u using(room_no)
+	                            where u.user_no = #{userNo}
+	                                and r.status = 'Y')
+	        and u.user_no = #{userNo}
+	        and u.room_no = #{roomNo}
+	        and u.status = 'H'
+ 	</select>
+ 	<update id="displayRoom">
+ 		update
+ 			tb_chat_user
+ 		set status = 'S' 
+ 		where room_no = #{roomNo}
+ 			and user_no = #{userNo}
+ 	</update>
  </mapper>

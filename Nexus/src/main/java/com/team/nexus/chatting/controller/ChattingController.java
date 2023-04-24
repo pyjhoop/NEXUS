@@ -47,16 +47,17 @@ public class ChattingController {
 	public String selectRoomDetail(ChatRoom cr,ChatUser cu , HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNo = loginUser.getUserNo();
+		int yourNo = cu.getUserNo();
 		cu.setUserNo(userNo);
-		cu.setRoomNo(cr.getRoomNo());
 		int result = cService.readMessage(cu);
 		ArrayList<ChatMessage> cList = cService.selectMessage(cr.getRoomNo()); 
 		modularity(session, model);
+		model.addAttribute("yourNo", yourNo);
+		model.addAttribute("cu",cu);
 		model.addAttribute("cList",cList);
 		model.addAttribute("cr", cr);
 		model.addAttribute("uno", userNo);
 		model.addAttribute("rno", cr.getRoomNo());
-		model.addAttribute("cu",cu);
 		return "chatting/chattingRoomDetail";
 	}
 	
@@ -76,11 +77,10 @@ public class ChattingController {
 	public void modularity(HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNo = loginUser.getUserNo();
-		System.out.println(userNo);
 		ArrayList<ChatRoom> rList = cService.selectRoom(userNo);
 		ArrayList<ChatUser> uList = cService.selectRoomUser(userNo);
 		ArrayList<ChatUser> cuList = cService.selectUnreadMessage(userNo);
-		System.out.println(cuList);
+		System.out.println(uList);
 		model.addAttribute("cuList", cuList);
 		model.addAttribute("rList",rList);
 		model.addAttribute("uList",uList);
@@ -134,6 +134,13 @@ public class ChattingController {
 		ArrayList<ChatRoom> list = cService.updateRoom(userNo);
 		
 		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping("exitRoom.ih")
+	public String hideRoom(ChatUser cu){
+		int hideRoom = cService.hideRoom(cu);
+		
+		return "redirect:/selectChat.ih";
 	}
 	
 	public String saveFile(MultipartFile upfile, HttpSession session) {

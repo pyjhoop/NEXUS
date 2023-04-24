@@ -44,4 +44,12 @@ public interface ChatService {
 	 Member selectMember(int userNo);
 	 
 	 void firstEntry(Member m);
+	 
+	 int exitRoom(ChatMessage chatMessage);
+	 
+	 int hideRoom(ChatUser cu);
+	 
+	 ChatUser selectHideUser(ChatMessage chatMessage); 
+	 
+	 int displayRoom(ChatMessage chatMessage);
 }

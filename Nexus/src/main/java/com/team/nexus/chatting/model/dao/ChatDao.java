@@ -77,4 +77,20 @@ public class ChatDao {
 	public void firstEntry(SqlSessionTemplate sqlSession,Member m) {
 		sqlSession.insert("chattingMapper.firstEntry", m);
 	}
+	
+	public int exitRoom(SqlSessionTemplate sqlSession,ChatMessage chatMessage) {
+		return sqlSession.delete("chattingMapper.exitRoom", chatMessage);
+	}
+	
+	public int hideRoom(SqlSessionTemplate sqlSession, ChatUser cu) {
+		return sqlSession.update("chattingMapper.hideRoom", cu);
+	}
+	
+	public ChatUser selectHideUser(SqlSessionTemplate sqlSession,ChatMessage chatMessage) {
+		return sqlSession.selectOne("chattingMapper.selectHideUser", chatMessage);
+	}
+	
+	public int displayRoom(SqlSessionTemplate sqlSession,ChatMessage chatMessage) {
+		return sqlSession.update("chattingMapper.displayRoom", chatMessage);
+	}
 }

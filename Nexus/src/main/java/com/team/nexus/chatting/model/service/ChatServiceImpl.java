@@ -124,6 +124,26 @@ public class ChatServiceImpl implements ChatService{
 		
 	}
 
+	@Override
+	public int exitRoom(ChatMessage chatMessage) {
+		return cDao.exitRoom(sqlSession,chatMessage);
+	}
+
+	@Override
+	public int hideRoom(ChatUser cu) {
+		return cDao.hideRoom(sqlSession, cu);
+	}
+
+	@Override
+	public ChatUser selectHideUser(ChatMessage chatMessage) {
+		return cDao.selectHideUser(sqlSession,chatMessage);
+	}
+
+	@Override
+	public int displayRoom(ChatMessage chatMessage) {
+		return cDao.displayRoom(sqlSession,chatMessage);
+	}
+
 	
 
 }

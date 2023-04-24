@@ -204,8 +204,8 @@
 	<hr class="m-0">
 	</c:if>
 	<c:forEach var="u" items="${uList}">
-	<c:if test="${ r.roomNo eq u.roomNo}">
-	<a href="roomDetail.ih?roomNo=${r.roomNo }&userName=${u.userName}&profile=${u.profile}" class="card-body d-flex">
+	<c:if test="${ r.roomNo eq u.roomNo && r.numberParticipants <= 2 }">
+	<a href="roomDetail.ih?roomNo=${r.roomNo }&userName=${u.userName}&profile=${u.profile}&userNo=${u.userNo}" class="card-body d-flex">
 	<div class="media-img-wrap">
 	<div class="avatar avatar-away">
 	<img src="${ u.profile }" alt="" class="avatar-img rounded-circle">
