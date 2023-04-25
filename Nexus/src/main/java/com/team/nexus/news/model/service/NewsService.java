@@ -25,8 +25,8 @@ public class NewsService {
 		return newsDao.selectList(sqlsession);
 	}
 
-	public ArrayList<News> selectList(int page) {
-		return newsDao.selectList(sqlsession, page);
+	public ArrayList<News> selectList(int page, String state) {
+		return newsDao.selectList(sqlsession, page, state);
 	}
 
 	public ArrayList<NewsReply> selectrList(int nNo) {

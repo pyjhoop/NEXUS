@@ -24,45 +24,60 @@
 		<result column="profile" property="profile"/>
 	</resultMap>
 	
+	<!-- 1. new일때 , popular일때, null일 때 그외 -->
 	<select id="selectList" resultMap="newsResultSet">
 		select * from(
 			select
-			         news_no
-			       , user_name 
-			       , news_title
-			       , DBMS_LOB.SUBSTR(news_content, 1000, 1) as "news_content"
-                   , to_char(create_date,'YYYY-MM-DD') "CREATE_DATE"
+			         n.news_no
+			       , m.user_name 
+			       , n.news_title
+			       , DBMS_LOB.SUBSTR(n.news_content, 1000, 1) as "news_content"
+                   , to_char(n.create_date,'YYYY-MM-DD') "CREATE_DATE"
 			       , thumbnail
 			       , profile
                    , count(CASE WHEN z.status = 'Y' THEN 1 ELSE NULL END) as "likeCount"
 			 from tb_news n
-			 join tb_member using(user_no)
-             left join tb_news_zzim z using(news_no)
+			 join tb_member m on(n.user_no = m.user_no)
+             left join tb_news_zzim z on(n.news_no = z.news_no)
              where n.status='Y'
-             <if test="state == 'my'">
-             	and 
+             <if test='text != "new" and text != "popular" and text !=null'>
+	             and m.user_no = #{state}             
              </if>
-             group by news_no, user_name, news_title, DBMS_LOB.SUBSTR(news_content, 1000, 1),to_char(create_date,'YYYY-MM-DD'), thumbnail, profile
-            order by news_no desc)
+             group by n.news_no, m.user_name, n.news_title, DBMS_LOB.SUBSTR(news_content, 1000, 1),to_char(create_date,'YYYY-MM-DD'), thumbnail, profile
+             <if test='state == "new" or state == null or state == "my"'>
+	             order by news_no desc
+             </if>
+             <if test='state == "popular"'>
+             	order by 8 desc
+             </if>
+            )
 			 where rownum BETWEEN 1 and 12
 	</select>
 	
 	<select id="ajaxSelectList" resultMap="newsResultSet">
 			select
-			         news_no
-			       , user_name 
-			       , news_title
-			       , DBMS_LOB.SUBSTR(news_content, 1000, 1) as "news_content"
-                   , to_char(create_date,'YYYY-MM-DD') "CREATE_DATE"
+			         n.news_no
+			       , m.user_name 
+			       , n.news_title
+			       , DBMS_LOB.SUBSTR(n.news_content, 1000, 1) as "news_content"
+                   , to_char(n.create_date,'YYYY-MM-DD') "CREATE_DATE"
 			       , thumbnail
 			       , profile
                    , count(CASE WHEN z.status = 'Y' THEN 1 ELSE NULL END) as "likeCount"
 			 from tb_news n
-			 join tb_member using(user_no)
-             left join tb_news_zzim z using(news_no)
+			 join tb_member m on(n.user_no = m.user_no)
+             left join tb_news_zzim z on(n.news_no = z.news_no)
              where n.status='Y'
-             group by news_no, user_name, news_title, DBMS_LOB.SUBSTR(news_content, 1000, 1),to_char(create_date,'YYYY-MM-DD'), thumbnail, profile
-            order by news_no desc
+             <if test='text != "new" and text != "popular" and text !=null'>
+	             and m.user_no = #{state}             
+             </if>
+             group by n.news_no, m.user_name, n.news_title, DBMS_LOB.SUBSTR(news_content, 1000, 1),to_char(create_date,'YYYY-MM-DD'), thumbnail, profile
+             <if test='state == "new" or state == null or state == "my"'>
+	             order by news_no desc
+             </if>
+             <if test='state == "popular"'>
+             	order by 8 desc
+             </if>
 			 
 	</select>
 	

@@ -57,9 +57,11 @@ public class NewsController {
 	
 	@ResponseBody
 	@RequestMapping(value = "ajaxNewsList.p", produces = "aplication/json; charset=utf-8")
-	public String ajaxNewsList(int page) {
+	public String ajaxNewsList(int page, HttpSession session) {
 		
-		ArrayList<News> list = newsService.selectList(page);
+		String state = (String)session.getAttribute("state");
+		
+		ArrayList<News> list = newsService.selectList(page,state);
 		
 		return new Gson().toJson(list);
 	}
@@ -254,15 +256,21 @@ public class NewsController {
 		return total+"";
 	}
 	
-	@RequestMapping("ajaxRepage.p")
+	@RequestMapping(value="ajaxRepage.p", produces = "application/json; cahrset=utf-8")
 	@ResponseBody
 	public String ajaxRepage(String state, HttpSession session) {
 		
 		if(state.equals("my")) {
-			state = ((Member)session.getAttribute("loginUser")).getUserNo();
+			state = ((Member)session.getAttribute("loginUser")).getUserNo()+"";
 		}
 		
-		ArrayList<News> list = newsService.ajaxRepage(state); 
+		session.setAttribute("state", state);
+		
+		ArrayList<News> list = newsService.ajaxRepage(state);
+		
+		return new Gson().toJson(list);
 	}
+	
+	
 	
 }

@@ -21,12 +21,12 @@ public class NewsDao {
 		return (ArrayList)sqlsession.selectList("newsMapper.selectList");
 	}
 
-	public ArrayList<News> selectList(SqlSessionTemplate sqlsession, int page) {
+	public ArrayList<News> selectList(SqlSessionTemplate sqlsession, int page, String state) {
 		int offset = (page-1)*12;
 		int limit = 12;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlsession.selectList("newsMapper.ajaxSelectList", null, rowBounds);
+		return (ArrayList)sqlsession.selectList("newsMapper.ajaxSelectList", state, rowBounds);
 	}
 
 	public ArrayList<NewsReply> selectrList(SqlSessionTemplate sqlsession, int nNo) {
