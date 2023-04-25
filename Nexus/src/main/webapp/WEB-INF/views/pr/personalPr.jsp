@@ -536,7 +536,7 @@ hr{
 </button>
 </div>
 
-<div id="shell" style="margin-left: 105px; display: block; height: 1200px;">
+<div id="shell" style="margin-left: 50px; display: block; height: 1200px; width: 100%;">
 
 
 <c:forEach var="p" items="${personalPrList }">
@@ -559,35 +559,7 @@ hr{
 </div>
 
 
-	<ul class="pagination" style="margin-left: 570px; margin-top: 30px;">
-                            <li class="page-item first">
-                              <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
-                            </li>
-                            <li class="page-item prev">
-                              <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-                            </li>
-                            <li class="page-item">
-                              <a class="page-link" href="javascript:void(0);">1</a>
-                            </li>
-                            <li class="page-item">
-                              <a class="page-link" href="javascript:void(0);">2</a>
-                            </li>
-                            <li class="page-item active">
-                              <a class="page-link" href="javascript:void(0);">3</a>
-                            </li>
-                            <li class="page-item">
-                              <a class="page-link" href="javascript:void(0);">4</a>
-                            </li>
-                            <li class="page-item">
-                              <a class="page-link" href="javascript:void(0);">5</a>
-                            </li>
-                            <li class="page-item next">
-                              <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-                            </li>
-                            <li class="page-item last">
-                              <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
-                            </li>
-                          </ul>
+	
 </div>
 
 </div> <!-- main body div -->
