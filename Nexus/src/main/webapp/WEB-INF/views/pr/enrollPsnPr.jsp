@@ -194,6 +194,7 @@ select {
                    <multi-input id="multiInputId">
 			      <input id="stackInputCard" list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
 			      <datalist id="speakers">
+			      <!-- stackInputCard에 "선택안함"이 있을경우 다른 옵션들 비활성화  -->
 			      	<option value="선택안함" id="noStack"></option>
 			        <option value="AWS" class="yesStack"></option>
 			        <option value="Django" class="yesStack"></option>
