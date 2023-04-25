@@ -1,10 +1,22 @@
 const getButton = document.getElementById('get1');
-const multiInput = document.querySelector('multi-input'); 
+
+const test12 = document.getElementById('test12'); 
+
 const values = document.querySelector('#values'); 
 
 getButton.onclick = () => {
   if (multiInput.getValues().length > 0) {
-  	console.log("digh");
+  		getButton.innerText="저장되었습니다";
+  	    values.textContent = `${multiInput.getValues().join(',')}`;
+  } else {
+    values.textContent = 'Got noon123e  :`^(.'; 
+  }
+}
+
+test12.onclick = () => {
+  if (multiInput.getValues().length > 0) {
+  	
+  	
   	    values.textContent = `${multiInput.getValues().join(',')}`;
   } else {
     values.textContent = 'Got noon123e  :`^(.'; 

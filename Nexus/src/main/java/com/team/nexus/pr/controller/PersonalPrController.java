@@ -44,16 +44,24 @@ public class PersonalPrController {
 		int listCount = pService.selectListCount();
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
-		ArrayList<PersonalPr> list = pService.selectPersonalPr(pi);
+		ArrayList<PersonalPr> personalPrList = pService.selectPersonalPr(pi);
 		
 		
-		mv.addObject("pi", pi).addObject("list", list).setViewName("pr/personalPr");
+		
+		mv.addObject("pi", pi).addObject("personalPrList", personalPrList).setViewName("pr/personalPr");
 		
 		
 		return mv;
 		
 		/*return "pr/personalPr";*/
 	}
+	
+	
+	/*
+	 * @RequestMapping("insertPersonalPr") public void insertPersonalPr() {
+	 * 
+	 * }
+	 */
 	
 	
 	

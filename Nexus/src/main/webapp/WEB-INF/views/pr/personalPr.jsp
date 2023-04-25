@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
 </head>
 <style>
 #mainBody{
-	height: 2500px; 
+	height: 1500px; 
 	width: 100%;
 	margin:auto;
 	margin-top: 10px !important;
@@ -366,6 +367,10 @@ hr{
 #newBtn{
 	float: right;
 }
+.pagination{
+	width: 100%;
+	text-align: center;
+}
 </style>
 <body>
 <jsp:include page="../common/template.jsp"/>
@@ -531,219 +536,58 @@ hr{
 </button>
 </div>
 
-<div id="shell" style="margin-left: 105px; display: block; height: 2100px;">
- <div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    <i class='bx bx-bookmark' style="float: right; "></i>
-  </div>
+<div id="shell" style="margin-left: 105px; display: block; height: 1200px;">
+
+
+<c:forEach var="p" items="${personalPrList }">
+	 <div class="card" style="width: 16.5rem;">
+	  <div class="card-body" style="padding-left: 10px;" >
+	    <p class="card-category" style="float:left; width: 50%;">${p.createDate }</p>
+	    <p class="card-category" style="float: right;">${p.category }</p>
+	    <h5 class="card-title" style="margin-right: 0px; width: 235px; height: 39.794px;"><b>${p.psnPrTitle }</b></h5>
+	    <p class="card-text" style="float: left; font-size: 13px; width: 240px; height: 99.375px;">${p.psnPrContent }</p>
+	    <!-- <p>아이디 들어갈자리</p> -->
+	    <span style="margin-bottom: 5px;"><%-- ${p.userNo } --%>아이디 들어갈 자리</span>
+	    <i class='bx bx-bookmark' style="float: right; "></i>
+	  </div>
 </div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    <i class='bx bx-bookmark' style="float: right; "></i>
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <p class="card-category" style="float:left; width: 50%;">작성일자,시간</p>
-    <p class="card-category" style="float: right;">모집분류</p>
-    <h5 class="card-title"><b>제목입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라소개입니다.아라라라라라라라</b></h5>
-    <p class="card-text" style="float: left; font-size: 13px;">소개글 일부 들어갈자리.아라라라라라라라.아라라라라라라라.아라라라라라라라.아라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라v라라라라라라라라라라라라라라라라라라라라라라라라</p>
-    <!-- <p>아이디 들어갈자리</p> -->
-    <span style="margin-bottom: 5px;">아이디 들어갈자리</span>
-    
-  </div>
-</div>
+</c:forEach>
+
+
+
 
 </div>
 
-<div id="page" style="width: 100%; height:100px; border: 1px solid black; margin-bottom: 300px;">
+
+	<ul class="pagination" style="margin-left: 570px; margin-top: 30px;">
+                            <li class="page-item first">
+                              <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                            </li>
+                            <li class="page-item prev">
+                              <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" href="javascript:void(0);">1</a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" href="javascript:void(0);">2</a>
+                            </li>
+                            <li class="page-item active">
+                              <a class="page-link" href="javascript:void(0);">3</a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" href="javascript:void(0);">4</a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" href="javascript:void(0);">5</a>
+                            </li>
+                            <li class="page-item next">
+                              <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                            </li>
+                            <li class="page-item last">
+                              <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                            </li>
+                          </ul>
 </div>
 
 </div> <!-- main body div -->

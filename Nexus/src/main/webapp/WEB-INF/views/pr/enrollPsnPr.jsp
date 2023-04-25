@@ -127,6 +127,21 @@ select {
     /* appearance:none;
     background:url('../img/icon_select_arrow.png') no-repeat right 1px center; */
 }
+ multi-input input::-webkit-calendar-picker-indicator {
+      display: inline;
+    }
+    /* NB use of pointer-events to only allow events from the × icon */
+    multi-input div.item::after {
+      color: black;
+      content: '×';
+      cursor: pointer;
+      font-size: 18px;
+      pointer-events: auto;
+      position: absolute;
+      right: 5px;
+      top: -1px;
+      float: right;
+    }
 </style>
 </head>
 <body>
@@ -176,46 +191,50 @@ select {
                    <label ><b>기술 스택</b></label>  
  					
                    <div class="input-group" style="border: none; box-shadow: none;">
-                   <multi-input>
+                   <multi-input id="multiInputId">
 			      <input id="stackInputCard" list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
 			      <datalist id="speakers">
-			        <option value="AWS"></option>
-			        <option value="Django"></option>
-			        <option value="Docker"></option>
-			        <option value="Express"></option>
-			        <option value="Figma"></option>
-			        <option value="Firebase"></option>
-			        <option value="Flutter"></option>
-			        <option value="Git"></option>
-			        <option value="Go"></option>
-			        <option value="GraphQL"></option>
-			        <option value="Java"></option>
-			        <option value="JavaScript"></option>
-			        <option value="Kotlin"></option>
-			        <option value="Kubernetes"></option>
-			        <option value="MongoDB"></option>
-			        <option value="MySQL"></option>
-			        <option value="Nestjs"></option>
-			        <option value="Nextjs"></option>
-			        <option value="NodeJs"></option>
-			        <option value="php"></option>
-			        <option value="Python"></option>
-			        <option value="TypeScript"></option>
-			        <option value="React"></option>
-			        <option value="ReactNative"></option>
-			        <option value="Spring"></option>
-			        <option value="Svelte"></option>
-			        <option value="Swift"></option>
-			        <option value="Unity"></option>
-			        <option value="Vue"></option>
-			        <option value="Zeplin"></option>
-			        <option value="Zest"></option>
+			      	<option value="선택안함" id="noStack"></option>
+			        <option value="AWS" class="yesStack"></option>
+			        <option value="Django" class="yesStack"></option>
+			        <option value="Docker" class="yesStack"></option>
+			        <option value="Express" class="yesStack"></option>
+			        <option value="Figma" class="yesStack"></option>
+			        <option value="Firebase" class="yesStack"></option>
+			        <option value="Flutter" class="yesStack"></option>
+			        <option value="Git" class="yesStack"></option>
+			        <option value="Go" class="yesStack"></option>
+			        <option value="GraphQL" class="yesStack"></option>
+			        <option value="Java" class="yesStack"></option>
+			        <option value="JavaScript" class="yesStack"></option>
+			        <option value="Kotlin" class="yesStack"></option>
+			        <option value="Kubernetes" class="yesStack"></option>
+			        <option value="MongoDB" class="yesStack"></option>
+			        <option value="MySQL" class="yesStack"></option>
+			        <option value="Nestjs" class="yesStack"></option>
+			        <option value="Nextjs" class="yesStack"></option>
+			        <option value="NodeJs" class="yesStack"></option>
+			        <option value="php"class="yesStack"></option>
+			        <option value="Python" class="yesStack"></option>
+			        <option value="TypeScript" class="yesStack"></option>
+			        <option value="React" class="yesStack"></option>
+			        <option value="ReactNative" class="yesStack"></option>
+			        <option value="Spring" class="yesStack"></option>
+			        <option value="Svelte" class="yesStack"></option>
+			        <option value="Swift" class="yesStack"></option>
+			        <option value="Unity" class="yesStack"></option>
+			        <option value="Vue" class="yesStack"></option>
+			        <option value="Zeplin" class="yesStack"></option>
+			        <option value="Zest" class="yesStack"></option>
 			      </datalist>
 			    </multi-input>
-                       <button id="get1" type="button">Get</button>
+			    		<button type="button" class="btn btn-outline-success" id="get1" style="height: 55px;">선택한 기술스택 저장</button> <br>
+                        <button type="button" class="btn btn-outline-success" id="test12" style="height: 55px;">get테스트</button>
                        </div>
-                       <p id="values" "></p>
+                       <p id="values" ></p>
                        <script src="${pageContext.request.contextPath}/resources/js/multi-input.js"></script>
+                       
+                  
 						
                        
         <!-- summerNote 들어갈 자리 -->
@@ -247,6 +266,7 @@ select {
       	  $('#prContent').summernote();
       	});
       	</script>
+      	
       	 <input type="hidden" name="prNo", value="${personalPr.prNo }">
       	  <input type="hidden" name="userNo" value="${loginUser.userNo}">
           <input type="hidden" name="prContent" id="prContent">
@@ -262,14 +282,19 @@ select {
     </c:if>
      
 		
-    </div>
-    
         <script src="${pageContext.request.contextPath}/resources/js/script1.js"></script>
+        
+       
     
-     <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center; margin-top: 80px">
-      	<button type="submit" id="submitButton" class="btn btn-outline-primary" style="font-size: 20px" onclick="return confirm();"><b>등록하기</b></button> &nbsp;
+     <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center; margin-top: 10px">
+      	<button type="submit" id="get1" class="btn btn-outline-primary" style="font-size: 20px" onclick="return confirm();"><b>등록하기</b></button> &nbsp;
 		<button type="submit" class="btn btn-outline-secondary" style="font-size: 20px"><b>취소</b></button>
       </div>
+      
+     
+      
+    </div>
+    
       
     </div>
     </div>

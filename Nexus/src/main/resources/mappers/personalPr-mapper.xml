@@ -11,7 +11,7 @@
 		<result column="PSN_PR_TITLE" property="psnPrTitle"/>
 		<result column="PSN_PR_CONTACT" property="psnPrContact"/>
 		<result column="user_no" property="userNo"/>
-		<result column="CRAETE_DATE" property="createDate"/>
+		<result column="CREATE_DATE" property="createDate"/>
 	</resultMap>
 	
 	<select id="selectListCount" resultType="_int">
@@ -28,7 +28,7 @@
 			,PSN_PR_AVLPRD
 			,PSN_PR_TITLE
 			,PSN_PR_CONTACT
-			,CREATE_DATE
+			,to_char(CREATE_DATE) AS "CREATE_DATE"
 			,USER_NO
 			,CATEGORY
 			FROM PSN_PR_BOARD
