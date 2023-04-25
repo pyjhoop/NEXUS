@@ -255,15 +255,32 @@ public class IssueController {
 
 	        // Retrieve assignees array
 	        JsonArray assigneesArray = issueJson.getAsJsonArray("assignees");
-	        List<String> assignees = new ArrayList<>();
-	        List<String> assigneeProfiles = new ArrayList<>(); // 이슈 담당자 프로필
+	        
+	        ArrayList<Member> list = new ArrayList<Member>();
+	        
+	        
 	        if (assigneesArray != null) {
 	            for (JsonElement assigneeElement : assigneesArray) {
 	                JsonObject assigneeObject = assigneeElement.getAsJsonObject();
-	                String assigneeLogin = assigneeObject.get("login").getAsString();
-	                assignees.add(assigneeLogin);
-	                assigneeProfiles.add(assigneeObject.get("avatar_url").getAsString());
+	                
+	                String userName = assigneeObject.get("login").getAsString();
+	                String assigneeProfiles = assigneeObject.get("avatar_url").getAsString();
+	                
+	                Member m = new Member();
+	                
+	                m.setUserName(userName);
+	                m.setProfile(assigneeProfiles);
+	                
+	                list.add(m);
+	                
+	               
+	                
+//	                String assigneeLogin = assigneeObject.get("login").getAsString();
+//	                assignees.add(assigneeLogin);
+//	                assigneeProfiles.add(assigneeObject.get("avatar_url").getAsString());
 	            }
+	            
+	            System.out.println(list);
 	        }
 
 
@@ -286,15 +303,13 @@ public class IssueController {
 	        model.addAttribute("title", title);
 	        model.addAttribute("body", body);
 	        model.addAttribute("state", state);
-	        model.addAttribute("assignees", assignees);
+//	        model.addAttribute("assignees", assignees);
 	        model.addAttribute("labels", labels);
 	        model.addAttribute("issueManagerName", issueManagerName);
-	        model.addAttribute("assigneeProfiles", assigneeProfiles);
+//	        model.addAttribute("assigneeProfiles", assigneeProfiles);
 	        
 	        
-	        System.out.println(assignees + "@@@@@@@");
-	        System.out.println("###########"+assigneeProfiles);
-
+	 
 	        return "issue/issueDetail";
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -314,21 +329,21 @@ public class IssueController {
 	
 	
 	
-	@RequestMapping(value="")
-	public String updateIssue() {
-		// 이슈 상태 변경을 위한 JSON 데이터 생성
-		JSONObject json = new JSONObject();
-		json.put("state", "closed");
-
-		// GitHub API에 PATCH 요청 보내기
-		String apiUrl = "https://api.github.com/repos/pyjhoop/NEXUS/issues/" + ino;
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer " + token);
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		HttpEntity<String> requestEntity = new HttpEntity<>(json.toString(), headers);
-		ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.PATCH, requestEntity, String.class);
-
-	}
+//	@RequestMapping(value="")
+//	public String updateIssue() {
+//		// 이슈 상태 변경을 위한 JSON 데이터 생성
+//		JSONObject json = new JSONObject();
+//		json.put("state", "closed");
+//
+//		// GitHub API에 PATCH 요청 보내기
+//		String apiUrl = "https://api.github.com/repos/pyjhoop/NEXUS/issues/" + ino;
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.set("Authorization", "Bearer " + token);
+//		headers.setContentType(MediaType.APPLICATION_JSON);
+//		HttpEntity<String> requestEntity = new HttpEntity<>(json.toString(), headers);
+//		ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.PATCH, requestEntity, String.class);
+//
+//	}
 	
 	
 }
