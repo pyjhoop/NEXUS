@@ -82,5 +82,9 @@ public class NewsService {
 		return newsDao.upateNews(sqlsession, n);
 	}
 
+	public ArrayList<News> ajaxRepage(String state) {
+		return newsDao.ajaxRepage(sqlsession, state);
+	}
+
 
 }

@@ -39,6 +39,9 @@
 			 join tb_member using(user_no)
              left join tb_news_zzim z using(news_no)
              where n.status='Y'
+             <if test="state == 'my'">
+             	and 
+             </if>
              group by news_no, user_name, news_title, DBMS_LOB.SUBSTR(news_content, 1000, 1),to_char(create_date,'YYYY-MM-DD'), thumbnail, profile
             order by news_no desc)
 			 where rownum BETWEEN 1 and 12

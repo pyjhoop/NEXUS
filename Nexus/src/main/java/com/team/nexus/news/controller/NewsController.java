@@ -123,12 +123,18 @@ public class NewsController {
 	
 	@PostMapping("insert.n")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> insertNewsImg(@RequestParam("images") MultipartFile multi, HttpSession session) {
+	public ResponseEntity<Map<String, Object>> insertNewsImg(@RequestParam("images") MultipartFile multi, HttpSession session) throws IOException {
 		String changeName = "";
 		String finalName = "";
 		 Map<String, Object> response = new HashMap<>();
 		if(!multi.getOriginalFilename().equals("")) {
 			String originName = multi.getOriginalFilename();
+			
+	        
+			
+			
+			// 바디 추가해야함
+			
 			
 			// 년월일시분초
 			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -147,7 +153,6 @@ public class NewsController {
 			System.out.println(finalName);
 			response.put("url", finalName);
 			
-		
 			//서버에 파일 업로드
 			try {
 				multi.transferTo(new File(savePath+changeName));
@@ -247,6 +252,17 @@ public class NewsController {
 		int total = newsService.totalLikeCount(z);
 		
 		return total+"";
+	}
+	
+	@RequestMapping("ajaxRepage.p")
+	@ResponseBody
+	public String ajaxRepage(String state, HttpSession session) {
+		
+		if(state.equals("my")) {
+			state = ((Member)session.getAttribute("loginUser")).getUserNo();
+		}
+		
+		ArrayList<News> list = newsService.ajaxRepage(state); 
 	}
 	
 }

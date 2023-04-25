@@ -53,3 +53,24 @@
 #observer{
 	visibility: hidden;
 }
+
+.new:hover{
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.popular:hover{
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+.my:hover{
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.popular,.my,.new{
+    font-weight: 900;
+    font-size: 1.3rem;
+}
+
+
