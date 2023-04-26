@@ -13,12 +13,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
+import org.springframework.web.reactive.function.client.WebClient;
 import com.team.nexus.member.model.vo.Member;
 import com.team.nexus.repository.model.dao.RepositoryDao;
 import com.team.nexus.repository.model.vo.Repositories;
-import com.vladsch.flexmark.html.HtmlRenderer;
-import com.vladsch.flexmark.parser.Parser;
+import com.team.nexus.repository.model.vo.Test;
+
+import reactor.core.publisher.Mono;
+
 
 @Service
 public class RepositoryService {
@@ -73,6 +75,38 @@ public class RepositoryService {
 		
 	}
 	
+	public Mono<String> test(String path, HttpSession session) {
+		
+		String token = ((Member)session.getAttribute("loginUser")).getToken();
+		
+
+		WebClient client = WebClient.builder()
+		        .baseUrl("https://api.github.com")
+		        .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+		        .defaultHeader(HttpHeaders.ACCEPT, "application/vnd.github+json")
+		        .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+		        .build();
+
+		String url = "/repos/" + path;
+
+		Mono<String> responseMono = client.get()
+		        .uri(url)
+		        .retrieve()
+		        .bodyToMono(String.class);
+		System.out.println("=======================");
+		
+		Test t = new Test();
+		responseMono.subscribe(response -> {
+			t.setStr(response);
+		    System.out.println(response); // Print the response to the console
+		    // Or, return the response from the method
+		    
+		});
+		
+		return responseMono;
+		
+	}
+	
 	public String getGitContentsByGet1(String path, HttpSession session) {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -120,7 +154,7 @@ public class RepositoryService {
 		
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
 		
-		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, entity, String.class);
 		
 		return response.getBody();
 	}

@@ -45,10 +45,10 @@
             <div class="col-lg-8 col-md-8 col-sm-8">
                 <div class="card mb-5">
                     <div class="row mt-3 mb-3" style="width: 80%; margin: auto;">
-                        <div class="col-lg-7 col-md-7 col-sm-7">
+                        <div class="col-lg-7 col-md-7 col-sm-7" style="display: flex;">
                             <img src="resources/image/github_repo.png" id="repoImg" alt="">
                             <br>
-                            <span id="repoPath">${repo.userName }/${repo.repoName }</span>
+                            <!-- <span id="repoPath">${repo.userName }/${repo.repoName }</span> -->
                         </div>
                         <div class="col-lg-5 col-md-5 col-sm-5">
                             <br>
@@ -68,6 +68,7 @@
                         </div>
 
                     </div>
+                    <span id="repoPath">${repo.userName }/${repo.repoName }</span>
                 </div>
 
                 <input type="hidden" name="hiddenpath" id="hiddenpath" value="">

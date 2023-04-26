@@ -1,10 +1,12 @@
 #repoImg{
-    width: 60%;
+    width: 190px;
+    height: 130px;
+    vertical-align: middle;
 }
 
 #repoPath{
     font-size: 2rem;
-    margin-left: 30px;
+    margin-left: 110px;
     font-weight: bold;
     color: black;
 }
