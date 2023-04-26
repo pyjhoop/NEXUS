@@ -31,6 +31,8 @@
 	<filter> 
 	    <filter-name>encodingFilter</filter-name> 
 	    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> 
+	    
+	    <async-supported>true</async-supported>
 	    <init-param> 
 	       <param-name>encoding</param-name> 
 	       <param-value>UTF-8</param-value> 
@@ -44,6 +46,9 @@
 	 <filter-mapping> 
 	    <filter-name>encodingFilter</filter-name> 
 	    <url-pattern>/*</url-pattern> 
+	    <dispatcher>REQUEST</dispatcher>
+	    
+	    <dispatcher>ASYNC</dispatcher>
 	 </filter-mapping> 
 
 	<servlet-mapping>

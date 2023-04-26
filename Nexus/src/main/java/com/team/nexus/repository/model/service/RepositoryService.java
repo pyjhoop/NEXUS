@@ -97,15 +97,15 @@ public class RepositoryService {
 		        .uri(url)
 		        .retrieve()
 		        .bodyToMono(String.class);
-		System.out.println("=======================");
-		
-		Test t = new Test();
-		responseMono.subscribe(response -> {
-			t.setStr(response);
-		    System.out.println(response); // Print the response to the console
-		    // Or, return the response from the method
-		    
-		});
+//		System.out.println("=======================");
+//		
+//		Test t = new Test();
+//		responseMono.subscribe(response -> {
+//			t.setStr(response);
+//		    System.out.println(response); // Print the response to the console
+//		    // Or, return the response from the method
+//		    
+//		});
 		
 		return responseMono;
 		
