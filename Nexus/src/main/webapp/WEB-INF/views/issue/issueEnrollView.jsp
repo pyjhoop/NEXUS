@@ -27,7 +27,6 @@
 
 
 
-
 </head>
 
 <body>
@@ -77,9 +76,9 @@
 
 			<select id="defaultSelect" class="form-select" name="assignees">
 				<option>이슈 담당자</option>
-				<option value="libiho" type="checkbox">One</option>
-				<option value="pyjhoop" type="checkbox">Two</option>
-				<option value="kanginho1" type="checkbox">Three</option>
+				<c:forEach var="r" items="${RepoMembers }">
+					<option value="${r.userName }">${r.userName}</option>
+				</c:forEach>
 			</select>
 		</div>
 
@@ -123,8 +122,32 @@
 
 
 
-	</div>
-	<!-- editor-label -->
+		<div id="issueEditArea" class="menulist col-md-3">
+			<!-- 	        이슈 담당자 menubox 시작 -->
+			<div class="menubox card">
+				<div class="menubox-header dropdown">
+					<button class="btn dropdown-toggle" type="button" id="issue-assignee-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span>담당자</span> <i class="icon-settings menu-icon"></i>
+
+					</button>
+					<div class="assigneeboxes dropdown-menu" aria-labelledby="issue-assignee-btn">
+						<ul>
+						<!-- 
+							<c:forEach var="r" items="${RepoMembers }">
+								<li><input type="checkbox" value="${r.userName }">${r.userName}</li>
+							</c:forEach>
+ -->
+						</ul>
+					</div>
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- editor-label -->
 
 	</div>
 
@@ -147,6 +170,8 @@
     $("input[name='body']").val(markdown);
 });
 
+            
+            
         </script>
 
 </body>

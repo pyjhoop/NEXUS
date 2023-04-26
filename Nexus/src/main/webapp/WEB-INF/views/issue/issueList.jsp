@@ -36,6 +36,8 @@
 
 <style>
 
+
+
 </style>
 
 
@@ -84,7 +86,7 @@
 							<tr>
 								<form action="" method="get" align="center">
 									<th>
-										<button type="submit" name="state" value="open" class="btn btn-outline-success btn-sm">진행 중</button>
+										<button type="submit" name="state" value="open" class="btn btn-outline-success btn-sm">진행 중 </button>
 									</th>
 									<th>
 										<button type="submit" name="state" value="closed" class="btn btn-outline-secondary btn-sm">종료</button>
@@ -252,6 +254,12 @@
 					});
 
 				
+				
+			
+
+
+			
+
 				
 			</script>
 
