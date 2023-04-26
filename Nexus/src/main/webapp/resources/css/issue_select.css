@@ -9,6 +9,11 @@
   margin-right : 12px;
 }
 
+.btn-box a {
+  float: right;
+  margin-right : 12px;
+}
+
 /* 글자 설정 */
 
 a{

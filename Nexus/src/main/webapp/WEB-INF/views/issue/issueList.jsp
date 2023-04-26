@@ -101,12 +101,11 @@
 									<form action="" method="get" align="center">
 										<select class="form-select form-select-sm" aria-label="Default select example">
 											<option selected>라벨</option>
-											<option value="1">버그</option>
-											<option value="2">문서작성</option>
-											<option value="3">베포 관려</option>
-											<option value="4">기능</option>
-											<option value="5">개발 환경</option>
-											<option value="6">기타 등등</option>
+											
+											<c:forEach var="l" items="${lList }">
+											<option value="${l.name }">${l.name }</option>
+											</c:forEach>
+										
 										</select>
 									</form>
 								</th>
@@ -116,12 +115,9 @@
 									<form action="" method="get" align="center">
 										<select class="form-select form-select-sm" aria-label="Default select example">
 											<option selected>작성자</option>
-											<!-- 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? ### -->
-											<option value="mini">혜민</option>
-											<option value="jun">연준</option>
-											<option value="ho">인호</option>
-											<option value="hyeon">철현</option>
-											<option value="jun">준호</option>
+											<c:forEach var="r" items="${RepoMembers }">
+											<option value="${r.userName }">${r.userName}</option>
+											</c:forEach>
 										</select>
 									</form>
 								</th>
@@ -130,12 +126,10 @@
 									<form action="" method="get" align="center">
 										<select class="form-select form-select-sm" aria-label="Default select example">
 											<option selected>담당자</option>
-											<!-- ### 프로젝트 사람 반복문으로 불러오기 + 값으로 그사람 아이디 넘기고 정렬? -->
-											<option value="mini">혜민</option>
-											<option value="jun">연준</option>
-											<option value="ho">인호</option>
-											<option value="hyeon">철현</option>
-											<option value="jun">준호</option>
+										<c:forEach var="r" items="${RepoMembers }">
+											<option value="${r.userName }">${r.userName}</option>
+										
+											</c:forEach>
 										</select>
 									</form>
 								</th>

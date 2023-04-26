@@ -1,3 +1,4 @@
+/*
 $(function () {
   // Initialize the profile list to be hidden
   $(".profiles-list").hide();
@@ -39,6 +40,8 @@ $(function () {
     // TODO: Submit the issue form
   });
 });
+
+*/
 
 // ------------------------- 멀티 input
 

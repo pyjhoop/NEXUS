@@ -6,9 +6,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/jquery/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="js/comboTreePlugin.js"></script>
-    <script type="text/javascript" src="js/icontains.js"></script>
+<script type="text/javascript" src="js/jquery/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/comboTreePlugin.js"></script>
+<script type="text/javascript" src="js/icontains.js"></script>
 <style>
 </style>
 
@@ -41,20 +41,21 @@
 
 	<div class="container total-box" style="margin-left: 0px; margin-right: 0px;">
 
-	<form action="createIssue.mi" method="post" id="issueEnrollForm">
+		<form action="createIssue.mi" method="post" id="issueEnrollForm">
 
 			<input type="text" class="form-control issuetitle" id="isTitle" name="title" placeholder="Title" autofocus>
 			<input type="hidden" name="issueNo" value="">
 
 			<div class="why">
 				<div class="editor-wrapper">
-					<div id="editor" name="body"></div>
+					<div id="editor"></div>
 
+					<input type="hidden" name="body" value="">
 					<!-- 본인 글일때만 보이게 분기처리 ### -->
 					<div class="btn-box">
 						<br>
-						<button type="submit" class="btn btn-outline-primary">제출하기</button>
-					
+						<button type="submit" class="btn btn-outline-primary" id="btn1">제출하기</button>
+
 
 					</div>
 				</div>
@@ -67,8 +68,13 @@
 	<div class="editor-label">
 
 
+
+
+
+
 		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">이슈 담당자</label>
+
 			<select id="defaultSelect" class="form-select" name="assignees">
 				<option>이슈 담당자</option>
 				<option value="libiho" type="checkbox">One</option>
@@ -78,13 +84,13 @@
 		</div>
 
 
-	<div class="mb-3">
+		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">라벨</label>
 			<select id="defaultSelect" class="form-select" name="labels">
 				<option>라벨</option>
-				<option value="1" type="checkbox">One</option>
-				<option value="2" type="checkbox">Two</option>
-				<option value="3" type="checkbox">Three</option>
+				<c:forEach var="l" items="${lList }">
+					<option value="${l.name }">${l.name }</option>
+				</c:forEach>
 			</select>
 		</div>
 
@@ -92,7 +98,8 @@
 
 
 
-	<div class="mb-3">
+
+		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">프로젝트</label>
 			<select id="defaultSelect" class="form-select" name="">
 				<option>프로젝트</option>
@@ -103,7 +110,7 @@
 		</div>
 
 
-	<div class="mb-3">
+		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">마일스톤</label>
 			<select id="defaultSelect" class="form-select" name="milestone">
 				<option>마일스톤</option>
@@ -133,9 +140,12 @@
             console.log(markdownValue); // Output: "# Hello, World!"
 
 
-            /*----------------------------------------------------*/
-
-
+      
+		// body 에디터 input 히든 값 넣기
+		$("#btn1").click(function(){
+    var markdown = editor.getMarkdown();
+    $("input[name='body']").val(markdown);
+});
 
         </script>
 
