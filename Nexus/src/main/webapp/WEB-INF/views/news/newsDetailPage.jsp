@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/newsDetailPage.css">
 <script src="${pageContext.request.contextPath}/resources/js/newsDetailPage.js"></script>
 
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 
 </head>
 <body>

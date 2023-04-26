@@ -57,9 +57,11 @@ public class NewsController {
 	
 	@ResponseBody
 	@RequestMapping(value = "ajaxNewsList.p", produces = "aplication/json; charset=utf-8")
-	public String ajaxNewsList(int page) {
+	public String ajaxNewsList(int page, HttpSession session) {
 		
-		ArrayList<News> list = newsService.selectList(page);
+		String state = (String)session.getAttribute("state");
+		
+		ArrayList<News> list = newsService.selectList(page,state);
 		
 		return new Gson().toJson(list);
 	}
@@ -123,12 +125,18 @@ public class NewsController {
 	
 	@PostMapping("insert.n")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> insertNewsImg(@RequestParam("images") MultipartFile multi, HttpSession session) {
+	public ResponseEntity<Map<String, Object>> insertNewsImg(@RequestParam("images") MultipartFile multi, HttpSession session) throws IOException {
 		String changeName = "";
 		String finalName = "";
 		 Map<String, Object> response = new HashMap<>();
 		if(!multi.getOriginalFilename().equals("")) {
 			String originName = multi.getOriginalFilename();
+			
+	        
+			
+			
+			// 바디 추가해야함
+			
 			
 			// 년월일시분초
 			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -147,7 +155,6 @@ public class NewsController {
 			System.out.println(finalName);
 			response.put("url", finalName);
 			
-		
 			//서버에 파일 업로드
 			try {
 				multi.transferTo(new File(savePath+changeName));
@@ -248,5 +255,23 @@ public class NewsController {
 		
 		return total+"";
 	}
+	
+
+	@RequestMapping(value="ajaxRepage.p", produces = "application/json; cahrset=utf-8")
+	@ResponseBody
+	public String ajaxRepage(String state, HttpSession session) {
+		
+		if(state.equals("my")) {
+			state = ((Member)session.getAttribute("loginUser")).getUserNo()+"";
+		}
+		
+		session.setAttribute("state", state);
+		
+		ArrayList<News> list = newsService.ajaxRepage(state);
+		
+		return new Gson().toJson(list);
+	}
+	
+	
 	
 }
