@@ -483,44 +483,18 @@ public class IssueController {
 
 	@RequestMapping(value="updateIssue.mi", produces = "application/json; charset=utf-8")
 	public String updateIssue(@RequestParam String title, @RequestParam(required = false) String body,
-			@RequestParam(required = false) String assignees, HttpSession session) {
+			@RequestParam(required = false) String assignees, HttpSession session,int ino) {
 		
-		
-		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
 
-//		https://api.github.com/repos/{owner}/{repo}/issues 변수로 각 받아와서 코드 수정해야함
-		
 		
 		String repository = (String)session.getAttribute("repository");
 		
 		
-		String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
+		String apiUrl = repository + "/issues";
 
-		// Create a JSON object for the issue payload
-		JSONObject issueJson = new JSONObject();
-		issueJson.put("title", title);
-		issueJson.put("body", body);
-		JSONArray assigneesArray = new JSONArray();
-		//assigneesArray.add(assignees);
-		// issueJson.put("assignees", assigneesArray);
-		
+		String response = repoService.gitPatchMethod(apiUrl, session,title,body,ino);
 
-		
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer " + token);
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		HttpEntity<String> requestEntity = new HttpEntity<String>(issueJson.toString(), headers);
-
-		// Send a POST request to the GitHub API
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, String.class);
-		HttpStatus responseStatus = responseEntity.getStatusCode();
-
-		if (responseStatus != HttpStatus.CREATED) {
-			throw new RuntimeException("Failed to create issue on GitHub API: " + responseStatus.toString());
-		}
-		
 		
 		
 		return "redirect:issueShow.mini";
