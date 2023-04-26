@@ -72,15 +72,15 @@ public class RepositoryController {
 	
 	
 	
+	/**
+	 * 레파지토리 디테일에 들어갔을 때 실행되는 메서드
+	 * 언어 사용율, contents, readme.md, members
+	 */
 	@RequestMapping("repoDetail.p")
 	public String repoDetail(HttpSession session,int rNo , Model model) throws JsonMappingException, JsonProcessingException {
 		
-		//rNo으로 userName, repoName 조회후 url 완성시키기
 		Repositories repo = repoService.selectRepo(rNo);
 		
-//		String url = "https://api.github.com/repos/";
-//		url+= repo.getUserName()+"/";
-//		url+= repo.getRepoName()+"/languages";
 		
 		String url = repo.getUserName()+"/"+repo.getRepoName()+"/languages";
 		
@@ -89,8 +89,8 @@ public class RepositoryController {
 		session.setAttribute("repository", repo.getUserName()+"/"+repo.getRepoName());
 		session.setAttribute("repoName", repo.getRepoName());
 		
-		// 언어 사용률 가져오는 부분
 		
+		// 언어 사용률 가져오는 부분
 		String responseText = repoService.getGitContentsByGet(url, session);
 		
 		Map<String, Double> map = new Gson().fromJson(responseText, Map.class);
@@ -131,10 +131,15 @@ public class RepositoryController {
 		
 		Collections.sort(list);
 		
+		String text1 = "";
 		String text = "";
 		if(findMd.length()>0) {
 			
-			text = getPathContents1(findMd, session);
+			text1 = repoService.getGitContentsByGet1(findMd, session);
+			
+			Parser parser = Parser.builder().build();
+	        HtmlRenderer renderer = HtmlRenderer.builder().build();
+	        text = renderer.render(parser.parse(text1));
 		}
 		
 		// 멤버 정보를 가져오는 부분
@@ -201,100 +206,6 @@ public class RepositoryController {
 	}
 	
 	
-	public String getPathContents(String path, HttpSession session){
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		String url = "https://api.github.com/repos/"+path;
-		
-		System.out.println("url : "+url);
-		
-		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		
-		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-		
-		
-		return response.getBody();
-	}
-	
-	public String getPathContentsPut(String path, HttpSession session){
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		String url = "https://api.github.com/repos/"+path;
-		
-		System.out.println("url : "+url);
-		
-		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		
-		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);
-		
-		return response.getBody();
-	}
-	
-	public String getPathContentsDelete(String path, HttpSession session){
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		String url = "https://api.github.com/repos/"+path;
-		
-		System.out.println("url : "+url);
-		
-		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		
-		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, entity, String.class);
-		
-		return response.getStatusCodeValue()+"";
-	}
-	
-	public String getPathContents1(String path, HttpSession session){
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		String url =path;
-		
-		System.out.println("url : "+url);
-		
-		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		
-		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-		
-		System.out.println(response.getBody());
-		String text = response.getBody();
-		
-	    Parser parser = Parser.builder().build();
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
-        String html = renderer.render(parser.parse(text));
-	
-		
-		
-		return html;
-	}
-	
-	public String getPathContents2(String path, HttpSession session){
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		String url =path;
-		
-		System.out.println("url : "+url);
-		
-		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		
-		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-		
-		System.out.println(response.getBody());
-		String text = response.getBody();
-	
-		return text;
-	}
-	
-	
 	@RequestMapping("ajaxGetContent")
 	@ResponseBody
 	public String ajaxGetContent(String path, HttpSession session) {
@@ -324,14 +235,19 @@ public class RepositoryController {
 	@RequestMapping(value = "getMdFile", produces = "text/html; charset=utf-8")
 	@ResponseBody
 	public String getMdFile(String url, HttpSession session) {
-		String text = getPathContents1(url, session);
-		return text;
+		String text = repoService.getGitContentsByGet1(url, session);
+		
+		Parser parser = Parser.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        String html = renderer.render(parser.parse(text));
+        
+		return html;
 	}
 	
 	@RequestMapping(value="ajaxFileContent", produces = "text/html; charset=utf-8")
 	@ResponseBody
 	public String ajaxGetFileContent(String path, HttpSession session) {
-		String text = getPathContents2(path, session);
+		String text = repoService.getGitContentsByGet1(path, session);
 		return text;
 	}
 	
@@ -355,7 +271,7 @@ public class RepositoryController {
 		
 		String url = repository+"/collaborators/"+id;
 		
-		String response = getPathContentsPut(url, session);
+		String response = repoService.gitPutMethod(url, session);
 		System.out.println(response);
 		
 		return response;
@@ -370,7 +286,7 @@ public class RepositoryController {
 		String repository = (String)session.getAttribute("repository");
 		String url = repository+"/collaborators/"+id;
 		
-		String response = getPathContentsDelete(url, session);
+		String response = repoService.gitDeleteMethod(url, session);
 		
 		return response;
 		

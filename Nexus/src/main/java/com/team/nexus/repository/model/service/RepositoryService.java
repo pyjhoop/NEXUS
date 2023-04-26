@@ -17,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 import com.team.nexus.member.model.vo.Member;
 import com.team.nexus.repository.model.dao.RepositoryDao;
 import com.team.nexus.repository.model.vo.Repositories;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
 
 @Service
 public class RepositoryService {
@@ -70,6 +72,74 @@ public class RepositoryService {
 		ResponseEntity<String> response = restTemplate.exchange(url,HttpMethod.GET, entity, String.class);
 		return response.getBody();
 		
+	}
+	
+	public String getGitContentsByGet1(String path, HttpSession session) {
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String url =path;
+		
+		System.out.println("url : "+url);
+		
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+		
+		System.out.println(response.getBody());
+		String text = response.getBody();
+		
+	
+		return text;
+	}
+	
+	public String gitPutMethod(String path, HttpSession session) {
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String url = "https://api.github.com/repos/"+path;
+		
+		System.out.println("url : "+url);
+		
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);
+		
+		return response.getBody();
+	}
+	
+	public String gitDeleteMethod(String path, HttpSession session) {
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String url = "https://api.github.com/repos/"+path;
+		
+		System.out.println("url : "+url);
+		
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);
+		
+		return response.getBody();
+	}
+	
+	public String gitPatchMethod(String path, HttpSession session) {
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String url = "https://api.github.com/repos/"+path;
+		
+		System.out.println("url : "+url);
+		
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, entity, String.class);
+		
+		return response.getBody();
 	}
 
 }
