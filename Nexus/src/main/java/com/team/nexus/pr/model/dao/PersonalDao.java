@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.team.nexus.news.model.vo.News;
 import com.team.nexus.pr.model.vo.PageInfo;
 import com.team.nexus.pr.model.vo.PersonalPr;
 
@@ -30,6 +31,12 @@ public class PersonalDao {
 		return (ArrayList)sqlSession.selectList("personalprMapper.selectPersonalPr", null, rowBounds);
 				
 	}
+	
+	public int insertPersonalPr(SqlSessionTemplate sqlsession, PersonalPr pr) {
+		return sqlsession.insert("personalprMapper.insertPersonalPr", pr);
+	}
+	
+	
 	
 
 }

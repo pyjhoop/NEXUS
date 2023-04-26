@@ -11,9 +11,13 @@
 		<result column="PSN_PR_TITLE" property="psnPrTitle"/>
 		<result column="PSN_PR_CONTACT" property="psnPrContact"/>
 		<result column="user_no" property="userNo"/>
+		<result column="USER_NAME" property="userName"/>
 		<result column="CREATE_DATE" property="createDate"/>
+		<result column="CATEGORY" property="category"/>
 	</resultMap>
-	
+
+
+
 	<select id="selectListCount" resultType="_int">
 			select
 				 count(*)
@@ -30,11 +34,18 @@
 			,PSN_PR_CONTACT
 			,to_char(CREATE_DATE) AS "CREATE_DATE"
 			,USER_NO
+			,USER_NAME
 			,CATEGORY
 			FROM PSN_PR_BOARD
 			JOIN TB_MEMBER USING (USER_NO)
 			ORDER BY CREATE_DATE DESC
 	</select>
+	
+	<insert id="insertPersonalPr">
+		insert into psn_pr_board
+			(psn_pr_no,PSN_PR_STACK,PSN_PR_CONTENT,PSN_PR_AVLPRD,PSN_PR_TITLE,PSN_PR_CONTACT,CREATE_DATE,USER_NO,CATEGORY)
+			values (SEQ_PSN_PR.NEXTVAL, #{psnPrStack}, #{psnPrContent},#{psnPrAvlPrd}, #{psnPrTitle},#{psnPrContact},to_char(sysdate,'yy/MM/dd HH24:mi'),#{userNo},#{category} )
+	</insert>
 	
 	
 </mapper>	

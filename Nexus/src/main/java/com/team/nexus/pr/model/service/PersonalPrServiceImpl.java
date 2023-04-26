@@ -31,6 +31,11 @@ public class PersonalPrServiceImpl implements PersonalPrService {
 	}
 
 	
+	@Override
+	public int insertPersonalPr(PersonalPr pr) {
+		int result = pDao.insertPersonalPr(sqlSession, pr);
+		return result;
+	}
 
 		
 		

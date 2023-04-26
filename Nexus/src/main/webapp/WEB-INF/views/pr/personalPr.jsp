@@ -375,7 +375,8 @@ hr{
 <body>
 <jsp:include page="../common/template.jsp"/>
 
-<div id="mainBody" style="width: 100%;">
+<div class="container-xxl flex-grow-1 container-p-y cpadding mt-5">
+	<div id="mainBody" style="width: 100%;">
 
 
 
@@ -547,7 +548,8 @@ hr{
 	    <h5 class="card-title" style="margin-right: 0px; width: 235px; height: 39.794px;"><b>${p.psnPrTitle }</b></h5>
 	    <p class="card-text" style="float: left; font-size: 13px; width: 240px; height: 99.375px;">${p.psnPrContent }</p>
 	    <!-- <p>아이디 들어갈자리</p> -->
-	    <span style="margin-bottom: 5px;"><%-- ${p.userNo } --%>아이디 들어갈 자리</span>
+	    <span style="margin-bottom: 5px;">${p.userName}</span>
+	    <%--  <span class="userName">${p.userNo}</span> --%>
 	    <i class='bx bx-bookmark' style="float: right; "></i>
 	  </div>
 </div>
@@ -584,6 +586,9 @@ hr{
     }
  
 </script> -->
+</div>
+
+
 
 
 

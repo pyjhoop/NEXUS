@@ -1,7 +1,9 @@
 const getButton = document.getElementById('get1');
 
 const test12 = document.getElementById('test12'); 
-const multiInput = document.querySelector('multi-input'); 
+
+const multiInput = document.getElementById('multi-input'); 
+
 const values = document.querySelector('#values'); 
 const noStack = document.getElementById('noStack');
 
@@ -23,5 +25,3 @@ test12.onclick = () => {
 }
 
 
-
-document.querySelector('input').focus();

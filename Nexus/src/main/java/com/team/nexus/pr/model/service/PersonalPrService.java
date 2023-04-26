@@ -14,5 +14,12 @@ public interface PersonalPrService {
 	int selectListCount();
 	ArrayList<PersonalPr> selectPersonalPr(PageInfo pi);
 	
+	
+	int insertPersonalPr(PersonalPr pr);
+		
+	}
+	
+	
+	
 
-}
+

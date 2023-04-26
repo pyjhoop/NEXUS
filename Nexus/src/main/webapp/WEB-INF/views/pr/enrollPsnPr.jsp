@@ -18,7 +18,7 @@
  
 
 
-
+<script src="${pageContext.request.contextPath}/resources/js/personalPrBoard.js"></script>
 
 
 <!-- summernote -->
@@ -142,6 +142,9 @@ select {
       top: -1px;
       float: right;
     }
+    .note-modal-content{
+    	height: 400px;
+    }
 </style>
 </head>
 <body>
@@ -157,31 +160,30 @@ select {
                     <label><b>제목</b></label>
                       <div class="input-group" >
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
-                        <input type="text" class="form-control" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon11" required>
+                        <input type="text" class="form-control" name="psnPrTitle" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon11" required>
                       </div> <br>
                       
                        <label ><b>프로젝트 참여 가능기간</b></label>
                       <div class="input-group" >
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
-                        <input  style="margin-top:0px;" type="text" class="form-control" placeholder="프로젝트 참여 가능기간을 입력해주세요 (ex-5월말부터 가능 or 6월중순부터 6개월간 가능 등)" aria-label="Username" aria-describedby="basic-addon11" required>
+                        <input  style="margin-top:0px;" type="text" class="form-control" name="psnPrAvlPrd" placeholder="프로젝트 참여 가능기간을 입력해주세요 (ex-5월말부터 가능 or 6월중순부터 6개월간 가능 등)" aria-label="Username" aria-describedby="basic-addon11" required>
                       </div><br>
                       
                       <label ><b>연락 수단</b></label>
                       <div class="input-group">
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
-                        <input type="text" class="form-control" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11" required>
+                        <input type="text" class="form-control" name="psnPrContact" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11" required>
                       </div><br>
                       
                      
                      <label ><b>희망 분야</b></label> <br>
-					<select style="background-color: transparent; color: #a4aab1; border-color: #d9dee3; width: 310px; height: 50px; box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4); border-radius: 6px; text-align: center;">
+					<select name="category" style="background-color: transparent;  color: #a4aab1; border-color: #d9dee3; width: 310px; height: 50px; box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4); border-radius: 6px; text-align: center;">
 						<option value="" selected="selected" style="display: none;">희망하는 분야를 선택해주세요</option>
 						<option value="FRONT-END">FRONT-END</option>
 						<option value="BACK-END">BACK-END</option>
 						<option value="FULL-STACK">FULL-STACK</option>
 						<option value="MOBILE">MOBILE</option>
 						<option value="ETC">ETC</option>
-						<option value="선택안함">선택안함</option>
 					</select><br><br>
 					
 					
@@ -191,8 +193,8 @@ select {
                    <label ><b>기술 스택</b></label>  
  					
                    <div class="input-group" style="border: none; box-shadow: none;">
-                   <multi-input id="multiInputId">
-			      <input id="stackInputCard" list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
+                   <multi-input id="multi-input" name="psnPrStack">
+			      <input id="stackInputCard" name=psnPrStack list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
 			      <datalist id="speakers">
 			      <!-- stackInputCard에 "선택안함"이 있을경우 다른 옵션들 비활성화  -->
 			      	<option value="선택안함" id="noStack"></option>
@@ -234,62 +236,50 @@ select {
                        </div>
                        <p id="values" ></p>
                        <script src="${pageContext.request.contextPath}/resources/js/multi-input.js"></script>
-                       
+        				<script src="${pageContext.request.contextPath}/resources/js/script1.js"></script>
                   
 						
                        
+        <label ><b>자기소개</b></label>
         <!-- summerNote 들어갈 자리 -->
-              <label ><b>자기소개</b></label>
-         <%--  <div class="container-xxl flex-grow-1 container-p-y cpadding" style="margin-right: 70px; padding: 0px; box-shadow: 0; border: 0px; margin-top: 0px !important; padding-top: 20px !important; ">
-      	  
-
-          <textarea name="newsContent" id="newsContent"></textarea>
-          
-          <c:if test="${ !empty news }">
-          	<script>
-          		
-              let text = `${news.newsContent}`;
-              $("#newsContent").summernote('code',text)
-          	</script>
-            <input type="hidden" name="newsNo", value="${news.newsNo }">
-          </c:if>
-
-          <input type="hidden" name="userNo" value="${loginUser.userNo}">
-          <input type="hidden" name="personalPrContent" id="personalPrContent" required>
-          <input type="hidden" name="thumbnail" id="thumbnail">
-       
-      	</div> --%>
-      	<textarea id="prContent" name="prContent" ></textarea>
+        
+        <div class="container" style="padding-left: 0px;">
+  		<textarea class="summernote" id="summernote" name="editordata"></textarea>    
+		</div>
+		
+		 <input type="hidden" name="userNo" value="${loginUser.userNo}">
+		
+		<script>
+		$('.summernote').summernote({
+			  height: 600,
+			  lang: "ko-KR"
+			});
+		</script>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
       	
-      	
-      	<script type="text/javascript">
-      	$(document).ready(function() {
-      	  $('#prContent').summernote();
-      	});
-      	</script>
-      	
-      	 <input type="hidden" name="prNo", value="${personalPr.prNo }">
-      	  <input type="hidden" name="userNo" value="${loginUser.userNo}">
-          <input type="hidden" name="prContent" id="prContent">
-          <input type="hidden" name="thumbnail" id="thumbnail">
       	
       	</div>
-      	
-      	<c:if test="${personalPr.prContent != null}">
-      <script>
-        let string = '${personalPr.prContent}';
-        $("#"prContent").summernote('pasteHTML',string);
-      </script>
-    </c:if>
-     
-		
-        <script src="${pageContext.request.contextPath}/resources/js/script1.js"></script>
-        
-       
     
      <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center; margin-top: 10px">
-      	<button type="submit" id="get1" class="btn btn-outline-primary" style="font-size: 20px" onclick="return confirm();"><b>등록하기</b></button> &nbsp;
-		<button type="submit" class="btn btn-outline-secondary" style="font-size: 20px"><b>취소</b></button>
+      	<button type="submit" id="enrollPsnPr"  style="font-size: 20px"><b>등록하기</b></button> &nbsp;   <!-- 버튼 클래스  class="btn btn-outline-primary"   -->
+		<button type="reset" class="btn btn-outline-secondary" style="font-size: 20px"><b>취소</b></button>
       </div>
       
      
@@ -299,52 +289,7 @@ select {
       
     </div>
     </div>
-    </div>
-    
-    <!-- <script>
-    const getButton = document.getElementById('get');
-    const multiInput = document.querySelector('multi-input'); 
-    const values = document.querySelector('#values'); 
-
-    getButton.onclick = () => {
-      if (multiInput.getValues().length > 0) {
-        values.textContent = `${multiInput.getValues().join(',')}`;
-      } else {
-        values.textContent = 'Got noo12ne  :`^(.'; 
-      }
-    }
-
-    document.querySelector('input').focus();
-    
-    </script> -->
-    
 	</form>
-	
-                      
-  
-                      
-                      
-                      
-                      
-                   
-                 
-               
-                
-                
-  
-	 
-    
-    
-	
-
-
-
-	
-
-
-
-
-
 
 </body>
 </html>

@@ -19,6 +19,7 @@ public class PersonalPr {
 	private String psnPrContact;
 	private String createDate;
 	private int userNo;
+	private String userName;
 	private String category;
 
 
