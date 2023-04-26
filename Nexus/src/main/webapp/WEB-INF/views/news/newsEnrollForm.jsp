@@ -34,8 +34,9 @@
           
           <div class="row mb-3" style="margin-top: 15px;">
             <div class="title">
-              TITLE
+              TITLE 
             </div>
+    
 
             <div class="col-sm-10">
               <input type="text" class="form-control" id="newsTitle" name="newsTitle" placeholder="Title" value="${ news.newsTitle }">
@@ -49,6 +50,7 @@
           
           <c:if test="${ !empty news }">
           	<script>
+          		
           		
               let text = `${news.newsContent}`;
               $("#newsContent").summernote('code',text)

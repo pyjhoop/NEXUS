@@ -124,7 +124,9 @@
 			<div class="app-brand demo">
 				<a href="main.p" class="app-brand-link">
 					<span class="app-brand-text demo menu-text fw-bolder ms-2">NEXUS</span>
-					<span style="margin-left: 5px; margin-top: 5px;">(${repoName})</span>
+					<c:if test="${ repoName != null }">
+						<span style="margin-left: 5px; margin-top: 5px;">(${repoName})</span>
+					</c:if>
 				</a>
 				<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
 					<i class="bx bx-chevron-left bx-sm align-middle"></i>
