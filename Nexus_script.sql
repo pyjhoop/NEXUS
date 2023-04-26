@@ -83,7 +83,7 @@ create table tb_news (
 create sequence seq_news
 nocache;
 
-insert into tb_news values(seq_news.nextval, 1,'오늘 하루 힘들다','지하철에서 빌런만났는데 힘드네요',sysdate,sysdate,'Y',null);
+--insert into tb_news values(seq_news.nextval, 1,'오늘 하루 힘들다','지하철에서 빌런만났는데 힘드네요',sysdate,sysdate,'Y',null);
 --insert into tb_news values(seq_news.nextval, 2,'배고프다','점심시간인데 왜 밥을 못먹게 합니까!!!',sysdate,sysdate,'Y','asdf');
 --insert into tb_news values(seq_news.nextval, 3,'아니 지하철에서 시위좀 그만 합시다','제시간에 도착하고 싶어여ㅠㅠ',sysdate,sysdate,'Y','asdf');
 

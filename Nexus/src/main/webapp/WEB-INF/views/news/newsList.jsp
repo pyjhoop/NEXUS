@@ -24,7 +24,17 @@
 
     <div class="container-xxl flex-grow-1 container-p-y cpadding mt-5">
 
-        <div class="row mb-5">
+		<div class="row">
+			<div class="mb-5 col-lg-4 col-md-4">
+				<div class="row">
+					<div class="col-md-4 new text-primary rePage" id="new">최신 news</div>
+					<div class="col-md-4 popular rePage" id="popular">인기 news</div>
+					<div class="col-md-4 my rePage" id="my">나의 news</div>
+				</div>
+			</div>
+		</div>
+
+        <div class="row mainContents mb-5">
 
         	<c:forEach var="i" items="${ list }">
 	            <div class="col-md-4 col-sm-6 col-lg-3 mb-5 cardWrap" onclick="location.href='newsDetail.p?nNo=${i.newsNo}'">
