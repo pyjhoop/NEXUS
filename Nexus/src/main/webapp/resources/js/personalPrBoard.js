@@ -26,22 +26,13 @@ function sendFile(file, editor){
 // 제출버튼 클릭시 title, newsContent가 잘있는지 확인하는 메서드
 
 function confirm(){
-    let $title = $("#newsTitle").val().trim();
-    let $content = $("#newsContent").val();
+    let $content = $("#summernote").val();
 
     let checkcontent = $content.trim();
 
     let imgSrc = $(checkcontent).find('img').attr('src');
     console.log(imgSrc)
     $("#thumbnail").val(imgSrc);
-    
-    if($title=="" || checkcontent ==""){
-        console.log("타이틀 또는 본문을 입력해주세요");
-        return false;
-    }else{
-        return true;
-    }
-
    
 }
 
@@ -49,9 +40,8 @@ function confirm(){
 // $(function)
 
 $(function(){
-    $('#newsContent').summernote({
-        height: 700,
-        width : 1350,
+    $('#summernote').summernote({
+        
         minHeight: null,
         maxHeight: null,
         focus: true,

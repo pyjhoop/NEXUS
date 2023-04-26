@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +10,11 @@
 </head>
 <style>
 #mainBody{
-	height: 2500px;
+	height: 1500px; 
 	width: 100%;
 	margin:auto;
+	margin-top: 10px !important;
+	margin-bottom: 0px !important;
 }
 #stacks{
 	width:100%;
@@ -23,9 +26,9 @@
 }
 #prs{
 	width:100%;
-	height:50px;
+	height:2.5%;
 	margin:auto;
-	padding-top:50px;
+	padding-top:10px;
 }
 #stackCategory>li{
 	display:flex;
@@ -297,30 +300,83 @@ hr{
 .card{
 	width: 264px;
 	/* height: 229.984px; */
-	height: 260px;
+	height: 280px;
 }
 .card-body{
 	display: block;
+	padding-top: 15px !important;
+	padding-right:10px !important;
+	padding-bottom:25px !important;
+	height: 241px;
 }
 .card-text{
 	width: 216px;
-	height: 103px;
+	/* height: 103px; */
+	overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box; 
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  margin-bottom: 35px !important;
+	
 }
 .card-title{
 	width: 216px;
 	/* height: 19.797px; */
-	height:40px;
+	/* height:40px; */
 	 overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box; 
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+#card-id{
+	margin-bottom: 15px !important;
+}
+ .card-body:hover{
+	cursor: pointer;
+	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+} 
+/* .card-title:hover{
+	cursor: pointer;
+	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+} 
+.card-text:hover{
+	cursor: pointer;
+	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+} 
+.bx:hover{
+	cursor: pointer;
+	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+} 
+ */
+
+.bx-bookmark::before{
+	width: 30px;
+	height: 30px;
+}
+.bx{
+	font-size: 1.8rem !important;
+}
+#prs{
+	width: 83%; 
+	height: 50px;
+	margin-bottom: 0px;
+	padding-top: 3px;
+}
+#newBtn{
+	float: right;
+}
+.pagination{
+	width: 100%;
+	text-align: center;
+}
 </style>
 <body>
 <jsp:include page="../common/template.jsp"/>
 
-<div id="mainBody" style="width: 100%;">
+<div class="container-xxl flex-grow-1 container-p-y cpadding mt-5">
+	<div id="mainBody" style="width: 100%;">
 
 
 
@@ -473,99 +529,43 @@ hr{
 </div> -->
 
 
-<div id="prs">
-<a href="enrollPsnPr.pr">새 글 쓰기</a>
+
+
+<div id="prs" >
+	<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollPsnPr.pr'">
+	새 글 쓰기
+</button>
 </div>
 
-<div id="shell" style="margin-left: 105px; display: block;">
- <div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title"><b>가나다라마바상</b></h5>
-    <h6 class="card-subtitle mb-2 text-muted">제목가나다라마바사아\하</h6>
-    <p class="card-text">.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
+<div id="shell" style="margin-left: 50px; display: block; height: 1200px; width: 100%;">
+
+
+<c:forEach var="p" items="${personalPrList }">
+	 <div class="card" style="width: 16.5rem;">
+	  <div class="card-body" style="padding-left: 10px;" >
+	    <p class="card-category" style="float:left; width: 50%;">${p.createDate }</p>
+	    <p class="card-category" style="float: right;">${p.category }</p>
+	    <h5 class="card-title" style="margin-right: 0px; width: 235px; height: 39.794px;"><b>${p.psnPrTitle }</b></h5>
+	    <p class="card-text" style="float: left; font-size: 13px; width: 240px; height: 99.375px;">${p.psnPrContent }</p>
+	    <!-- <p>아이디 들어갈자리</p> -->
+	    <span style="margin-bottom: 5px;">${p.userName}</span>
+	    <%--  <span class="userName">${p.userNo}</span> --%>
+	    <i class='bx bx-bookmark' style="float: right; "></i>
+	  </div>
 </div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h6 class="card-subtitle mb-2 text-muted">아이디 들어갈자리</h6>
-    <h5 class="card-title"><b>소개입니다.아라라라라라라라ㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴddddddddddddddddddddddddddddddddㅇ</b></h5>
-    <p class="card-text">모집분류,기술스택</p>
-    <p>작성일자, 시간</p>
-    
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div class="card" style="width: 16.5rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-
-</div>
-
-
-
-
-
-
-
-
-
+</c:forEach>
 
 
 
 
 </div>
+
+
+	
+</div>
+
+</div> <!-- main body div -->
+
 
 <!-- <script>
 		var seeAll = document.getElementById( "seeAll" );
@@ -586,6 +586,9 @@ hr{
     }
  
 </script> -->
+</div>
+
+
 
 
 

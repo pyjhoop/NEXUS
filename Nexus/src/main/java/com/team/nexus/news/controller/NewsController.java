@@ -256,6 +256,7 @@ public class NewsController {
 		return total+"";
 	}
 	
+
 	@RequestMapping(value="ajaxRepage.p", produces = "application/json; cahrset=utf-8")
 	@ResponseBody
 	public String ajaxRepage(String state, HttpSession session) {
