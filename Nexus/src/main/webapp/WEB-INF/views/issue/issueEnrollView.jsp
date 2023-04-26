@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -10,6 +11,29 @@
 <script type="text/javascript" src="js/comboTreePlugin.js"></script>
 <script type="text/javascript" src="js/icontains.js"></script>
 <style>
+.assigneeboxes li {
+	list-style: none;
+}
+
+
+input.inputCk + label{
+  cursor:pointer;
+ }
+.assigneeboxes li input[type="checkbox"] {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+</style>
+
+
+
+
 </style>
 
 
@@ -123,6 +147,13 @@
 
 
 		<div id="issueEditArea" class="menulist col-md-3">
+
+
+			<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+
+				<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${assignee}"><img src="${assigneeProfiles[loop.index]}" alt="" class="rounded-circle" /></li>
+
+			</ul>
 			<!-- 	        이슈 담당자 menubox 시작 -->
 			<div class="menubox card">
 				<div class="menubox-header dropdown">
@@ -132,11 +163,12 @@
 					</button>
 					<div class="assigneeboxes dropdown-menu" aria-labelledby="issue-assignee-btn">
 						<ul>
-						<!-- 
+
 							<c:forEach var="r" items="${RepoMembers }">
-								<li><input type="checkbox" value="${r.userName }">${r.userName}</li>
+								<li><input type="checkbox" id="${r.userName}-checkbox" class="inputCk" value="${r.userName }" /> <label for="${r.userName}-checkbox">${r.userName}</label></li>
 							</c:forEach>
- -->
+
+
 						</ul>
 					</div>
 				</div>
@@ -171,6 +203,43 @@
 });
 
             
+		// Get the ul element
+		const ul = document.querySelector('.users-list');
+
+		// Get all the checkboxes
+		const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+		// Loop through all the checkboxes
+		checkboxes.forEach((checkbox, index) => {
+		  // Add an event listener to each checkbox
+		  checkbox.addEventListener('change', () => {
+		    // If the checkbox is checked
+		    if (checkbox.checked) {
+		      // Create a new li element
+		      const li = document.createElement('li');
+		      li.classList.add('avatar', 'avatar-xs', 'pull-up');
+		      li.setAttribute('data-bs-toggle', 'tooltip');
+		      li.setAttribute('data-popup', 'tooltip-custom');
+		      li.setAttribute('data-bs-placement', 'top');
+		      li.setAttribute('title', checkbox.value);
+
+		      // Create a new img element
+		      const img = document.createElement('img');
+		      img.src = assigneeProfiles[index];
+		      img.alt = '';
+
+		      // Add the img element to the li element
+		      li.appendChild(img);
+
+		      // Add the li element to the ul element
+		      ul.appendChild(li);
+		    } else {
+		      // If the checkbox is unchecked, remove the corresponding li element
+		      ul.removeChild(ul.children[index]);
+		    }
+		  });
+		});
+
             
         </script>
 
