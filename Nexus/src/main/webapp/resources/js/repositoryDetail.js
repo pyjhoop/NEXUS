@@ -20,6 +20,61 @@ $(function(){
         })
     })
 
+
+    // 초대버튼 클릭시 ajax로 넘기기
+    $("#add").click(function(){
+
+        var gitId = $("#gitId").val();
+        
+        if($.trim(gitId).length > 0){
+
+            $.ajax({
+                url:"addRepoMember.p",
+                data:{id:$.trim(gitId)},
+                success:function(data){
+                    console.log(data)
+                    if(data == ""){
+                        alert("이미 초대한 아이디입니다.")
+                    }else{
+                        alert("초대완료")
+                    }
+                    $("#gitId").val("");
+                }, error:function(){
+
+                }
+            })
+        }else{
+            alert("아이디를 입력해주세요")
+        }
+
+    })
+
+    // 추방버튼 클릭시 ajax로 넘기기
+    $("#remove").click(function(){
+
+        var gitId = $("#gitId").val();
+        
+        if($.trim(gitId).length > 0){
+            
+            $.ajax({
+                url:"removeRepoMember.p",
+                data:{id:$.trim(gitId)},
+                success:function(data){
+                    console.log(data);
+                    if(data == 204){
+                        alert("추방 완료")
+                    }else{
+                        alert("아이디가 잚")
+                    }
+
+                }, error:function(){
+
+                }
+            })
+
+        }
+    })
+
     
 
 

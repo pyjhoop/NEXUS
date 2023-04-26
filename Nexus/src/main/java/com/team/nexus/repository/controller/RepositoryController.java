@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -52,7 +54,11 @@ public class RepositoryController {
 	@Autowired
 	private RepositoryService repoService;
 	
-	// repository 페이지로 이동
+	
+	
+	/**
+	 * 내가 등록한 레파지토리가 보이는 페이지로 이동
+	 */
 	@RequestMapping("repository.p")
 	public String repositoyPage(HttpSession session, Model model) {
 		int userNo = ((Member)session.getAttribute("loginUser")).getUserNo();
@@ -64,159 +70,104 @@ public class RepositoryController {
 		return "repository/repository";
 	}
 	
+	
+	
 	@RequestMapping("repoDetail.p")
-	public String repoDetail(HttpSession session,int rNo , Model model) {
+	public String repoDetail(HttpSession session,int rNo , Model model) throws JsonMappingException, JsonProcessingException {
 		
 		//rNo으로 userName, repoName 조회후 url 완성시키기
 		Repositories repo = repoService.selectRepo(rNo);
 		
-		String url = "https://api.github.com/repos/";
-		url+= repo.getUserName()+"/";
-		url+= repo.getRepoName()+"/languages";
+//		String url = "https://api.github.com/repos/";
+//		url+= repo.getUserName()+"/";
+//		url+= repo.getRepoName()+"/languages";
+		
+		String url = repo.getUserName()+"/"+repo.getRepoName()+"/languages";
+		
 		String token = ((Member)(session.getAttribute("loginUser"))).getToken();
 		
 		session.setAttribute("repository", repo.getUserName()+"/"+repo.getRepoName());
 		session.setAttribute("repoName", repo.getRepoName());
 		
-		try {
-			URL requestUrl = new URL(url);
-			
-			HttpURLConnection urlConnection = (HttpURLConnection)requestUrl.openConnection();
-			urlConnection.setRequestMethod("GET");
-			urlConnection.setRequestProperty("Accept", "application/vnd.github+json");
-			urlConnection.setRequestProperty("Authorization", "Bearer "+token);
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-			
-			String line;
-			String responseText="";
-			
-			while((line = br.readLine()) != null) {
-				responseText += line;
-			}
-			
-			Map<String, Double> map = new Gson().fromJson(responseText, Map.class);
-			
-			int sum = 0;
-			for(String key:map.keySet()) {
-				sum += map.get(key);
-			}
-			
-			for(String key:map.keySet()) {
-				map.replace(key, Math.round(map.get(key)/sum*100*10)/10.0);
-			}
-			
-			
-			// content 가져오기
-			String url1 =  repo.getUserName()+"/";
-			url1 += repo.getRepoName()+"/contents";
-			
-			String response = getPathContents(url1, session);
-
-			
-			
-			ArrayList<Content> list = new ArrayList<Content>();
-			ObjectMapper obj = new ObjectMapper();
-			JsonNode jsonNode;
-			
-			
-			jsonNode = obj.readTree(response);
-			String findMd = "";
-			for(int i = 0; i<jsonNode.size(); i++) {
-				
-				//System.out.println(jsonNode.get(i));
-				String name = jsonNode.get(i).get("name").asText();
-				String downloadUrl = jsonNode.get(i).get("download_url").asText();
-				String type = jsonNode.get(i).get("type").asText();
-				String size = Math.round(jsonNode.get(i).get("size").asDouble()*10/1000)/10.0+ "KB";
-				if(name.indexOf(".md")!= -1) {
-					findMd = downloadUrl;
-				}
-				
-				list.add(new Content(name, downloadUrl,type,size));
-			}
-			
-			Collections.sort(list);
-			
-			
-//			System.out.println(list);
-			
-			// .md 있으면 밑에 추가해야하고
-			System.out.println(".md:"+findMd);
-			
-			String text = "";
-			if(findMd.length()>0) {
-				
-				text = getPathContents1(findMd, session);
-//				
-		        
-			}
-			
-			// 멤버 정보를 가져와야 한다.
-			
-			String url2 = repo.getUserName()+"/";
-			url2+= repo.getRepoName()+"/collaborators";
-			
-			String members = getPathContents(url2, session);
-			ArrayList<Member> mList = new ArrayList<Member>();
-			
-			jsonNode = obj.readTree(members);
-			for(int i = 0; i<jsonNode.size(); i++) {
-				Member m = new Member();
-				System.out.println(jsonNode.get(i));
-				String userName = jsonNode.get(i).get("login").asText();
-				String avatarUrl = jsonNode.get(i).get("avatar_url").asText();
-				String roleName = jsonNode.get(i).get("role_name").asText();
-				m.setUserName(userName);
-				m.setProfile(avatarUrl);
-				m.setRollName(roleName);
-				
-				mList.add(m);
-			}
-			
-			
-			// 레파지토리 멤버 세션에 저장
-			session.setAttribute("RepoMembers", mList);
-			
-			// 라벨 추가 
-			String url3 = repo.getUserName()+"/";
-			url3 += repo.getRepoName()+"/labels";
-			
-			String labelResponse = getPathContents(url3, session);
-			
-			jsonNode = obj.readTree(labelResponse);
-			
-			ArrayList<Label> lList = new ArrayList<Label>();
-			
-			for(int i = 0; i<jsonNode.size(); i++) {
-				
-				
-				String id = jsonNode.get(i).get("id").asText();
-				String name = jsonNode.get(i).get("name").asText();
-				String color = jsonNode.get(i).get("color").asText();
-				String description = jsonNode.get(i).get("description").asText();
-				
-				Label l = new Label(id, name, color, description);
-				lList.add(l);
-			}
-			
-			System.out.println(lList);
-			
-			
-			// model에 데이터 추가
-			model.addAttribute("list",list);
-			model.addAttribute("map",map);
-			model.addAttribute("repo",repo);
-			model.addAttribute("text",text);
-			model.addAttribute("mList",mList);
-			
-			br.close();
-			urlConnection.disconnect();
-			
-			//System.out.println(map);
-		} catch (IOException e) {
-			e.printStackTrace();
+		// 언어 사용률 가져오는 부분
+		
+		String responseText = repoService.getGitContentsByGet(url, session);
+		
+		Map<String, Double> map = new Gson().fromJson(responseText, Map.class);
+		
+		int sum = 0;
+		for(String key:map.keySet()) {
+			sum += map.get(key);
 		}
+		
+		for(String key:map.keySet()) {
+			map.replace(key, Math.round(map.get(key)/sum*100*10)/10.0);
+		}
+		
+		// repository contents를 가져오는 부분
+		String repoContentsUrl =  repo.getUserName()+"/";
+		repoContentsUrl += repo.getRepoName()+"/contents";
+		String responseText1 = repoService.getGitContentsByGet(repoContentsUrl, session);
+		
+		ArrayList<Content> list = new ArrayList<Content>();
+		
+		ObjectMapper obj = new ObjectMapper();
+		JsonNode jsonNode;
+		
+		jsonNode = obj.readTree(responseText1);
+		String findMd = "";
+		for(int i = 0; i<jsonNode.size(); i++) {
+			
+			String name = jsonNode.get(i).get("name").asText();
+			String downloadUrl = jsonNode.get(i).get("download_url").asText();
+			String type = jsonNode.get(i).get("type").asText();
+			String size = Math.round(jsonNode.get(i).get("size").asDouble()*10/1000)/10.0+ "KB";
+			if(name.indexOf(".md")!= -1) {
+				findMd = downloadUrl;
+			}
+			
+			list.add(new Content(name, downloadUrl,type,size));
+		}
+		
+		Collections.sort(list);
+		
+		String text = "";
+		if(findMd.length()>0) {
+			
+			text = getPathContents1(findMd, session);
+		}
+		
+		// 멤버 정보를 가져오는 부분
+		String getMemberUrl = repo.getUserName()+"/";
+		getMemberUrl+= repo.getRepoName()+"/collaborators";
+		ArrayList<Member> mList = new ArrayList<Member>();
+		
+		String members = repoService.getGitContentsByGet(getMemberUrl, session);
+		
+		jsonNode = obj.readTree(members);
+		for(int i = 0; i<jsonNode.size(); i++) {
+			Member m = new Member();
+			System.out.println(jsonNode.get(i));
+			String userName = jsonNode.get(i).get("login").asText();
+			String avatarUrl = jsonNode.get(i).get("avatar_url").asText();
+			String roleName = jsonNode.get(i).get("role_name").asText();
+			m.setUserName(userName);
+			m.setProfile(avatarUrl);
+			m.setRollName(roleName);
+			
+			mList.add(m);
+		}
+		
+		
+		// 레파지토리 멤버 세션에 저장
+		session.setAttribute("RepoMembers", mList);
+			
+		// model에 데이터 추가
+		model.addAttribute("list",list);
+		model.addAttribute("map",map);
+		model.addAttribute("repo",repo);
+		model.addAttribute("text",text);
+		model.addAttribute("mList",mList);
 		
 		
 		return "repository/repositoryDetail";
@@ -225,48 +176,18 @@ public class RepositoryController {
 	
 	// repository 등록시 사용
 	@RequestMapping("enrollRepo.p")
-	public String enrollRepository(Repositories r) throws IOException {
+	public String enrollRepository(Repositories r, HttpSession session) throws IOException {
 		
-		String url = " https://api.github.com/repos/";
-		url += r.getUserName()+"/";
-		url += r.getRepoName();
+		String url = r.getUserName()+"/"+r.getRepoName();
 		
+		String responseText = repoService.getGitContentsByGet(url, session);
+		JsonObject totalObj = JsonParser.parseString(responseText).getAsJsonObject();
+		String status = totalObj.get("private").getAsString();
 		
-		try {
-			URL requestUrl = new URL(url);
-			
-			HttpURLConnection urlConnection = (HttpURLConnection)requestUrl.openConnection();
-			
-			urlConnection.setRequestMethod("GET");
-			urlConnection.setRequestProperty("Accept", "application/vnd.github+json");
-			urlConnection.setRequestProperty("Authorization", "Bearer "+r.getToken());
-			// urlConnection.inputstream은 byte기반이고 buffredReader는 문자기반 
-			BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-			
-			String line;
-			String responseText="";
-			
-			while((line = br.readLine()) != null) {
-				responseText += line;
-			}
-			
-			
-			JsonObject totalObj = JsonParser.parseString(responseText).getAsJsonObject();
-			//System.out.println(totalObj);
-			String status = totalObj.get("private").getAsString();
-			
-			if(status.equals("true")) {
-				r.setRepoStatus("Private");
-			}else {
-				r.setRepoStatus("Public");
-			}
-			
-			br.close();
-			urlConnection.disconnect();
-			
-			
-		} catch (FileNotFoundException f) {
-			System.out.println("에러발생");
+		if(status.equals("true")) {
+			r.setRepoStatus("Private");
+		}else {
+			r.setRepoStatus("Public");
 		}
 		
 		if(r.getRepoStatus() != null) {
@@ -293,11 +214,40 @@ public class RepositoryController {
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 		
-//		System.out.println(response.getBody());
-		
-		
 		
 		return response.getBody();
+	}
+	
+	public String getPathContentsPut(String path, HttpSession session){
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String url = "https://api.github.com/repos/"+path;
+		
+		System.out.println("url : "+url);
+		
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);
+		
+		return response.getBody();
+	}
+	
+	public String getPathContentsDelete(String path, HttpSession session){
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth((((Member)(session.getAttribute("loginUser"))).getToken()));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String url = "https://api.github.com/repos/"+path;
+		
+		System.out.println("url : "+url);
+		
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, entity, String.class);
+		
+		return response.getStatusCodeValue()+"";
 	}
 	
 	public String getPathContents1(String path, HttpSession session){
@@ -319,7 +269,6 @@ public class RepositoryController {
 	    Parser parser = Parser.builder().build();
         HtmlRenderer renderer = HtmlRenderer.builder().build();
         String html = renderer.render(parser.parse(text));
-//        System.out.println(html);
 	
 		
 		
@@ -351,7 +300,7 @@ public class RepositoryController {
 	public String ajaxGetContent(String path, HttpSession session) {
 		
 		//System.out.println(path);
-		String response = getPathContents(path, session);
+		String response = repoService.getGitContentsByGet(path, session);
 		
 		
 		Gson gson = new Gson();
@@ -366,11 +315,6 @@ public class RepositoryController {
 		}
 		
 		Collections.sort(contArray);
-//		
-//		
-//		
-//		System.out.println("===============");
-//		System.out.println(contArray);
 		
 		return gson.toJson(contArray);
 		
@@ -399,6 +343,37 @@ public class RepositoryController {
 		
 		String text = repoService.getRepoContent(repo);
 		return text;
+		
+	}
+	
+	
+	// 멤버 초대 ajax
+	@RequestMapping(value="addRepoMember.p")
+	@ResponseBody
+	public String addRepoMemer(String id, HttpSession session) {
+		String repository = (String)session.getAttribute("repository");
+		
+		String url = repository+"/collaborators/"+id;
+		
+		String response = getPathContentsPut(url, session);
+		System.out.println(response);
+		
+		return response;
+	}
+	
+	
+	// 멤버 추방 ajax
+	@RequestMapping("removeRepoMember.p")
+	@ResponseBody
+	public String removeRepoMember(String id, HttpSession session) {
+		
+		String repository = (String)session.getAttribute("repository");
+		String url = repository+"/collaborators/"+id;
+		
+		String response = getPathContentsDelete(url, session);
+		
+		return response;
+		
 		
 	}
 	

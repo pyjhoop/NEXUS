@@ -148,7 +148,7 @@
                             <c:if test="${i.rollName eq 'admin' }">
                                 <div style="display:flex; margin-left: 20px;">
                                     <img src="${i.profile}" alt="" width="50px" height="50px" style="border-radius: 100%; float: left; display: block;">
-                                    <span style="line-height: 50px; margin-left: 10px;">${i.userName}</span>
+                                    <span style="line-height: 50px; margin-left: 10px; font-weight: 900;">${i.userName}</span>
     
                                 </div>
     
@@ -163,14 +163,16 @@
                     <div style="width: 90%; margin: auto; margin-top: 20px; margin-bottom: 20px;">
                         <div style="display: flex; justify-content: space-between;">
                             <h3>참여 멤버</h3>
-                            <div><a href=""><img src="resources/image/settings.png" alt="" width="30px"></a></div>
-
+                            <button type="button" class="btnM"  data-bs-toggle="modal" data-bs-target="#memberModal">
+                                <img src="resources/image/settings.png" alt="" width="30px">
+                            </button>
+                            
                         </div>
                         <c:forEach var="i" items="${mList }">
                             
                             <div style="display:flex; margin-left: 20px;">
                                 <img src="${i.profile}" alt="" width="50px" height="50px" style="border-radius: 100%; float: left; display: block;">
-                                <span style="line-height: 50px; margin-left: 10px;">${i.userName}</span>
+                                <span style="line-height: 50px; margin-left: 10px; font-weight: 900;">${i.userName}</span>
 
                             </div>
                             <br>
@@ -211,6 +213,49 @@
       </div>
 
 
+    
+    <!-- 멤버 수정 모달-->
+
+    <div class="modal fade" id="memberModal" tabindex="-1" aria-hidden="true">
+
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel1">${repo.repoName } 멤버 수정</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="mBodyWrap mt-3">
+                    <div class="mb-3">
+                        <label for="gitId" class="form-label">깃허브 아이디</label>
+                        <input type="text" class="form-control mb-2" id="gitId" placeholder="아이디 입력해주세요">
+                        <div align="right">
+                            <button type="button" class="btn btn-danger" id="remove">추방</button>
+                            <button type="button" class="btn btn-primary" id="add">초대</button>
+
+                        </div>
+                      </div>
+                </div>
+
+
+
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" id="close1" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+  </div>
+
+
 
 
 
@@ -233,9 +278,9 @@
               </button>
               
             </div>
-          </div>
+            </div>
         </div>
-      </div>
+    </div>
    
 </body>
 </html>
