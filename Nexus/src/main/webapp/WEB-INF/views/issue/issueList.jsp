@@ -101,12 +101,11 @@
 									<form action="" method="get" align="center">
 										<select class="form-select form-select-sm" aria-label="Default select example">
 											<option selected>라벨</option>
-											<option value="1">버그</option>
-											<option value="2">문서작성</option>
-											<option value="3">베포 관려</option>
-											<option value="4">기능</option>
-											<option value="5">개발 환경</option>
-											<option value="6">기타 등등</option>
+											
+											<c:forEach var="l" items="${lList }">
+											<option value="${l.name }">${l.name }</option>
+											</c:forEach>
+										
 										</select>
 									</form>
 								</th>

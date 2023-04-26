@@ -2,15 +2,23 @@ package com.team.nexus.issue.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpUtils;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -51,17 +59,18 @@ public class IssueController {
 //		/*
 		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
 
-//		String OWNER = "";	// 레파지토리 작성자
-//		String REPO = ""; // 레파지토리
 //		
-//		String url = " https://api.github.com/repos/" + OWNER + "/" + REPO + "/issues";
 
 		String url = "";
-
+		
+		
+		String repository = (String)session.getAttribute("repository");
+		
+		
 		if (state != null) {
-			url = "https://api.github.com/repos/pyjhoop/NEXUS/issues?state=" + state;
+			url = "https://api.github.com/repos/" + repository + "/issues?state=" + state;
 		} else {
-			url = "https://api.github.com/repos/pyjhoop/NEXUS/issues?state=open";
+			url = "https://api.github.com/repos/" + repository + "/issues?state=open";
 		}
 
 		URL requestUrl = new URL(url);
@@ -189,21 +198,23 @@ public class IssueController {
 		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
 
 //		https://api.github.com/repos/{owner}/{repo}/issues 변수로 각 받아와서 코드 수정해야함
-		String apiUrl = "https://api.github.com/repos/pyjhoop/NEXUS/issues";
+		
+		
+		String repository = (String)session.getAttribute("repository");
+		
+		
+		String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
 
 		// Create a JSON object for the issue payload
 		JSONObject issueJson = new JSONObject();
 		issueJson.put("title", title);
 		issueJson.put("body", body);
 		JSONArray assigneesArray = new JSONArray();
+//		### 라벨만 있으면 에러나서 주석처리함
 		//assigneesArray.add(assignees);
 		// issueJson.put("assignees", assigneesArray);
 		
-		
-		
-		System.out.println(title);
-		System.out.println(body);
-		System.out.println(assignees);
+
 		
 
 		HttpHeaders headers = new HttpHeaders();
@@ -229,7 +240,13 @@ public class IssueController {
 	public String selectIssue(@RequestParam String ino, HttpSession session, Model model) {
 	    try {
 	        String token = ((Member) session.getAttribute("loginUser")).getToken();
-	        String apiUrl = "https://api.github.com/repos/pyjhoop/NEXUS/issues/" + ino;
+	        
+	        
+	    	String repository = (String)session.getAttribute("repository");
+			
+			String apiUrl = "https://api.github.com/repos/" + repository + "/issues/" +ino;
+			
+			
 
 	        RestTemplate restTemplate = new RestTemplate();
 	        HttpHeaders headers = new HttpHeaders();
@@ -280,7 +297,7 @@ public class IssueController {
 //	                assigneeProfiles.add(assigneeObject.get("avatar_url").getAsString());
 	            }
 	            
-	            System.out.println(list);
+//	            System.out.println(list);
 	        }
 
 
@@ -303,6 +320,7 @@ public class IssueController {
 	        model.addAttribute("title", title);
 	        model.addAttribute("body", body);
 	        model.addAttribute("state", state);
+	        model.addAttribute("ino", ino);
 //	        model.addAttribute("assignees", assignees);
 	        model.addAttribute("labels", labels);
 	        model.addAttribute("issueManagerName", issueManagerName);
@@ -318,32 +336,89 @@ public class IssueController {
 	}
 
 
+	
+	
+	
+	@RequestMapping(value = "issueState.mi", produces = "application/json; charset=utf-8")
+	public String updateStateIssue(@RequestParam int ino, @RequestParam String state, HttpSession session) {
 
-	@RequestMapping("issueDelete.mini")
-	public String deleteIssue(HttpSession session) {
-		session.setAttribute("alertMsg", "성공적으로 이슈가 삭제되었습니다");
+	    String token = ((Member) session.getAttribute("loginUser")).getToken();
+    	String repository = (String)session.getAttribute("repository");
+		
+		String apiUrl = "https://api.github.com/repos/" + repository + "/issues/" +ino;
 
-		return "redirect:issueShow.mini";
+	    // code for changing issue status
+	    JsonObject json = new JsonObject();
+	    json.addProperty("state", state);
+	    String jsonStr = json.toString();
+
+	    HttpClient client = HttpClient.newBuilder()
+	            .version(HttpClient.Version.HTTP_1_1)
+	            .build();
+
+	    HttpRequest request = HttpRequest.newBuilder()
+	            .uri(URI.create(apiUrl))
+	            .header("Authorization", "Bearer " + token)
+	            .header("Content-Type", "application/json")
+	            .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonStr))
+	            .build();
+
+	    try {
+	        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+	        System.out.println(response.body());
+	    } catch (IOException | InterruptedException e) {
+	        e.printStackTrace();
+	    }
+
+	    return "redirect:issueShow.mini";
 	}
 
-	
-	
-	
-//	@RequestMapping(value="")
-//	public String updateIssue() {
-//		// 이슈 상태 변경을 위한 JSON 데이터 생성
-//		JSONObject json = new JSONObject();
-//		json.put("state", "closed");
-//
-//		// GitHub API에 PATCH 요청 보내기
-//		String apiUrl = "https://api.github.com/repos/pyjhoop/NEXUS/issues/" + ino;
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.set("Authorization", "Bearer " + token);
-//		headers.setContentType(MediaType.APPLICATION_JSON);
-//		HttpEntity<String> requestEntity = new HttpEntity<>(json.toString(), headers);
-//		ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.PATCH, requestEntity, String.class);
-//
-//	}
+
+
+	@RequestMapping(value="updateIssue.mi", produces = "application/json; charset=utf-8")
+	public String updateIssue(@RequestParam String title, @RequestParam(required = false) String body,
+			@RequestParam(required = false) String assignees, HttpSession session) {
+		
+		
+		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
+
+//		https://api.github.com/repos/{owner}/{repo}/issues 변수로 각 받아와서 코드 수정해야함
+		
+		
+		String repository = (String)session.getAttribute("repository");
+		
+		
+		String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
+
+		// Create a JSON object for the issue payload
+		JSONObject issueJson = new JSONObject();
+		issueJson.put("title", title);
+		issueJson.put("body", body);
+		JSONArray assigneesArray = new JSONArray();
+		//assigneesArray.add(assignees);
+		// issueJson.put("assignees", assigneesArray);
+		
+
+		
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "Bearer " + token);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> requestEntity = new HttpEntity<String>(issueJson.toString(), headers);
+
+		// Send a POST request to the GitHub API
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, String.class);
+		HttpStatus responseStatus = responseEntity.getStatusCode();
+
+		if (responseStatus != HttpStatus.CREATED) {
+			throw new RuntimeException("Failed to create issue on GitHub API: " + responseStatus.toString());
+		}
+		
+		
+		
+		return "redirect:issueShow.mini";
+	}
 	
 	
 }
