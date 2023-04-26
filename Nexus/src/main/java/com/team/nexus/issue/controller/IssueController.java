@@ -2,23 +2,19 @@ package com.team.nexus.issue.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpUtils;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -35,6 +31,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -43,7 +43,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.team.nexus.issue.model.service.IssueServiceImpl;
 import com.team.nexus.issue.model.vo.GitIssue;
+import com.team.nexus.issue.model.vo.Label;
 import com.team.nexus.member.model.vo.Member;
+import com.team.nexus.repository.model.service.RepositoryService;
 
 @Controller
 public class IssueController {
@@ -51,20 +53,54 @@ public class IssueController {
 	@Autowired
 	private IssueServiceImpl iService;
 	
+	@Autowired
+	private RepositoryService repoService;
+	
 
 	@RequestMapping(value = "issueShow.mini", produces = "application/json; charset=utf-8")
 	public String issueList(HttpSession session, Member m, Model model, @RequestParam(required = false) String state)
 			throws IOException {
 
-//		/*
+		String repository = (String)session.getAttribute("repository");
+		
+//		연준이 코드
+		
+		
+		String url3 = repository + "/labels";
+        
+		
+        String labelResponse = repoService.getGitContentsByGet(url3, session);
+        
+        
+        
+        ObjectMapper obj = new ObjectMapper();
+        JsonNode jsonNode;
+        
+        jsonNode = obj.readTree(labelResponse);
+        
+        ArrayList<Label> lList = new ArrayList<Label>();
+        
+        for(int i = 0; i<jsonNode.size(); i++) {
+           
+           
+           String id = jsonNode.get(i).get("id").asText();
+           String name = jsonNode.get(i).get("name").asText();
+           String color = jsonNode.get(i).get("color").asText();
+           String description = jsonNode.get(i).get("description").asText();
+           
+           Label l = new Label(id, name, color, description);
+           lList.add(l);
+        }
+		
+		
+		
+		
 		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
 
-//		
 
 		String url = "";
 		
 		
-		String repository = (String)session.getAttribute("repository");
 		
 		
 		if (state != null) {
@@ -178,14 +214,50 @@ public class IssueController {
 		}
 
 		model.addAttribute("list", list);
+		model.addAttribute("lList", lList);
 
 		return "issue/issueList";
 	}
 
 	@RequestMapping("issueEnroll.mini")
-	public String issueEnrollForm() {
+	public String issueEnrollForm(HttpSession session, Model model) throws IOException, IOException {
 		
 		
+		
+
+		String repository = (String)session.getAttribute("repository");
+		
+//		연준이 코드
+		
+		
+		String url3 = repository + "/labels";
+        
+		
+        String labelResponse = repoService.getGitContentsByGet(url3, session);
+        
+        
+        
+        ObjectMapper obj = new ObjectMapper();
+        JsonNode jsonNode;
+        
+        jsonNode = obj.readTree(labelResponse);
+        
+        ArrayList<Label> lList = new ArrayList<Label>();
+        
+        for(int i = 0; i<jsonNode.size(); i++) {
+           
+           
+           String id = jsonNode.get(i).get("id").asText();
+           String name = jsonNode.get(i).get("name").asText();
+           String color = jsonNode.get(i).get("color").asText();
+           String description = jsonNode.get(i).get("description").asText();
+           
+           Label l = new Label(id, name, color, description);
+           lList.add(l);
+        }
+		
+		
+		model.addAttribute("lList", lList);
 		
 		return "issue/issueEnrollView";
 	}
@@ -243,6 +315,40 @@ public class IssueController {
 	        
 	        
 	    	String repository = (String)session.getAttribute("repository");
+	    	
+	    	
+	    	
+//			연준이 코드
+			
+			
+			String url3 = repository + "/labels";
+	        
+			System.out.println(url3);
+			
+	        String labelResponse = repoService.getGitContentsByGet(url3, session);
+	        
+	        
+	        
+	        ObjectMapper obj = new ObjectMapper();
+	        JsonNode jsonNode;
+	        
+	        jsonNode = obj.readTree(labelResponse);
+	        
+	        ArrayList<Label> lList = new ArrayList<Label>();
+	        
+	        for(int i = 0; i<jsonNode.size(); i++) {
+	           
+	           
+	           String id = jsonNode.get(i).get("id").asText();
+	           String name = jsonNode.get(i).get("name").asText();
+	           String color = jsonNode.get(i).get("color").asText();
+	           String description = jsonNode.get(i).get("description").asText();
+	           
+	           Label l = new Label(id, name, color, description);
+	           lList.add(l);
+	        }
+	    	
+	    	
 			
 			String apiUrl = "https://api.github.com/repos/" + repository + "/issues/" +ino;
 			

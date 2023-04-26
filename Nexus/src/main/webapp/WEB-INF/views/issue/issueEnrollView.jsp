@@ -74,7 +74,7 @@
 
 		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">이슈 담당자</label>
-			
+
 			<select id="defaultSelect" class="form-select" name="assignees">
 				<option>이슈 담당자</option>
 				<option value="libiho" type="checkbox">One</option>
@@ -88,15 +88,15 @@
 			<label for="defaultSelect" class="form-label">라벨</label>
 			<select id="defaultSelect" class="form-select" name="labels">
 				<option>라벨</option>
-				<option value="1" type="checkbox">One</option>
-				<option value="2" type="checkbox">Two</option>
-				<option value="3" type="checkbox">Three</option>
+				<c:forEach var="l" items="${lList }">
+					<option value="${l.name }">${l.name }</option>
+				</c:forEach>
 			</select>
 		</div>
 
 
 
-		
+
 
 
 		<div class="mb-3">
