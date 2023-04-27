@@ -59,16 +59,18 @@
                             </div>
                             
                             <c:forEach var="i" items="${map }" varStatus="status">
-                            
-                            	<p class="circle ${array[status.index] }"></p>
-                                <h5> ${ i }%</h5>
+                                <div style="float: left; width: 50%;">
+                                    <p class="circle ${array[status.index] }"></p>
+                                    <span class="cirName"> ${ i }%</span>
+
+                                </div>
                             
                             </c:forEach>
                
                         </div>
 
                     </div>
-                    <span id="repoPath">${repo.userName }/${repo.repoName }</span>
+                    <span id="repoPath" class="mb-3">${repo.userName }/${repo.repoName }</span>
                 </div>
 
                 <input type="hidden" name="hiddenpath" id="hiddenpath" value="">

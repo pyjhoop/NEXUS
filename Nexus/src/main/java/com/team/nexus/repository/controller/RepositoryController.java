@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.async.DeferredResult;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -30,9 +29,7 @@ import com.team.nexus.repository.model.vo.Repositories;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 import reactor.util.function.Tuple3;
 
@@ -73,24 +70,36 @@ public class RepositoryController {
 		
 		String url = repo.getUserName()+"/"+repo.getRepoName()+"/languages";
 		
+		String repository = repo.getUserName()+"/"+repo.getRepoName();
 		
-		session.setAttribute("repository", repo.getUserName()+"/"+repo.getRepoName());
+		String check = (String)session.getAttribute("repository");
+		
+		if(repository.equals(check)) {
+			return "repository/repositoryDetail";
+		}
+		
+		
+		session.setAttribute("repository", repository);
 		session.setAttribute("repoName", repo.getRepoName());
 		
 		
 		
+		
+		
 		// 언어 사용률 가져오는 부분
-		Mono<String> responseText = repoService.test(url, session).subscribeOn(Schedulers.boundedElastic());
+		Mono<String> responseText = repoService.asynHttpRequest(url, session).subscribeOn(Schedulers.boundedElastic());
 		
 		String repoContentsUrl =  repo.getUserName()+"/";
 		repoContentsUrl += repo.getRepoName()+"/contents";
-		Mono<String> responseText1 = repoService.test(repoContentsUrl, session).subscribeOn(Schedulers.boundedElastic());
+		Mono<String> responseText1 = repoService.asynHttpRequest(repoContentsUrl, session).subscribeOn(Schedulers.boundedElastic());
 		
 		String getMemberUrl = repo.getUserName()+"/";
 		getMemberUrl+= repo.getRepoName()+"/collaborators";
 		
-		Mono<String> members = repoService.test(getMemberUrl, session).subscribeOn(Schedulers.boundedElastic());
+		Mono<String> members = repoService.asynHttpRequest(getMemberUrl, session).subscribeOn(Schedulers.boundedElastic());
 		System.out.println();
+		
+		// 프로젝트, 마일스톤 가져오자
 		
 		Tuple3<String, String, String> tuple3 = Mono.zip(responseText,responseText1,members).block();
 		
@@ -159,12 +168,17 @@ public class RepositoryController {
 		session.setAttribute("RepoMembers", mList);
 		
 		
+		session.setAttribute("list",list);
+		session.setAttribute("map",map);
+		session.setAttribute("repo",repo);
+		session.setAttribute("text",text);
+		session.setAttribute("mList",mList);
 		
-		model.addAttribute("list",list);
-		model.addAttribute("map",map);
-		model.addAttribute("repo",repo);
-		model.addAttribute("text",text);
-		model.addAttribute("mList",mList);
+//		model.addAttribute("list",list);
+//		model.addAttribute("map",map);
+//		model.addAttribute("repo",repo);
+//		model.addAttribute("text",text);
+//		model.addAttribute("mList",mList);
 		
 		
 		return "repository/repositoryDetail";
@@ -179,7 +193,7 @@ public class RepositoryController {
 		
 		String url = r.getUserName()+"/"+r.getRepoName();
 		
-		String responseText = repoService.getGitContentsByGet(url, session);
+		String responseText = repoService.synHttpRequest(url, session,"get");
 		JsonObject totalObj = JsonParser.parseString(responseText).getAsJsonObject();
 		String status = totalObj.get("private").getAsString();
 		
@@ -205,7 +219,7 @@ public class RepositoryController {
 	public String ajaxGetContent(String path, HttpSession session) {
 		
 		//System.out.println(path);
-		String response = repoService.getGitContentsByGet(path, session);
+		String response = repoService.synHttpRequest(path, session,"get");
 		
 		
 		Gson gson = new Gson();
@@ -265,7 +279,7 @@ public class RepositoryController {
 		
 		String url = repository+"/collaborators/"+id;
 		
-		String response = repoService.gitPutMethod(url, session);
+		String response = repoService.synHttpRequest(url, session,"put");
 		System.out.println(response);
 		
 		return response;
@@ -280,7 +294,7 @@ public class RepositoryController {
 		String repository = (String)session.getAttribute("repository");
 		String url = repository+"/collaborators/"+id;
 		
-		String response = repoService.gitDeleteMethod(url, session);
+		String response = repoService.synHttpRequest(url, session,"delete");
 		
 		return response;
 		
