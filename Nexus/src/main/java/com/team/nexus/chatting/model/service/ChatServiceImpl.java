@@ -149,6 +149,17 @@ public class ChatServiceImpl implements ChatService{
 		return cDao.opponentUser(sqlSession,chatMessage);
 	}
 
+	@Override
+	public int insertChatFile(ChatMessage cm) {
+		return cDao.insertChatFile(sqlSession,cm);
+	}
+
+	@Override
+	public void updateFileName(ChatMessage chatMessage) {
+		cDao.updateFileName(sqlSession,chatMessage);
+		
+	}
+
 	
 
 }

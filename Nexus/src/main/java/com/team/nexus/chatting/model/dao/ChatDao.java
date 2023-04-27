@@ -97,4 +97,13 @@ public class ChatDao {
 	public ChatUser opponentUser(SqlSessionTemplate sqlSession,ChatMessage chatMessage) {
 		return sqlSession.selectOne("chattingMapper.opponentUser", chatMessage);
 	}
+	
+	public int insertChatFile(SqlSessionTemplate sqlSession,ChatMessage cm) {
+		return sqlSession.insert("chattingMapper.insertChatFile", cm);
+	}
+	
+	public void updateFileName(SqlSessionTemplate sqlSession,ChatMessage chatMessage) {
+		sqlSession.update("chattingMapper.updateFileName",chatMessage);
+	}
+	
 }

@@ -61,7 +61,7 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 		//logger.info(chatMessage);
 		// 전달 받은 채팅메세지를 db에 삽입
 		System.out.println(chatMessage);
-		if(chatMessage.getInvite() != null) {
+		if(chatMessage.getInvite() != null && !chatMessage.getInvite().equals("F")) {
 			if(chatMessage.getInvite().equals("Z")) {
 				int exit = cService.exitRoom(chatMessage);
 				chatMessage.setChattingContent(chatMessage.getUserName()+"님이 방을 나가셨습니다.");
@@ -99,10 +99,20 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 					
 			}
 				
+		int result = 0;	
+		if(chatMessage.getInvite() != null && chatMessage.getInvite().equals("F")) {
+			if(chatMessage.getChattingContent().substring(0,2).equals("파일")) {
+			result = cService.insertChatFile(chatMessage);
+			}else {
+			chatMessage.setChattingContent("");	
+			result = cService.insertChatFile(chatMessage);	
+			chatMessage.setChattingContent("사진을 보냈습니다.");	
+			}
+		}else {
+			result = cService.insertMessage(chatMessage);
 			
+		}
 		
-		
-		int result = cService.insertMessage(chatMessage);
 		int result2 =  cService.updateMessage(chatMessage);
 		ChatUser opponent = cService.opponentUser(chatMessage);
 		int displayRoom = cService.displayRoom(opponent);	
@@ -123,7 +133,7 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 					count++;
 				}
 			}
-				if(chatMessage.getInvite() == null) {
+				if(chatMessage.getInvite() == null || chatMessage.getInvite().equals("F") ) {
 				int result3= cService.unreadMessage(chatMessage);
 				for(WebSocketSession s : sessions) {
 					ChatUser cu = new ChatUser();

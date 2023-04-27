@@ -26,5 +26,7 @@ public class Member {
 	private String token;
 	private String status;
 	private String search;
-	
+	private int createUserNo;
+	private String roomTitle2;
+	private String changeName2;
 }

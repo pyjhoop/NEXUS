@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -51,7 +54,7 @@ public class ChattingController {
 		int result = cService.readMessage(cu);
 		ArrayList<ChatMessage> cList = cService.selectMessage(cr.getRoomNo()); 
 		modularity(session, model);
-		System.out.println("cr : " + cr);
+		System.out.println("cList : " + cList);
 		model.addAttribute("cu",cu);
 		model.addAttribute("cList",cList);
 		model.addAttribute("cr", cr);
@@ -89,7 +92,10 @@ public class ChattingController {
 	public String createRoom(int checkNo, HttpSession session) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int[] cUser = {loginUser.getUserNo(), checkNo};
-		Member m = cService.selectMember(checkNo);
+		Member m = cService.selectMember(loginUser.getUserNo());
+		Member om = cService.selectMember(checkNo);
+		m.setRoomTitle2(om.getUserName());
+		m.setChangeName2(om.getProfile());
 		int result = cService.createRoom(m);
 		if(result>0) {
 			for(int c : cUser) {
@@ -132,7 +138,6 @@ public class ChattingController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNo = loginUser.getUserNo();
 		ArrayList<ChatRoom> list = cService.updateRoom(userNo);
-		System.out.println(list);
 		return new Gson().toJson(list);
 	}
 	
@@ -142,6 +147,28 @@ public class ChattingController {
 		int hideRoom = cService.hideRoom(cu);
 		
 		return "redirect:/selectChat.ih";
+	}
+
+	@ResponseBody
+	@RequestMapping("fileChat.ih")
+	public Map<String, String> insertChatFile(MultipartHttpServletRequest request, HttpServletRequest servletRequest, HttpSession session) {
+		MultipartFile upfile = request.getFile("file");
+		ChatMessage cm = new ChatMessage();
+		cm.setUserNo(Integer.parseInt(servletRequest.getParameter("userNo")));
+		cm.setRoomNo(Integer.parseInt(servletRequest.getParameter("roomNo")));
+		if(!upfile.getOriginalFilename().equals("")) {
+			String changeName = saveFile(upfile, session);
+			cm.setOriginName(upfile.getOriginalFilename());
+			cm.setChangeName("resources/uploadFiles/"+changeName);
+		}
+		
+		 Map<String, String> map = new HashMap<>();
+		
+		
+			 map.put("originName", cm.getOriginName());
+		     map.put("changeName", cm.getChangeName());
+		
+		return map;
 	}
 	
 	public String saveFile(MultipartFile upfile, HttpSession session) {

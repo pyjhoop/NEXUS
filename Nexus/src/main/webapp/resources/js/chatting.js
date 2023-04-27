@@ -77,8 +77,9 @@ chatSocket.onmessage = function(e) {
 
     // 전달받은 메세지를 JS객체로 변환
     const chatMessage = JSON.parse(e.data); // js객체로 변환.
+    console.log(chatMessage.chattingContent.substr(0, 2));
     let myChatting = "";
-
+    console.log(chatMessage);
     if(chatMessage.invite == 'O'){
         myChatting = "<li class='chat-invite'>" +
         chatMessage.userName + 
@@ -100,7 +101,59 @@ chatSocket.onmessage = function(e) {
     }else{
     //내가쓴 채팅
     if (chatMessage.userNo == userNo) {
-         myChatting = "<li class='media sent'>" +
+        if(chatMessage.invite == 'F'){
+            myChatting += "<li class='media sent'>" +
+            "<div class='media-body2'>" +
+            "<div class='msg-box'>" +
+            "<div>" +
+            "<div class='chat-msg-attachments'>";
+            if(chatMessage.chattingContent.substr(0, 2) == '파일'){
+            myChatting +=   "<div>" +
+                            "<a href=" +
+                            chatMessage.changeName +
+                            " download=" +
+                            chatMessage.originName +
+                             " >" +
+                            chatMessage.originName +
+                            "<i class='bx bxs-download'>" +
+                            "</i>" +
+                            "</a>";  
+            }else{
+             myChatting += "<div class='chat-attachment'>" +
+                            "<img src=" +
+                            chatMessage.changeName +
+                            " >" +
+                            "<div class='chat-attach-caption'>" +
+                            chatMessage.originName +
+                            "</div>" +
+                            "<a href=" +
+                            chatMessage.changeName +
+                            " download=" +
+                            chatMessage.originName +
+                            " class='chat-attach-download'>" +
+                            "<i class='bx bxs-download'>" +
+                            "</i>" +
+                            "</a>";
+            }
+           
+            myChatting +=   "</div>" +
+                            "</div>" +
+                            "<ul class='chat-msg-info'>" +
+                            "<li>" +
+                            "<div class='chat-time'>" +
+                            "<span>" +
+                            chatMessage.today +
+                            "</span>" +
+                            "</div>" +
+                            "</li>" +
+                            "</ul>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>" +
+                            "</li>";
+        }else{
+        
+        myChatting = "<li class='media sent'>" +
         "<div class='media-body2'>" +
         "<div class='msg-box'>" +
         "<div>" +
@@ -120,7 +173,67 @@ chatSocket.onmessage = function(e) {
         "</div>" +
         "</div>" +
         "</li>";
+        }
     } else {
+        if(chatMessage.invite == 'F'){
+            myChatting += "<li class='media d-flex received'>" +
+            "<div class='avatar'>" +
+            "<img src= " +
+            chatMessage.profile + 
+            " class='w-px-40 h-px-40 rounded-circle'>"+
+            "<div id='cnt-name'>" +
+            chatMessage.userName + 
+            "</div>" +
+            "</div>" +
+            "<div class='media-body'>" +
+            "<div class='msg-box'>" +
+            "<div>" +
+            "<div class='chat-msg-attachments'>";
+            if(chatMessage.chattingContent.substr(0, 2) == '파일'){
+                myChatting +=   "<div>" +
+                                "<a href=" +
+                                chatMessage.changeName +
+                                " download=" +
+                                chatMessage.originName +
+                                 " >" +
+                                chatMessage.originName +
+                                "<i class='bx bxs-download'>" +
+                                "</i>" +
+                                "</a>";  
+                }else{
+                 myChatting += "<div class='chat-attachment'>" +
+                                "<img src=" +
+                                chatMessage.changeName +
+                                " >" +
+                                "<div class='chat-attach-caption'>" +
+                                chatMessage.originName +
+                                "</div>" +
+                                "<a href=" +
+                                chatMessage.changeName +
+                                " download=" +
+                                chatMessage.originName +
+                                " class='chat-attach-download'>" +
+                                "<i class='bx bxs-download'>" +
+                                "</i>" +
+                                "</a>";
+                }
+                myChatting +=     "</div>" +
+                                    "</div>" +
+                                    "<ul class='chat-msg-info'>" +
+                                    "<li>" +
+                                    "<div class='chat-time'>" +
+                                    "<span>" +
+                                    chatMessage.today +
+                                    "</span>" +
+                                    "</div>" +
+                                    "</li>" +
+                                    "</ul>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</li>";
+        }else{
+
         myChatting = "<li class='media d-flex received'>" +
         "<div class='avatar'>" +
         "<img src= " +
@@ -149,6 +262,7 @@ chatSocket.onmessage = function(e) {
         "</div>" +
         "</div>" +
         "</li>";
+        }
     }
     }
     // 채팅창

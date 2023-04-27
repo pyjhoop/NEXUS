@@ -27,4 +27,7 @@ public class ChatRoom {
 	private String changeName;
 	private String lastChat;
 	private Date lastDate;
+	private int createUserNo;
+	private String roomTitle2;
+	private String changeName2;
 }

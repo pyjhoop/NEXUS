@@ -42,6 +42,8 @@
 }
   #cnt-name {
   	font-size: 3px;
+  	font-weight :800;
+  	padding-top: 8px;
   }
   .bx {
     vertical-align: middle;
@@ -66,8 +68,10 @@
     justify-content: space-between;
     width: 100%;
 }
-
-.list-unstyled {
+	.down-link{
+	
+	}
+	.list-unstyled {
             width: 100%;
             height: 495px;
             overflow: auto;
@@ -83,6 +87,18 @@
     margin: 1.875rem 0;
     text-align: center;
    }      
+   
+   .chat-img {
+   width : 100%;
+ 	height: 100%; 
+	}
+	.chat-attachment{
+	height:26vh;
+  	width: 50vw;	
+	}
+	.down-link{
+	font-size: 1.45rem;
+	}
  </style>
 </head>
 <body>
@@ -97,7 +113,6 @@
 	<div class="chat-header">
 	<span>Chats</span>
 	<div class="chat-compose" id="create-room">
-	<i class="bx bx-plus-circle"></i>
 	</div>
 	</div>
 	
@@ -232,7 +247,6 @@
 	</c:otherwise>
 	</c:choose>
 	<div class="chat-body">
-
 	<ul class="list-unstyled" id="room-scroll2">
 	<c:forEach var="c" items="${cList }">
 	<c:choose>
@@ -242,11 +256,14 @@
 	</li>
 	</c:when>
 	<c:otherwise>
-	<c:if test="${c.userNo eq loginUser.userNo }">
+	<c:choose>
+	<c:when test="${c.userNo eq loginUser.userNo }">
 	<li class="media sent">
 	<div class="media-body2">
 	<div class="msg-box">
 	<div>
+	<c:choose>
+	<c:when test="${c.invite != 'F'}">
 	<p>${ c.chattingContent }</p>
 	<ul class="chat-msg-info">
 	<li>
@@ -255,20 +272,55 @@
 	</div>
 	</li>
 	</ul>
+	</c:when>
+	<c:otherwise>
+	<div class="chat-msg-attachments">
+	<c:choose>
+	<c:when test="${empty c.chattingContent}">
+	<div class="chat-attachment">
+	<img src="${c.changeName }"  class="chat-img">
+	<div class="chat-attach-caption">${c.originName }</div>
+	<a href="${c.changeName }" download="${c.originName }" class="chat-attach-download">
+	<i class="bx bxs-download"></i>
+	</a>
+	</c:when>
+	<c:otherwise>
+	<div>
+	<a href="${c.changeName }" download="${c.originName }">
+	${c.originName }
+	<i class="bx bxs-download down-link"></i>
+	</a>
+	</c:otherwise>
+	</c:choose>
+	</div>
+	</div>
+	<ul class="chat-msg-info">
+	<li>
+	<div class="chat-time">
+	<span>${ c.createDate }</span>
+	</div>
+	</li>
+	</ul>
+	</c:otherwise>
+	</c:choose>
 	</div>
 	</div>
 	</div>
 	</li>
-	</c:if>
-	<c:if test="${ c.userNo != loginUser.userNo }">
+	</c:when>
+	<c:otherwise>
 	<li class="media d-flex received">
 	<div class="avatar">
 	<img src="${c.profile }" alt="" class="w-px-40 h-px-40 rounded-circle">
+	<br>
 	<div id="cnt-name">${c.userName }</div>
 	</div>
 	<div class="media-body">
 	<div class="msg-box">
 	<div>
+	<c:choose>
+	<c:when test="${c.invite != 'F'}">
+	
 	<p>${ c.chattingContent }</p>
 	<ul class="chat-msg-info">
 	<li>
@@ -277,14 +329,46 @@
 	</div>
 	</li>
 	</ul>
+	</c:when>
+	<c:otherwise>
+	<div class="chat-msg-attachments">
+	<c:choose>
+	<c:when test="${empty c.chattingContent}">
+	<div class="chat-attachment">
+	<img src="${c.changeName }" class="chat-img">
+	<div class="chat-attach-caption">${c.originName }</div>
+	<a href="${c.changeName }" download="${c.originName }" class="chat-attach-download">
+	<i class="bx bxs-download"></i>
+	</a>
+	</div>
+	</c:when>
+	<c:otherwise>
+	<div>
+	<a href="${c.changeName }" download="${c.originName }">
+	${c.originName }
+	<i class="bx bxs-download down-link"></i>
+	</a>
+	</div>
+	</c:otherwise>
+	</c:choose>
+	</div>
+	<ul class="chat-msg-info">
+	<li>
+	<div class="chat-time">
+	<span>${ c.createDate }</span>
+	</div>
+	</li>
+	</ul>
+	</c:otherwise>
+	</c:choose>
 	</div>
 	</div>
 	</div>
 	</li>
-	</c:if>
 	</c:otherwise>
 	</c:choose>
-	
+	</c:otherwise>
+	</c:choose>
 	</c:forEach>
 	</ul>
 	
@@ -292,10 +376,13 @@
 	<div class="chat-footer">
 	<div class="input-group">
 	<div class="input-group-prepend">
+	<form id="m_fileForm">
 	<div class="btn-file btn">
 	<i class="bx bx-paperclip"></i>
-	<input type="file">
+	<input type="file" id="m-file">
+	<input type="hidden" name="hidden-form">
 	</div>
+	</form>
 	</div>
 	<input type="text" class="input-msg-send form-control" id="inputChatting" placeholder="Type something">
 	<div class="input-group-append">
@@ -321,8 +408,7 @@
         const roomNo = "${cr.roomNo}";
         const profile = "${loginUser.profile}";
         const contextPath = "${contextPath}";
-      
-
+       
         // /chat이라는 요청주소로 통신할수있는 webSocket 객체 생성 --> /spring/chat
         let chatSocket = new SockJS("http://localhost:8010/nexus/chat");
         //-> websocket 프로토콜을 이용해서 해당주소로 데이터를 송/수신 할수 있다.
@@ -407,13 +493,78 @@
         		chatSocket.send(JSON.stringify(chatMessage));
         		
         	});
+        	
+        	 $(function() {
+        		
+
+        		  $("#m-file").change(function(e){
+        			  var formData = new FormData();
+        			
+        		    formData.append("file",$('#m-file')[0].files[0]);
+        		    formData.append("userNo",userNo);
+        		    formData.append("roomNo",roomNo);
+        		   
+        		    $.ajax({
+        		    	url:"fileChat.ih",
+        		    	data: formData,
+        		    	type:"POST",
+        		        async: true, 
+        		    	processData: false,
+        	            contentType: false,
+        	            enctype: "multipart/form-data",
+        		    	success:function(result){
+        		    		
+        		    	let ext = result.originName.split('.').pop().toLowerCase();
+        		    	
+        		    	if ($.inArray(ext, ['jpg', 'jpeg', 'png', 'gif']) != -1) {
+        		    		const chatMessage = {
+                                    "chattingContent": '사진을 보냈습니다.',
+                                    "roomNo": roomNo,
+                                    "userNo": userNo,
+                                    "invite" : 'F',
+                                    "originName" : result.originName,
+                                    "changeName" : result.changeName,
+                                    "profile":profile,
+                                    "userName": userName
+                                };
+        		    		
+        		    		chatSocket.send(JSON.stringify(chatMessage));
+        		    		return false;
+        		    	}else{
+        		    		const chatMessage = {
+                                    "chattingContent": '파일: '+ result.originName ,
+                                    "roomNo": roomNo,
+                                    "userNo": userNo,
+                                    "invite" : 'F',
+                                    "originName" : result.originName,
+                                    "changeName" : result.changeName,
+                                    "profile":profile,
+                                    "userName": userName
+                                };
+        		    		
+        		    		chatSocket.send(JSON.stringify(chatMessage));
+        		    		return false;
+        		    	}
+        		    	
+        		    	
+        		    	},
+        		    	error:function(){
+        		    		console.log("ajax 통신 실패");
+        		    	}
+        		    	
+        		    });
+        		 
+        		    });
+
+        		});
+    
     </script>
 
 	
 	
 	<!--  <script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>-->
 	<script src="${pageContext.request.contextPath}/resources/js/feather.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.slimscroll.min.js""></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.slimscroll.min.js""></script> 
 	<script src="${pageContext.request.contextPath}/resources/js/chatting.js"></script>
 	<!--  <script src="${pageContext.request.contextPath}/resources/js/chat_script.js"></script>-->
 </body>

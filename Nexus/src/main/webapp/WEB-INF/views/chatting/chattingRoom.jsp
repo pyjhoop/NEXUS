@@ -219,6 +219,7 @@
                                       class="form-control"
                                       name="roomTitle"
                                       placeholder="Enter Name"
+                                      required
                                     />
                                   </div>
                                 </div>
@@ -245,6 +246,8 @@
 	
 	
 	<script>
+	const userNo = "${loginUser.userNo}";
+	
 	let checkNo = new Array();
 	let count = 0;
 	$("#create-room").click(function(){
@@ -298,12 +301,12 @@
 						 + "<div class='avatar avatar-away'>"
 						 + "<img src="
 						 + result[i].changeName
-						 + " class='avatar-img rounded-circle'>"
+						 + " class='avatar-img rounded-circle room-img'>"
 						 + "</div>"
 						 + "</div>"
 						 + "<div class='media-body2'>"
 					     + "<div>"
-						 + "<div class='user-name'>"
+						 + "<div class='user-name room-title'>"
 					     + result[i].roomTitle
 						 + "</div>"
 						 + "<div class='user-last-chat'>"
@@ -346,6 +349,10 @@
 					$(".user-last-chat").eq(i).show();	
 					}else{
 					$(".user-last-chat").eq(i).hide();	
+					}
+					if(result[i].createUserNo == userNo ){
+					$(".room-title").eq(i).html(result[i].roomTitle2);
+					$(".room-img").eq(i).attr("src",result[i].changeName2);
 					}
 				}
 				}

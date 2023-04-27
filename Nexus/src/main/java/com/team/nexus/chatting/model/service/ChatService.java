@@ -54,4 +54,8 @@ public interface ChatService {
 	 int displayRoom(ChatUser cu);
 	 
 	 ChatUser opponentUser(ChatMessage chatMessage);
+	 
+	 int insertChatFile(ChatMessage cm);
+	 
+	 void updateFileName(ChatMessage chatMessage);
 }
