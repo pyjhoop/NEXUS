@@ -1,5 +1,6 @@
 .card-img-top{
-    height: 200px;
+    height: 160px;
+    width: 200px;
 }
 
 .userInfo{
@@ -16,6 +17,10 @@
     font-weight: 800;
     height: 20px;
     overflow: hidden;
+}
+
+.card-body{
+    padding-bottom: 5px !important;
 }
 
 .bxs-heart-circle{
@@ -49,3 +54,28 @@
 .bx-chevrons-up{
     font-size: 2rem !important;
 }
+
+#observer{
+	visibility: hidden;
+}
+
+.new:hover{
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.popular:hover{
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+.my:hover{
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.popular,.my,.new{
+    font-weight: 900;
+    font-size: 1.3rem;
+}
+
+

@@ -242,6 +242,7 @@ chatSocket.onmessage = function(e) {
         "<div id='cnt-name'>" +
         chatMessage.userName + 
         "</div>" +
+
         "</div>" +
         "<div class='media-body'>" +
         "<div class='msg-box'>" +

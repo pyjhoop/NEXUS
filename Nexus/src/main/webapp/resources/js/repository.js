@@ -6,4 +6,6 @@ $(function(){
     $(".active").removeClass("active");
     $("#repository").addClass("active")
 
+    $("#repobtn").css("display", "block");
 })
+

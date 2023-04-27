@@ -25,8 +25,8 @@ public class NewsService {
 		return newsDao.selectList(sqlsession);
 	}
 
-	public ArrayList<News> selectList(int page) {
-		return newsDao.selectList(sqlsession, page);
+	public ArrayList<News> selectList(int page, String state) {
+		return newsDao.selectList(sqlsession, page, state);
 	}
 
 	public ArrayList<NewsReply> selectrList(int nNo) {
@@ -76,6 +76,14 @@ public class NewsService {
 
 	public int likeCount1(Zzim z) {
 		return newsDao.likeCount1(sqlsession,z);
+	}
+
+	public int updateNews(News n) {
+		return newsDao.upateNews(sqlsession, n);
+	}
+
+	public ArrayList<News> ajaxRepage(String state) {
+		return newsDao.ajaxRepage(sqlsession, state);
 	}
 
 

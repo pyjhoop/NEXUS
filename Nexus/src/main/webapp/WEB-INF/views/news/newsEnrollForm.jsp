@@ -23,6 +23,7 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/summernote-ko-KR.js"></script>
 
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 
 </head>
 <body>
@@ -33,8 +34,9 @@
           
           <div class="row mb-3" style="margin-top: 15px;">
             <div class="title">
-              TITLE
+              TITLE 
             </div>
+    
 
             <div class="col-sm-10">
               <input type="text" class="form-control" id="newsTitle" name="newsTitle" placeholder="Title" value="${ news.newsTitle }">
@@ -49,9 +51,11 @@
           <c:if test="${ !empty news }">
           	<script>
           		
+          		
               let text = `${news.newsContent}`;
               $("#newsContent").summernote('code',text)
           	</script>
+            <input type="hidden" name="newsNo", value="${news.newsNo }">
           </c:if>
 
          
@@ -60,18 +64,19 @@
           <input type="hidden" name="userNo" value="${loginUser.userNo}">
           <input type="hidden" name="newsContent" id="newsContent">
           <input type="hidden" name="thumbnail" id="thumbnail">
+          
 
           <div class="btns"  align="right">
 
               
               <c:choose>
 	              <c:when test="${ status eq 'E' }">
-		              <button type="reset" class="btn btn-outline-danger">초기화</button>
+		             
 		              <button type="submit" class="btn btn-outline-primary" onclick="return confirm();">제출하기</button>
 	              </c:when>
 	              <c:otherwise>
-	                  <button type="reset" class="btn btn-outline-danger">초기화</button>
-	                  <button type="submit" class="btn btn-outline-secondary">수정하기</button>
+	                  
+	                  <button type="submit" class="btn btn-outline-secondary" onclick="return confirm();">수정하기</button>
 	              </c:otherwise>
               </c:choose>
 

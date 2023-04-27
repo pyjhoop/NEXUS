@@ -14,10 +14,16 @@
 		<typeAlias type="com.team.nexus.calendar.model.vo.Calendar" alias="Calendar"/>
 		<typeAlias type="com.team.nexus.news.model.vo.News" alias="News"/>
 		<typeAlias type="com.team.nexus.news.model.vo.NewsReply" alias="NewsReply"/>
+		<typeAlias type="com.team.nexus.pr.model.vo.PersonalPr" alias="PersonalPr"/>
+		<typeAlias type="com.team.nexus.pr.model.vo.Pagination" alias="Pagination"/>
+		<typeAlias type="com.team.nexus.pr.model.vo.PageInfo" alias="PageInfo"/>
+		
 
 		<typeAlias type="com.team.nexus.chatting.model.vo.ChatRoom" alias="ChatRoom"/>
 		<typeAlias type="com.team.nexus.chatting.model.vo.ChatMessage" alias="ChatMessage"/>
 		<typeAlias type="com.team.nexus.chatting.model.vo.ChatUser" alias="ChatUser"/>
+		
+		<typeAlias type="com.team.nexus.repository.model.vo.Repositories" alias="Repositories"/>
 		
 
 		<typeAlias type="com.team.nexus.news.model.vo.Zzim" alias="Zzim"/>
@@ -33,9 +39,13 @@
 	 
 	<!-- 유의사항 : 미리 등록해두려면 해당 mapper 파일이 진짜 존재하고 있는 상태여야함! 뿐만 아니라 namespace 등록까지 지정돼있어야 한다. -->
 	<mappers>
+		<mapper resource="/mappers/personalPr-mapper.xml"/>
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/calendar-mapper.xml"/>
 		<mapper resource="/mappers/news-mapper.xml"/>
 		<mapper resource="/mappers/chatting-mapper.xml"/>
+		<mapper resource="/mappers/repositories-mapper.xml"/>
+		
+
 	</mappers>
 </configuration>

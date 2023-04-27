@@ -29,4 +29,6 @@ public class Member {
 	private int createUserNo;
 	private String roomTitle2;
 	private String changeName2;
+	private String rollName;
+	
 }

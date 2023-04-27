@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,12 +10,14 @@
 </head>
 <style>
 #mainBody{
-	height: 2500px;
-	width: 85%;
+	height: 1500px; 
+	width: 100%;
 	margin:auto;
+	margin-top: 10px !important;
+	margin-bottom: 0px !important;
 }
 #stacks{
-	width:89%;
+	width:100%;
 	margin:auto;
 	padding-top:25px;
 	padding-bottom:50px;
@@ -22,10 +25,10 @@
 	padding-right:20px;
 }
 #prs{
-	width:89%;
-	height:50px;
+	width:100%;
+	height:2.5%;
 	margin:auto;
-	padding-top:50px;
+	padding-top:10px;
 }
 #stackCategory>li{
 	display:flex;
@@ -286,17 +289,99 @@ hr{
 	margin-top:0px;
 	margin-bottom:0px;
 }
+.card{
+	margin: 10px;
+	float: left;
+}
+#prList{
+	width: 100%;
+	height: 1500px !important;
+}
+.card{
+	width: 264px;
+	/* height: 229.984px; */
+	height: 280px;
+}
+.card-body{
+	display: block;
+	padding-top: 15px !important;
+	padding-right:10px !important;
+	padding-bottom:25px !important;
+	height: 241px;
+}
+.card-text{
+	width: 216px;
+	/* height: 103px; */
+	overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box; 
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  margin-bottom: 35px !important;
+	
+}
+.card-title{
+	width: 216px;
+	/* height: 19.797px; */
+	/* height:40px; */
+	 overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box; 
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+#card-id{
+	margin-bottom: 15px !important;
+}
+ .card-body:hover{
+	cursor: pointer;
+	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+} 
+/* .card-title:hover{
+	cursor: pointer;
+	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+} 
+.card-text:hover{
+	cursor: pointer;
+	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+} 
+.bx:hover{
+	cursor: pointer;
+	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+} 
+ */
 
+.bx-bookmark::before{
+	width: 30px;
+	height: 30px;
+}
+.bx{
+	font-size: 1.8rem !important;
+}
+#prs{
+	width: 83%; 
+	height: 50px;
+	margin-bottom: 0px;
+	padding-top: 3px;
+}
+#newBtn{
+	float: right;
+}
+.pagination{
+	width: 100%;
+	text-align: center;
+}
 </style>
 <body>
 <jsp:include page="../common/template.jsp"/>
 
-<div id="mainBody">
+<div class="container-xxl flex-grow-1 container-p-y cpadding mt-5">
+	<div id="mainBody" style="width: 100%;">
 
 
 
-<div id="stacks">
-<div class="col-xl-6" style="width: 90%; margin: auto;" >
+<!-- <div id="stacks">
+<div class="col-xl-6" style="width: 100% !important; margin: auto;" >
                   <h6 class="text-muted"></h6>
                   <div class="nav-align-top mb-4" >
                     <ul class="nav nav-tabs nav-fill" role="tablist" style="margin-bottom: 0;" >
@@ -366,7 +451,7 @@ hr{
 							<li class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/jest.svg" alt="Jest"><span>Jest</span></li></ul>
 							</ul>
 						<div class="SelectedLanguage_selectedWrapper__2StUQ"><ul class="SelectedLanguage_selectedLanguages__DYJjl"></ul></div>
-						<!-- <div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div> -->
+						<div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div>
 						</section>
                       </div>
                       <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
@@ -382,7 +467,7 @@ hr{
 							<li class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/nodejs.svg" alt="Nodejs"><span>Nodejs</span></li>
 							</ul>
 						<div class="SelectedLanguage_selectedWrapper__2StUQ"><ul class="SelectedLanguage_selectedLanguages__DYJjl"></ul></div>
-						<!-- <div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div> -->
+						<div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div>
 						</section>
                       </div>
                       <div class="tab-pane fade" id="navs-justified-messages" role="tabpanel">
@@ -405,7 +490,7 @@ hr{
 							<li class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/python.svg" alt="Python"><span>Python</span></li>
 							</ul>
 						<div class="SelectedLanguage_selectedWrapper__2StUQ"><ul class="SelectedLanguage_selectedLanguages__DYJjl"></ul></div>
-						<!-- <div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div> -->
+						<div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div>
 						</section>
                       </div>
                       <div class="tab-pane fade" id="navs-justified-mobile" role="tabpanel">
@@ -420,7 +505,7 @@ hr{
 							<li class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/unity.svg" alt="Unity"><span>Unity</span></li>
 							</ul>
 						<div class="SelectedLanguage_selectedWrapper__2StUQ"><ul class="SelectedLanguage_selectedLanguages__DYJjl"></ul></div>
-						<!-- <div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div> -->
+						<div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div>
 						</section>
                       </div>
                       <div class="tab-pane fade" id="navs-justified-etc" role="tabpanel">
@@ -435,17 +520,40 @@ hr{
 							<li class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/jest.svg" alt="Jest"><span>Jest</span></li></ul>
 							</ul>
 						<div class="SelectedLanguage_selectedWrapper__2StUQ"><ul class="SelectedLanguage_selectedLanguages__DYJjl"></ul></div>
-						<!-- <div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div> -->
+						<div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div>
 						</section>
                       </div>
                     </div>
                   </div>
                 </div>
+</div> -->
 
 
 
 
+<div id="prs" >
+	<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollPsnPr.pr'">
+	새 글 쓰기
+</button>
+</div>
 
+<div id="shell" style="margin-left: 50px; display: block; height: 1200px; width: 100%;">
+
+
+<c:forEach var="p" items="${personalPrList }">
+	 <div class="card" style="width: 16.5rem;">
+	  <div class="card-body" style="padding-left: 10px;" >
+	    <p class="card-category" style="float:left; width: 50%;">${p.createDate }</p>
+	    <p class="card-category" style="float: right;">${p.category }</p>
+	    <h5 class="card-title" style="margin-right: 0px; width: 235px; height: 39.794px;"><b>${p.psnPrTitle }</b></h5>
+	    <p class="card-text" style="float: left; font-size: 13px; width: 240px; height: 99.375px;">${p.psnPrContent }</p>
+	    <!-- <p>아이디 들어갈자리</p> -->
+	    <span style="margin-bottom: 5px;">${p.userName}</span>
+	    <%--  <span class="userName">${p.userNo}</span> --%>
+	    <i class='bx bx-bookmark' style="float: right; "></i>
+	  </div>
+</div>
+</c:forEach>
 
 
 
@@ -453,19 +561,13 @@ hr{
 </div>
 
 
-<div id="prs">
-<a href="enrollPsnPr.pr">새 글 쓰기</a>
+	
 </div>
 
+</div> <!-- main body div -->
 
 
-
-
-
-
-</div>
-
-<script>
+<!-- <script>
 		var seeAll = document.getElementById( "seeAll" );
 		var seeFront1 = document.getElementById("seeFront");
 		var seeBack = document.getElementById("seeBack");
@@ -483,7 +585,10 @@ hr{
         seeAll.style.fontSize="25px";
     }
  
-</script>
+</script> -->
+</div>
+
+
 
 
 
