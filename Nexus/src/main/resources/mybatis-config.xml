@@ -14,6 +14,7 @@
 		<typeAlias type="com.team.nexus.calendar.model.vo.Calendar" alias="Calendar"/>
 		<typeAlias type="com.team.nexus.news.model.vo.News" alias="News"/>
 		<typeAlias type="com.team.nexus.news.model.vo.NewsReply" alias="NewsReply"/>
+<<<<<<< Updated upstream
 		<typeAlias type="com.team.nexus.pr.model.vo.PersonalPr" alias="PersonalPr"/>
 		<typeAlias type="com.team.nexus.pr.model.vo.Pagination" alias="Pagination"/>
 		<typeAlias type="com.team.nexus.pr.model.vo.PageInfo" alias="PageInfo"/>
@@ -28,6 +29,9 @@
 
 		<typeAlias type="com.team.nexus.news.model.vo.Zzim" alias="Zzim"/>
 
+=======
+		<typeAlias type="com.team.nexus.friend.model.vo.Friend" alias="Friend"/>
+>>>>>>> Stashed changes
 	</typeAliases>
 	
 	<!-- 
@@ -43,9 +47,13 @@
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/calendar-mapper.xml"/>
 		<mapper resource="/mappers/news-mapper.xml"/>
+<<<<<<< Updated upstream
 		<mapper resource="/mappers/chatting-mapper.xml"/>
 		<mapper resource="/mappers/repositories-mapper.xml"/>
 		
 
+=======
+		<mapper resource="/mappers/friend-mapper.xml"/>
+>>>>>>> Stashed changes
 	</mappers>
 </configuration>

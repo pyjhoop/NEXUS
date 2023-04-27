@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="friendMapper">
+
+	<resultMap type="Friend" id="friendResultSet">
+		<result column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_pwd" property="userPwd"/>
+		<result column="user_name" property="userName"/>
+		<result column="user_nick" property="userNick"/>
+		<result column="email" property="email"/>
+		<result column="profile" property="profile"/>
+		<result column="gender" property="gender"/>
+		<result column="social" property="social"/>
+		<result column="enroll_date" property="enrollDate"/>
+		<result column="token" property="token"/>
+		<result column="status" property="status"/>
+		<result column="block_i" property="blockI"/>
+		<result column="block_me" property="blockMe"/>
+	</resultMap>
+	
+	<!-- 친구 리스트 -->
+	<select id="selectList" resultMap="friendResultSet">
+		select *
+		from tb_member
+		join (
+		    select b.user_no, a.user_blocked block_i, b.user_blocked block_me
+		    from tb_friend a
+		    join (select * from tb_friend where user_add_no = #{userNo}) b on (a.user_add_no = b.user_no)
+		    where a.user_no = #{userNo}
+		    --and a.user_blocked = 'N'
+		    and b.user_blocked = 'N'
+		    )
+		using(user_no)
+		where status = 'Y'
+	</select>
+	
+</mapper>
