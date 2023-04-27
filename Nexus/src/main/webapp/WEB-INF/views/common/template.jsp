@@ -87,6 +87,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
+
 <!-- 알람창 JavaScript -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
@@ -162,7 +163,6 @@
 						<i class="menu-icon tf-icons bx bx-box"></i>
 						<div data-i18n="User interface">Milestone</div>
 					</a></li>
-
 				<li class="menu-item"><a href="#" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-copy"></i>
 						<div data-i18n="Extended UI">Kanban</div>
