@@ -49,6 +49,9 @@ function confirm(){
 // $(function)
 
 $(function(){
+
+    $(".news").addClass("active");
+    
     $('#newsContent').summernote({
         height: 700,
         width : 1350,

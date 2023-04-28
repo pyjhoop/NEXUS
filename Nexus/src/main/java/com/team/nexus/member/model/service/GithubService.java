@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import com.team.nexus.member.model.vo.GitMember;
 import com.team.nexus.member.model.vo.Member;
 
@@ -35,21 +36,22 @@ public class GithubService {
 	
 	public String getToken(String code){
 		String url = "https://github.com/login/oauth/access_token";
+		
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
+		
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		
-		JSONObject jsonObject = new JSONObject();
-	    jsonObject.put("client_id", gitId);
-	    jsonObject.put("client_secret", gitSecret);
-	    jsonObject.put("code", code);
-	    
-	    // body, header 넘기는거
-	    HttpEntity<String> entity = new HttpEntity<String>(jsonObject.toString(), headers);
-	    ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
-	    
-	    
+		JsonObject jsonObject = new JsonObject();
+		
+		jsonObject.addProperty("client_id", gitId);
+		jsonObject.addProperty("client_secret", gitSecret);
+		jsonObject.addProperty("code", code);
+		
+		HttpEntity<String> entity = new HttpEntity<String>(jsonObject.toString(), headers);
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+
 	    ObjectMapper objectMapper = new ObjectMapper();
 	    JsonNode jsonNode;
 	    

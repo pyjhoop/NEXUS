@@ -3,10 +3,13 @@ package com.team.nexus.news.model.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.team.nexus.member.model.vo.Member;
 import com.team.nexus.news.model.vo.News;
 import com.team.nexus.news.model.vo.NewsReply;
 import com.team.nexus.news.model.vo.Zzim;
@@ -18,12 +21,12 @@ public class NewsDao {
 		return (ArrayList)sqlsession.selectList("newsMapper.selectList");
 	}
 
-	public ArrayList<News> selectList(SqlSessionTemplate sqlsession, int page) {
+	public ArrayList<News> selectList(SqlSessionTemplate sqlsession, int page, String state) {
 		int offset = (page-1)*12;
 		int limit = 12;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlsession.selectList("newsMapper.ajaxSelectList", null, rowBounds);
+		return (ArrayList)sqlsession.selectList("newsMapper.ajaxSelectList", state, rowBounds);
 	}
 
 	public ArrayList<NewsReply> selectrList(SqlSessionTemplate sqlsession, int nNo) {
@@ -76,6 +79,11 @@ public class NewsDao {
 
 	public int upateNews(SqlSessionTemplate sqlsession, News n) {
 		return sqlsession.update("newsMapper.updateNews", n);
+	}
+
+	public ArrayList<News> ajaxRepage(SqlSessionTemplate sqlsession, String state) {
+		
+		return (ArrayList)sqlsession.selectList("newsMapper.selectList", state);
 	}
 
 	

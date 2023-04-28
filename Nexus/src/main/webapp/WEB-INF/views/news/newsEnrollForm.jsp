@@ -23,6 +23,7 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/summernote-ko-KR.js"></script>
 
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 
 </head>
 <body>
@@ -33,8 +34,9 @@
           
           <div class="row mb-3" style="margin-top: 15px;">
             <div class="title">
-              TITLE
+              TITLE 
             </div>
+    
 
             <div class="col-sm-10">
               <input type="text" class="form-control" id="newsTitle" name="newsTitle" placeholder="Title" value="${ news.newsTitle }">
@@ -48,6 +50,7 @@
           
           <c:if test="${ !empty news }">
           	<script>
+          		
           		
               let text = `${news.newsContent}`;
               $("#newsContent").summernote('code',text)

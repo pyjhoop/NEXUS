@@ -1,0 +1,70 @@
+#repoImg{
+    width: 60%;
+}
+
+#repoPath{
+    font-size: 2rem;
+    margin-left: 30px;
+    font-weight: bold;
+    color: black;
+}
+
+.circle{
+    border-radius: 100%;
+    background-color: black;
+    width: 15px;
+    height: 15px;
+    float: left;
+    margin-top: 4px;
+    margin-right: 5px;
+}
+.progress{
+    margin-right: 10px;
+}
+
+#pathWrap{
+    width: 70%;
+    margin: auto;
+}
+
+.size{
+    text-align: right;
+}
+
+.clcik1:hover{
+    cursor: pointer;
+}
+
+.back{
+    color: #696cff;
+}
+.back:hover{
+    cursor: pointer;
+}
+
+.folder:hover{
+    cursor: pointer;
+}
+
+.origin{
+    color: #696cff;
+}
+
+.origin:hover{
+    cursor: pointer;
+}
+
+.mdFile>div{
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+#lmodal{
+    visibility: hidden;
+}
+
+.btnM{
+    border: none;
+    background-color: white;
+}

@@ -2,7 +2,50 @@
 /* 종모양 설정*/
 
 
+/* 글등록 버튼 속성*/
 
+.btn-box button {
+  float: right;
+  margin-right : 12px;
+}
+
+.btn-box a {
+  float: right;
+  margin-right : 12px;
+}
+
+/* 글자 설정 */
+
+a{
+  text-decoration: none;
+  color: #495057;
+}
+
+
+.luda {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.luda a {
+	margin-left: auto;
+	margin-right: 5vw;
+}
+
+.textA {
+text-decoration: none;
+	color: rgb(31, 29, 29)
+}
+
+.textA:hover {
+  text-decoration: none;
+}
+
+
+table {
+    width: 100%;
+}
 
 /* 에디터--------------------------- */
 
@@ -49,7 +92,7 @@ width:100%;
 
 }
 
-.btn-box a{
+.btn-box button{
 	
 	float:right;
 	margin-right:12px;

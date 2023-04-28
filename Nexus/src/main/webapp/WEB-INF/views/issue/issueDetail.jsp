@@ -1,20 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <!DOCTYPE html>
-    <html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Insert title here</title>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 
-        <style>
-         
-        </style>
+<style>
+</style>
 
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
-<script
-src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/i18n/defaults-*.min.js"></script>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/issue_select.css">
@@ -23,14 +21,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap
 <script src="${pageContext.request.contextPath}/resources/js/issue_mini.js"></script>
 
 
-<!-- 테스트 중인 js,css -->
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/issue_test.css">
-<!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-multiselect.css"> -->
-<script src="${pageContext.request.contextPath}/resources/js/issue_test.js"></script>
-
-<script src="${pageContext.request.contextPath}/resources/js/comboTreePlugin.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap-multiselect2.js"></script>
 
 
 
@@ -38,113 +28,138 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap
 </head>
 
 <body>
-    
-    <jsp:include page="../common/template.jsp" />
+
+	<jsp:include page="../common/template.jsp" />
 
 
 
 
 
 
-        <div class="container total-box" style="margin-left: 0px; margin-right: 0px;">
+	<div class="container total-box" style="margin-left: 0px; margin-right: 0px;">
 
-            <form action="updateIssue" method="post" id="issueUpdateForm">
+		<form action="updateIssue.mi" method="post" id="issueUpdateForm">
 
-                <input type="text" class="form-control issuetitle" id="isTitle" name="issueTitle" placeholder="Title"
-                    autofocus>
+			<input type="text" class="form-control issuetitle" name="title" placeholder="Title" value="${title }" autofocus>
+			<input type="hidden" name="ino" value="${ino }">
+			<input type="hidden" name="assigneesHidden" value="">
+			<input type="hidden" name="projectHidden" value="">
+			<input type="hidden" name="mileHidden" value="">
+			<input type="hidden" name="labelHidden" value="">
 
+			<div class="why">
+				<div class="editor-wrapper">
+					<div id="editor">${body }</div>
 
-                <div class="why">
-                    <div class="editor-wrapper">
-                        <div id="editor">
-                        </div>
+					<!-- 본인 글일때만 보이게 분기처리 ### -->
+					<div class="btn-box">
+						<br>
+						<button type="submit" class="btn btn-outline-primary">수정하기</button>
+						<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#myissueModal">상태 수정</button>
 
-                        <!-- 본인 글일때만 보이게 분기처리 ### -->
-                        <div class="btn-box">
-                            <br>
-                            <a type="button" class="btn btn-outline-secondary" onclick="postFormSubmit(1);">수정하기</button>
-                            <a type="button" class="btn btn-outline-danger" onclick="postFormSubmit(2);">삭제하기</a>
-
-                        </div>
-                    </div>
-
-            </form>
-        </div>
+					</div>
 
 
-        <!-- 이슈 번호랑 사진있으면 그 사진경로 가져가야함!! ### -->
-        <form id="postForm" action="" method="post">
-            <input type="hidden" name="ino" value="">
-            <input type="hidden" name="filePath" value="">
-        </form>
-
-
-        <!-- 구분선 -->
-        <!-- 멀티 셀렉 되게 다 바꾸자! -->
-
-        <div class="editor-label">
-
-
-            <div class="mb-3">
-                <label for="defaultSelect" class="form-label">이슈 담당자</label>
-                <select id="defaultSelect" class="form-select">
-                    <option>이슈 담당자 - 지정된사람 출력되게 (여럿일 경우 이름 순서대로)</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-
-
-            <div class="mb-3">
-                <label for="defaultSelect" class="form-label">Default select</label>
-                <select id="defaultSelect" class="form-select">
-                    <option>Default select</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
+				</div>
+		</form>
+	</div>
 
 
 
+	<!-- Modal -->
+	<form action="issueState.mi" method="post">
+		<div class="modal fade" id="myissueModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">이슈 상태 변경</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="ino" value="${ino}">
+						현재 이슈의 ${state } 상태를 변경합니다
+					</div>
+					<div class="modal-footer">
+						<!-- 상태에 따라 종료 / open 버튼 text 바뀌게 ### -->
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+						<c:choose>
+							<c:when test="${state eq 'open' }">
+								<button type="submit" class="btn btn-primary" name="state" value="closed">이슈 종료</button>
+							</c:when>
+							<c:otherwise>
+								<button type="submit" class="btn btn-primary" name="state" value="open">이슈 재오픈</button>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+
+
+	<div class="editor-label">
+
+		<div class="mb-3">
+			<label for="defaultSelect" class="form-label">이슈 담당자</label>
+
+			<div>
+				<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+					<c:forEach items="${assignees}" var="a">
+						<p>${assignees}</p>
+						<p>${a }</p>
+						<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${assignee}"><img src="${assigneeProfiles[loop.index]}" alt="" class="rounded-circle" /></li>
+					</c:forEach>
+				</ul>
+			</div>
+
+			<select id="issueAssignees" class="form-select" name="assignees">
+				<option>이슈 담당자</option>
+				<c:forEach var="r" items="${RepoMembers }">
+					<option value="${r.userName }">${r.userName}</option>
+				</c:forEach>
+			</select>
+		</div>
+
+
+		<div class="mb-3">
+			<label for="defaultSelect" class="form-label">라벨</label>
+			<select id="issueLabel" class="form-select" name="labels">
+				<option>라벨</option>
+				<option value="1" type="checkbox">One</option>
+				<option value="2" type="checkbox">Two</option>
+				<option value="3" type="checkbox">Three</option>
+			</select>
+		</div>
+
+
+
+		<div class="mb-3">
+			<label for="defaultSelect" class="form-label">프로젝트</label>
+			<select id="issueProject" class="form-select" name="project">
+				<option>프로젝트</option>
+				<option value="1" type="checkbox">One</option>
+				<option value="2" type="checkbox">Two</option>
+				<option value="3" type="checkbox">Three</option>
+			</select>
+		</div>
+
+
+		<div class="mb-3">
+			<label for="defaultSelect" class="form-label">마일스톤</label>
+			<select id="issueMile" class="form-select" name="milestone">
+				<option>마일스톤</option>
+				<option value="1" type="checkbox">One</option>
+				<option value="2" type="checkbox">Two</option>
+				<option value="3" type="checkbox">Three</option>
+			</select>
+		</div>
 
 
 
 
 
 
-            <br>
-            <hr><br>
-
-            <div class="mb-3">
-                <label for="defaultSelect" class="form-label">테스트 담당자</label>
-
-                <div class="profiles-list" style="display:none;">
-                    <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                        <!-- Add selected profile li elements here -->
-                    </ul>
-                </div>
-
-                <select id="defaultSelect" class="form-select" multiple>
-                    <option value="1">이혜민</option>
-                    <option value="2">홍길동</option>
-                    <option value="3">김철수</option>
-                </select>
-
-            </div>
-
-
-            <!-- ---------------------------------------------- -->
-
-
-
-            <div class="line">
-                <input type="text" id="test1" autocomplete="off" placeholder="Multiple Select">
-            </div>
-            <div class="line">
-                <input type="text" id="test2" autocomplete="off" placeholder="Multiple Select">
-            </div>
 
 
 
@@ -152,15 +167,12 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap
 
 
 
+	</div>
+	<!-- editor-label -->
 
+	</div>
 
-
-
-        </div> <!-- editor-label -->
-
-        </div>
-
-        <script>
+	<script>
 
             var editor = new toastui.Editor({
                 el: document.querySelector('#editor'),
@@ -175,9 +187,54 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap
             /*----------------------------------------------------*/
 
 
+// Get references to the select and hidden input elements
+const selectEl = document.getElementById('issueAssignees');
+const hiddenEl = document.querySelector('#issueUpdateForm input[name="assigneesHidden"]');
+
+// Listen for change events on the select element
+selectEl.addEventListener('change', (event) => {
+  // Get the selected value and update the hidden input value
+  const selectedValue = event.target.value;
+  hiddenEl.value = selectedValue;
+});
+
+            
+const selectE2 = document.getElementById('issueLabel');
+const hiddenE2 = document.querySelector('#issueUpdateForm input[name="labelHidden"]');
+
+// Listen for change events on the select element
+selectE2.addEventListener('change', (event) => {
+  // Get the selected value and update the hidden input value
+  const selectedValue = event.target.value;
+  hiddenE2.value = selectedValue;
+});          
+            
+const selectE3 = document.getElementById('issueProject');
+const hiddenE3 = document.querySelector('#issueUpdateForm input[name="projectHidden"]');
+
+// Listen for change events on the select element
+selectE3.addEventListener('change', (event) => {
+  // Get the selected value and update the hidden input value
+  const selectedValue = event.target.value;
+  hiddenE3.value = selectedValue;
+});  
+
+const selectE4 = document.getElementById('issueMile');
+const hiddenE4 = document.querySelector('#issueUpdateForm input[name="mileHidden"]');
+
+// Listen for change events on the select element
+selectE4.addEventListener('change', (event) => {
+  // Get the selected value and update the hidden input value
+  const selectedValue = event.target.value;
+  hiddenE4.value = selectedValue;
+});  
+            
+            
+            
+            
 
         </script>
 
-    </body>
+</body>
 
-    </html>
+</html>

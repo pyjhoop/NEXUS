@@ -26,7 +26,7 @@
 
 
 <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/favicon/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -124,17 +124,21 @@
 			<div class="app-brand demo">
 				<a href="main.p" class="app-brand-link">
 					<span class="app-brand-text demo menu-text fw-bolder ms-2">NEXUS</span>
+					<c:if test="${ repoName != null }">
+						<span style="margin-left: 5px; margin-top: 5px;">(${repoName})</span>
+					</c:if>
 				</a>
 				<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
 					<i class="bx bx-chevron-left bx-sm align-middle"></i>
 				</a>
 			</div>
 
+
 			<div class="menu-inner-shadow"></div>
 
 			<ul class="menu-inner py-1">
 				<!-- Dashboard -->
-				<li class="menu-item active">
+				<li class="menu-item">
 					<a href="main.p" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-home-circle"></i>
 						<div data-i18n="Analytics">Home</div>
@@ -210,68 +214,78 @@
 					</a>
 				</div>
 
-				<div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-					<!-- Search -->
-					<div class="navbar-nav align-items-center">
-						<div class="nav-item d-flex align-items-center">
-							<i class="bx bx-search fs-4 lh-0"></i>
-							<input type="text" class="form-control border-0 shadow-none" placeholder="Search..." aria-label="Search..." />
-						</div>
-					</div>
-					<!-- /Search -->
-					<ul class="navbar-nav flex-row align-items-center ms-auto">
+								<div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+									<!-- Search -->
+									<div class="navbar-nav align-items-center">
+										<div class="nav-item d-flex align-items-center">
+											<i class="bx bx-search fs-4 lh-0"></i>
+											<input type="text" class="form-control border-0 shadow-none" placeholder="Search..." aria-label="Search..." />
+										</div>
+									</div>
+									<!-- /Search -->
 
+									<ul class="navbar-nav flex-row align-items-center ms-auto">
+										
+										<button class="btn btn-outline-primary" id="enroll" style="visibility:hidden;">뉴스등록</button>
+										
+										<button type="button" id="repobtn" style="display: none;" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+											new repository
+										</button>
+										<!-- Place this tag where you want the button to render. -->
+										<li class="nav-item 1h-1 me-4">
+											<!-- <a href="javascript:void(0);"class="menu-link position-relative">  -->
+												<a class="nav-link dropdown-toggle hide-arrow menu-link " href="javascript:void(0);" data-bs-toggle="dropdown" style="padding-top: 0px; padding-bottom: 0px; width: 35px;">
+												<!-- ### 알람온 숫자만큼 뜨게 바꾸기 -->
+
+												<!-- ### 알람오면 bx-data 클래스 추가하기 +  (종 흔들림 애니메니션) -->
+												<!-- </span> <i class="menu-icon tf-icons bx bx-bell bx-tada bx-md"></i> -->
+												<span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1"> 
+												<span class="visually-hidden">unread messages</span></span> <i class="menu-icon tf-icons bx bx-bell bx-md "></i>
+
+												<!-- <span class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
+									9 <span class="visually-hidden">unread messages</span>
+								</span> <i class="menu-icon tf-icons bx bx-bell bx-md "></i> -->
+
+
+
+
+											</a> <!-- 집어 넣어봄-->
+
+											<ul class="dropdown-menu dropdown-menu-end">
+
+
+												<li class="alermLi"><span class="dropdown-item alermA" href="#"> ### 개의 새로운 알림이 있습니다 </span>
+												<button type="button" class="btn btn-outline-danger btn-sm">CLEAN</button>
+												</li>
+												<li>
+													<div class="dropdown-divider"></div>
+												</li>
+												<li><a class="boxsize" href="#">
+														<div class="avatar alarmprofile">
+															<img src="${loginUser.profile }" alt class="w-px-40 h-auto rounded-circle" />
+														</div>
+													</a> <span class="align-middle spanbox">###님이 ##이슈에 댓글 달았습니다</span> </a>
+											</li>
+												
+												<!-- 한바퀴 -->
+												
+												
+												<li>
+													<div class="dropdown-divider"></div>
+												</li>
+												<li><a class="boxsize" href="#">
+														<div class="avatar alarmprofile">
+															<img src="${loginUser.profile }" alt class="w-px-40 h-auto rounded-circle" />
+														</div>
+													</a> <span class="align-middle spanbox">###님이 ##이슈에 댓글 달았습니다</span> </a>
+											</li>
+					
+											<!-- 한바퀴 끝 -->
+							</ul>
 						
-						<button class="btn btn-outline-primary" id="enroll" style="visibility:hidden;">뉴스등록</button>
-						<!-- Place this tag where you want the button to render. -->
-						<li class="nav-item 1h-1 me-4">
-							<!-- <a href="javascript:void(0);"class="menu-link position-relative">  --> <a class="nav-link dropdown-toggle hide-arrow menu-link " href="javascript:void(0);" data-bs-toggle="dropdown" style="padding-top: 0px; padding-bottom: 0px; width: 35px;">
-								<!-- ### 알람온 숫자만큼 뜨게 바꾸기 -->
-
-								<!-- ### 알람오면 bx-data 클래스 추가하기 (종 흔들림 애니메니션) -->
-								<!-- </span> <i class="menu-icon tf-icons bx bx-bell bx-tada bx-md"></i> -->
-								<span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1"> <span class="visually-hidden">unread messages</span></span> <i class="menu-icon tf-icons bx bx-bell bx-md "></i>
-
-								<!-- <span class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
-					9 <span class="visually-hidden">unread messages</span>
-				</span> <i class="menu-icon tf-icons bx bx-bell bx-md "></i> -->
+						</li>
 
 
-
-
-							</a> <!-- 집어 넣어봄-->
-
-							<ul class="dropdown-menu dropdown-menu-end">
-
-
-								<li><a class="dropdown-item" href="#"> ### 개의 새로운 알림이 있습니다 </a></li>
-								<li>
-									<div class="dropdown-divider"></div>
-								</li>
-								<li><a class="boxsize" href="#">
-										<div class="avatar alarmprofile">
-											<img src="${loginUser.profile }" alt class="w-px-40 h-auto rounded-circle" />
-										</div>
-									</a> <span class="align-middle spanbox">###님이 ##이슈에 댓글 달았습니다</span> </a>
-							</li>
-								
-								<!-- 한바퀴 -->
-								
-								
-								<li>
-									<div class="dropdown-divider"></div>
-								</li>
-								<li><a class="boxsize" href="#">
-										<div class="avatar alarmprofile">
-											<img src="${loginUser.profile }" alt class="w-px-40 h-auto rounded-circle" />
-										</div>
-									</a> <span class="align-middle spanbox">###님이 ##이슈에 댓글 달았습니다</span> </a>
-							</li>
-	
-							<!-- 한바퀴 끝 -->
-			</ul>
-		
-		</li>
 
 
 
