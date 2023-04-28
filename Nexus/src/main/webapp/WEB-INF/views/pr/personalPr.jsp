@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Nexus!</title>
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 </head>
 <style>
@@ -27,7 +27,7 @@
 #prs{
 	width:100%;
 	height:2.5%;
-	margin:auto;
+	/* margin:auto; */
 	padding-top:10px;
 }
 #stackCategory>li{
@@ -158,10 +158,6 @@
 .LanguageBar_languages__2Ilqf{
 	padding-left:0;
 }
-
-
-/*       Just setting CSS for the page   */
-
 * {
   margin: 0;
   padding: 0;
@@ -172,7 +168,6 @@ css {
   width: 100%;
   height: 100%;
 }
-
 .position {
   margin-left: auto;
   margin-right: auto;
@@ -195,15 +190,6 @@ css {
   bottom:15px;
   right:2%;
 }
-/*    start code for the actual button:         */
-
-
-/*   
-    Spot is the span on the inside of the href that
-    fills the parent and makes the hover and link work
-    for the entire div
-*/
-
 .spot {
   position: absolute;
   width: 100%;
@@ -258,11 +244,6 @@ css {
   font-weight: 100;
   font-size: 1.1em;
 }
-/* 
-    Changing the shape on hover. I change the color of the stroke,
-make it thinner, then set it to again wrap around the entire parent element.
-*/
-
 .svg-wrapper:hover #shape {
   stroke-dasharray: 50 0;
   stroke-width: 3px;
@@ -337,20 +318,6 @@ hr{
 	cursor: pointer;
 	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
 } 
-/* .card-title:hover{
-	cursor: pointer;
-	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
-} 
-.card-text:hover{
-	cursor: pointer;
-	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
-} 
-.bx:hover{
-	cursor: pointer;
-	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
-} 
- */
-
 .bx-bookmark::before{
 	width: 30px;
 	height: 30px;
@@ -361,22 +328,30 @@ hr{
 #prs{
 	width: 83%; 
 	height: 50px;
-	margin-bottom: 0px;
-	padding-top: 3px;
+	margin-bottom: 0.8rem;
+	float: right;
+	margin-right: 1.5rem;
 }
 #newBtn{
 	float: right;
+	margin-right: 0rem !important;
 }
 .pagination{
 	width: 100%;
 	text-align: center;
 }
+.card-category{
+	font-size: 12px;
+}
+.mt-5{
+	ma
+}
 </style>
 <body>
 <jsp:include page="../common/template.jsp"/>
 
-<div class="container-xxl flex-grow-1 container-p-y cpadding mt-5">
-	<div id="mainBody" style="width: 100%;">
+<div class="container-xxl flex-grow-1">
+	<div id="mainBody" style="width: 100%; margin-right: 5rem;">
 
 
 
@@ -537,11 +512,11 @@ hr{
 </button>
 </div>
 
-<div id="shell" style="margin-left: 50px; display: block; height: 1200px; width: 100%;">
+<div id="shell" style="display: block; height: 1200px; width: 100%;">
 
 
 <c:forEach var="p" items="${personalPrList }">
-	 <div class="card" style="width: 16.5rem;">
+	 <div class="card" style="width: 16.1rem;">
 	  <div class="card-body" style="padding-left: 10px;" >
 	    <p class="card-category" style="float:left; width: 50%;">${p.createDate }</p>
 	    <p class="card-category" style="float: right;">${p.category }</p>
@@ -586,7 +561,7 @@ hr{
     }
  
 </script> -->
-</div>
+
 
 
 

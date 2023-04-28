@@ -153,8 +153,10 @@ class MultiInput extends HTMLElement {
     for (const item of items) {
       values.push(item.textContent);
     }
+    console.log(items);
     return values;
   }
+ 
 }
 
 window.customElements.define('multi-input', MultiInput);
