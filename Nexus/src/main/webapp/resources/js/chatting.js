@@ -1,6 +1,12 @@
 //1. 페이지 로딩 완료시 채팅창을 맨 아래로 내리기.
 // 즉시 실행함수. IIFE
 
+$("#selectUser").on("keyup",function(key){
+    if(key.keyCode==13) {
+        $("#search-btn").trigger('click');
+    }
+});
+
 
 $(function() {
     var displayChatting = document.getElementsByClassName("list-unstyled")[0];
@@ -77,7 +83,7 @@ chatSocket.onmessage = function(e) {
 
     // 전달받은 메세지를 JS객체로 변환
     const chatMessage = JSON.parse(e.data); // js객체로 변환.
-    console.log(chatMessage.chattingContent.substr(0, 2));
+   // console.log(chatMessage.chattingContent.substr(0, 2));
     let myChatting = "";
     console.log(chatMessage);
     if(chatMessage.invite == 'O'){

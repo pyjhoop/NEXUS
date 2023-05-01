@@ -160,6 +160,11 @@ public class ChatServiceImpl implements ChatService{
 		
 	}
 
+	@Override
+	public ArrayList<Member> selectFriend(int userNo) {
+		return cDao.selectFriend(sqlSession,userNo);
+	}
+
 	
 
 }

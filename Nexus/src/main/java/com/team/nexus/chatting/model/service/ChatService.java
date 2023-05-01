@@ -58,4 +58,6 @@ public interface ChatService {
 	 int insertChatFile(ChatMessage cm);
 	 
 	 void updateFileName(ChatMessage chatMessage);
+	 
+	 ArrayList<Member> selectFriend(int userNo);
 }

@@ -14,7 +14,9 @@
  <style>
  .chat-window .chat-scroll 
  {
-  height: calc(100vh - 255px);}
+  height: calc(100vh - 255px);
+  overflow-y: scroll;
+  }
   .media-img-wrap {
     margin-right: 15px;
     position: relative;
@@ -71,7 +73,19 @@
 	.chat-window .chat-cont-right .chat-footer {
 	padding: 30px 15px;
 	}
-	
+	.btn-icon2{
+	position: absolute;
+    right: 4px;
+    top: 7px;
+    z-index: 999;
+    
+	}
+	#search-btn{
+	border:none;
+	background-color:#fff;
+	border-radius: 20px;
+}
+a:hover { text-decoration:none !important }
  </style>
 </head>
 <body>
@@ -86,74 +100,44 @@
 	<div class="chat-header">
 	<span>Chats</span>
 	<div class="chat-compose" id="create-room">
-	<i class="bx bx-plus-circle"></i>
+	<i class="bx bx-plus-circle" style="font-size: 1.3rem; cursor:pointer"></i>
 	</div>
 	</div>
 	<div class="chat-search">
 	<div class="input-group">
-	<div class="input-group-prepend">
-	<i class="bx bx-search-alt-2"></i>
-	</div>
 	<input type="text" class="form-control" name="search" placeholder="Search" id="selectUser">
-	<button class="btn rounded-pill btn-outline-secondary" id="search-btn">검색</button>
+	<div class="btn-icon2">
+	<button class="bx bx-search-alt-2" id="search-btn"></button>
+	</div>
 	</div>
 	</div>
 	<div class="chat-users-list">
 	<div class="chat-scroll" id="search-user">
-	<c:choose>
-	<c:when test="${empty mList }">
-	<c:forEach var="r" items="${rList}">
-	<c:forEach var="u" items="${uList}">
-	<c:if test="${ r.roomNo eq u.roomNo }">
+	<c:if test="${not empty fList }">
+	<c:forEach var="f" items="${ fList }">
 	<div class="card-body d-flex">
 	<div class="media-img-wrap">
-	<div class="avatar avatar-away">
-	<img src="assets/img/profiles/avatar-05.jpg" alt="" class="avatar-img rounded-circle">
+	<div class="avatar">
+	<img src="${f.profile }" alt="" class="avatar-img rounded-circle">
 	</div>
 	</div>
 	<div class="media-body2">
 	<div>
 	<div class="user-name">
-	${u.userName}
+	${f.userName }
+	</div>
+	<div>
+	userCode : ${f.userNo }
 	</div>
 	</div>
 	<div>
-	<input type="Checkbox" class="form-check-input" name="chat-check" value="${u.userNo}">
+	<input type="Checkbox" class="form-check-input" name="chat-check" value="${f.userNo }">
 	</div>
 	</div>
 	</div>
 	<hr class="m-0">
+	</c:forEach>
 	</c:if>
-	</c:forEach>
-	</c:forEach>
-	</c:when>
-	<c:otherwise>
-	<c:forEach var="m" items="${ mList }">
-	<c:if test="${ loginUser.userNo != m.userNo }">
-	<div class="card-body d-flex">
-	<div class="media-img-wrap">
-	<div class="avatar avatar-away">
-	<img src="${m.profile }" alt="" class="avatar-img rounded-circle">
-	</div>
-	</div>
-	<div class="media-body2">
-	<div>
-	<div class="user-name">
-	${m.userName}
-	</div>
-	</div>
-	<div>
-	<input type="Checkbox" class="form-check-input" name="chat-check" value="${m.userNo }">
-	
-	</div>
-	</div>
-	</div>
-	<hr class="m-0">
-	</c:if>
-	</c:forEach>
-	</c:otherwise>
-	</c:choose>
-	
 	</div>
 	</div>
 	</div>
@@ -164,7 +148,7 @@
 	</a>
 	<div class="media d-flex">
 	<div class="media-img-wrap">
-	<div class="avatar avatar-online">
+	<div class="avatar">
 	<img src="${loginUser.profile }" alt="" class="avatar-img rounded-circle">
 	</div>
 	</div>
@@ -296,9 +280,11 @@
 					     + result[i].numberParticipants
 					     + "&roomTitle="
 					     + result[i].roomTitle
+					     + "&userNo="
+					     + userNo
 					 	 + " class='card-body d-flex'>"
 						 + "<div class='media-img-wrap'>"
-						 + "<div class='avatar avatar-away'>"
+						 + "<div class='avatar'>"
 						 + "<img src="
 						 + result[i].changeName
 						 + " class='avatar-img rounded-circle room-img'>"
@@ -376,7 +362,7 @@
      			for(let i in result){
      				value += "<div class='card-body d-flex'>" +
      				   "<div class='media-img-wrap'>" +
-     			       "<div class='avatar avatar-away'>" +
+     			       "<div class='avatar'>" +
      				   "<img src= " +
      				    result[i].profile + 
      				   " class='avatar-img rounded-circle'>" +
@@ -387,6 +373,10 @@
      				   "<div class='user-name'>" +
      				   result[i].userName +
      				   "</div>" + 
+     				   "<div>" +
+     				   "userCode : " + 
+     				   result[i].userNo +
+     				   "</div>" +
      				   "</div>" +
      				   "<div>" +
      				   "<input type='Checkbox' class= " +
@@ -409,11 +399,16 @@
      	})
      });
 	
+	 $("#selectUser").on("keyup",function(key){
+	        if(key.keyCode==13) {
+	        	$("#search-btn").trigger('click');
+	        }
+	    });
 	</script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 	<!--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>-->
-	<script src="${pageContext.request.contextPath}/resources/js/feather.min.js"></script>
+	 <script src="${pageContext.request.contextPath}/resources/js/feather.min.js"></script> 
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.slimscroll.min.js""></script>
 	<!-- <script src="${pageContext.request.contextPath}/resources/js/chat_script.js"></script> -->
 </body>
