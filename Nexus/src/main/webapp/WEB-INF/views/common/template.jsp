@@ -87,6 +87,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
+
 <!-- 알람창 JavaScript -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
@@ -121,17 +122,17 @@
 		<!-- Menu -->
 
 		<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-			<div class="app-brand demo">
+			<div class="app-brand demo" style="height: 40px;">
 				<a href="main.p" class="app-brand-link">
-					<span class="app-brand-text demo menu-text fw-bolder ms-2">NEXUS</span>
-					<c:if test="${ repoName != null }">
-						<span style="margin-left: 5px; margin-top: 5px;">(${repoName})</span>
-					</c:if>
+					<span class="app-brand-text demo menu-text fw-bolder ms-2 text-primary">NEXUS</span>
 				</a>
 				<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
 					<i class="bx bx-chevron-left bx-sm align-middle"></i>
 				</a>
 			</div>
+			<c:if test="${ repoName != null }">
+				<span style="margin-left: 5px; margin-top: 5px; margin-left: 40px;" class="text-primary">(${repoName})</span>
+			</c:if>
 
 
 			<div class="menu-inner-shadow"></div>
@@ -162,7 +163,6 @@
 						<i class="menu-icon tf-icons bx bx-box"></i>
 						<div data-i18n="User interface">Milestone</div>
 					</a></li>
-
 				<li class="menu-item"><a href="#" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-copy"></i>
 						<div data-i18n="Extended UI">Kanban</div>

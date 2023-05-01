@@ -1,26 +1,18 @@
 package com.team.nexus.member.model.service;
 
-import java.util.Collections;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonObject;
-import com.team.nexus.member.model.vo.GitMember;
 import com.team.nexus.member.model.vo.Member;
-
-import reactor.core.publisher.Mono;
 
 @PropertySource("classpath:git.properties")
 @Service
@@ -37,20 +29,17 @@ public class GithubService {
 	public String getToken(String code){
 		String url = "https://github.com/login/oauth/access_token";
 		
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
+		WebClient client = WebClient.builder()
+				.baseUrl(url)
+				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				.defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+				.build();
 		
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-		
-		JsonObject jsonObject = new JsonObject();
-		
-		jsonObject.addProperty("client_id", gitId);
-		jsonObject.addProperty("client_secret", gitSecret);
-		jsonObject.addProperty("code", code);
-		
-		HttpEntity<String> entity = new HttpEntity<String>(jsonObject.toString(), headers);
-		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+		String response = client.post()
+				.body(BodyInserters.fromFormData("client_id", gitId)
+                        .with("client_secret", gitSecret)
+                        .with("code",code))
+				.retrieve().bodyToMono(String.class).block();
 
 	    ObjectMapper objectMapper = new ObjectMapper();
 	    JsonNode jsonNode;
@@ -58,7 +47,7 @@ public class GithubService {
 	    String token="";
 	    
 	    try {
-			jsonNode = objectMapper.readTree(response.getBody());
+			jsonNode = objectMapper.readTree(response);
 			token = jsonNode.get("access_token").asText();
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -67,19 +56,19 @@ public class GithubService {
 	    return token;
 	}
 	
+	
 	public Member getUserInfo(String token) {
 		
-		RestTemplate restTemplate = new RestTemplate();
-		
-		String url = "https://api.github.com/user";
-		HttpHeaders header = new HttpHeaders();
-		header.set("Authorization", "Bearer "+token);
-		
-		HttpEntity<String> entity = new HttpEntity<String>(header);
-		
-		//이렇게 하면 쉽게 데이터를 넣을 수 있는데 카카오랑 통일이 되어야 한다. ... 내가 수정하지 
-//		ResponseEntity<GitMember> response = restTemplate.exchange(url, HttpMethod.GET, entity, GitMember.class);
-		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+		String response = WebClient.builder()
+				.baseUrl("https://api.github.com/user")
+				.defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer "+token)
+				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				.defaultHeader(HttpHeaders.ACCEPT, "application/vnd.github+json")
+				.build()
+				.get()
+				.retrieve()
+				.bodyToMono(String.class)
+				.block();
 		
 		ObjectMapper objecMapper = new ObjectMapper();
 		JsonNode jsonNode = null;
@@ -87,7 +76,7 @@ public class GithubService {
 		
 		// login = nick으로 저장하자
 		try {
-			jsonNode = objecMapper.readTree(response.getBody());
+			jsonNode = objecMapper.readTree(response);
 			m.setUserId(jsonNode.get("id").asText());
 			m.setUserNick(jsonNode.get("login").asText());
 			m.setEmail(jsonNode.get("email").asText());
