@@ -27,8 +27,8 @@
               <div class="card">
                 <div class="pl-3">
                   <a href="repoDetail.p?rNo=${ i.repoNo }">
-                    <h4 class="fw-bold py-3 mb-3">
-                        <span class="text-muted fw-light">${ i.userName } /</span> ${ i.repoName }
+                    <h4 class="fw-bold py-3 mb-3" style="overflow: hidden;">
+                        <span class="text-muted fw-light">${ i.userName } /</span><br> ${ i.repoName }
                     </h4>
                     ${ i.repoStatus }
   

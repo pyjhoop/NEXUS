@@ -33,12 +33,12 @@ class MultiInput extends HTMLElement {
     }
     /* NB use of pointer-events to only allow events from the × icon */
     ::slotted(div.item) {
-      background-color: lightblue;
+      background-color: var(--multi-input-item-bg-color, #dedede);
       border: var(--multi-input-item-border, 1px solid #ccc);
       border-radius: 2px;
       color: #222;
       display: inline-block;
-      font-size: 17px;
+      font-size: var(--multi-input-item-font-size, 14px);
       margin: 5px;
       padding: 2px 25px 2px 5px;
       pointer-events: none;
@@ -47,7 +47,7 @@ class MultiInput extends HTMLElement {
     }
     /* NB pointer-events: none above */
     ::slotted(div.item:hover) {
-      background-color: lightblue;
+      background-color: #eee;
       color: black;
     }
     ::slotted(input) {

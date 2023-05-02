@@ -2,6 +2,8 @@ package com.team.nexus.chatting.model.vo;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +25,7 @@ public class ChatMessage {
 	private int userNo;
 	private String userName;
 	private String profile;
+	private String today;
+	private String invite;
 	
 }

@@ -25,6 +25,10 @@ public class Member {
 	private Date enrollDate;
 	private String token;
 	private String status;
+	private String search;
+	private int createUserNo;
+	private String roomTitle2;
+	private String changeName2;
 	private String rollName;
 	
 }
