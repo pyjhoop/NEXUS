@@ -311,14 +311,10 @@ a:hover { text-decoration:none !important }
 						 + "</a>"
 						 + "<hr class='m-0'>";
 
-					//$(".user-last-chat").eq(i).text(result[i].lastChat);
-					//$(".last-chat-time block").eq(i).text(result[i].lastDate);
-					//$(".badge-success").eq(i).text(result[i].count);
-					
 					
 					
 					}
-				console.log(value);
+			
 				$("#room-list").html(value);
 				for(let i in result){
 					if(result[i].count != 0){
@@ -390,7 +386,7 @@ a:hover { text-decoration:none !important }
      				   "<hr class='m-0'>";
      			}
      			
-     			console.log(value);
+     		
      			
      		$("#search-user").html(value);
      		}, error:function(){

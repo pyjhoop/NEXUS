@@ -151,8 +151,8 @@ public class MemberController {
 			session.setAttribute("loginUser", loginUser);
 			return "main";
 		}else {
-			model.addAttribute("errorMsg", "로그인 실패");
-			return "common/errorPage";
+			session.setAttribute("alertMsg", "아이디나 비밀번호가 일치하지 않습니다.");
+			return "redirect:/";
 		}
 	}
 	

@@ -440,7 +440,6 @@ a:hover { text-decoration:none !important }
 		 */
 
 		$("#search-btn").click(function() {
-							console.log($("#selectUser").val());
 							$.ajax({
 										url : "searchPlus.ih",
 										data : {
@@ -448,7 +447,7 @@ a:hover { text-decoration:none !important }
 											userNo : userNo
 										},
 										success : function(result) {
-											console.log(result);
+											
 
 											let value = "";
 
@@ -483,7 +482,7 @@ a:hover { text-decoration:none !important }
 														+ "<hr class='m-0'>";
 											}
 
-											console.log(value);
+										
 
 											$("#search-user").html(value);
 										},
@@ -503,7 +502,7 @@ a:hover { text-decoration:none !important }
 						"roomNo" : roomNo,
 						"invite" : 'O'
 					};
-					console.log(chatMessage);
+	
 
 					chatSocket.send(JSON.stringify(chatMessage));
 				}
@@ -518,7 +517,6 @@ a:hover { text-decoration:none !important }
 				"roomNo" : roomNo,
 				"invite" : 'Z'
 			};
-			console.log(chatMessage);
 			chatSocket.send(JSON.stringify(chatMessage));
 
 		});

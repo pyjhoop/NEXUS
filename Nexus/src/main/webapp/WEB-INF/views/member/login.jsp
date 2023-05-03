@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -64,10 +65,32 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${pageContext.request.contextPath}/resources/assets/js/config.js"></script>
+    
+    <!-- 알람창 JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	
+	<!-- 알람창 CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+	<!--  알람창 Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+	<!--  알람창 Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+    
   </head>
 
   <body>
     <!-- Content -->
+    
+    
+	<c:if test="${not empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+	
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+	    
+    
 
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
