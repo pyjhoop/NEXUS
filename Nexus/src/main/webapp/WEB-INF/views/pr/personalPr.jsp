@@ -516,7 +516,7 @@ hr{
 
 
 <c:forEach var="p" items="${personalPrList }">
-	 <div class="card" style="width: 16.1rem;">
+	 <div class="card" style="width: 15.9rem;">
 	  <div class="card-body" style="padding-left: 10px;" >
 	    <p class="card-category" style="float:left; width: 50%;">${p.createDate }</p>
 	    <p class="card-category" style="float: right;">${p.category }</p>
