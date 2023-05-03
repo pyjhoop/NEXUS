@@ -123,6 +123,19 @@
 .down-link {
 	font-size: 1.45rem;
 }
+.btn-icon2{
+	position: absolute;
+    right: 4px;
+    top: 7px;
+    z-index: 999;
+    
+}
+#search-btn{
+	border:none;
+	background-color:#fff;
+	border-radius: 20px;
+}
+a:hover { text-decoration:none !important }
 </style>
 </head>
 <body>
@@ -136,68 +149,43 @@
 						<div class="chat-cont-left">
 							<div class="chat-header">
 								<span>Chats</span>
-								<div class="chat-compose" id="create-room"></div>
 							</div>
-
 							<div class="chat-search">
 								<div class="input-group">
-									<div class="input-group-prepend">
-										<div class="bx bx-search-alt-2"></div>
-									</div>
 									<input type="text" class="form-control" name="search"
 										placeholder="Search" id="selectUser">
-									<button class="btn rounded-pill btn-outline-secondary"
-										id="search-btn">검색</button>
+									<div class="btn-icon2">
+										<button class="bx bx-search-alt-2" id="search-btn"></button>
+									</div>
 								</div>
-
 							</div>
 							<div class="chat-users-list">
 								<div class="chat-scroll" id="search-user">
-									<c:choose>
-										<c:when test="${empty mList }">
-											<c:forEach var="r" items="${rList}">
-												<c:forEach var="u" items="${uList}">
-													<c:if test="${ r.roomNo eq u.roomNo }">
-														<div class="card-body d-flex">
-															<div class="media-img-wrap">
-																<div class="avatar avatar-away">
-																	<img src="assets/img/profiles/avatar-05.jpg" alt=""
-																		class="avatar-img rounded-circle">
-																</div>
-															</div>
-															<div class="media-body2">
-																<div class="user-name">${u.userName}</div>
-																<input type="radio" class="form-check-input"
-																	name="chat-check" value="${u.userNo}">
-															</div>
-														</div>
-														<hr class="m-0">
-													</c:if>
-												</c:forEach>
-											</c:forEach>
-										</c:when>
-										<c:otherwise>
-											<c:forEach var="m" items="${ mList }">
-												<c:if test="${ loginUser.userNo != m.userNo }">
-													<div class="card-body d-flex">
-														<div class="media-img-wrap">
-															<div class="avatar avatar-away">
-																<img src="${m.profile }" alt=""
-																	class="avatar-img rounded-circle">
-															</div>
-														</div>
-														<div class="media-body2">
-															<div class="user-name">${m.userName}</div>
-															<input type="radio" class="form-check-input"
-																name="chat-check" value="${m.userNo }">
-														</div>
-													</div>
-													<hr class="m-0">
-												</c:if>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-
+									<c:if test="${not empty fList }">
+									<c:forEach var="f" items="${ fList }">
+									<div class="card-body d-flex">
+									<div class="media-img-wrap">
+									<div class="avatar">
+									<img src="${f.profile }" alt="" class="avatar-img rounded-circle">
+									</div>
+									</div>
+									<div class="media-body2">
+									<div>
+									<div class="user-name">
+									${f.userName }
+									</div>
+									<div>
+									userCode : ${f.userNo }
+									</div>
+									</div>
+									<div>
+									<input type="radio" class="form-check-input" name="chat-check" value="${f.userNo }">
+									</div>
+									</div>
+									</div>
+									<hr class="m-0">
+									</c:forEach>
+									</c:if>
 								</div>
 							</div>
 						</div>
@@ -208,7 +196,7 @@
 									<div class="chat-header">
 										<div class="media d-flex">
 											<div class="media-img-wrap">
-												<div class="avatar avatar-online">
+												<div class="avatar">
 													<img src="${cr.changeName }" alt=""
 														class="avatar-img rounded-circle">
 												</div>
@@ -219,10 +207,10 @@
 										</div>
 										<div class="chat-options">
 											<div class="btn-group">
-												<a href=""
-													;
-                            class="btn-icon dropdown-toggle hide-arrow"
-													data-bs-toggle="dropdown" aria-expanded="false"> <i
+												<a href=""						
+                            						class="btn-icon dropdown-toggle hide-arrow"
+													data-bs-toggle="dropdown" aria-expanded="false">
+												<i
 													class='bx bx-dots-vertical-rounded'
 													style="font-size: 1.6rem;"></i>
 												</a>
@@ -245,13 +233,13 @@
 									<div class="chat-header">
 										<div class="media d-flex">
 											<div class="media-img-wrap">
-												<div class="avatar avatar-online">
-													<img src="${cr.changeName  }" alt=""
+												<div class="avatar">
+													<img src="${oUser.profile  }" alt=""
 														class="avatar-img rounded-circle">
 												</div>
 											</div>
 											<div class="media-body">
-												<div class="user-name">${cr.roomTitle  }</div>
+												<div class="user-name">${oUser.userName  }</div>
 											</div>
 										</div>
 										<div class="chat-options">
@@ -402,15 +390,14 @@
 					</c:choose>
 					</c:forEach>
 					</ul>
-
 				</div>
 				<div class="chat-footer">
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<form id="m_fileForm">
 								<div class="btn-file btn">
-									<i class="bx bx-paperclip"></i> <input type="file" id="m-file">
-									<input type="hidden" name="hidden-form">
+									<i class="bx bx-paperclip" style="font-size: 1.5rem;"></i> 
+									<input type="file" id="m-file">
 								</div>
 							</form>
 						</div>
@@ -452,46 +439,50 @@
 		 * HTML5 , JAVA7버전 이상, SPRING 4버전이상에서 지원.
 		 */
 
-		$("#search-btn")
-				.click(
-						function() {
-							console.log($("#selectUser").val());
-							$
-									.ajax({
+		$("#search-btn").click(function() {
+							$.ajax({
 										url : "searchPlus.ih",
 										data : {
 											search : $("#selectUser").val(),
 											userNo : userNo
 										},
 										success : function(result) {
-											console.log(result);
+											
 
 											let value = "";
 
 											for ( let i in result) {
 												value += "<div class='card-body d-flex'>"
 														+ "<div class='media-img-wrap'>"
-														+ "<div class='avatar avatar-away'>"
-														+ "<img src= " +
-        				    result[i].profile + 
-        				   " class='avatar-img rounded-circle'>"
+														+ "<div class='avatar'>"
+														+ "<img src= " 
+        				   								+ result[i].profile 
+        				  								+" class='avatar-img rounded-circle'>"
 														+ "</div>"
 														+ "</div>"
 														+ "<div class='media-body2'>"
+														+ "<div>"
 														+ "<div class='user-name'>"
 														+ result[i].userName
 														+ "</div>"
-														+ "<input type='radio' class= " +
-        				   "'form-check-input'" +
-        				   " name='chat-check' value=" +
-        				   result[i].userNo +
-        				   ">"
+														+ "<div>" 
+									     				+ "userCode : "
+									     				+ result[i].userNo 
+									     			    + "</div>"
+														+ "</div>"
+														+ "<div>"
+														+ "<input type='radio' class= " 
+								        				+ "'form-check-input'" 
+								        				+ " name='chat-check' value=" 
+								        				+ result[i].userNo 
+								        				+ ">"
+								        				+ "</div>"
 														+ "</div>"
 														+ "</div>"
 														+ "<hr class='m-0'>";
 											}
 
-											console.log(value);
+										
 
 											$("#search-user").html(value);
 										},
@@ -504,14 +495,14 @@
 		$("#invite").click(function() {
 			$('input:radio[name=chat-check]').each(function() {
 				if ($(this).is(":checked") == true) {
-					checkName = $(this).parent().find('.user-name').text();
+					checkName = $(this).parent().parent().find('.user-name').text();
 					const chatMessage = {
 						"userNo" : $(this).val(),
 						"userName" : checkName,
 						"roomNo" : roomNo,
 						"invite" : 'O'
 					};
-					console.log(chatMessage);
+	
 
 					chatSocket.send(JSON.stringify(chatMessage));
 				}
@@ -526,7 +517,6 @@
 				"roomNo" : roomNo,
 				"invite" : 'Z'
 			};
-			console.log(chatMessage);
 			chatSocket.send(JSON.stringify(chatMessage));
 
 		});

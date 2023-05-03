@@ -254,16 +254,36 @@
  			and user_no = #{userNo}
  	</update>
  	<select id="opponentUser" resultMap="chatUserResultSet">
- 		select *
- 	 	from tb_chat_user
+ 	select user_no
+       , room_no
+       , c.status
+       , count
+       , user_name
+       , profile
+ 	 	from tb_chat_user c
+        join tb_member m using(user_no)
  	 	where user_no != #{userNo}
- 	 		and room_no = #{roomNo}	
- 	 		and (status = 'S' or status='H')
+ 	 		and room_no = #{roomNo}
+ 	 		and (c.status = 'S' or c.status='H')  
+            and m.status = 'Y'
  	</select>
  	<insert id="insertChatFile">
  		insert
  			into tb_chatting
  			values(seq_chatting.nextval,#{roomNo},#{chattingContent},#{originName},#{changeName},#{userNo},sysdate,'F')
  	</insert>
+ 	<select id="selectFriend" resultMap="memberResultSet">
+ 	select *
+		from tb_member
+		join (
+		    select b.user_no
+		    from tb_friend a
+		    join (select * from tb_friend where user_add_no = #{userNo}) b on (a.user_add_no = b.user_no)
+		    where a.user_no = #{userNo}
+		    and b.user_blocked = 'N'
+		    )
+		using(user_no)
+		where status = 'Y'
+ 	</select>
  	
  </mapper>
