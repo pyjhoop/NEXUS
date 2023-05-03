@@ -16,6 +16,11 @@ public interface PersonalPrService {
 	
 	
 	int insertPersonalPr(PersonalPr pr);
+	
+	int increaseCount(int personalPrNo);
+	
+	
+	PersonalPr personalPrDetail(int personalPrNo);
 		
 	}
 	

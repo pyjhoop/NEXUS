@@ -522,14 +522,30 @@ hr{
 	    <p class="card-category" style="float: right;">${p.category }</p>
 	    <h5 class="card-title" style="margin-right: 0px; width: 235px; height: 39.794px;"><b>${p.psnPrTitle }</b></h5>
 	    <p class="card-text" style="float: left; font-size: 13px; width: 240px; height: 99.375px;">${p.psnPrContent }</p>
-	    <!-- <p>아이디 들어갈자리</p> -->
+	    <img  src="${p.profile}" alt="" style="width: 25px; border-radius: 100%;">
 	    <span style="margin-bottom: 5px;">${p.userName}</span>
-	    <%--  <span class="userName">${p.userNo}</span> --%>
+	    <div id="prCount" style="width: 0px; height: 0px;" hidden="">
+	    	${p.psnPrNo }
+	    </div>
+	    <div style="float: right;">
+	    	<i class='bx bx-show' style="margin-bottom: 5px;"></i> <p  style="display: inline-block; font-size: 1.1rem;">${p.count }</p> &nbsp;
+	    	
 	    <i class='bx bx-bookmark' style="float: right; "></i>
+	    </div>
 	  </div>
 </div>
 </c:forEach>
 
+	<script>
+            	$(function(){
+            		$(".card-body").click(function(){
+            			console.log("클릭은된");
+            			location.href= 'personalPr.bo?pno=' + $(this).children("#prCount").text();
+            			console.log("클릭이후");
+            		})	
+            	})
+            </script> 
+
 
 
 
@@ -538,36 +554,6 @@ hr{
 
 	
 </div>
-
-</div> <!-- main body div -->
-
-
-<!-- <script>
-		var seeAll = document.getElementById( "seeAll" );
-		var seeFront1 = document.getElementById("seeFront");
-		var seeBack = document.getElementById("seeBack");
-		var seeMobile = document.getElementById("seeMobile");
-		var seeEtc = document.getElementById("seeEtc");
-		seeAll.style.color = "#706482";
-		seeAll.style.fontSize = "28px";
-		
-
-	
-	function seeFront(){
-        seeFront1.style.color = "#706482";
-        seeFront1.style.fontSize = "28px";
-       	seeAll.style.color="lightgray";  
-        seeAll.style.fontSize="25px";
-    }
- 
-</script> -->
-
-
-
-
-
-
-
 
 </body>
 </html>

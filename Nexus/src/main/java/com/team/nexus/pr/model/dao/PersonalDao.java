@@ -37,6 +37,15 @@ public class PersonalDao {
 	}
 	
 	
+	public int increaseCount(SqlSessionTemplate sqlSession, int personalPrNo) {
+		return sqlSession.update("personalprMapper.increaseCount", personalPrNo);
+	}
+	
+	public PersonalPr personalPrDetail(SqlSessionTemplate sqlSession, int personalPrNo) {
+		return sqlSession.selectOne("personalprMapper.personalPrDetail", personalPrNo);
+	}
+	
+	
 	
 
 }

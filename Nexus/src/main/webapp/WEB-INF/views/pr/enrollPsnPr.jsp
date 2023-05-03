@@ -148,10 +148,10 @@ select {
 </head>
 <body>
 
-
+<div class="container-xxl flex-grow-1"> 
 <form action="insertPersonalPr" method="post" style="height: 100%;">
-<div id="body" style="margin: 0px; margin-top: 30px;">
-		<div class="col-md-6" style="width:97%; height:100%;  max-width: 100%; margin: auto; margin-left: 103px;">
+<div id="body" style="margin: 0px; margin-top: 30px; width: 100%">
+		<div class="col-md-6" style="width:150rem; height:100%;  max-width: 100%; margin: auto;">
                   <div class="card mb-4" style="width: 100%; margin: auto;">
                     <h4 class="card-header"  ><b>정보 입력</b></h4>
                     <div class="card-body demo-vertical-spacing demo-only-element" style="height: 1800px;"><br>
@@ -239,15 +239,15 @@ select {
 			    		<button type="button" class="btn btn-outline-success" id="get1" style="height: 55px;">선택한 기술스택 저장</button> <br>
                         <button type="button" class="btn btn-outline-success" id="test12" style="height: 55px;" onclick='getValues()'>get테스트</button>
                        </div>
-                       <textarea name="psnPrStack" id="values"></textarea>
+                        <textarea name="psnPrStack" id="values"></textarea> <br> 
                        <!-- <input  id="stackInputHidden" name="psnPrStack"> <br> -->
                        <script src="${pageContext.request.contextPath}/resources/js/multi-input.js"></script>
         				<script src="${pageContext.request.contextPath}/resources/js/script1.js"></script>
         	
-        <label ><b>자기소개</b></label>
+        <label style="float: left;" ><b>자기소개</b></label><br><br>
         <!-- summerNote 들어갈 자리 -->
         
-        <div class="container" style="padding-left: 0px;">
+        <div class="container" style="padding-left: 0px; float: left;">
   		<textarea class="summernote" id="summernote" name="editordata"></textarea>    
 		</div>
 		
@@ -285,7 +285,7 @@ select {
       
     </div>
     
-      
+     
     </div>
     </div>
 	</form>

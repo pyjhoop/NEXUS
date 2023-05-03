@@ -21,6 +21,8 @@ public class PersonalPr {
 	private int userNo;
 	private String userName;
 	private String category;
+	private int count;
+	private String profile;
 
 
 }
