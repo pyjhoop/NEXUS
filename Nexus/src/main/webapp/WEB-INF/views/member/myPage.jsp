@@ -81,7 +81,10 @@
                               placeholder=""
                             />
                           </div>
-                        
+                         <div class="mb-3 col-md-6">
+                            <label for="token" class="form-label">Token</label>
+                            <input class="form-control" type="password" name="token" id="token" value="${loginUser.token }"/>
+                          </div>
 
                         <br><br>
                         <div class="mt-2">

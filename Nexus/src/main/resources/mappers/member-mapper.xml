@@ -127,7 +127,8 @@
 			tb_member
 		 set user_name = #{userName},
 		 	 email = #{email},
-		 	 profile = #{profile}
+		 	 profile = #{profile},
+		 	 token = #{token}
 		 where user_no = #{userNo}
 	</update>
 	<update id="memberDelete">
