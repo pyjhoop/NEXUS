@@ -35,4 +35,8 @@ public class MemberDao {
 	public int resetPwd(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.selectOne("memberMapper.resetPwd", m);
 	}
+
+	public int enrollToken(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.enrollToken", m);
+	}
 }

@@ -63,6 +63,8 @@ public class IssueController {
 		// 연준이 코드
 
 		String url3 = repository + "/labels";
+		
+		System.out.println("usr1: "+url3);
 
 		String labelResponse = iService.getGitContentsByGet1(url3, session);
 

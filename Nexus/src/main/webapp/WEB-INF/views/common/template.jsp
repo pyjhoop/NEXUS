@@ -102,6 +102,8 @@
 <!-- 알람 종 js -->
 <script src="${pageContext.request.contextPath}/resources/js/alarm.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/alarm.css" />
+
+<script src="resources/js/template.js"></script>
 </head>
 
 <body>
@@ -109,7 +111,8 @@
 
 <c:if test="${not empty alertMsg }">
 	<script>
-		alertify.alert("${alertMsg}");
+		//alertify.alert("${alertMsg}");
+		$("#inputToken").click();
 	</script>
 
 	<c:remove var="alertMsg" scope="session" />
@@ -145,7 +148,7 @@
 						<div data-i18n="Analytics">Home</div>
 					</a></li>
 				<li class="menu-item" id="repository">
-					<a href="repository.p" class="menu-link">
+					<a href="repository.p" onclick="return tokenCheck();" class="menu-link">
 						<i class="menu-icon tf-icons bx bxl-github"></i>
 						<div data-i18n="Basic">Repository</div>
 					</a>
@@ -155,18 +158,45 @@
 				<li class="menu-header small text-uppercase"><span class="menu-header-text">Project</span></li>
 				<!-- Cards -->
 				
-				<li class="menu-item"><a href="issueShow.mini" class="menu-link">
+				<li class="menu-item"><a href="issueShow.mini" onclick="return repoCheck();" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-collection"></i>
 						<div data-i18n="Basic">Issue</div>
 					</a></li>
-				<li class="menu-item"><a href="#" class="menu-link">
+				<li class="menu-item"><a href="#" onclick="return repoCheck();" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-box"></i>
 						<div data-i18n="User interface">Milestone</div>
 					</a></li>
-				<li class="menu-item"><a href="#" class="menu-link">
+				<li class="menu-item"><a href="#" onclick="return repoCheck();" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-copy"></i>
 						<div data-i18n="Extended UI">Kanban</div>
 					</a></li>
+					
+				<script>
+					function tokenCheck(){
+						if("${loginUser.token}" == ""){
+							//모달 클릭 한 뒤 return false
+							//$("#eMsg").click();
+							$("#inputToken").click();
+							return false;
+						}else{
+							return true;
+						}
+					}
+
+					function repoCheck() {
+						if("${repoName}"== ""){
+							$(".errMsg").html("레파지토리 선택후 이용이 가능합니다.");
+							$("#eMsg").click();
+							//alertify.alert("레파지토리 선택후 이용이 가능합니다.");
+							return false;
+							
+						}else{
+							return true;
+						}
+					}
+				</script>
+				
+			
 
 				<li class="menu-item news"><a href="news.p" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-detail"></i>
@@ -388,6 +418,70 @@
 	</div>
 
 </div>
+
+	<!-- 토큰 입력 모달 -->
+	<button type="button" id="inputToken" style="display: none;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tokenModal">
+		
+	</button>
+
+	<div class="modal fade" id="tokenModal" tabindex="-1" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog" role="document">
+			<form action="enrollToken" method="post">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel1">깃허브 토큰 입력</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				  </div>
+				  <div class="modal-body">
+					<div class="row">
+					  <div class="col mb-3">
+						<label for="gitToken" class="form-label">토큰</label>
+						<input type="text" id="gitToken" name="token" class="form-control" placeholder="Enter Token">
+					  </div>
+					</div>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" id="closeModal" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+					  Close
+					</button>
+					<button type="button" id="tokenSubmit" class="btn btn-primary">등록</button>
+				  </div>
+				</div>
+			</form>
+		</div>
+	  </div>
+
+	  <button type="button" id="eMsg" style="display: none;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#errorModal">
+		
+	  </button>
+  
+	  <div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true" style="display: none;">
+		  <div class="modal-dialog" role="document">
+			  <form action="enrollToken" method="post">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <h4 class="modal-title text-danger" id="exampleModalLabel1">에러</h4>
+					  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body errMsg">
+						<c:if test="${not empty alertMsg }">
+							${alertMsg}
+						</c:if>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" id="closeModal" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+						Close
+					  </button>
+					  
+					</div>
+				  </div>
+			  </form>
+		  </div>
+		</div>
+
+	  
+	
+
 
                  
 
