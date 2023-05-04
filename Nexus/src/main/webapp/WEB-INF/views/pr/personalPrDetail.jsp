@@ -51,6 +51,19 @@
 #countNo{
 	margin-bottom: 0px !important;
 }
+#content{
+ overflow: auto;
+}
+#specs{
+	font-size: 1.2rem; 
+	font-weight: 100;
+	padding: 3rem 0rem 0rem 10rem;
+	
+}
+#specs2>b{
+	margin-left: 1rem;
+	margin-bottom: 5rem !important;
+}
 
 </style>
 
@@ -69,17 +82,41 @@
 </div>
 
 <div id="idDate">
+
 	<div id="idDateReal1" style="display: inline-block;">
-	 <img  src="${p.profile}" alt="" style="width: 2.5rem; border-radius: 100%;">
-	<span>${p.userName}</span> &nbsp; 
+	 <img  src="${p.profile}" alt="" style="width: 2.1rem; border-radius: 100%;"> &nbsp; 
+	<span id="userName" style="font-size: 1.1rem;">${p.userName}</span> &nbsp; &nbsp; 
 	<span>${p.createDate }</span>
 	<p id="countNo" style="display: inline-block; font-size: 1.4rem; float:right; margin-bottom: 0px; margin-top: 0.23rem;">${p.count }</p>  &nbsp;
 	<i class='bx bx-show' style="float: right; font-size: 2.5rem; margin-right: 0.4rem;"></i>  &nbsp;
 	</div>
 	
-	<div id="idDateReal2">
+</div>
+
+<div id="specs" style=" padding: 3rem 6rem 0rem 6rem;">
+	<div id="specs2" style="overflow: auto; margin-bottom: 3rem; padding-left: 0.8rem; border-bottom: 3px solid #f2f2f2">
+		<div><b>희망 분야 <span style="margin-left: 2.5rem; color: black; ">&nbsp; &nbsp; ${p.category }</span></b></div><br>
+		<div><b>참여 기간 <span style="margin-left: 2.5rem; color: black;">&nbsp; &nbsp; ${p.psnPrAvlPrd }</span></b></div><br>
+		<div><b>연락 방법 <span style="margin-left: 2.5rem; color: black;">&nbsp; &nbsp; ${p.psnPrContact }</span></b></div><br>
+		<div><b>사용 언어<span style="margin-left: 2.5rem; color: black; ">&nbsp; &nbsp; ${p.psnPrStack }</span></b></div><br>
 		
 	</div>
+
+</div>
+
+
+
+
+
+<div id="content" style="padding-left: 0.8rem;">
+
+	<div>
+		<p id="jgsg" style="font-size: 1.75rem; font-weight:900; color: black; padding: 3rem 6rem 1.2rem 6rem;  border-bottom: 3px solid #f2f2f2; width: 80%;" ><b>자기소개</b></p> 
+	</div>
+	<div id="realContent" style="padding: 2rem 0rem 3rem 6rem; font-size: 1.2rem; color: black;">
+		<b>${p.psnPrContent }</b>
+	</div>
+
 </div>
 
 
