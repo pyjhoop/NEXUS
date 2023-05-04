@@ -34,7 +34,7 @@ public class IssueService {
 
 		String response = webClient
 				.get()
-				.uri(path)
+				.uri("https://api.github.com/repos/"+path)
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 				.header(HttpHeaders.ACCEPT, "application/vnd.github+json")
 				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)

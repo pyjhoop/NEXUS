@@ -138,4 +138,10 @@
 		where user_no = #{userNo}	
 	</update>
 	
+	<update id="enrollToken">
+		update tb_member
+		   set token = #{token}
+		 where user_no = #{userNo} 
+	</update>
+	
 </mapper>
