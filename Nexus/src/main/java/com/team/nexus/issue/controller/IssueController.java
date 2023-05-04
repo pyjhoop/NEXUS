@@ -41,7 +41,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.team.nexus.issue.model.service.IssueServiceImpl;
+import com.team.nexus.issue.model.service.IssueService;
 import com.team.nexus.issue.model.vo.GitIssue;
 import com.team.nexus.issue.model.vo.Label;
 import com.team.nexus.member.model.vo.Member;
@@ -51,10 +51,8 @@ import com.team.nexus.repository.model.service.RepositoryService;
 public class IssueController {
 
 	@Autowired
-	private IssueServiceImpl iService;
+	private IssueService iService;
 
-	@Autowired
-	private RepositoryService repoService;
 
 	@RequestMapping(value = "issueShow.mini", produces = "application/json; charset=utf-8")
 	public String issueList(HttpSession session, Member m, Model model, @RequestParam(required = false) String state)
@@ -66,7 +64,7 @@ public class IssueController {
 
 		String url3 = repository + "/labels";
 
-		String labelResponse = repoService.getGitContentsByGet(url3, session);
+		String labelResponse = iService.getGitContentsByGet1(url3, session);
 
 		ObjectMapper obj = new ObjectMapper();
 		JsonNode jsonNode;
@@ -218,7 +216,7 @@ public class IssueController {
 
 		String url3 = repository + "/labels";
 
-		String labelResponse = repoService.getGitContentsByGet(url3, session);
+		String labelResponse = iService.getGitContentsByGet1(url3, session);
 
 		ObjectMapper obj = new ObjectMapper();
 		JsonNode jsonNode;
@@ -294,7 +292,7 @@ public class IssueController {
 			String url3 = repository + "/labels";
 
 
-			String labelResponse = repoService.getGitContentsByGet(url3, session);
+			String labelResponse = iService.getGitContentsByGet1(url3, session);
 
 			ObjectMapper obj = new ObjectMapper();
 			JsonNode jsonNode;
@@ -442,7 +440,7 @@ public class IssueController {
 
 		String apiUrl = repository + "/issues";
 
-		String response = repoService.gitPatchMethod(apiUrl, session, title, body, ino);
+		String response = iService.gitPatchMethod(apiUrl, session, title, body, ino);
 
 		return "redirect:issueShow.mini";
 	}
