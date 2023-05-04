@@ -31,6 +31,9 @@ public class IssueService {
 	public String getGitContentsByGet1(String path, HttpSession session) {
 
 		String token = ((Member) session.getAttribute("loginUser")).getToken();
+		
+		System.out.println("여기 타나염????" + token);
+		System.out.println("1111111" +path);
 
 		String response = webClient
 				.get()
@@ -50,6 +53,14 @@ public class IssueService {
 		// .build();
 		//
 		// String response = client.get().retrieve().bodyToMono(String.class).block();
+		
+		
+		
+		
+		
+		System.out.println("################ 1111111" +path);
+		System.out.println("################ 2222222" +response);
+		System.out.println("################ 3333333" +token);
 
 		return response;
 	}
