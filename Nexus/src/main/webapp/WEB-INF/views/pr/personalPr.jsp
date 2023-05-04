@@ -10,7 +10,7 @@
 </head>
 <style>
 #mainBody{
-	height: 1500px; 
+	height: auto; 
 	width: 100%;
 	margin:auto;
 	margin-top: 10px !important;
@@ -350,15 +350,20 @@ hr{
 <body>
 <jsp:include page="../common/template.jsp"/>
 
+
 <div class="container-xxl flex-grow-1">
 	<div id="mainBody" style="width: 100%; margin-right: 5rem;">
-
-
-
-<!-- <div id="stacks">
-<div class="col-xl-6" style="width: 100% !important; margin: auto;" >
+	
+	<div id="prs" >
+	<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollPsnPr.pr'">
+	새 글 쓰기
+</button>
+</div>
+	
+	<div id="stacks" style="overflow: auto; padding: 0;">
+<div class="col-xl-6" style="width: 100%; max-width: 100%;" >
                   <h6 class="text-muted"></h6>
-                  <div class="nav-align-top mb-4" >
+                  <div class="nav-align-top mb-4" style="width: 100%;">
                     <ul class="nav nav-tabs nav-fill" role="tablist" style="margin-bottom: 0;" >
                       <li class="nav-item" style="margin: 0;">
                         <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-home" aria-controls="navs-justified-home" aria-selected="true">
@@ -388,7 +393,7 @@ hr{
                       </li>
                       
                     </ul>
-                    <div class="tab-content" style="height: 350px;">
+                    <div class="tab-content" style="overflow: auto; width: 100%;">
                       <div class="tab-pane fade active show" id="navs-justified-home" role="tabpanel">
                         <section class="desktopFilter_filterWrapper__1gwsT" style="box-sizing: border-box;">
 							<ul class="LanguageBar_languages__2Ilqf">
@@ -425,8 +430,8 @@ hr{
 							<li class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/zeplin.svg" alt="Zeplin"><span>Zeplin</span></li>
 							<li class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/jest.svg" alt="Jest"><span>Jest</span></li></ul>
 							</ul>
-						<div class="SelectedLanguage_selectedWrapper__2StUQ"><ul class="SelectedLanguage_selectedLanguages__DYJjl"></ul></div>
-						<div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div>
+						<!-- <div class="SelectedLanguage_selectedWrapper__2StUQ"><ul class="SelectedLanguage_selectedLanguages__DYJjl"></ul></div>
+						<div class="search_container__2ExFE"><img class="search_searchImg__2ia6h" src="" alt="sub logo"></div> -->
 						</section>
                       </div>
                       <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
@@ -501,16 +506,15 @@ hr{
                     </div>
                   </div>
                 </div>
-</div> -->
+</div> 
 
 
 
 
-<div id="prs" >
-	<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollPsnPr.pr'">
-	새 글 쓰기
-</button>
-</div>
+
+
+
+
 
 <div id="shell" style="display: block; height: 1200px; width: 100%;">
 

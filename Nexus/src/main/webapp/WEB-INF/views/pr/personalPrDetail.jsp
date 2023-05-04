@@ -99,7 +99,6 @@
 		<div><b>참여 기간 <span style="margin-left: 2.5rem; color: black;">&nbsp; &nbsp; ${p.psnPrAvlPrd }</span></b></div><br>
 		<div><b>연락 방법 <span style="margin-left: 2.5rem; color: black;">&nbsp; &nbsp; ${p.psnPrContact }</span></b></div><br>
 		<div><b>사용 언어<span style="margin-left: 2.5rem; color: black; ">&nbsp; &nbsp; ${p.psnPrStack }</span></b></div><br>
-		
 	</div>
 
 </div>
@@ -111,8 +110,11 @@
 <div id="content" style="padding-left: 0.8rem;">
 
 	<div>
-		<p id="jgsg" style="font-size: 1.75rem; font-weight:900; color: black; padding: 3rem 6rem 1.2rem 6rem;  border-bottom: 3px solid #f2f2f2; width: 80%;" ><b>자기소개</b></p> 
+		<p id="jgsg" style="font-size: 1.75rem; font-weight:900; color: black; padding: 3rem 6rem 0rem 6rem;  " ><b>자기소개</b></p> 
 	</div>
+	
+	<div style="margin-left:5rem; border-bottom: 1.5px solid #f2f2f2; width: 88%;"></div>
+	
 	<div id="realContent" style="padding: 2rem 0rem 3rem 6rem; font-size: 1.2rem; color: black;">
 		<b>${p.psnPrContent }</b>
 	</div>

@@ -177,7 +177,7 @@ select {
                       <label ><b>연락 수단</b></label>
                       <div class="input-group">
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
-                        <input type="text" class="form-control" name="psnPrContact" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11" required>
+                        <input type="text" class="form-control" name="psnPrContact" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요. Nexus채팅으로 연락받기를 원하시면 유저코드 혹은 닉네임을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11" required>
                       </div><br>
                       
                      
@@ -197,10 +197,10 @@ select {
                     
                    <label ><b>기술 스택</b></label>  
  					
-                   <div class="input-group" style="border: none; box-shadow: none;">
-                   <multi-input id="multi-input">
+                   <div class="input-group" style="border: none; box-shadow: none;" onchange="handleOnChange(this)" >
+                   <multi-input id="multi-input" >
 			      <input id="stackInputCard" list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
-			      <datalist id="speakers">
+			      <datalist id="speakers" onchange="dataListChange(this)">
 			      <!-- stackInputCard에 "선택안함"이 있을경우 다른 옵션들 비활성화  -->
 			      	<option value="선택안함" class="item"></option>
 			        <option value="AWS" class="item"></option>
@@ -239,10 +239,46 @@ select {
 			    		<button type="button" class="btn btn-outline-success" id="get1" style="height: 55px;">선택한 기술스택 저장</button> <br>
                         <button type="button" class="btn btn-outline-success" id="test12" style="height: 55px;" onclick='getValues()'>get테스트</button>
                        </div>
-                        <textarea name="psnPrStack" id="values"></textarea> <br> 
-                       <!-- <input  id="stackInputHidden" name="psnPrStack"> <br> -->
+                       <!--  <textarea id="values" ></textarea> <br>  -->
+                       <input  id="selecteds" name="psnPrStack"> <br>
                        <script src="${pageContext.request.contextPath}/resources/js/multi-input.js"></script>
         				<script src="${pageContext.request.contextPath}/resources/js/script1.js"></script>
+        				
+         <script type="text/javascript">
+        /* function handleOnChange(e) {
+        	var values = [];
+        	  console.log(e);
+        	 // options에서 selected 된 element의 value 찾기
+        	 // var values = [...e.options]
+        	   // .filter(option => option.selected)
+        	   // .map(option => option.value);
+				//console.log(values);
+        	  document.getElementById('selecteds').innerText = values;
+        	  document.getElementById('selecteds').value = values;
+        	  console.log($("#speakers").val());
+        	} */
+        
+        function dataListChange(e){
+        	var values = [];
+      	  console.log(e);
+      	 // options에서 selected 된 element의 value 찾기
+      	 // var values = [...e.options]
+      	   // .filter(option => option.selected)
+      	   // .map(option => option.value);
+				//console.log(values);
+      	  document.getElementById('selecteds').innerText = values;
+      	  document.getElementById('selecteds').value = values;
+      	  console.log($("#speakers option").find(':selected').data('data-value'));
+        }
+        
+       
+        </script> 
+        
+        <!-- <script>
+        	$('#stackInputCard').bind('input',function(){
+        		console.log(123);
+        	})  
+        	</script> -->
         	
         <label style="float: left;" ><b>자기소개</b></label><br><br>
         <!-- summerNote 들어갈 자리 -->
