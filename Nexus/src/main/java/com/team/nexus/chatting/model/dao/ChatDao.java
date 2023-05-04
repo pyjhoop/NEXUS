@@ -106,4 +106,7 @@ public class ChatDao {
 		sqlSession.update("chattingMapper.updateFileName",chatMessage);
 	}
 	
+	public ArrayList<Member> selectFriend(SqlSessionTemplate sqlSession,int userNo){
+		return (ArrayList)sqlSession.selectList("chattingMapper.selectFriend", userNo);
+	}
 }

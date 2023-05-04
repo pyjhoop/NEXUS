@@ -14,7 +14,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -35,6 +34,9 @@ public class RepositoryService {
 
 	@Autowired
 	private RepositoryDao rDao;
+
+	@Autowired
+	private WebClient webClient;
 
 	public int insertRepo(Repositories r) {
 		return rDao.insertRepo(sqlSession, r);
@@ -58,10 +60,6 @@ public class RepositoryService {
 
 	/*
 	 * http 통신을 위한 메서드들
-	 * <<<<<<< HEAD
-	 * 
-	 * 
-	 * =======
 	 */
 
 	// 비동기통신을 하기 위한 메서드
@@ -69,19 +67,30 @@ public class RepositoryService {
 
 		String token = ((Member) session.getAttribute("loginUser")).getToken();
 
-		WebClient client = WebClient.builder()
-				.baseUrl("https://api.github.com")
-				.defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-				.defaultHeader(HttpHeaders.ACCEPT, "application/vnd.github+json")
-				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				.build();
-
-		String url = "/repos/" + path;
-
-		Mono<String> responseMono = client.get()
-				.uri(url)
+		Mono<String> responseMono = webClient
+				.get()
+				.uri("https://api.github.com/repos/" + path)
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.header(HttpHeaders.ACCEPT, "application/vnd.github+json")
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				.retrieve()
 				.bodyToMono(String.class);
+
+		// 빈등록 이전 방식
+
+		// WebClient client = WebClient.builder()
+		// .baseUrl("https://api.github.com")
+		// .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+		// .defaultHeader(HttpHeaders.ACCEPT, "application/vnd.github+json")
+		// .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+		// .build();
+		//
+		// String url = "/repos/" + path;
+		//
+		// Mono<String> responseMono = client.get()
+		// .uri(url)
+		// .retrieve()
+		// .bodyToMono(String.class);
 
 		return responseMono;
 
@@ -92,14 +101,24 @@ public class RepositoryService {
 
 		String token = ((Member) session.getAttribute("loginUser")).getToken();
 
-		WebClient client = WebClient.builder()
-				.baseUrl(path)
-				.defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-				.defaultHeader(HttpHeaders.ACCEPT, "application/vnd.github+json")
-				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				.build();
+		String response = webClient
+				.get()
+				.uri(path)
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.header(HttpHeaders.ACCEPT, "application/vnd.github+json")
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				.retrieve()
+				.bodyToMono(String.class)
+				.block();
 
-		String response = client.get().retrieve().bodyToMono(String.class).block();
+		// WebClient client = WebClient.builder()
+		// .baseUrl(path)
+		// .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+		// .defaultHeader(HttpHeaders.ACCEPT, "application/vnd.github+json")
+		// .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+		// .build();
+		//
+		// String response = client.get().retrieve().bodyToMono(String.class).block();
 
 		return response;
 	}
@@ -147,13 +166,9 @@ public class RepositoryService {
 		// assigneesArray.add(assignees);
 		// issueJson.put("assignees", assigneesArray);
 
-		HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-		requestFactory.setConnectTimeout(5 * 1000);
-		requestFactory.setReadTimeout(5 * 1000);
+		String test = "{\"title\":\"Found a bug\",\"body\":\"I''m having a problem with this.\"}";
 
-		restTemplate.setRequestFactory(requestFactory);
-
-		HttpEntity<String> entity = new HttpEntity<String>(issueJson.toString(), headers);
+		HttpEntity<String> entity = new HttpEntity<String>(test, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, entity, String.class);
 

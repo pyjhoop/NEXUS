@@ -30,6 +30,9 @@ END;
 
 -- 테이블 생성
 
+create sequence seq_memberDelete
+nocache;
+
 ---------------------- 회원 테이블 -------------------------
 create table tb_member(
     user_no	number primary key,

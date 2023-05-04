@@ -32,7 +32,7 @@ import com.team.nexus.chatting.model.vo.ChatUser;
 import com.team.nexus.member.model.vo.Member;
 
 @Controller
-@SessionAttributes({"rno", "rList", "uno"})
+@SessionAttributes({"rno", "uno"})
 
 public class ChattingController {
 	
@@ -42,24 +42,21 @@ public class ChattingController {
 	@RequestMapping("selectChat.ih")
 	public String selectChattingRoom(HttpSession session, Model model) {
 		modularity(session, model);
-		
 		return "chatting/chattingRoom";
 	}
 	
 	@RequestMapping("roomDetail.ih")
-	public String selectRoomDetail(ChatRoom cr,ChatUser cu , HttpSession session, Model model) {
-		Member loginUser = (Member)session.getAttribute("loginUser");
-		int userNo = loginUser.getUserNo();
-		cu.setUserNo(userNo);
+	public String selectRoomDetail(ChatRoom cr,ChatUser cu ,ChatMessage cm, HttpSession session, Model model) {
 		int result = cService.readMessage(cu);
 		ArrayList<ChatMessage> cList = cService.selectMessage(cr.getRoomNo()); 
+		ChatUser oUser = cService.opponentUser(cm); 
 		modularity(session, model);
-		System.out.println("cList : " + cList);
 		model.addAttribute("cu",cu);
 		model.addAttribute("cList",cList);
 		model.addAttribute("cr", cr);
-		model.addAttribute("uno", userNo);
+		model.addAttribute("uno", cu.getUserNo());
 		model.addAttribute("rno", cr.getRoomNo());
+		model.addAttribute("oUser", oUser);
 		return "chatting/chattingRoomDetail";
 	}
 	
@@ -79,13 +76,8 @@ public class ChattingController {
 	public void modularity(HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNo = loginUser.getUserNo();
-		ArrayList<ChatRoom> rList = cService.selectRoom(userNo);
-		ArrayList<ChatUser> uList = cService.selectRoomUser(userNo);
-		ArrayList<ChatUser> cuList = cService.selectUnreadMessage(userNo);
-		System.out.println(uList);
-		model.addAttribute("cuList", cuList);
-		model.addAttribute("rList",rList);
-		model.addAttribute("uList",uList);
+		ArrayList<Member> fList = cService.selectFriend(userNo);
+		model.addAttribute("fList", fList);
 	}
 	
 	@RequestMapping("createRoom.ih")

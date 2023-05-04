@@ -122,5 +122,20 @@
 		 where user_id = #{userId}
 		   and email = #{email}
 	</select>
+	<update id="myPageUpdate">
+		update
+			tb_member
+		 set user_name = #{userName},
+		 	 email = #{email},
+		 	 profile = #{profile}
+		 where user_no = #{userNo}
+	</update>
+	<update id="memberDelete">
+		update
+			tb_member
+		set status = 'N',
+		    user_id = seq_memberDelete.nextval
+		where user_no = #{userNo}	
+	</update>
 	
 </mapper>
