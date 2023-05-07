@@ -12,6 +12,7 @@ import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -243,46 +245,115 @@ public class IssueController {
 		return "issue/issueEnrollView";
 	}
 
+//	@RequestMapping(value = "createIssue.mi", produces = "application/json; charset=utf-8")
+//	public String insertIssue(@RequestParam String title, @RequestParam(required = false) String body,
+//			@RequestParam(required = false) String assignees, HttpSession session) {
+//
+//		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
+//
+//
+//		String repository = (String) session.getAttribute("repository");
+//
+//		String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
+//
+//		// Create a JSON object for the issue payload
+//		JSONObject issueJson = new JSONObject();
+//		issueJson.put("title", title);
+//		issueJson.put("body", body);
+//		JSONArray assigneesArray = new JSONArray();
+//		// ### 라벨만 있으면 에러나서 주석처리함
+//		 assigneesArray.add(assignees);
+//		 issueJson.put("assignees", assigneesArray);
+//
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.set("Authorization", "Bearer " + token);
+//		headers.setContentType(MediaType.APPLICATION_JSON);
+//		HttpEntity<String> requestEntity = new HttpEntity<String>(issueJson.toString(), headers);
+//
+//		// Send a POST request to the GitHub API
+//		RestTemplate restTemplate = new RestTemplate();
+//		ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity,
+//				String.class);
+//		HttpStatus responseStatus = responseEntity.getStatusCode();
+//
+//		if (responseStatus != HttpStatus.CREATED) {
+//			throw new RuntimeException("Failed to create issue on GitHub API: " + responseStatus.toString());
+//		}
+//
+//		return "redirect:issueShow.mini";
+//	}
+	
+	
+
+	
+	
+	
 	@RequestMapping(value = "createIssue.mi", produces = "application/json; charset=utf-8")
-	public String insertIssue(@RequestParam String title, @RequestParam(required = false) String body,
-			@RequestParam(required = false) String assignees, HttpSession session) {
+	public String createIssue(@RequestParam("title") String title, 
+					@RequestParam(required = false) String body, 
+	                          @RequestParam("assignees") String assignees,
+//	                          @RequestParam("milestone") Integer milestone,
+	                          @RequestParam("labels") String[] labels,
+	                          HttpSession session) {
 
-		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
+	    String token = ((Member) session.getAttribute("loginUser")).getToken();
+	    String repository = (String) session.getAttribute("repository");
+	    String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
 
-		// https://api.github.com/repos/{owner}/{repo}/issues 변수로 각 받아와서 코드 수정해야함
+	    // Create a JSON object for the issue payload
+	    JSONObject issueJson = new JSONObject();
+	    issueJson.put("title", title);
+	    issueJson.put("body", body);
+	    JSONArray assigneesArray = new JSONArray();
+	    assigneesArray.add(assignees);
+	    issueJson.put("assignees", assigneesArray);
+//	    issueJson.put("milestone", milestone);
+	    JSONArray labelsArray = new JSONArray();
+	    for (String label : labels) {
+	        labelsArray.add(label);
+	    }
+	    issueJson.put("labels", labelsArray);
 
-		String repository = (String) session.getAttribute("repository");
+	    
+	    System.out.println("########33");
+	    System.out.println(title);
+	    System.out.println(body);
+	    System.out.println(assignees);
+	    System.out.println(labelsArray);
+	    
+	    
+	    
+	    
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.set("Authorization", "Bearer " + token);
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    HttpEntity<String> requestEntity = new HttpEntity<>(issueJson.toString(), headers);
 
-		String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
+	    // Send a POST request to the GitHub API
+	    RestTemplate restTemplate = new RestTemplate();
+	    ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity,
+	            String.class);
+	    HttpStatus responseStatus = responseEntity.getStatusCode();
 
-		// Create a JSON object for the issue payload
-		JSONObject issueJson = new JSONObject();
-		issueJson.put("title", title);
-		issueJson.put("body", body);
-		JSONArray assigneesArray = new JSONArray();
-		// ### 라벨만 있으면 에러나서 주석처리함
-		// assigneesArray.add(assignees);
-		// issueJson.put("assignees", assigneesArray);
+	    if (responseStatus != HttpStatus.CREATED) {
+	        throw new RuntimeException("Failed to create issue on GitHub API: " + responseStatus.toString());
+	    }
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer " + token);
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		HttpEntity<String> requestEntity = new HttpEntity<String>(issueJson.toString(), headers);
-
-		// Send a POST request to the GitHub API
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity,
-				String.class);
-		HttpStatus responseStatus = responseEntity.getStatusCode();
-
-		if (responseStatus != HttpStatus.CREATED) {
-			throw new RuntimeException("Failed to create issue on GitHub API: " + responseStatus.toString());
-		}
-
-
-		
-		return "redirect:issueShow.mini";
+	    return "redirect:issueShow.mini";
 	}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@RequestMapping(value = "issueDetail.mini", produces = "application/json; charset=utf-8")
 	public String selectIssue(@RequestParam String ino, HttpSession session, Model model) {

@@ -32,8 +32,7 @@ public class IssueService {
 
 		String token = ((Member) session.getAttribute("loginUser")).getToken();
 		
-		System.out.println("여기 타나염????" + token);
-		System.out.println("1111111" +path);
+	
 
 		String response = webClient
 				.get()
@@ -45,22 +44,6 @@ public class IssueService {
 				.bodyToMono(String.class)
 				.block();
 
-		// WebClient client = WebClient.builder()
-		// .baseUrl(path)
-		// .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-		// .defaultHeader(HttpHeaders.ACCEPT, "application/vnd.github+json")
-		// .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-		// .build();
-		//
-		// String response = client.get().retrieve().bodyToMono(String.class).block();
-		
-		
-		
-		
-		
-		System.out.println("################ 1111111" +path);
-		System.out.println("################ 2222222" +response);
-		System.out.println("################ 3333333" +token);
 
 		return response;
 	}
@@ -97,7 +80,6 @@ public class IssueService {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		String url = "https://api.github.com/repos/" + path + "/" + ino;
 
-		System.out.println("url : " + url);
 
 		// Create a JSON object for the issue payload
 		JSONObject issueJson = new JSONObject();

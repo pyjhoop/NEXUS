@@ -68,13 +68,16 @@ input.inputCk + label{
 
 			<input type="text" class="form-control issuetitle" id="isTitle" name="title" placeholder="Title" autofocus>
 			<input type="hidden" name="issueNo" value="">
+			<input type="hidden" name="assignees" value="">
+			<input type="hidden" name="labels" value="">
+			
 
 			<div class="why">
 				<div class="editor-wrapper">
 					<div id="editor"></div>
 
 					<input type="hidden" name="body" value="">
-					<!-- 본인 글일때만 보이게 분기처리 ### -->
+				
 					<div class="btn-box">
 						<br>
 						<button type="submit" class="btn btn-outline-primary" id="btn1">제출하기</button>
@@ -98,7 +101,7 @@ input.inputCk + label{
 		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">이슈 담당자</label>
 
-			<select id="defaultSelect" class="form-select" name="assignees">
+			<select id="defaultSelect" class="form-select" name="issueAss" multiple >
 				<option>이슈 담당자</option>
 				<c:forEach var="r" items="${RepoMembers }">
 					<option value="${r.userName }">${r.userName}</option>
@@ -109,7 +112,7 @@ input.inputCk + label{
 
 		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">라벨</label>
-			<select id="defaultSelect" class="form-select" name="labels">
+			<select id="defaultSelect" class="form-select" name="issueLabel">
 				<option>라벨</option>
 				<c:forEach var="l" items="${lList }">
 					<option value="${l.name }">${l.name }</option>
@@ -120,17 +123,6 @@ input.inputCk + label{
 
 
 
-
-
-		<div class="mb-3">
-			<label for="defaultSelect" class="form-label">프로젝트</label>
-			<select id="defaultSelect" class="form-select" name="">
-				<option>프로젝트</option>
-				<option value="1" type="checkbox">One</option>
-				<option value="2" type="checkbox">Two</option>
-				<option value="3" type="checkbox">Three</option>
-			</select>
-		</div>
 
 
 		<div class="mb-3">
@@ -196,49 +188,24 @@ input.inputCk + label{
 
 
       
-		// body 에디터 input 히든 값 넣기
-		$("#btn1").click(function(){
-    var markdown = editor.getMarkdown();
-    $("input[name='body']").val(markdown);
-});
+
 
             
-		// Get the ul element
-		const ul = document.querySelector('.users-list');
-
-		// Get all the checkboxes
-		const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-		// Loop through all the checkboxes
-		checkboxes.forEach((checkbox, index) => {
-		  // Add an event listener to each checkbox
-		  checkbox.addEventListener('change', () => {
-		    // If the checkbox is checked
-		    if (checkbox.checked) {
-		      // Create a new li element
-		      const li = document.createElement('li');
-		      li.classList.add('avatar', 'avatar-xs', 'pull-up');
-		      li.setAttribute('data-bs-toggle', 'tooltip');
-		      li.setAttribute('data-popup', 'tooltip-custom');
-		      li.setAttribute('data-bs-placement', 'top');
-		      li.setAttribute('title', checkbox.value);
-
-		      // Create a new img element
-		      const img = document.createElement('img');
-		      img.src = assigneeProfiles[index];
-		      img.alt = '';
-
-		      // Add the img element to the li element
-		      li.appendChild(img);
-
-		      // Add the li element to the ul element
-		      ul.appendChild(li);
-		    } else {
-		      // If the checkbox is unchecked, remove the corresponding li element
-		      ul.removeChild(ul.children[index]);
-		    }
-		  });
+		$(document).ready(function() {
+		    $('#issueEnrollForm').submit(function() {
+		    	
+		        var markdown = editor.getMarkdown();
+		        $("input[name='body']").val(markdown);
+		    	
+		    	
+		        var selectedAssignee = $(".form-select option:selected").val();
+		        $('input[name="assignees"]').val(selectedAssignee);
+		        $('input[name="body"]').val($('#editor').html());
+		        return true;
+		    });
 		});
+
+
 
             
         </script>
@@ -246,3 +213,6 @@ input.inputCk + label{
 </body>
 
 </html>
+
+
+이게 지금 원본
