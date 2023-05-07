@@ -52,4 +52,3 @@ public class PersonalPrServiceImpl implements PersonalPrService {
 		
 	}
 
-

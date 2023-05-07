@@ -154,7 +154,7 @@ select {
 		<div class="col-md-6" style="width:150rem; height:100%;  max-width: 100%; margin: auto;">
                   <div class="card mb-4" style="width: 100%; margin: auto;">
                     <h4 class="card-header"  ><b>정보 입력</b></h4>
-                    <div class="card-body demo-vertical-spacing demo-only-element" style="height: 1800px;"><br>
+                    <div class="card-body demo-vertical-spacing demo-only-element" style="height: 1500px; overflow: auto; "><br>
                     
                     <label><b>제목</b></label>
                       <div class="input-group" >
@@ -197,12 +197,11 @@ select {
                     
                    <label ><b>기술 스택</b></label>  
  					
-                   <div class="input-group" style="border: none; box-shadow: none;" onchange="handleOnChange(this)" >
-                   <multi-input id="multi-input" >
+                   <div class="input-group" style="border: none; box-shadow: none;" onchange="dataListChange()">
+                   <multi-input id="multi-input">
 			      <input id="stackInputCard" list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
-			      <datalist id="speakers" onchange="dataListChange(this)">
+			      <datalist id="speakers">
 			      <!-- stackInputCard에 "선택안함"이 있을경우 다른 옵션들 비활성화  -->
-			      	<option value="선택안함" class="item"></option>
 			        <option value="AWS" class="item"></option>
 			        <option value="Django" class="item"></option>
 			        <option value="Docker" class="item"></option>
@@ -236,50 +235,21 @@ select {
 			        <option value="Zest" class="item"></option>
 			      </datalist>
 			    </multi-input>
-			    		<button type="button" class="btn btn-outline-success" id="get1" style="height: 55px;">선택한 기술스택 저장</button> <br>
-                        <button type="button" class="btn btn-outline-success" id="test12" style="height: 55px;" onclick='getValues()'>get테스트</button>
                        </div>
-                       <!--  <textarea id="values" ></textarea> <br>  -->
-                       <input  id="selecteds" name="psnPrStack"> <br>
+                       <input  id="selecteds" name="psnPrStack" type="hidden"> <br>
                        <script src="${pageContext.request.contextPath}/resources/js/multi-input.js"></script>
         				<script src="${pageContext.request.contextPath}/resources/js/script1.js"></script>
         				
          <script type="text/javascript">
-        /* function handleOnChange(e) {
-        	var values = [];
-        	  console.log(e);
-        	 // options에서 selected 된 element의 value 찾기
-        	 // var values = [...e.options]
-        	   // .filter(option => option.selected)
-        	   // .map(option => option.value);
-				//console.log(values);
-        	  document.getElementById('selecteds').innerText = values;
-        	  document.getElementById('selecteds').value = values;
-        	  console.log($("#speakers").val());
-        	} */
-        
-        function dataListChange(e){
-        	var values = [];
-      	  console.log(e);
-      	 // options에서 selected 된 element의 value 찾기
-      	 // var values = [...e.options]
-      	   // .filter(option => option.selected)
-      	   // .map(option => option.value);
-				//console.log(values);
-      	  document.getElementById('selecteds').innerText = values;
-      	  document.getElementById('selecteds').value = values;
-      	  console.log($("#speakers option").find(':selected').data('data-value'));
+         const multiInput= document.getElementById('multi-input'); 
+         var selecteds = document.getElementById('selecteds'); 
+
+        function dataListChange(){
+          	console.log(multiInput.getValues());
+           document.getElementById('selecteds').value =multiInput.getValues();
         }
-        
-       
         </script> 
         
-        <!-- <script>
-        	$('#stackInputCard').bind('input',function(){
-        		console.log(123);
-        	})  
-        	</script> -->
-        	
         <label style="float: left;" ><b>자기소개</b></label><br><br>
         <!-- summerNote 들어갈 자리 -->
         
@@ -296,27 +266,15 @@ select {
 			});
 		</script>
   
+      
       	</div>
     
-        		
-     <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center; margin-top: 10px">
-      	<button type="submit" id="enrollPsnPr"  style="font-size: 20px" onclick="returnFunction()"><b>등록하기</b></button> &nbsp;   <!-- 버튼 클래스  class="btn btn-outline-primary"   -->
+     <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center;">
+      	<button type="submit" id="enrollPsnPr" class="btn btn-outline-primary"  style="font-size: 20px" onclick="returnFunction()"><b>등록하기</b></button> &nbsp;   <!-- 버튼 클래스  class="btn btn-outline-primary"   -->
 		<button type="reset" class="btn btn-outline-secondary" style="font-size: 20px"><b>취소</b></button>
       </div>
+        		
       
-      <script type="text/javascript">
-      const enrollBtn1 = document.getElementById('enrollPsnPr');
-      
-      function returnFunction(){
-    	  if (multiInput1.getValues().length > 0) {
-    	  		getButton.innerText="저장되었습니다";
-    	  	    values.textContent = `${multiInput1.getValues().join(',')}`;
-    	  	    console.log(values);
-    	  } else {
-    	    values.textContent = 'Got noon123e  :`^(.'; 
-    	  }
-    	}
-      </script>
      
       
     </div>
@@ -326,37 +284,5 @@ select {
     </div>
 	</form>
 	
-	<!-- <script>
-        		const multiInput = document.querySelector('#multi-input');
-        		const selectedOptions = [];
-
-        		multiInput.addEventListener('change', function() {
-        		  selectedOptions.length = 0; // clear previous selections
-        		  const items = multiInput.querySelectorAll('.item');
-        		  items.forEach(item => {
-        		    if (item.selected) {
-        		      selectedOptions.push(item.value);
-        		    }
-        		  });
-        		});
-        		
-        		const submitButton = document.querySelector('#enrollPsnPr');
-
-        		submitButton.addEventListener('click', function() {
-        		  fetch('/submit-data', {
-        		    method: 'POST',
-        		    body: JSON.stringify({ options: selectedOptions }),
-        		    headers: {
-        		      'Content-Type': 'application/json'
-        		    }
-        		  })
-        		  .then(response => response.json())
-        		  .then(data => console.log(data))
-        		  .catch(error => console.error(error));
-        		});
-        		
-        		</script> -->
-        		
-
 </body>
 </html>

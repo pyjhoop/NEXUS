@@ -150,13 +150,19 @@ class MultiInput extends HTMLElement {
   getValues() {
     const values = [];
     const items = this.querySelectorAll('.item');
+    
+    
     for (const item of items) {
       values.push(item.textContent);
     }
-    console.log(items);
-    return values;
+    
+    let newValues = values.filter((element) => {
+  return element !== undefined && element !== null && element !== '';
+});
+    
+    return newValues;
   }
- 
+  
 }
 
 window.customElements.define('multi-input', MultiInput);
