@@ -81,7 +81,18 @@
                               placeholder=""
                             />
                           </div>
-                        
+                         <div class="mb-3 col-md-6">
+                            <label for="token" class="form-label">Token</label>
+                            
+                            	<c:if test="${loginUser.social == 'G' }">
+									<input class="form-control" type="password" name="token" readOnly id="token" value="${loginUser.token }"/>                            	
+                            	</c:if>
+                            	<c:if test="${loginUser.social != 'G' }">
+									<input class="form-control" type="password" name="token" id="token" value="${loginUser.token }"/>                            	
+                            	</c:if>
+                           
+
+                          </div>
 
                         <br><br>
                         <div class="mt-2">
