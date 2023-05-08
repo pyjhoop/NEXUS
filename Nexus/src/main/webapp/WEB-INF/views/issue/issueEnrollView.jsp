@@ -101,7 +101,7 @@ input.inputCk + label{
 		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">이슈 담당자</label>
 
-			<select id="defaultSelect" class="form-select" name="issueAss" multiple >
+			<select id="defaultSelect" class="form-select" name="issueAss"  >
 				<option>이슈 담당자</option>
 				<c:forEach var="r" items="${RepoMembers }">
 					<option value="${r.userName }">${r.userName}</option>

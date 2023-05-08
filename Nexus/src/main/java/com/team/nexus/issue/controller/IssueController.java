@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -57,7 +59,7 @@ public class IssueController {
 
 
 	@RequestMapping(value = "issueShow.mini", produces = "application/json; charset=utf-8")
-	public String issueList(HttpSession session, Member m, Model model, @RequestParam(required = false) String state)
+	public String issueList(HttpSession session, Member m, Model model, @RequestParam(required = false) String state,@RequestParam(required = false) String assign)
 			throws IOException {
 
 		String repository = (String) session.getAttribute("repository");
@@ -66,7 +68,6 @@ public class IssueController {
 
 		String url3 = repository + "/labels";
 		
-		System.out.println("usr1: "+url3);
 
 		String labelResponse = iService.getGitContentsByGet1(url3, session);
 
@@ -91,6 +92,11 @@ public class IssueController {
 		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
 
 		String url = "";
+		
+		
+		if(assign != null) {
+			url = " https://api.github.com/issues";
+		}
 
 		if (state != null) {
 			url = "https://api.github.com/repos/" + repository + "/issues?state=" + state;
@@ -118,10 +124,6 @@ public class IssueController {
 
 		JsonArray arr = JsonParser.parseString(responseText).getAsJsonArray();
 
-
-
-		
-		
 		
 		ArrayList<GitIssue> list = new ArrayList<GitIssue>();
 
@@ -154,17 +156,7 @@ public class IssueController {
 			// Set number
 			git.setNumber(arr.get(i).getAsJsonObject().get("number").getAsInt());
 
-			// Set assignees (as an array of strings)
-			// JsonArray assigneesArr =
-			// arr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
-			// String[] assignees = new String[assigneesArr.size()];
-			// for (int j = 0; j < assigneesArr.size(); j++) {
-			// JsonObject assigneeObj = assigneesArr.get(j).getAsJsonObject();
-			// assignees[j] = assigneeObj.get("login").getAsString();
-			// }
-			// git.setAssignees(assignees);
 
-			// Set assignees (as an array of strings)
 			JsonArray assigneesArr = arr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
 			String[] assignees = new String[assigneesArr.size()];
 			String[] assigneeProfiles = new String[assigneesArr.size()]; // 이슈 담당자 프로필
@@ -290,7 +282,7 @@ public class IssueController {
 	
 	@RequestMapping(value = "createIssue.mi", produces = "application/json; charset=utf-8")
 	public String createIssue(@RequestParam("title") String title, 
-					@RequestParam(required = false) String body, 
+							  @RequestParam(required = false) String body, 
 	                          @RequestParam("assignees") String assignees,
 //	                          @RequestParam("milestone") Integer milestone,
 	                          @RequestParam("labels") String[] labels,
@@ -517,5 +509,72 @@ public class IssueController {
 
 		return "redirect:issueShow.mini";
 	}
+	
+	
+	
+	
+	
+//	@RequestMapping(value="myIssue.mi" , produces = "application/json; charset=utf-8")
+//	public String myIssueList(@RequestParam(value = "assign") String assign,HttpSession session) {
+//		
+//		  // 사용자 토큰 및 레포지토리 정보 가져오기
+//	    String token = ((Member) session.getAttribute("loginUser")).getToken();
+//	    String repository = (String) session.getAttribute("repository");
+//
+//	    // API URL 생성
+//	    String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
+//	    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(apiUrl)
+//	            .queryParam("assignee",assign);
+//
+//	    // API 요청 헤더 설정
+//	    HttpHeaders headers = new HttpHeaders();
+//		headers.set("Authorization", "Bearer " + token);
+//		headers.setContentType(MediaType.APPLICATION_JSON);
+//	    HttpEntity<?> entity = new HttpEntity<>(headers);
+//
+//	    // API 요청 보내기
+//	    RestTemplate restTemplate = new RestTemplate();
+//	    ResponseEntity<String> response = restTemplate.exchange(builder.build().encode().toUri(), HttpMethod.GET, entity, String.class);
+//
+//	    // JSON 배열로 파싱하여 모델에 담아 반환
+//	    JSONArray issueArray = new JSONArray();
+//	    
+//	    issueArray.add(response.getBody());
+//		
+//		return "redirect:issueShow.mini";
+//	}
+	
+	@RequestMapping(value="myIssue", produces = "application/json; charset=utf-8")
+	public String myIssueList(@RequestParam(value = "assign") String assign, HttpSession session, Model model) {
+	    String token = ((Member) session.getAttribute("loginUser")).getToken();
+	    String repository = (String) session.getAttribute("repository");
+
+	    String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
+	    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(apiUrl)
+	            .queryParam("assignee", assign);
+
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.set("Authorization", "Bearer " + token);
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    HttpEntity<?> entity = new HttpEntity<>(headers);
+
+	    RestTemplate restTemplate = new RestTemplate();
+	    ResponseEntity<String> response = restTemplate.exchange(builder.build().encode().toUri(), HttpMethod.GET, entity, String.class);
+
+	    JSONArray issueArray = new JSONArray();
+	    issueArray.add(response.getBody());
+
+	    model.addAttribute("issues", issueArray);
+
+	    return "issue/issueShow";
+	}
+
+
+
+
+
+
+
+
 
 }
