@@ -134,15 +134,7 @@
 
 
 
-		<div class="mb-3">
-			<label for="defaultSelect" class="form-label">프로젝트</label>
-			<select id="issueProject" class="form-select" name="project">
-				<option>프로젝트</option>
-				<option value="1" type="checkbox">One</option>
-				<option value="2" type="checkbox">Two</option>
-				<option value="3" type="checkbox">Three</option>
-			</select>
-		</div>
+
 
 
 		<div class="mb-3">

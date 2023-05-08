@@ -1,7 +1,20 @@
 package com.team.nexus.issue.model.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpVersion;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,10 +24,21 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.team.nexus.issue.model.dao.IssueDao;
+import com.team.nexus.issue.model.vo.GitIssue;
+import com.team.nexus.issue.model.vo.Label;
 import com.team.nexus.member.model.vo.Member;
 
 @Service
@@ -27,32 +51,8 @@ public class IssueService {
 	private WebClient webClient;
 	
 
-	// download_url과 같이 full url이 들어오는경우 사용하는 동기 메서드
-	public String getGitContentsByGet1(String path, HttpSession session) {
-
-		String token = ((Member) session.getAttribute("loginUser")).getToken();
-
-		String response = webClient
-				.get()
-				.uri("https://api.github.com/repos/"+path)
-				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-				.header(HttpHeaders.ACCEPT, "application/vnd.github+json")
-				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				.retrieve()
-				.bodyToMono(String.class)
-				.block();
-
-		// WebClient client = WebClient.builder()
-		// .baseUrl(path)
-		// .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-		// .defaultHeader(HttpHeaders.ACCEPT, "application/vnd.github+json")
-		// .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-		// .build();
-		//
-		// String response = client.get().retrieve().bodyToMono(String.class).block();
-
-		return response;
-	}
+	@Autowired
+	private IssueDao iDao;
 
 	// 이외의 get, put, delete시 사용될 동기 메서드
 	public String synHttpRequest(String path, HttpSession session, String method) {
@@ -80,31 +80,181 @@ public class IssueService {
 
 	public String gitPatchMethod(String path, HttpSession session, String title, String body, int ino) {
 
-		RestTemplate restTemplate = new RestTemplate();
+//		RestTemplate restTemplate = new RestTemplate();
+//		 PATCH 메소드를 사용하기 위해 필요한 HttpClient 버전이 낮기 때문에 발생하는 문제
+		
+		HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+		requestFactory.setHttpClient(HttpClients.createDefault());
+		RestTemplate restTemplate = new RestTemplate(requestFactory);
+
+
+		
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setBearerAuth((((Member) (session.getAttribute("loginUser"))).getToken()));
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		String url = "https://api.github.com/repos/" + path + "/" + ino;
 
-		System.out.println("url : " + url);
+		
+		System.out.println(url);
 
 		// Create a JSON object for the issue payload
 		JSONObject issueJson = new JSONObject();
 		issueJson.put("title", title);
 		issueJson.put("body", body);
-		JSONArray assigneesArray = new JSONArray();
-		// ### 라벨만 있으면 에러나서 주석처리함
-		// assigneesArray.add(assignees);
-		// issueJson.put("assignees", assigneesArray);
+	
+	
 
-		String test = "{\"title\":\"Found a bug\",\"body\":\"I''m having a problem with this.\"}";
-
-		HttpEntity<String> entity = new HttpEntity<String>(test, headers);
+		HttpEntity<String> entity = new HttpEntity<String>(issueJson.toString(), headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, entity, String.class);
 
 		return response.getBody();
 	}
 
+	
+	
+	
+
+
+	    public List<GitIssue> getIssues(String repository, String token, String state, String assign) throws IOException {
+	        
+	        String url = "";
+	        if(assign != null) {
+	            url = "https://api.github.com/issues";
+	        }
+	        else {
+	            url = "https://api.github.com/repos/" + repository + "/issues?state=open";
+	            if (state != null) {
+	                url += "&state=" + state;
+	            }
+	        }
+
+	        URL requestUrl = new URL(url);
+
+	        HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
+
+	        urlConnection.setRequestProperty("Authorization", "Bearer " + token);
+	        urlConnection.setRequestMethod("GET");
+
+	        BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+	        String line;
+	        String responseText = "";
+
+	        while ((line = br.readLine()) != null) {
+	            responseText += line;
+	        }
+
+	        JsonArray arr = JsonParser.parseString(responseText).getAsJsonArray();
+	        ArrayList<GitIssue> list = new ArrayList<GitIssue>();
+
+	        for (int i = 0; i < arr.size(); i++) {
+
+				// Inside the for loop
+				GitIssue git = new GitIssue();
+
+				// Set title
+				git.setTitle(arr.get(i).getAsJsonObject().get("title").getAsString());
+
+				// Set labels (as an array of strings)
+				JsonArray labelsArr = arr.get(i).getAsJsonObject().get("labels").getAsJsonArray();
+				String[] labels = new String[labelsArr.size()];
+				for (int j = 0; j < labelsArr.size(); j++) {
+					labels[j] = labelsArr.get(j).getAsJsonObject().get("name").getAsString();
+				}
+				git.setLabels(labels);
+
+				// Set state
+				git.setState(arr.get(i).getAsJsonObject().get("state").getAsString());
+
+				// Set milestone
+				JsonElement milestoneElem = arr.get(i).getAsJsonObject().get("milestone");
+				if (!milestoneElem.isJsonNull()) {
+					JsonObject milestoneObj = milestoneElem.getAsJsonObject();
+					git.setMilestone(milestoneObj.get("title").getAsString());
+				}
+
+				// Set number
+				git.setNumber(arr.get(i).getAsJsonObject().get("number").getAsInt());
+
+
+				JsonArray assigneesArr = arr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
+				String[] assignees = new String[assigneesArr.size()];
+				String[] assigneeProfiles = new String[assigneesArr.size()]; // 이슈 담당자 프로필
+				for (int j = 0; j < assigneesArr.size(); j++) {
+					JsonObject assigneeObj = assigneesArr.get(j).getAsJsonObject();
+					assignees[j] = assigneeObj.get("login").getAsString();
+					assigneeProfiles[j] = assigneeObj.get("avatar_url").getAsString(); // 이슈 담당자 프로필
+				}
+				git.setAssignees(assignees);
+				git.setAssigneeProfiles(assigneeProfiles); // 이슈 담당자 프로필 설정
+
+				// Set createdAt (with only the date)
+				String createdDateTimeString = arr.get(i).getAsJsonObject().get("created_at").getAsString();
+				LocalDateTime createdDateTime = LocalDateTime.parse(createdDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
+				String createdDateString = createdDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				git.setCreatedAt(createdDateString);
+
+				// Set updatedAt
+				git.setUpdatedAt(arr.get(i).getAsJsonObject().get("updated_at").getAsString());
+
+				// Set closedAt (if it's not null)
+				JsonElement closedAtElem = arr.get(i).getAsJsonObject().get("closed_at");
+				if (!closedAtElem.isJsonNull()) {
+					git.setClosedAt(closedAtElem.getAsString());
+				}
+
+				// Set issueId
+				git.setIssudId(arr.get(i).getAsJsonObject().get("id").getAsString());
+
+				// Set user (as a string)
+				JsonObject userObj = arr.get(i).getAsJsonObject().get("user").getAsJsonObject();
+				git.setUser(userObj.get("login").getAsString());
+
+				// Set user profile
+				String userProfileUrl = userObj.get("avatar_url").getAsString();
+				git.setProfile(userProfileUrl);
+
+				list.add(git);
+			}
+	        return list;
+	    }
+	
+	
+	  
+
+
+
+	public List<Label> getLabels(String repository, HttpSession session) {
+		
+		
+		String url = repository + "/labels";
+		
+		String labelResponse = iDao.getGitContentsByGet1(url, session);
+
+		ObjectMapper obj = new ObjectMapper();
+		JsonNode jsonNode;
+		List<Label> lList = new ArrayList<>();
+
+		try {
+			jsonNode = obj.readTree(labelResponse);
+			for (int i = 0; i < jsonNode.size(); i++) {
+				String id = jsonNode.get(i).get("id").asText();
+				String name = jsonNode.get(i).get("name").asText();
+				String color = jsonNode.get(i).get("color").asText();
+				String description = jsonNode.get(i).get("description").asText();
+				Label l = new Label(id, name, color, description);
+				lList.add(l);
+			}
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		return lList;
+	}
+
+	
+	
 	
 }
