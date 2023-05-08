@@ -78,5 +78,16 @@
 			where PSN_PR_NO = #{PSN_PR_NO}
 	</select>
 	
+	<select id="selectPrAjax" resultMap="psnPrBoardResultSet">
+		SELECT *
+	FROM PSN_PR_BOARD
+	JOIN TB_MEMBER USING (USER_NO)
+	WHERE 
+	<foreach collection="array" item="psnPrStack"  separator="or">
+		psn_pr_stack like '%${psnPrStack}%'
+    </foreach>
+		
+	</select>
+	
 	
 </mapper>	

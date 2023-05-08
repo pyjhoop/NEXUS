@@ -21,6 +21,8 @@ public interface PersonalPrService {
 	
 	
 	PersonalPr personalPrDetail(int personalPrNo);
+	
+	ArrayList<PersonalPr> selectPrAjax(String[] strArr);
 		
 	}
 	

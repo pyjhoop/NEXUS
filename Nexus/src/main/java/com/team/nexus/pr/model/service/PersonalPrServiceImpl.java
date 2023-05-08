@@ -48,6 +48,12 @@ public class PersonalPrServiceImpl implements PersonalPrService {
 		return pDao.personalPrDetail(sqlSession, personalPrNo);
 	}
 
+	@Override
+	public ArrayList<PersonalPr> selectPrAjax(String[] strArr) {
+		return pDao.selectPrAjax(sqlSession, strArr);
+	}
+	
+	
 		
 		
 	}

@@ -273,6 +273,7 @@ hr{
 .card{
 	margin: 10px;
 	float: left;
+	width: 15.9rem;
 }
 #prList{
 	width: 100%;
@@ -287,6 +288,7 @@ hr{
 	display: block;
 	padding-top: 15px !important;
 	padding-right:10px !important;
+	padding-left: 10px !important;
 	padding-bottom:25px !important;
 	height: 241px;
 }
@@ -299,17 +301,27 @@ hr{
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   margin-bottom: 35px !important;
+   float: left; 
+   font-size: 13px; 
+   width: 240px; 
+   height: 99.375px;
 	
 }
+.card-category{
+	float:left; width: 50%;
+}
+.card-category1{
+	float: right;
+}
 .card-title{
-	width: 216px;
-	/* height: 19.797px; */
-	/* height:40px; */
 	 overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box; 
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+   margin-right: 0px; 
+   width: 235px; 
+   height: 39.794px;
 }
 #card-id{
 	margin-bottom: 15px !important;
@@ -318,9 +330,25 @@ hr{
 	cursor: pointer;
 	box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
 } 
+.card-image{
+	width: 25px;
+	border-radius: 100%;
+}
+.card-name{
+margin-bottom: 5px;
+}
 .bx-bookmark::before{
 	width: 30px;
 	height: 30px;
+}
+.prCount{
+	width: 0px; 
+	height: 0px;
+	hidden="";
+}
+.pCount{
+	display: inline-block; 
+	font-size: 1.1rem;
 }
 .bx{
 	font-size: 1.8rem !important;
@@ -343,9 +371,6 @@ hr{
 .card-category{
 	font-size: 12px;
 }
-.mt-5{
-	ma
-}
 .LanguageBar_languages__2Ilqf li{
  transition: all 0.2s ease-in-out;
 }
@@ -356,7 +381,15 @@ hr{
  filter: blur(0);
 transform: scale(1.1);
 }
-	
+.bx-show{
+	margin-bottom: 5px;
+}
+.bx-bookmark{
+	float: right; 
+}
+.countDiv{
+	float: right;
+}
 </style>
 <body>
 <jsp:include page="../common/template.jsp"/>
@@ -508,27 +541,85 @@ transform: scale(1.1);
                 </div>
                 
                 <script>
+                /* 의믜없음  */
                 var val1 = "";
                 $(document).on("click",".LanguageBar_languages__2Ilqf li", function(){
-            		 val1 += $(this).attr('value');
-					console.log(val1);
+            		 val1 += $(this).attr('value') + ' ';
             	});
                 
-               
                 
                 const liItems = document.querySelectorAll('.LanguageBar_languages__2Ilqf li');
-
+                var val2 = [];
+        
                 liItems.forEach(li => {
                   li.addEventListener('click', () => {
                     if (li.classList.contains('selected')) {
                       li.classList.remove('selected');
+                     val2 = val2.filter((element) => element !== li.getAttribute('value'));
                     } else {
                       li.classList.add('selected');
+                      val2.push(li.getAttribute('value'));
                     }
+                       console.log(val2); // log value to console */
+                       
+                       let val3 = val2.join(",")
+                       console.log(val3);
+                       
+                       $.ajax({
+                          	url:"psnPrStackArray",
+                          	type:"post",
+                          	data: {"arrStr" : val3},
+                          	success: function(data){
+                          		console.log(data);
+                          		let value = "";
+                          		for(let i in data){
+                          			value += "<div class='card'>"
+                          				   + "<div class='card-body'>"
+                          				   + "<p class='card-category'>"
+                          				   + data[i].createDate
+                          				   + "</p>"
+                          				   + "<p class='card-category1'>"
+                          				   + data[i].category
+                          				   + "</p>"
+                          				   + "<h5 class='card-title'>"
+                          				   + "<b>"
+                          				   + data[i].psnPrTitle
+                          				   + "</b>"
+                          				   + "</h5>"
+                          				   + "<p class='card-text'>"
+                          				   + data[i].psnPrContent
+                          				   +"</p>"
+                          				   +"<img class='card-image' src="
+                          				   + data[i].profile
+                          				   + " >"
+                          				   +"<span class='card-name'>"
+                          				   + data[i].userName
+                          				   + "</span>"
+                          				   + "<input class='prCount' type='hidden' value="
+                          				   + data[i].psnPrNo
+                          				   + " />"
+                          				   + "<div class='countDiv'>"
+                          				   + "<i class='bx bx-show'>"
+                          				   + "</i>"
+                          				   + "<p class='pCount'>"
+                          				   + data[i].count
+                          				   + "</p>"
+                          				   + "<i class='bx bx-bookmark'>"
+                          				   + "</i>"
+                          				   + "</div>"
+                          				   + "</div>"
+                          				   + "</div>"; 
+                          				
+                          		}
+                          		console.log(value);
+                          		$("#shell").html(value);
+                          	}
+                          }) 
                   });
                 });
-
-
+                
+               
+            
                 </script>
 </div> 
 
@@ -544,31 +635,32 @@ transform: scale(1.1);
 
 
 <c:forEach var="p" items="${personalPrList }">
-	 <div class="card" style="width: 15.9rem;">
-	  <div class="card-body" style="padding-left: 10px;" >
-	    <p class="card-category" style="float:left; width: 50%;">${p.createDate }</p>
-	    <p class="card-category" style="float: right;">${p.category }</p>
-	    <h5 class="card-title" style="margin-right: 0px; width: 235px; height: 39.794px;"><b>${p.psnPrTitle }</b></h5>
-	    <p class="card-text" style="float: left; font-size: 13px; width: 240px; height: 99.375px;">${p.psnPrContent }</p>
-	    <img  src="${p.profile}" alt="" style="width: 25px; border-radius: 100%;">
-	    <span style="margin-bottom: 5px;">${p.userName}</span>
-	    <div id="prCount" style="width: 0px; height: 0px;" hidden="">
-	    	${p.psnPrNo }
-	    </div>
-	    <div style="float: right;">
-	    	<i class='bx bx-show' style="margin-bottom: 5px;"></i> <p  style="display: inline-block; font-size: 1.1rem;">${p.count }</p> &nbsp;
+	 <div class="card">
+	  <div class="card-body" >
+	    <p class="card-category" >${p.createDate }</p>
+	    <p class="card-category1">${p.category }</p>
+	    <h5 class="card-title"><b>${p.psnPrTitle }</b></h5>
+	    <p class="card-text">${p.psnPrContent }</p>
+	    <img class="card-image"  src="${p.profile}" alt="" >
+	    <span class="card-name">${p.userName}</span>
+	    <input class="prCount" type="hidden" value="${p.psnPrNo }" />
+	    <div class="countDiv">
+	    	<i class='bx bx-show'></i> <p  class="pCount">${p.count }</p> &nbsp;
 	    	
-	    <i class='bx bx-bookmark' style="float: right; "></i>
+	    <i class='bx bx-bookmark'></i>
 	    </div>
 	  </div>
 </div>
 </c:forEach>
 
+
+
+
 	<script>
             	$(function(){
             		$(".card-body").click(function(){
             			console.log("클릭은된");
-            			location.href= 'personalPr.bo?pno=' + $(this).children("#prCount").text();
+            			location.href= 'personalPr.bo?pno=' + $(this).children(".prCount").val();
             			console.log("클릭이후");
             		})	
             	})

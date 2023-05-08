@@ -45,6 +45,10 @@ public class PersonalDao {
 		return sqlSession.selectOne("personalprMapper.personalPrDetail", personalPrNo);
 	}
 	
+	public ArrayList<PersonalPr> selectPrAjax(SqlSessionTemplate sqlSession, String[] strArr){
+		return (ArrayList)sqlSession.selectList("personalprMapper.selectPrAjax", strArr);
+	}
+	
 	
 	
 
