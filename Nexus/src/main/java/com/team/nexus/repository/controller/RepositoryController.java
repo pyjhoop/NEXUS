@@ -97,7 +97,6 @@ public class RepositoryController {
 		getMemberUrl+= repo.getRepoName()+"/collaborators";
 		
 		Mono<String> members = repoService.asynHttpRequest(getMemberUrl, session).subscribeOn(Schedulers.boundedElastic());
-		System.out.println();
 		
 		// 프로젝트, 마일스톤 가져오자
 		

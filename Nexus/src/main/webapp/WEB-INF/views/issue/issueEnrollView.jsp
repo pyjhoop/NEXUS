@@ -200,7 +200,6 @@ input.inputCk + label{
 		    	
 		        var selectedAssignee = $(".form-select option:selected").val();
 		        $('input[name="assignees"]').val(selectedAssignee);
-		        $('input[name="body"]').val($('#editor').html());
 		        return true;
 		    });
 		});
@@ -215,4 +214,3 @@ input.inputCk + label{
 </html>
 
 
-이게 지금 원본
