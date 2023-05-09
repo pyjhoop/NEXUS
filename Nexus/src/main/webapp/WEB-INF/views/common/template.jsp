@@ -194,7 +194,7 @@
 						<i class="menu-icon tf-icons bx bxs-group"></i>
 						<div data-i18n="Form Layouts">Recruit</div>
 					</a></li>
-				<li class="menu-item"><a href="javascript:void(0);" class="menu-link">
+				<li class="menu-item"><a href="friend.me" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-user-plus"></i>
 						<div data-i18n="Form Elements">Friend</div>
 					</a></li>

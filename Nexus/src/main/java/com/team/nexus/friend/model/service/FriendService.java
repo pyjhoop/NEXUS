@@ -21,6 +21,24 @@ public class FriendService {
 	public ArrayList<Friend> selectList(int userNo) {
 		return friendDao.selectList(sqlSession, userNo);
 	}
+
+	public ArrayList<Friend> searchList(int userNo, String keyword) {
+		return friendDao.searchList(sqlSession, userNo, keyword);
+	}
+
+	public int addFriend(int userNo, String addUserNo) {
+		return friendDao.addFriend(sqlSession, userNo, addUserNo);
+	}
+
+	public int delFriend(int userNo, String delUserNo) {
+		return friendDao.delFriend(sqlSession, userNo, delUserNo);
+
+	}
+
+	public int banFriend(int userNo, String banUserNo, String isBanned, String isFriend) {
+		System.out.println("서비스탐");
+		return friendDao.banFriend(sqlSession, userNo, banUserNo, isBanned, isFriend);
+	}
 	
 	
 	
