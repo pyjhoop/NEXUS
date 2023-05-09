@@ -1,6 +1,12 @@
 //1. 페이지 로딩 완료시 채팅창을 맨 아래로 내리기.
 // 즉시 실행함수. IIFE
 
+$("#selectUser").on("keyup",function(key){
+    if(key.keyCode==13) {
+        $("#search-btn").trigger('click');
+    }
+});
+
 
 $(function() {
     var displayChatting = document.getElementsByClassName("list-unstyled")[0];
@@ -55,8 +61,8 @@ function sendMessage() {
         // JSON.parse(문자열) : JSON -> JS object로 변환
         // JSON.stringify(객체) : JS Ojbect -> JSON
 
-         console.log(chatMessage);
-         console.log(JSON.stringify(chatMessage));
+        // console.log(chatMessage);
+         //console.log(JSON.stringify(chatMessage));
 
         // // chatSocket(웹소켓객체)를 이용하여 메세지 보내기
         // // chatSocket.send(값) : 웹소켓 핸들러로 값을 보냄.
@@ -77,9 +83,8 @@ chatSocket.onmessage = function(e) {
 
     // 전달받은 메세지를 JS객체로 변환
     const chatMessage = JSON.parse(e.data); // js객체로 변환.
-    console.log(chatMessage.chattingContent.substr(0, 2));
+   // console.log(chatMessage.chattingContent.substr(0, 2));
     let myChatting = "";
-    console.log(chatMessage);
     if(chatMessage.invite == 'O'){
         myChatting = "<li class='chat-invite'>" +
         chatMessage.userName + 
@@ -268,7 +273,6 @@ chatSocket.onmessage = function(e) {
     }
     // 채팅창
     displayChatting = document.getElementsByClassName("chat-body")[0];
-    console.log(myChatting);
      // 채팅창에 채팅 추가
      $('.list-unstyled').append(myChatting);
      //inputChatting.value = "";

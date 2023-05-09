@@ -78,6 +78,7 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 				checkUser = cService.checkUser(chatMessage);
 				if(checkUser != null) {
 					chatMessage.setInvite("X");
+					System.out.println(chatMessage);
 					session.sendMessage(new TextMessage( new Gson().toJson(chatMessage )));
 					return;
 				}else{

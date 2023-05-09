@@ -50,11 +50,11 @@
 			<div class="why">
 				<div class="editor-wrapper">
 					<div id="editor">${body }</div>
-
+					<input type="hidden" name="body" value="">
 					<!-- 본인 글일때만 보이게 분기처리 ### -->
 					<div class="btn-box">
 						<br>
-						<button type="submit" class="btn btn-outline-primary">수정하기</button>
+						<button type="submit" class="btn btn-outline-primary" id="btn1">수정하기</button>
 						<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#myissueModal">상태 수정</button>
 
 					</div>
@@ -126,23 +126,15 @@
 			<label for="defaultSelect" class="form-label">라벨</label>
 			<select id="issueLabel" class="form-select" name="labels">
 				<option>라벨</option>
-				<option value="1" type="checkbox">One</option>
-				<option value="2" type="checkbox">Two</option>
-				<option value="3" type="checkbox">Three</option>
+				<c:forEach var="l" items="${lList }">
+					<option value="${l.name }">${l.name }</option>
+				</c:forEach>
 			</select>
 		</div>
 
 
 
-		<div class="mb-3">
-			<label for="defaultSelect" class="form-label">프로젝트</label>
-			<select id="issueProject" class="form-select" name="project">
-				<option>프로젝트</option>
-				<option value="1" type="checkbox">One</option>
-				<option value="2" type="checkbox">Two</option>
-				<option value="3" type="checkbox">Three</option>
-			</select>
-		</div>
+
 
 
 		<div class="mb-3">
@@ -229,7 +221,10 @@ selectE4.addEventListener('change', (event) => {
   hiddenE4.value = selectedValue;
 });  
             
-            
+$("#btn1").click(function(){
+    var markdown = editor.getMarkdown();
+    $("input[name='body']").val(markdown);
+});        
             
             
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -64,10 +65,34 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${pageContext.request.contextPath}/resources/assets/js/config.js"></script>
+    
+    <!-- 알람창 JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	
+	<!-- 알람창 CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+	<!--  알람창 Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+	<!--  알람창 Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+    
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+    
   </head>
 
   <body>
     <!-- Content -->
+    
+    
+	<c:if test="${not empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+	
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+	    
+    
 
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
@@ -131,6 +156,7 @@
                   <a href="https://kauth.kakao.com/oauth/authorize?client_id=c2b8f2ae81e7206df597a694d983c1ee&redirect_uri=http://localhost:8010/nexus/kakao&response_type=code" style="display: block; padding-right: 50px;"><img src="${ pageContext.request.contextPath }/resources/image/kakao.png" alt="" width="60px" style="display: block; margin: auto;"></a>
                 </div>
 
+
               </div>
 
               <p class="text-center">
@@ -139,12 +165,30 @@
                   <span>Create an account</span>
                 </a>
               </p>
+                             <div id="naver_id_login">ㄴㅇㄹ</div>
+    <!-- //네이버 로그인 버튼 노출 영역 -->
+    <script type="text/javascript">
+    var naverLogin = new naver.LoginWithNaverId(
+        {
+            clientId: "iGZuP3MKqJW0jWTEeB3n",
+              // 본인의 Client ID로 수정, 띄어쓰기는 사용하지 마세요.
+            callbackUrl: "http://localhost:8010/nexus/callback.n",
+              // 본인의 callBack url로 수정하세요.
+            isPopup: false,
+            loginButton: {color: "white", type: 3, height: 60}
+              // 네이버 로그인버튼 디자인 설정. 한번 바꿔보세요:D
+        }
+    );
+naverLogin.init();
+</script>
             </div>
           </div>
           <!-- /Register -->
         </div>
       </div>
     </div>
+    
+     
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->

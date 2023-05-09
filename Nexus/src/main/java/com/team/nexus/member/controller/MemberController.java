@@ -46,6 +46,8 @@ public class MemberController {
 	    
 		// access_token 
 		String token = gService.getToken(code);
+		
+		System.out.println("token : " + token);
 	    
 		// access_token을 이용한 유저 정보 얻어오기
 		Member m = gService.getUserInfo(token);
@@ -139,7 +141,9 @@ public class MemberController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces = "application/hal+json; charset=UTF-8" )
 	public String kakaoLogout(HttpSession session) {
 		token = "";
-		session.removeAttribute("loginUser");
+//		session.removeAttribute("loginUser");
+		
+		session.invalidate();
 		return "redirect:login.p";
 	}
 	
@@ -151,8 +155,8 @@ public class MemberController {
 			session.setAttribute("loginUser", loginUser);
 			return "main";
 		}else {
-			model.addAttribute("errorMsg", "로그인 실패");
-			return "common/errorPage";
+			session.setAttribute("alertMsg", "아이디나 비밀번호가 일치하지 않습니다.");
+			return "redirect:/";
 		}
 	}
 	
@@ -169,6 +173,25 @@ public class MemberController {
 			session.setAttribute("alertMsg", "정보가 일치하지 않습니다.");
 			return "redirect:forgotPwd.p";
 		}
+		
+	}
+	
+	@RequestMapping(value="enrollToken", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String enrollToken(Member m, HttpSession session) {
+		
+		m.setUserNo(((Member)session.getAttribute("loginUser")).getUserNo());
+		
+		int result = mService.enrollToken(m);
+		
+		if(result>0) {
+			((Member)session.getAttribute("loginUser")).setToken(m.getToken());
+			return "토큰 등록에 성공했습니다.";
+		}else {
+			return "토큰 등록에 실패했습니다. 다시 등록해주세요";
+		}
+		
+		
 		
 	}
 	
