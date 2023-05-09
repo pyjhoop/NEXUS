@@ -36,6 +36,10 @@ public class MemberServiceImpl {
 	public int resetPwd(Member m) {
 		return mDao.resetPwd(sqlSession, m);
 	}
+
+	public int enrollToken(Member m) {
+		return mDao.enrollToken(sqlSession, m);
+	}
 	
 	
 
