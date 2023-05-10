@@ -259,42 +259,36 @@
 							<!-- Place this tag where you want the button to render. -->
 							<li class="nav-item 1h-1 me-4">
 								<!-- <a href="javascript:void(0);"class="menu-link position-relative">  --> <a class="nav-link dropdown-toggle hide-arrow menu-link " href="javascript:void(0);" data-bs-toggle="dropdown" style="padding-top: 0px; padding-bottom: 0px; width: 35px;">
-									
+
 
 
 									<c:if test="${not empty updateBellIcon}">
 										<script>
-												    $(function() { 
-												      updateBellIcon();
-												    });
-												    
-												    function updateBellIcon() {
-												        $(".ringring").addClass("bx-tada");
-												        $(".redpoint").removeClass("visually-hidden");
-												        setTimeout(() => {
-												          $("i.bx-bell").removeClass("bx-tada");
-												          $(".redpoint").addClass("visually-hidden");
-												          
-												          
-												          $.ajax({
-												              type: "POST",
-												              url: "removeRingSession",
-												              success: function(data) {
-												                  console.log("Session invalidated");
-												              }
-												          });
-												          
-												          
-												          
-												        }, 10000);
-												        
-												        
-												      }
-  										</script>
+											$(function() {
+												updateBellIcon();
+											});
+										</script>
 									</c:if>
 
 
+									<script>
+										//버튼 클릭 이벤트 리스너 등록
+										document
+												.querySelector('.cleanBtn')
+												.addEventListener(
+														'click',
+														function() {
+															// 삭제할 요소의 부모 요소 탐색
+															const parentElement = document
+																	.querySelector('.issueAlerm').parentElement;
 
+															// 부모 요소에서 삭제할 요소 찾아 삭제
+															const targetElement = parentElement
+																	.querySelector('.issueAlerm');
+															targetElement
+																	.remove();
+														});
+									</script>
 
 
 									<span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1 visually-hidden redpoint"> </span> <i class="menu-icon tf-icons bx bx-bell bx-md ringring"></i>
@@ -306,38 +300,55 @@
 								<ul class="dropdown-menu dropdown-menu-end">
 
 
-									<li class="alermLi"><span class="dropdown-item alermA" href="#"> ### 개의 새로운 알림이 있습니다 </span>
-										<button type="button" class="btn btn-outline-danger btn-sm">CLEAN</button></li>
-									<li>
-										<div class="dropdown-divider"></div>
-									</li>
-									<li><a class="boxsize" href="#">
-											<div class="avatar alarmprofile">
-												<img src="${loginUser.profile }" alt class="w-px-40 h-auto rounded-circle" />
-											</div>
-										</a> <span class="align-middle spanbox">###님이 ##이슈에 댓글 달았습니다</span> </a></li>
+					<!--  이슈 변화가 있을때마다 숫자가 계속 누적되는것도 고민 -->
 
-									<!-- 한바퀴 -->
+									<li class="alermLi"><span id="alermMsg" class="dropdown-item alermA" href="#"> 99개의 새로운 알림이 있습니다 </span>
+										<button type="button" class="btn btn-outline-danger btn-sm cleanBtn" onclick="deleteTie()">CLEAN</button></li>
 
 
-									<li>
-										<div class="dropdown-divider"></div>
-									</li>
-									<li><a class="boxsize" href="#">
-											<div class="avatar alarmprofile">
-												<img src="${loginUser.profile }" alt class="w-px-40 h-auto rounded-circle" />
-											</div>
-										</a> <span class="align-middle spanbox">###님이 ##이슈에 댓글 달았습니다</span> </a></li>
+								<!-- tie가 for문을 돌아야함 / a태그안에는 issueDetail.mini?ino=${i.number}를 집어넣어야하니 고민 ### -->
 
-									<!-- 한바퀴 끝 -->
-								</ul>
+									<div class="tie">
 
-							</li>
+										<li>
+											<div class="dropdown-divider"></div>
+										</li>
+
+										<a class="boxsize" href="#">
+											<li class="issueAlerm">
+												<div class="d-flex align-items-center">
+													<div class="avatar alarmprofile">
+														<img src="${loginUser.profile }" alt class="w-px-40 h-auto rounded-circle" />
+													</div>
+													<span class="align-middle spanbox pl-3">${authorName}님이 ${issueTitle}를 생성했습니다</span>
+												</div>
+											</li>
+										</a>
+										
+									</div>
+
+								<div class="tie">
+
+										<li>
+											<div class="dropdown-divider"></div>
+										</li>
+
+										<a class="boxsize" href="#">
+											<li class="issueAlerm">
+												<div class="d-flex align-items-center">
+													<div class="avatar alarmprofile">
+														<img src="${loginUser.profile }" alt class="w-px-40 h-auto rounded-circle" />
+													</div>
+													<span class="align-middle spanbox pl-3">${authorName}님이 ${issueTitle}를 생성했습니다</span>
+												</div>
+											</li>
+										</a>
+										
+									</div>
 
 
 
-
-							<!-- User -->
+								</ul> <!-- User -->
 							<li class="nav-item navbar-dropdown dropdown-user dropdown"><a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
 									<div class="avatar avatar-online">
 

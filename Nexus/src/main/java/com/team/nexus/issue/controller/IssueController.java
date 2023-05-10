@@ -72,6 +72,9 @@ public class IssueController {
 
 		model.addAttribute("list", list);
 		model.addAttribute("lList", lList);
+		
+		
+	
 
 		return "issue/issueList";
 	}
@@ -80,10 +83,16 @@ public class IssueController {
 	
 	
 	@RequestMapping("issueEnroll.mini")
-	public String issueEnrollForm(HttpSession session, Model model) throws IOException, IOException {
+	public String issueEnrollForm(HttpSession session, Model model,@RequestParam(required = false) String state,
+			@RequestParam(required = false) String assign) throws IOException, IOException {
 
 		String repository = (String) session.getAttribute("repository");
 		List<Label> lList = iService.getLabels(repository, session);
+		
+	
+
+		
+		
 		model.addAttribute("lList", lList);
 
 		return "issue/issueEnrollView";
@@ -94,42 +103,52 @@ public class IssueController {
 	
 	@RequestMapping(value = "createIssue.mi", produces = "application/json; charset=utf-8")
 	public String insertIssue(@RequestParam String title, @RequestParam(required = false) String body,
-			@RequestParam(required = false) String assignees, HttpSession session) {
+	        @RequestParam(required = false) String assignees, HttpSession session, Model model) {
 
-		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
+	    String token = ((Member) session.getAttribute("loginUser")).getToken();
+	    String repository = (String) session.getAttribute("repository");
+	    String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
 
+	    JSONObject issueJson = new JSONObject();
+	    issueJson.put("title", title);
+	    issueJson.put("body", body);
+	    JSONArray assigneesArray = new JSONArray();
+	    // ### 라벨만 있으면 에러나서 주석처리함
+	    // assigneesArray.add(assignees);
+	    // issueJson.put("assignees", assigneesArray);
 
-		String repository = (String) session.getAttribute("repository");
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.set("Authorization", "Bearer " + token);
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    HttpEntity<String> requestEntity = new HttpEntity<String>(issueJson.toString(), headers);
 
-		String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
+	    RestTemplate restTemplate = new RestTemplate();
+	    ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity,
+	            String.class);
+	    HttpStatus responseStatus = responseEntity.getStatusCode();
 
-		JSONObject issueJson = new JSONObject();
-		issueJson.put("title", title);
-		issueJson.put("body", body);
-		JSONArray assigneesArray = new JSONArray();
-		// ### 라벨만 있으면 에러나서 주석처리함
-//		 assigneesArray.add(assignees);
-//		 issueJson.put("assignees", assigneesArray);
+	    if (responseStatus != HttpStatus.CREATED) {
+	        throw new RuntimeException("Failed to create issue on GitHub API: " + responseStatus.toString());
+	    }
+	    
+	 
+	    
+	    Gson gson = new GsonBuilder().setLenient().create();
+	    JsonObject issue = gson.fromJson(responseEntity.getBody(), JsonObject.class);
+	    String issueTitle = issue.get("title").getAsString();
+	    JsonObject userObject = issue.getAsJsonObject("user");
+	    String authorName = userObject.get("login").getAsString();
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer " + token);
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		HttpEntity<String> requestEntity = new HttpEntity<String>(issueJson.toString(), headers);
+	    model.addAttribute("authorName", authorName);
+	    model.addAttribute("issueTitle", issueTitle);
+	    model.addAttribute("userObject", userObject);
+		  
+		  
+	    session.setAttribute("updateBellIcon", "updateBellIcon");
 
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity,
-				String.class);
-		HttpStatus responseStatus = responseEntity.getStatusCode();
-
-		if (responseStatus != HttpStatus.CREATED) {
-			throw new RuntimeException("Failed to create issue on GitHub API: " + responseStatus.toString());
-		}
-		
-		
-		  session.setAttribute("updateBellIcon", "updateBellIcon");
-
-		return "redirect:issueShow.mini";
+	    return "redirect:issueShow.mini";
 	}
+
 
 	
 	
@@ -232,6 +251,7 @@ public class IssueController {
 			model.addAttribute("lList", lList);
 			// model.addAttribute("assigneeProfiles", assigneeProfiles);
 
+			
 			return "issue/issueDetail";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -286,6 +306,8 @@ public class IssueController {
 
 		String response = iService.gitPatchMethod(apiUrl, session, title, body, ino);
 
+		  session.setAttribute("updateBellIcon", "updateBellIcon");
+		
 		return "redirect:issueShow.mini";
 	}
 

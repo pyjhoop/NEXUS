@@ -84,6 +84,7 @@
 					<table class="table" id="issueTable">
 						<thead>
 							<tr>
+							<th>번호</th>
 								<form action="" method="get" align="center">
 									<th>
 										<button type="submit" name="state" value="open" class="btn btn-outline-success btn-sm">진행 중 </button>
@@ -142,10 +143,11 @@
 
 
 							<!-- 한바퀴  -->
-
 							<c:forEach var="i" items="${list }">
 
 								<tr>
+							<td style="width:5%;">${i.number }</td>
+							
 									<td colspan="3" style="width:26%" >
 										<a href="issueDetail.mini?ino=${i.number}" class="textA">
 											<i class="fab fa-angular fa-lg text-danger me-3"></i>
@@ -154,9 +156,10 @@
 									</td>
 
 
-									<td style="width:9%;">${i.createdAt }</td>
+								<td style="width:9%;">${i.createdAt }</td> 
+									
 
-									<td style="width:32%;">
+									<td style="width:28%;">
 										<c:forEach items="${i.labels}" var="label">
 											<c:choose>
 												<c:when test="${label eq 'bug'}">

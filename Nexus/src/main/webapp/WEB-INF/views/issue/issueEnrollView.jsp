@@ -66,8 +66,9 @@ input.inputCk + label{
 
 		<form action="createIssue.mi" method="post" id="issueEnrollForm">
 
-			<input type="text" class="form-control issuetitle" id="isTitle" name="title" placeholder="Title" autofocus>
+			<input type="text" class="form-control issuetitle" id="isTitle" name="title" placeholder="이슈 제목 입력" autofocus>
 			<input type="hidden" name="issueNo" value="">
+			<input type="hidden" name="issueWriter" value="">
 			<input type="hidden" name="assignees" value="">
 			<input type="hidden" name="labels" value="">
 			
