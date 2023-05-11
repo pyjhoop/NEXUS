@@ -59,7 +59,7 @@ public class IssueController {
 	private IssueService iService;
 
 	@RequestMapping(value = "issueShow.mini", produces = "application/json; charset=utf-8")
-	public String issueList(HttpSession session, Member m, Model model, @RequestParam(required = false) String state,
+	public String issueList(HttpSession session, Member m, Model model, @RequestParam(required = false) String state,@RequestParam(required = false) String label,@RequestParam(required = false) String author,
 			@RequestParam(required = false) String assign,@RequestParam(required = false) String authorName,@RequestParam(required = false) String newTitle ,@RequestParam(required = false) String issueNumber ,@RequestParam(required = false) String userObject) throws IOException {
 
 		String repository = (String) session.getAttribute("repository");
@@ -68,14 +68,25 @@ public class IssueController {
 
 		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
 
-		List<GitIssue> list = iService.getIssues(repository, token, state, assign);
+		List<GitIssue> list;
+
+	    if (assign != null && !assign.equals("all")) {
+	        list = iService.getIssuesByAssignee(assign,session);
+	    } else if(author != null && author.equals("writer")) {
+	    	list = iService.getIssuesByAuthor(author, session,repository);
+	    }else if (label != null && !label.equals("noChoice")) {
+	        list = iService.getIssuesByLabel(label, session,repository,token);
+	    }
+	    else {
+	        list = iService.getIssues(repository, token, state, assign, label);
+	    }
 
 		model.addAttribute("list", list);
 		model.addAttribute("lList", lList);
 		
-	    model.addAttribute("issueNumber", issueNumber);
-	    model.addAttribute("authorName", authorName);
-	    model.addAttribute("newTitle", newTitle);
+//	    model.addAttribute("issueNumber", issueNumber);
+//	    model.addAttribute("authorName", authorName);
+//	    model.addAttribute("newTitle", newTitle);
 	    
 
 		return "issue/issueList";
@@ -95,7 +106,8 @@ public class IssueController {
 
 	@RequestMapping(value = "createIssue.mi", produces = "application/json; charset=utf-8")
 	public String insertIssue(@RequestParam String title, @RequestParam(required = false) String body,
-			@RequestParam(required = false) String assignees, HttpSession session, Model model) {
+	        @RequestParam(required = false) String label, @RequestParam(required = false) String assignee,
+	        HttpSession session, Model model) {
 
 		String token = ((Member) session.getAttribute("loginUser")).getToken();
 		String repository = (String) session.getAttribute("repository");
@@ -104,10 +116,12 @@ public class IssueController {
 		JSONObject issueJson = new JSONObject();
 		issueJson.put("title", title);
 		issueJson.put("body", body);
-		JSONArray assigneesArray = new JSONArray();
-		// ### 라벨만 있으면 에러나서 주석처리함
-		// assigneesArray.add(assignees);
-		// issueJson.put("assignees", assigneesArray);
+		issueJson.put("assignee", assignee);
+		JSONArray labelsArray = new JSONArray();
+		labelsArray.add(label);
+		issueJson.put("labels", labelsArray);
+
+		
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer " + token);
@@ -129,9 +143,9 @@ public class IssueController {
 		JsonObject userObject = issue.getAsJsonObject("user");
 		String authorName = userObject.get("login").getAsString();
 
-		model.addAttribute("issueNumber", issueNumber); 
-		model.addAttribute("authorName", authorName);
-		model.addAttribute("newTitle", newTitle);
+//		model.addAttribute("issueNumber", issueNumber); 
+//		model.addAttribute("authorName", authorName);
+//		model.addAttribute("newTitle", newTitle);
 
 		session.setAttribute("updateBellIcon", "updateBellIcon");
 

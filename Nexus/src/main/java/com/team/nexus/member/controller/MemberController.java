@@ -49,6 +49,8 @@ public class MemberController {
 		
 		System.out.println("token : " + token);
 	    
+		session.setAttribute("assigneeToken", token);
+		
 		// access_token을 이용한 유저 정보 얻어오기
 		Member m = gService.getUserInfo(token);
 		

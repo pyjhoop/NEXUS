@@ -288,6 +288,14 @@
 															targetElement
 																	.remove();
 														});
+										
+										
+										$(document).ready(function() {
+											  $('.ringring').click(function() {
+											    $('.redpoint').addClass('visually-hidden');
+											  });
+											});
+
 									</script>
 
 

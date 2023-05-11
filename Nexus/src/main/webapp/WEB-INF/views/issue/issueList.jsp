@@ -102,10 +102,9 @@
 								<th>생성일</th>
 
 								<th>
-									<form action="" method="get" align="center">
-										<select class="form-select form-select-sm" aria-label="Default select example">
-											<option selected>라벨</option>
-
+									<form action="issueShow.mini" method="get" align="center">
+										<select onchange="this.form.submit()" class="form-select form-select-sm" name="label" aria-label="Default select example">
+											<option selected value="noChoice">라벨</option>
 											<c:forEach var="l" items="${lList }">
 												<option value="${l.name }">${l.name }</option>
 											</c:forEach>
@@ -116,9 +115,9 @@
 
 
 								<th>
-									<form action="" method="get" align="center">
+									<form action="issueShow.mini" method="get" align="center">
 										<select onchange="this.form.submit()" class="form-select form-select-sm" name="author" aria-label="Default select example">
-											<option selected>작성자</option>
+											<option selected value="writer">작성자</option>
 											<c:forEach var="r" items="${RepoMembers }">
 												<option value="${r.userName }">${r.userName}</option>
 											</c:forEach>
@@ -129,7 +128,7 @@
 								<th>
 									<form action="issueShow.mini" method="get" align="center">
 										<select onchange="this.form.submit()" class="form-select form-select-sm" name="assign" aria-label="Default select example">
-											<option selected>담당자</option>
+											<option selected value="all">담당자</option>
 											<c:forEach var="r" items="${RepoMembers }">
 												<option value="${r.userName }">${r.userName}</option>
 
