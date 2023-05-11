@@ -35,9 +35,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/issue_select.css">
 
 <style>
-
-
-
 </style>
 
 
@@ -75,6 +72,10 @@
 
 
 
+
+
+
+
 				<div class="luda">
 					<a class="btn btn-primary" href="issueEnroll.mini">이슈 등록</a>
 				</div>
@@ -84,10 +85,10 @@
 					<table class="table" id="issueTable">
 						<thead>
 							<tr>
-							<th>번호</th>
+								<th>번호</th>
 								<form action="" method="get" align="center">
 									<th>
-										<button type="submit" name="state" value="open" class="btn btn-outline-success btn-sm">진행 중 </button>
+										<button type="submit" name="state" value="open" class="btn btn-outline-success btn-sm">진행 중</button>
 									</th>
 									<th>
 										<button type="submit" name="state" value="closed" class="btn btn-outline-secondary btn-sm">종료</button>
@@ -101,14 +102,14 @@
 								<th>생성일</th>
 
 								<th>
-									<form action="" method="get" align="center" >
+									<form action="" method="get" align="center">
 										<select class="form-select form-select-sm" aria-label="Default select example">
 											<option selected>라벨</option>
-											
+
 											<c:forEach var="l" items="${lList }">
-											<option value="${l.name }">${l.name }</option>
+												<option value="${l.name }">${l.name }</option>
 											</c:forEach>
-										
+
 										</select>
 									</form>
 								</th>
@@ -119,19 +120,19 @@
 										<select onchange="this.form.submit()" class="form-select form-select-sm" name="author" aria-label="Default select example">
 											<option selected>작성자</option>
 											<c:forEach var="r" items="${RepoMembers }">
-											<option value="${r.userName }">${r.userName}</option>
+												<option value="${r.userName }">${r.userName}</option>
 											</c:forEach>
 										</select>
 									</form>
 								</th>
 
 								<th>
-									<form action="issueShow.mini" method="get" align="center" >
+									<form action="issueShow.mini" method="get" align="center">
 										<select onchange="this.form.submit()" class="form-select form-select-sm" name="assign" aria-label="Default select example">
 											<option selected>담당자</option>
-										<c:forEach var="r" items="${RepoMembers }">
-											<option value="${r.userName }">${r.userName}</option>
-										
+											<c:forEach var="r" items="${RepoMembers }">
+												<option value="${r.userName }">${r.userName}</option>
+
 											</c:forEach>
 										</select>
 									</form>
@@ -146,20 +147,19 @@
 							<c:forEach var="i" items="${list }">
 
 								<tr>
-							<td style="width:5%;">${i.number }</td>
-							
-									<td colspan="3" style="width:26%" >
+									<td style="width: 5%;">${i.number }</td>
+
+									<td colspan="3" style="width: 26%">
 										<a href="issueDetail.mini?ino=${i.number}" class="textA">
-											<i class="fab fa-angular fa-lg text-danger me-3"></i>
-											<strong>${i.title}</strong>
-											</a>
+											<i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${i.title}</strong>
+										</a>
 									</td>
 
 
-								<td style="width:9%;">${i.createdAt }</td> 
-									
+									<td style="width: 9%;">${i.createdAt }</td>
 
-									<td style="width:28%;">
+
+									<td style="width: 28%;">
 										<c:forEach items="${i.labels}" var="label">
 											<c:choose>
 												<c:when test="${label eq 'bug'}">
@@ -188,7 +188,7 @@
 
 									</td>
 
-									<td style="width:10%;">
+									<td style="width: 10%;">
 										<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
 
 											<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${i.user }"><img src="${i.profile }" alt="" class="rounded-circle" /></li>
@@ -197,19 +197,20 @@
 									</td>
 
 
-									<td style="width:13%;">
+									<td style="width: 13%;">
 										<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
 											<c:forEach items="${i.assignees}" var="assignee" varStatus="loop">
 												<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${assignee}"><img src="${i.assigneeProfiles[loop.index]}" alt="" class="rounded-circle" /></li>
+
 											</c:forEach>
 										</ul>
 									</td>
 
 
-									<td style="width:10%;">
-									<!-- 마일스톤 클릭시 해당 마일스톤으로 이동 ###   -->
+									<td style="width: 10%;">
+										<!-- 마일스톤 클릭시 해당 마일스톤으로 이동 ###   -->
 										<div class="dropdown">
-										${i.milestone }
+											${i.milestone }
 											<button type="button" class="btn p-0 dropdown-toggle hide-arrow ${empty i.milestone ? 'invisible' : ''}" data-bs-toggle="dropdown">
 												<i class="bx bx-dots-vertical-rounded"></i>
 											</button>
@@ -224,6 +225,16 @@
 										</div>
 									</td>
 								</tr>
+
+
+
+
+
+
+
+
+
+
 							</c:forEach>
 							<!-- 한바퀴  -->
 
@@ -257,21 +268,21 @@
 					});
 
 				
-				
-			
 
 				
 			</script>
 
 
+			<c:if test="${not empty newTitle }">
 
-
-
-
+				<script>
 		
+					$(function() {
+						issueWeb();
+					});
+					</script>
 
-
-
+			</c:if>
 
 
 

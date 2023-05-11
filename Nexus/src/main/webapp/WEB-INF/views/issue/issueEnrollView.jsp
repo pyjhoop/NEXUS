@@ -8,27 +8,24 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/jquery/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="js/comboTreePlugin.js"></script>
-<script type="text/javascript" src="js/icontains.js"></script>
 <style>
 .assigneeboxes li {
 	list-style: none;
 }
 
-
-input.inputCk + label{
-  cursor:pointer;
- }
-.assigneeboxes li input[type="checkbox"] {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  margin-right: 10px;
-  vertical-align: middle;
-  position: relative;
-  top: -1px;
+input.inputCk+label {
+	cursor: pointer;
 }
 
+.assigneeboxes li input[type="checkbox"] {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 10px;
+	vertical-align: middle;
+	position: relative;
+	top: -1px;
+}
 </style>
 
 
@@ -48,7 +45,11 @@ input.inputCk + label{
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/issue_mini.js"></script>
 
+<!-- 알람 종 js -->
+<script src="${pageContext.request.contextPath}/resources/js/alarm.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/alarmSocket.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 
 </head>
@@ -67,18 +68,22 @@ input.inputCk + label{
 		<form action="createIssue.mi" method="post" id="issueEnrollForm">
 
 			<input type="text" class="form-control issuetitle" id="isTitle" name="title" placeholder="이슈 제목 입력" autofocus>
+
+
+
 			<input type="hidden" name="issueNo" value="">
-			<input type="hidden" name="issueWriter" value="">
+			<input type="hidden" name="userName" value="${loginUser.userName}">
+			<input type="hidden" name="userNo" value="${loginUser.userNo}">
 			<input type="hidden" name="assignees" value="">
-			<input type="hidden" name="labels" value="">
-			
+			<input type="hidden" name="newTitle" value="">
+
 
 			<div class="why">
 				<div class="editor-wrapper">
 					<div id="editor"></div>
 
 					<input type="hidden" name="body" value="">
-				
+
 					<div class="btn-box">
 						<br>
 						<button type="submit" class="btn btn-outline-primary" id="btn1">제출하기</button>
@@ -102,7 +107,7 @@ input.inputCk + label{
 		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">이슈 담당자</label>
 
-			<select id="defaultSelect" class="form-select" name="issueAss"  >
+			<select id="defaultSelect" class="form-select" name="issueAss">
 				<option>이슈 담당자</option>
 				<c:forEach var="r" items="${RepoMembers }">
 					<option value="${r.userName }">${r.userName}</option>
@@ -185,7 +190,6 @@ input.inputCk + label{
 
             });
             var markdownValue = editor.getMarkdown();
-            console.log(markdownValue); // Output: "# Hello, World!"
 
 
       
@@ -195,20 +199,63 @@ input.inputCk + label{
 		$(document).ready(function() {
 		    $('#issueEnrollForm').submit(function() {
 		    	
+		   
+		    	
 		        var markdown = editor.getMarkdown();
 		        $("input[name='body']").val(markdown);
 		    	
 		    	
 		        var selectedAssignee = $(".form-select option:selected").val();
 		        $('input[name="assignees"]').val(selectedAssignee);
+		        
+		        
 		        return true;
 		    });
 		});
 
 
+		$("#btn1").click(function() {
+			
+			
+			var title = $("#isTitle").val();
+	    	
+			  const userNo = "${loginUser.userNo}";
+			  const userName = "${loginUser.userName}";
+			  // const issueNumber = "${issueNumber}";
+			  // const authorName = "${authorName}";
+			  const profile = "${loginUser.profile}";
+			  // const contextPath = "${contextPath}";
+			  const newTitle = title;
+
+		
+			  console.log(newTitle);
+
+			  let issueSocket = new SockJS("http://localhost:8010/nexus/issue");
+
+			 
+
+			    const message = {
+			      newTitle: newTitle,
+			      userNo: userNo,
+			      userName: userName,
+			      profile: profile,
+			    };
+			    issueSocket.send(JSON.stringify(message));
+
+			    console.log("aaaaaaaa");
+			
+		});  
+	
 
             
         </script>
+
+
+
+
+
+
+
 
 </body>
 

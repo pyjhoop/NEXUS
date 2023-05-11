@@ -308,6 +308,10 @@
 
 								<!-- tie가 for문을 돌아야함 / a태그안에는 issueDetail.mini?ino=${i.number}를 집어넣어야하니 고민 ### -->
 
+
+								
+								
+
 									<div class="tie">
 
 										<li>
@@ -326,6 +330,7 @@
 										</a>
 										
 									</div>
+
 
 								<div class="tie">
 

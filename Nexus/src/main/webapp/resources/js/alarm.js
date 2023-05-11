@@ -3,8 +3,6 @@
 												        $(".redpoint").removeClass("visually-hidden");
 												        setTimeout(() => {
 												          $("i.bx-bell").removeClass("bx-tada");
-												         // $(".redpoint").addClass("visually-hidden");
-												          
 												          
 												          $.ajax({
 												              type: "POST",
@@ -21,11 +19,18 @@
 												        
 												      }
 												      
-												      
+
+
+											      
  function deleteTie() {
    $('.tie').remove();
-   
+    $(".redpoint").addClass("visually-hidden");
     const alermMsg = document.getElementById('alermMsg');
      alermMsg.innerHTML = '새로운 알림이 없습니다';
 }
-											      
+	
+	
+			
+
+		
+	
