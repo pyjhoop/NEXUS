@@ -1,6 +1,9 @@
 package com.team.nexus.pr.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
+import com.google.gson.Gson;
 import com.team.nexus.member.model.vo.Member;
 import com.team.nexus.news.model.vo.News;
 import com.team.nexus.pr.model.dao.PersonalDao;
@@ -85,6 +90,41 @@ public class PersonalPrController {
 	}
 	
 	
+	@RequestMapping("personalPr.bo")
+	public ModelAndView personalDetailView(int pno, ModelAndView mv) { 
+		
+		System.out.println("성공0");
+		
+		int count = pService.increaseCount(pno);
+		
+		System.out.println("성공1");
+		
+		if(count > 0) {
+			
+			
+			System.out.println("성공");
+			PersonalPr p = pService.personalPrDetail(pno);
+			mv.addObject("p", p).setViewName("pr/personalPrDetail");
+			
+			
+		}else {
+			mv.addObject("errorMsg", "실패").setViewName("common/errorPage");
+			
+			
+		}
+		return mv;
+
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "psnPrStackArray", produces = "application/json;")
+	public String psnPrStackArray(String arrStr) {
+		String[] strArr = arrStr.split(",");
+		ArrayList<PersonalPr> prList = pService.selectPrAjax(strArr);
+		System.out.println(prList);
+		
+		return new Gson().toJson(prList);
+	}
 	
 	
 	

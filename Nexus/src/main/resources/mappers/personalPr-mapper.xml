@@ -14,6 +14,8 @@
 		<result column="USER_NAME" property="userName"/>
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="CATEGORY" property="category"/>
+		<result column="COUNT" property="count"/>
+		<result column="profile" property="profile"/>
 	</resultMap>
 
 
@@ -36,6 +38,8 @@
 			,USER_NO
 			,USER_NAME
 			,CATEGORY
+			,PROFILE
+			,COUNT
 			FROM PSN_PR_BOARD
 			JOIN TB_MEMBER USING (USER_NO)
 			ORDER BY CREATE_DATE DESC
@@ -43,9 +47,47 @@
 	
 	<insert id="insertPersonalPr">
 		insert into psn_pr_board
-			(psn_pr_no,PSN_PR_STACK,PSN_PR_CONTENT,PSN_PR_AVLPRD,PSN_PR_TITLE,PSN_PR_CONTACT,CREATE_DATE,USER_NO,CATEGORY)
-			values (SEQ_PSN_PR.NEXTVAL, #{psnPrStack}, #{psnPrContent},#{psnPrAvlPrd}, #{psnPrTitle},#{psnPrContact},to_char(sysdate,'yy/MM/dd HH24:mi'),#{userNo},#{category} )
+			(psn_pr_no,PSN_PR_STACK,PSN_PR_CONTENT,PSN_PR_AVLPRD,PSN_PR_TITLE,PSN_PR_CONTACT,CREATE_DATE,USER_NO,CATEGORY, COUNT)
+			values (SEQ_PSN_PR.NEXTVAL, #{psnPrStack}, #{psnPrContent},#{psnPrAvlPrd}, #{psnPrTitle},#{psnPrContact},to_char(sysdate,'yy/MM/dd HH24:mi'),#{userNo},#{category},0 )
 	</insert>
+	
+	
+	<update id= "increaseCount">
+		update
+	    PSN_PR_BOARD
+	    set count = count + 1
+	    where PSN_PR_NO = #{psnPrNo}
+	</update>
+	
+	<select id="personalPrDetail" resultMap="psnPrBoardResultSet">
+		select 
+			 PSN_PR_NO
+			,PSN_PR_STACK
+			,PSN_PR_CONTENT
+			,PSN_PR_AVLPRD
+			,PSN_PR_TITLE
+			,PSN_PR_CONTACT
+			,to_char(CREATE_DATE) AS "CREATE_DATE"
+			,USER_NO
+			,PROFILE
+			,USER_NAME
+			,CATEGORY
+			,COUNT
+			FROM PSN_PR_BOARD
+			JOIN TB_MEMBER USING (USER_NO)
+			where PSN_PR_NO = #{PSN_PR_NO}
+	</select>
+	
+	<select id="selectPrAjax" resultMap="psnPrBoardResultSet">
+		SELECT *
+	FROM PSN_PR_BOARD
+	JOIN TB_MEMBER USING (USER_NO)
+	WHERE 
+	<foreach collection="array" item="psnPrStack"  separator="or">
+		psn_pr_stack like '%${psnPrStack}%'
+    </foreach>
+    ORDER BY CREATE_DATE DESC
+	</select>
 	
 	
 </mapper>	

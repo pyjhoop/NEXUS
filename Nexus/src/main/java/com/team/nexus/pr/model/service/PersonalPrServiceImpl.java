@@ -36,9 +36,25 @@ public class PersonalPrServiceImpl implements PersonalPrService {
 		int result = pDao.insertPersonalPr(sqlSession, pr);
 		return result;
 	}
+	
+	
+	@Override
+	public int increaseCount(int personalPrNo) {
+		return pDao.increaseCount(sqlSession, personalPrNo );
+	}
 
+	@Override
+	public PersonalPr personalPrDetail(int personalPrNo) {
+		return pDao.personalPrDetail(sqlSession, personalPrNo);
+	}
+
+	@Override
+	public ArrayList<PersonalPr> selectPrAjax(String[] strArr) {
+		return pDao.selectPrAjax(sqlSession, strArr);
+	}
+	
+	
 		
 		
 	}
-
 

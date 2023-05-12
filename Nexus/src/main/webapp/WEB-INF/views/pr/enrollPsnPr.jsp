@@ -59,10 +59,6 @@
 input{
 	width:300px;
 }
-#psnInfoInput li{
-	
-
-}
 #toolbar-container{
 	width:90%;
 }
@@ -93,7 +89,7 @@ button {
 	width:100%;
 }
 #stackInputCard{
-	width: 700px;
+	width: 40rem;;
 }
 .form-control{
 	height: 60px;
@@ -149,19 +145,25 @@ select {
 </head>
 <body>
 
-
+<div class="container-xxl flex-grow-1"> 
 <form action="insertPersonalPr" method="post" style="height: 100%;">
-<div id="body" style="margin: 0px; margin-top: 30px;">
-		<div class="col-md-6" style="width:97%; height:100%;  max-width: 100%; margin: auto; margin-left: 103px;">
+<div id="body" style="margin: 0px; margin-top: 30px; width: 100%">
+		<div class="col-md-6" style="width:150rem; height:100%;  max-width: 100%; margin: auto;">
                   <div class="card mb-4" style="width: 100%; margin: auto;">
                     <h4 class="card-header"  ><b>정보 입력</b></h4>
-                    <div class="card-body demo-vertical-spacing demo-only-element" style="height: 1800px;"><br>
+                    <div class="card-body demo-vertical-spacing demo-only-element" style="height: 1500px; overflow: auto; "><br>
                     
                     <label><b>제목</b></label>
                       <div class="input-group" >
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
-                        <input type="text" class="form-control" name="psnPrTitle" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon11" required>
+                        <input type="text" class="form-control" id="psnPrTitle" name="psnPrTitle" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon11" required>
                       </div> <br>
+                      
+                      <script type="text/javascript">
+                      	$(document).ready(function() {
+                    	    $('#psnPrTitle').focus();
+                    	});
+                      </script>
                       
                        <label ><b>프로젝트 참여 가능기간</b></label>
                       <div class="input-group" >
@@ -172,7 +174,7 @@ select {
                       <label ><b>연락 수단</b></label>
                       <div class="input-group">
                        <!--  <span class="input-group-text" id="basic-addon11">@</span> -->
-                        <input type="text" class="form-control" name="psnPrContact" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11" required>
+                        <input type="text" class="form-control" name="psnPrContact" placeholder="핸드폰번호나 이메일, 오픈카톡방 링크 등 연락받기를 원하는 방법을 입력해주세요. Nexus채팅으로 연락받기를 원하시면 유저코드 혹은 닉네임을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11" required>
                       </div><br>
                       
                      
@@ -192,58 +194,61 @@ select {
                     
                    <label ><b>기술 스택</b></label>  
  					
-                   <div class="input-group" style="border: none; box-shadow: none;">
-                   <multi-input id="multi-input" name="psnPrStack">
-			      <input id="stackInputCard" name=psnPrStack list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
+                   <div class="input-group" style="border: none; box-shadow: none;" onchange="dataListChange()">
+                   <multi-input id="multi-input">
+			      <input id="stackInputCard" list="speakers"  placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
 			      <datalist id="speakers">
-			      <!-- stackInputCard에 "선택안함"이 있을경우 다른 옵션들 비활성화  -->
-			      	<option value="선택안함" id="noStack"></option>
-			        <option value="AWS" class="yesStack"></option>
-			        <option value="Django" class="yesStack"></option>
-			        <option value="Docker" class="yesStack"></option>
-			        <option value="Express" class="yesStack"></option>
-			        <option value="Figma" class="yesStack"></option>
-			        <option value="Firebase" class="yesStack"></option>
-			        <option value="Flutter" class="yesStack"></option>
-			        <option value="Git" class="yesStack"></option>
-			        <option value="Go" class="yesStack"></option>
-			        <option value="GraphQL" class="yesStack"></option>
-			        <option value="Java" class="yesStack"></option>
-			        <option value="JavaScript" class="yesStack"></option>
-			        <option value="Kotlin" class="yesStack"></option>
-			        <option value="Kubernetes" class="yesStack"></option>
-			        <option value="MongoDB" class="yesStack"></option>
-			        <option value="MySQL" class="yesStack"></option>
-			        <option value="Nestjs" class="yesStack"></option>
-			        <option value="Nextjs" class="yesStack"></option>
-			        <option value="NodeJs" class="yesStack"></option>
-			        <option value="php"class="yesStack"></option>
-			        <option value="Python" class="yesStack"></option>
-			        <option value="TypeScript" class="yesStack"></option>
-			        <option value="React" class="yesStack"></option>
-			        <option value="ReactNative" class="yesStack"></option>
-			        <option value="Spring" class="yesStack"></option>
-			        <option value="Svelte" class="yesStack"></option>
-			        <option value="Swift" class="yesStack"></option>
-			        <option value="Unity" class="yesStack"></option>
-			        <option value="Vue" class="yesStack"></option>
-			        <option value="Zeplin" class="yesStack"></option>
-			        <option value="Zest" class="yesStack"></option>
+			        <option value="AWS" class="item"></option>
+			        <option value="Django" class="item"></option>
+			        <option value="Docker" class="item"></option>
+			        <option value="Express" class="item"></option>
+			        <option value="Figma" class="item"></option>
+			        <option value="Firebase" class="item"></option>
+			        <option value="Flutter" class="item"></option>
+			        <option value="Git" class="item"></option>
+			        <option value="Go" class="item"></option>
+			        <option value="GraphQL" class="item"></option>
+			        <option value="Java" class="item"></option>
+			        <option value="JavaScript" class="item"></option>
+			        <option value="Kotlin" class="item"></option>
+			        <option value="Kubernetes" class="item"></option>
+			        <option value="MongoDB" class="item"></option>
+			        <option value="MySQL" class="item"></option>
+			        <option value="Nestjs" class="item"></option>
+			        <option value="Nextjs" class="item"></option>
+			        <option value="NodeJs" class="item"></option>
+			        <option value="php"class="item"></option>
+			        <option value="Python" class="item"></option>
+			        <option value="TypeScript" class="item"></option>
+			        <option value="React" class="item"></option>
+			        <option value="ReactNative" class="item"></option>
+			        <option value="Spring" class="item"></option>
+			        <option value="Svelte" class="item"></option>
+			        <option value="Swift" class="item"></option>
+			        <option value="Unity" class="item"></option>
+			        <option value="Vue" class="item"></option>
+			        <option value="Zeplin" class="item"></option>
+			        <option value="Zest" class="item"></option>
 			      </datalist>
 			    </multi-input>
-			    		<button type="button" class="btn btn-outline-success" id="get1" style="height: 55px;">선택한 기술스택 저장</button> <br>
-                        <button type="button" class="btn btn-outline-success" id="test12" style="height: 55px;">get테스트</button>
                        </div>
-                       <p id="values" ></p>
+                       <input  id="selecteds" name="psnPrStack" type="hidden"> <br>
                        <script src="${pageContext.request.contextPath}/resources/js/multi-input.js"></script>
-        				<script src="${pageContext.request.contextPath}/resources/js/script1.js"></script>
-                  
-						
-                       
-        <label ><b>자기소개</b></label>
+        				
+         <script type="text/javascript">
+         const multiInput= document.getElementById('multi-input'); 
+         var selecteds = document.getElementById('selecteds'); 
+
+        function dataListChange(){
+          	console.log(multiInput.getValues());
+           document.getElementById('selecteds').value =multiInput.getValues();
+        }
+        </script> 
+        
+        <label style="float: left;" ><b>자기소개</b></label><br><br>
         <!-- summerNote 들어갈 자리 -->
         
-        <div class="container" style="padding-left: 0px;">
+        <div class="container" style="padding-left: 0px; float: left;">
   		<textarea class="summernote" id="summernote" name="editordata"></textarea>    
 		</div>
 		
@@ -255,41 +260,24 @@ select {
 			  lang: "ko-KR"
 			});
 		</script>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-      	
-      	
+  
+      
       	</div>
     
-     <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center; margin-top: 10px">
-      	<button type="submit" id="enrollPsnPr"  style="font-size: 20px"><b>등록하기</b></button> &nbsp;   <!-- 버튼 클래스  class="btn btn-outline-primary"   -->
+     <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center;">
+      	<button type="submit" id="enrollPsnPr" class="btn btn-outline-primary"  style="font-size: 20px" onclick="returnFunction()"><b>등록하기</b></button> &nbsp;   <!-- 버튼 클래스  class="btn btn-outline-primary"   -->
 		<button type="reset" class="btn btn-outline-secondary" style="font-size: 20px"><b>취소</b></button>
       </div>
+        		
       
      
       
     </div>
     
-      
+     
     </div>
     </div>
 	</form>
-
+	
 </body>
 </html>

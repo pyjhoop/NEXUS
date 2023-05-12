@@ -17,6 +17,7 @@
 		<typeAlias type="com.team.nexus.pr.model.vo.PersonalPr" alias="PersonalPr"/>
 		<typeAlias type="com.team.nexus.pr.model.vo.Pagination" alias="Pagination"/>
 		<typeAlias type="com.team.nexus.pr.model.vo.PageInfo" alias="PageInfo"/>
+		<typeAlias type="com.team.nexus.recruit.model.vo.Recruit" alias="Recruit"/>
 		
 
 		<typeAlias type="com.team.nexus.chatting.model.vo.ChatRoom" alias="ChatRoom"/>
@@ -42,6 +43,7 @@
 		<mapper resource="/mappers/news-mapper.xml"/>
 		<mapper resource="/mappers/chatting-mapper.xml"/>
 		<mapper resource="/mappers/repositories-mapper.xml"/>
+		<mapper resource="/mappers/recruit-mapper.xml"/>
 		<mapper resource="/mappers/friend-mapper.xml"/>
 	</mappers>
 </configuration>

@@ -196,36 +196,36 @@
 
 
 					<li class="menu-item news"><a href="news.p" class="menu-link">
-							<i class="menu-icon tf-icons bx bx-detail"></i>
-							<div data-i18n="Form Elements">News</div>
-						</a></li>
-					<li class="menu-item"><a href="selectCal.ih" class="menu-link">
-							<i class="menu-icon tf-icons bx bxs-calendar"></i>
-							<div data-i18n="Tables">Calendar</div>
-						</a></li>
-					<!-- Misc -->
-					<li class="menu-header small text-uppercase"><span class="menu-header-text">Team</span></li>
-					<li class="menu-item"><a href="selectChat.ih" target="_blank" class="menu-link">
-							<i class="menu-icon tf-icons bx bx-message-rounded-dots"></i>
-							<div data-i18n="Support">Chatting</div>
-						</a></li>
-					<li class="menu-item"><a href="#" target="_blank" class="menu-link">
-							<i class="menu-icon tf-icons bx bx-bot"></i>
-							<div data-i18n="Support">Chattbot</div>
-						</a></li>
-					<li class="menu-item"><a href="personal.me" target="_blank" class="menu-link">
-							<i class="menu-icon tf-icons  bx bxs-megaphone"></i>
-							<div data-i18n="Documentation">Personal Pr</div>
-						</a></li>
-					<li class="menu-item"><a href="javascript:void(0);" class="menu-link ">
-							<i class="menu-icon tf-icons bx bxs-group"></i>
-							<div data-i18n="Form Layouts">Recruit</div>
-						</a></li>
-					<li class="menu-item"><a href="friend.me" class="menu-link">
+						<i class="menu-icon tf-icons bx bx-detail"></i>
+						<div data-i18n="Form Elements">News</div>
+					</a></li>
+				<li class="menu-item"><a href="selectCal.ih" class="menu-link">
+						<i class="menu-icon tf-icons bx bxs-calendar"></i>
+						<div data-i18n="Tables">Calendar</div>
+					</a></li>
+				<!-- Misc -->
+				<li class="menu-header small text-uppercase"><span class="menu-header-text">Team</span></li>
+				<li class="menu-item"><a href="selectChat.ih" target="_blank" class="menu-link">
+						<i class="menu-icon tf-icons bx bx-message-rounded-dots"></i>
+						<div data-i18n="Support">Chatting</div>
+					</a></li>
+				<li class="menu-item"><a href="#" target="_blank" class="menu-link">
+						<i class="menu-icon tf-icons bx bx-bot"></i>
+						<div data-i18n="Support">Chattbot</div>
+					</a></li>
+				<li class="menu-item"><a href="personal.me" target="_blank" class="menu-link">
+						<i class="menu-icon tf-icons  bx bxs-megaphone"></i>
+						<div data-i18n="Documentation">Personal Pr</div>
+					</a></li>
+				<li class="menu-item"><a href="project.re" class="menu-link ">
+						<i class="menu-icon tf-icons bx bxs-group"></i>
+						<div data-i18n="Form Layouts">Recruit</div>
+					</a></li>
+				<li class="menu-item"><a href="friend.me" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-user-plus"></i>
 						<div data-i18n="Form Elements">Friend</div>
 					</a></li>
-				</ul>
+			</ul>
 
 			</aside>
 			<!-- / Menu -->
@@ -250,7 +250,6 @@
 							</div>
 						</div>
 						<!-- /Search -->
-
 						<ul class="navbar-nav flex-row align-items-center ms-auto">
 
 							<button class="btn btn-outline-primary" id="enroll" style="visibility: hidden;">뉴스등록</button>
