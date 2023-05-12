@@ -37,7 +37,7 @@
         <div class="row mainContents mb-5">
 
         	<c:forEach var="i" items="${ list }">
-	            <div class="col-md-4 col-sm-6 col-lg-3 mb-5 cardWrap" onclick="location.href='newsDetail.p?nNo=${i.newsNo}'">
+	            <div class="col-md-3 col-sm-3 col-lg-3 mb-5 cardWrap" onclick="location.href='newsDetail.p?nNo=${i.newsNo}'">
 	                <div class="card h-100">
 	                	
                       <c:choose>
@@ -73,7 +73,7 @@
 	                          
 	                      </p>
 	                      ${ i.createDate}
-	                      <hr>
+	                      <hr style="margin: 3px;">
 
 	                      <div class="userInfo">
 

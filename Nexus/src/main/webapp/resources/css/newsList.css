@@ -1,5 +1,6 @@
 .card-img-top{
-    height: 200px;
+    height: 160px;
+    width: 200px;
 }
 
 .userInfo{
@@ -16,6 +17,10 @@
     font-weight: 800;
     height: 20px;
     overflow: hidden;
+}
+
+.card-body{
+    padding-bottom: 5px !important;
 }
 
 .bxs-heart-circle{

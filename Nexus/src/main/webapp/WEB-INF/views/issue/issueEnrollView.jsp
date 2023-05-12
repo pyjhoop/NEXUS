@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -7,11 +8,13 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/jquery/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="js/comboTreePlugin.js"></script>
-<script type="text/javascript" src="js/icontains.js"></script>
 <style>
 </style>
 
+
+
+
+</style>
 
 
 
@@ -26,6 +29,11 @@
 
 
 
+<!-- 알람 종 js -->
+<script src="${pageContext.request.contextPath}/resources/js/alarm.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/alarmSocket.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 
 </head>
@@ -34,30 +42,34 @@
 
 	<jsp:include page="../common/template.jsp" />
 
-
-
-
-
-
 	<div class="container total-box" style="margin-left: 0px; margin-right: 0px;">
 
 		<form action="createIssue.mi" method="post" id="issueEnrollForm">
 
-			<input type="text" class="form-control issuetitle" id="isTitle" name="title" placeholder="Title" autofocus>
-			<input type="hidden" name="issueNo" value="">
+			<input type="text" class="form-control issuetitle" name="title" placeholder="이슈 제목 입력" autofocus required>
+
+
+
+			<input type="hidden" name="userName" value="${loginUser.userName}">
+			<input type="hidden" name="userNo" value="${loginUser.userNo}">
+			<input type="hidden" name="assignee" value="">
+			<input type="hidden" name="label" value="">
+			<input type="hidden" name="newTitle" value="">
+
 
 			<div class="why">
 				<div class="editor-wrapper">
-					<div id="editor"></div>
+
+					<div id="editor">에디터활성안돼 씨앙</div>
 
 					<input type="hidden" name="body" value="">
-					<!-- 본인 글일때만 보이게 분기처리 ### -->
-					<div class="btn-box">
-						<br>
-						<button type="submit" class="btn btn-outline-primary" id="btn1">제출하기</button>
 
 
-					</div>
+				</div>
+				<div class="btn-box">
+					<br>
+					<button type="submit" class="btn btn-outline-primary" id="btn1">제출하기</button>
+
 				</div>
 		</form>
 	</div>
@@ -75,18 +87,18 @@
 		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">이슈 담당자</label>
 
-			<select id="defaultSelect" class="form-select" name="assignees">
+			<select id="defaultSelect" class="form-select assigneesSelect" name="issueAss">
 				<option>이슈 담당자</option>
-				<option value="libiho" type="checkbox">One</option>
-				<option value="pyjhoop" type="checkbox">Two</option>
-				<option value="kanginho1" type="checkbox">Three</option>
+				<c:forEach var="r" items="${RepoMembers }">
+					<option value="${r.userName }">${r.userName}</option>
+				</c:forEach>
 			</select>
 		</div>
 
 
 		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">라벨</label>
-			<select id="defaultSelect" class="form-select" name="labels">
+			<select id="defaultSelect" class="form-select labelSelect" name="issueLabel">
 				<option>라벨</option>
 				<c:forEach var="l" items="${lList }">
 					<option value="${l.name }">${l.name }</option>
@@ -99,26 +111,9 @@
 
 
 
-		<div class="mb-3">
-			<label for="defaultSelect" class="form-label">프로젝트</label>
-			<select id="defaultSelect" class="form-select" name="">
-				<option>프로젝트</option>
-				<option value="1" type="checkbox">One</option>
-				<option value="2" type="checkbox">Two</option>
-				<option value="3" type="checkbox">Three</option>
-			</select>
-		</div>
 
 
-		<div class="mb-3">
-			<label for="defaultSelect" class="form-label">마일스톤</label>
-			<select id="defaultSelect" class="form-select" name="milestone">
-				<option>마일스톤</option>
-				<option value="1" type="checkbox">One</option>
-				<option value="2" type="checkbox">Two</option>
-				<option value="3" type="checkbox">Three</option>
-			</select>
-		</div>
+
 
 
 
@@ -128,27 +123,56 @@
 
 	</div>
 
+
+
+
+
+
+
+
 	<script>
 
-            var editor = new toastui.Editor({
-                el: document.querySelector('#editor'),
-                height: '100%',
-                initialEditType: 'markdown'
+	 $('.assigneesSelect').change(function() {
+		 var selectedAssignee = $(this).val();
+		 console.log(selectedAssignee); // 선택된 이슈 담당자 출력
 
-            });
-            var markdownValue = editor.getMarkdown();
-            console.log(markdownValue); // Output: "# Hello, World!"
+		 $('input[name="assignee"]').val(selectedAssignee);
+
+		 });
+
+		 $('.labelSelect').change(function() {
+		 var selectedLabel = $(this).val();
+		 console.log(selectedLabel); // 선택된 라벨 출력
+
+		 $('input[name="label"]').val(selectedLabel);  
+		 });
+  
 
 
-      
-		// body 에디터 input 히든 값 넣기
-		$("#btn1").click(function(){
-    var markdown = editor.getMarkdown();
-    $("input[name='body']").val(markdown);
-});
+            
+	$(document).ready(function() {
+	    $('#issueEnrollForm').submit(function() {
+	    	
+	    	
+	      
+	    	
+	        
+	        console.log("aaaaaaaa")
+	    	
+	      
 
+	        return true;
+	    });
+	});
+
+
+		
+
+            
         </script>
 
 </body>
 
 </html>
+
+

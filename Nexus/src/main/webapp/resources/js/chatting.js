@@ -1,12 +1,21 @@
 //1. 페이지 로딩 완료시 채팅창을 맨 아래로 내리기.
 // 즉시 실행함수. IIFE
-(function() {
-    const displayChatting = document.getElementsByClassName("list-unstyled")[0];
 
-    if (displayChatting != null) {
-        displayChatting.scrollTop = displayChatting.scrollHeight;
+$("#selectUser").on("keyup",function(key){
+    if(key.keyCode==13) {
+        $("#search-btn").trigger('click');
     }
-})();
+});
+
+
+$(function() {
+    var displayChatting = document.getElementsByClassName("list-unstyled")[0];
+   
+  
+    if (displayChatting != null) {
+         displayChatting.scrollTop = displayChatting.scrollHeight;
+     }
+});
 
 
 
@@ -52,8 +61,8 @@ function sendMessage() {
         // JSON.parse(문자열) : JSON -> JS object로 변환
         // JSON.stringify(객체) : JS Ojbect -> JSON
 
-         console.log(chatMessage);
-         console.log(JSON.stringify(chatMessage));
+        // console.log(chatMessage);
+         //console.log(JSON.stringify(chatMessage));
 
         // // chatSocket(웹소켓객체)를 이용하여 메세지 보내기
         // // chatSocket.send(값) : 웹소켓 핸들러로 값을 보냄.
@@ -74,47 +83,171 @@ chatSocket.onmessage = function(e) {
 
     // 전달받은 메세지를 JS객체로 변환
     const chatMessage = JSON.parse(e.data); // js객체로 변환.
-    console.log(chatMessage);
-    /*
-    	<li>
-    		[<b></b>]
-    		<p>메세지</p>
-    		<span>메세지 보낸 날짜</span>
-    	</li>
-    */
-   
-    
-
-    // //span태그 추가
-    // const span = document.createElement("span");
-    // span.classList.add("chatDate");
-
-    // span.innerText = getCurrentTime();
-
-    // // 내가 쓴 채팅 
-    // // 남이 쓴 채팅 
-
-    //내가쓴 채팅
+   // console.log(chatMessage.chattingContent.substr(0, 2));
     let myChatting = "";
+    if(chatMessage.invite == 'O'){
+        myChatting = "<li class='chat-invite'>" +
+        chatMessage.userName + 
+        "님이 입장하셨습니다." +
+        "</li>";
+    }else if(chatMessage.invite == 'X'){
+        alert('이미 이 채팅방에 존재하는 유저입니다!');
+        return;
+
+    }else if(chatMessage.invite == 'Z'){
+        myChatting = "<li class='chat-invite'>" +
+        chatMessage.userName + 
+        "님이 방을 나가셨습니다." +
+        "</li>";
+        if(chatMessage.userNo == userNo){
+            location.href="selectChat.ih";
+        }
+  
+    }else{
+    //내가쓴 채팅
     if (chatMessage.userNo == userNo) {
-         myChatting = "<li class='media sent'>" +
+        if(chatMessage.invite == 'F'){
+            myChatting += "<li class='media sent'>" +
+            "<div class='media-body2'>" +
+            "<div class='msg-box'>" +
+            "<div>" +
+            "<div class='chat-msg-attachments'>";
+            if(chatMessage.chattingContent.substr(0, 2) == '파일'){
+            myChatting +=   "<div>" +
+                            "<a href=" +
+                            chatMessage.changeName +
+                            " download=" +
+                            chatMessage.originName +
+                             " >" +
+                            chatMessage.originName +
+                            "<i class='bx bxs-download'>" +
+                            "</i>" +
+                            "</a>";  
+            }else{
+             myChatting += "<div class='chat-attachment'>" +
+                            "<img src=" +
+                            chatMessage.changeName +
+                            " >" +
+                            "<div class='chat-attach-caption'>" +
+                            chatMessage.originName +
+                            "</div>" +
+                            "<a href=" +
+                            chatMessage.changeName +
+                            " download=" +
+                            chatMessage.originName +
+                            " class='chat-attach-download'>" +
+                            "<i class='bx bxs-download'>" +
+                            "</i>" +
+                            "</a>";
+            }
+           
+            myChatting +=   "</div>" +
+                            "</div>" +
+                            "<ul class='chat-msg-info'>" +
+                            "<li>" +
+                            "<div class='chat-time'>" +
+                            "<span>" +
+                            chatMessage.today +
+                            "</span>" +
+                            "</div>" +
+                            "</li>" +
+                            "</ul>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>" +
+                            "</li>";
+        }else{
+        
+        myChatting = "<li class='media sent'>" +
         "<div class='media-body2'>" +
         "<div class='msg-box'>" +
         "<div>" +
         "<p>" + 
         chatMessage.chattingContent +
         "</p>" +
+        "<ul class='chat-msg-info'>" +
+        "<li>" +
+        "<div class='chat-time'>" +
+        "<span>" +
+        chatMessage.today +
+        "</span>" +
+        "</div>" +
+        "</li>" +
+        "</ul>" +
         "</div>" +
         "</div>" +
         "</div>" +
         "</li>";
+        }
     } else {
+        if(chatMessage.invite == 'F'){
+            myChatting += "<li class='media d-flex received'>" +
+            "<div class='avatar'>" +
+            "<img src= " +
+            chatMessage.profile + 
+            " class='w-px-40 h-px-40 rounded-circle'>"+
+            "<div id='cnt-name'>" +
+            chatMessage.userName + 
+            "</div>" +
+            "</div>" +
+            "<div class='media-body'>" +
+            "<div class='msg-box'>" +
+            "<div>" +
+            "<div class='chat-msg-attachments'>";
+            if(chatMessage.chattingContent.substr(0, 2) == '파일'){
+                myChatting +=   "<div>" +
+                                "<a href=" +
+                                chatMessage.changeName +
+                                " download=" +
+                                chatMessage.originName +
+                                 " >" +
+                                chatMessage.originName +
+                                "<i class='bx bxs-download'>" +
+                                "</i>" +
+                                "</a>";  
+                }else{
+                 myChatting += "<div class='chat-attachment'>" +
+                                "<img src=" +
+                                chatMessage.changeName +
+                                " >" +
+                                "<div class='chat-attach-caption'>" +
+                                chatMessage.originName +
+                                "</div>" +
+                                "<a href=" +
+                                chatMessage.changeName +
+                                " download=" +
+                                chatMessage.originName +
+                                " class='chat-attach-download'>" +
+                                "<i class='bx bxs-download'>" +
+                                "</i>" +
+                                "</a>";
+                }
+                myChatting +=     "</div>" +
+                                    "</div>" +
+                                    "<ul class='chat-msg-info'>" +
+                                    "<li>" +
+                                    "<div class='chat-time'>" +
+                                    "<span>" +
+                                    chatMessage.today +
+                                    "</span>" +
+                                    "</div>" +
+                                    "</li>" +
+                                    "</ul>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</li>";
+        }else{
+
         myChatting = "<li class='media d-flex received'>" +
         "<div class='avatar'>" +
         "<img src= " +
         chatMessage.profile + 
         " class='w-px-40 h-px-40 rounded-circle'>"+
-        "class='avatar-img rounded-circle'>" +
+        "<div id='cnt-name'>" +
+        chatMessage.userName + 
+        "</div>" +
+
         "</div>" +
         "<div class='media-body'>" +
         "<div class='msg-box'>" +
@@ -122,41 +255,33 @@ chatSocket.onmessage = function(e) {
         "<p>" + 
         chatMessage.chattingContent +
         "</p>" +
+        "<ul class='chat-msg-info'>" +
+        "<li>" +
+        "<div class='chat-time'>" +
+        "<span>" +
+        chatMessage.today +
+        "</span>" +
+        "</div>" +
+        "</li>" +
+        "</ul>" +
         "</div>" +
         "</div>" +
         "</div>" +
         "</li>";
+        }
     }
-
+    }
     // 채팅창
-    const displayChatting = document.getElementsByClassName("display-chatting")[0];
-    console.log(myChatting);
+    displayChatting = document.getElementsByClassName("chat-body")[0];
      // 채팅창에 채팅 추가
      $('.list-unstyled').append(myChatting);
      //inputChatting.value = "";
 
     // 채팅창을 제일밑으로 내리기
-    displayChatting.scrollTop = displayChatting.scrollHeight;
+    $('#room-scroll2').scrollTop($('#room-scroll2').prop('scrollHeight'));
+   // displayChatting.scrollTop = displayChatting.scrollHeight;
     // scrollTop : 스크롤 이동
     // scrollHeight : 스크롤이되는 요소의 전체 높이.
 
 };
 
-function getCurrentTime() {
-
-    const now = new Date();
-
-    const time = now.getFullYear() + "년 " +
-        addZero(now.getMonth() + 1) + "월 " +
-        addZero(now.getDate()) + "일 " +
-        addZero(now.getHours()) + ":" +
-        addZero(now.getMinutes()) + ":" +
-        addZero(now.getSeconds()) + " ";
-
-    return time;
-}
-
-// 10보다 작은수가 매개변수로 들어오는경우 앞에 0을 붙여서 반환해주는함수.
-function addZero(number) {
-    return number < 10 ? "0" + number : number;
-}

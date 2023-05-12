@@ -22,17 +22,20 @@ public class MemberDao {
 	public Member selectMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.selectOne("memberMapper.selectMember", m);
 	}
-	
+
 	public Member findKaKao(SqlSessionTemplate sqlSession, HashMap<String, Object> userInfo) {
 		return sqlSession.selectOne("memberMapper.findKaKao", userInfo);
 	}
-	
+
 	public void insertKaKao(SqlSessionTemplate sqlSession, HashMap<String, Object> userInfo) {
 		sqlSession.insert("memberMapper.insertKaKao", userInfo);
 	}
 
-
 	public int resetPwd(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.selectOne("memberMapper.resetPwd", m);
+	}
+
+	public int enrollToken(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.enrollToken", m);
 	}
 }

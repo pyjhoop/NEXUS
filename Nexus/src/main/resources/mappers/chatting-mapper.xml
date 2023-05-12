@@ -13,6 +13,13 @@
  		<result column="count" property="count"/>
  		<result column="user_no" property="userNo"/>
  		<result column="user_name" property="userName"/>
+ 		<result column="origin_name" property="originName"/>
+ 		<result column="change_name" property="changeName"/>
+ 		<result column="last_chat" property="lastChat"/>
+ 		<result column="last_date" property="lastDate"/>
+ 		<result column="create_user_no" property="createUserNo"/>
+ 		<result column="room_title2" property="roomTitle2"/>
+ 		<result column="change_name2" property="changeName2"/>
  	</resultMap>
  	
  	<resultMap type="ChatUser" id="chatUserResultSet">
@@ -20,6 +27,8 @@
  		<result column="user_no" property="userNo"/>
  		<result column="user_name" property="userName"/>
  		<result column="profile" property="profile"/>
+ 		<result column="status" property="status"/>
+ 		<result column="count" property="count"/>
  	</resultMap>
  	
  	<resultMap type="ChatMessage" id="chatMessageResultSet">
@@ -29,10 +38,35 @@
  		<result column="user_name" property="userName"/>
  		<result column="create_date" property="createDate"/>
  		<result column="profile" property="profile"/>
+ 		<result column="invite" property="invite"/>
+ 		<result column="change_name" property="changeName"/>
+ 		<result column="origin_name" property="originName"/>
  	</resultMap>
  	
+ 	<resultMap type="Member" id="memberResultSet">
+		<result column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_pwd" property="userPwd"/>
+		<result column="user_name" property="userName"/>
+		<result column="user_nick" property="userNick"/>
+		<result column="email" property="email"/>
+		<result column="profile" property="profile"/>
+		<result column="gender" property="gender"/>
+		<result column="social" property="social"/>
+		<result column="enroll_date" property="enrollDate"/>
+		<result column="token" property="token"/>
+		<result column="status" property="status"/>
+	</resultMap>
+ 	
  	<select id="selectRoom" resultMap="chatRoomResultSet">
- 	select *
+ 	select 
+ 		  room_no
+ 		, number_participants
+ 		, origin_name
+ 		, change_name
+ 		, room_title
+ 		, last_chat
+ 		, last_date
 		from tb_chat_room r
 		join tb_chat_user u using(room_no)
 		where u.user_no = #{userNo}
@@ -44,7 +78,8 @@
 	    u.user_no,
 	    room_no,
 	    user_name,
-	    profile
+	    profile,
+	    count
 	from tb_chat_user u 
 	join  tb_member m on(u.user_no = m.user_no)
 	where room_no in (select room_no
@@ -53,6 +88,7 @@
 	                            where u.user_no = #{userNo}
 	                                and r.status = 'Y')
 	        and u.user_no != #{userNo}
+	        and u.status = 'S'
  	</select>
  
  	<select id="selectMessage" resultMap="chatMessageResultSet">
@@ -62,6 +98,9 @@
 	     , m.user_name
 	     , create_date
 	     , profile
+	     , invite
+	     , origin_name
+	     , change_name
 	    from tb_chatting c
 	    join tb_member m using(user_no) 
 	  where room_no = #{rno}
@@ -71,6 +110,180 @@
  	<insert id="insertMessage">
  		insert 
  			into tb_chatting
- 			values(seq_chatting.nextval, #{roomNo}, #{chattingContent}, null , null, #{userNo}, sysdate)
+ 			values(seq_chatting.nextval, #{roomNo}, #{chattingContent}, null , null, #{userNo}, sysdate,#{invite})
  	</insert>
+ 	
+ 	<select id="searchUser" resultMap="memberResultSet">
+ 		select *
+ 		from tb_member
+ 		where user_name like '%${search}%'
+ 			and user_no != #{userNo}
+ 			and status = 'Y'
+ 	</select>
+ 	
+ 	<insert id="createRoom">
+ 		insert
+ 			into tb_chat_room
+ 			values(SEQ_CHAT_ROOM.NEXTVAL,2,sysdate,'Y',null,#{profile},#{userName},null,null,#{userNo},#{roomTitle2},#{changeName2})
+ 	</insert>
+ 	<insert id="insertChatUser">
+ 		insert
+ 			into tb_chat_user
+ 			values(#{userNo},seq_chat_room.currval,#{status},0)
+ 	</insert>
+ 	
+ 	<insert id="createGroupRoom">
+ 		insert 
+ 			into tb_chat_room
+ 			values(SEQ_CHAT_ROOM.NEXTVAL,#{numberParticipants},sysdate,'Y',#{originName},#{changeName},#{roomTitle},null,null,0,null,null)
+ 	</insert>
+ 	
+ 	<update id="updateMessage">
+ 		update
+ 			tb_chat_room
+ 		set last_chat = #{chattingContent},
+ 			last_date = sysdate
+ 		where room_no = #{roomNo}
+ 	</update>
+ 	<update id="unreadMessage">
+ 		update
+ 			tb_chat_user
+ 		set count = count + 1
+ 		where room_no = #{roomNo}
+ 		and user_no != #{userNo}
+ 	</update>
+ 	<select id="selectUnreadMessage" resultMap="chatUserResultSet">
+ 	select 
+	    u.user_no,
+	    room_no,
+	    count
+	from tb_chat_user u 
+	join  tb_member m on(u.user_no = m.user_no)
+	where room_no in (select room_no
+	                            from tb_chat_room r
+	                            join tb_chat_user u using(room_no)
+	                            where u.user_no = #{userNo}
+	                                and r.status = 'Y')
+	        and u.user_no = #{userNo}
+ 	</select>
+ 	<update id="readMessage">
+ 		update
+ 			tb_chat_user
+ 		set count = 0
+ 		where room_no = #{roomNo}
+ 			and user_no = #{userNo}
+ 	</update>
+ 	<select id="updateRoom" resultMap="chatRoomResultSet" >
+ 		select 
+ 		  room_no
+ 		, number_participants
+ 		, origin_name
+ 		, change_name
+ 		, replace(room_title,' ','') as "room_title"
+ 		, last_chat
+ 		, last_date
+        , u.count
+        , create_user_no
+        , room_title2
+        , change_name2
+		from tb_chat_room r
+		join tb_chat_user u using(room_no)
+		where u.user_no = #{userNo}
+   	 and r.status = 'Y'
+   	 and (u.status = 'S' or u.status='G')
+   	 order by last_date desc nulls last
+ 	</select>
+ 	<select id="checkUser" resultMap="chatUserResultSet">
+ 	 	select *
+ 	 	from tb_chat_user
+ 	 	where user_no = #{userNo}
+ 	 		and room_no = #{roomNo}	
+ 	</select>
+ 	<insert id="inviteUser">
+ 		insert
+ 			into tb_chat_user
+ 			values(#{userNo},#{roomNo},'G',0)
+ 	</insert>
+ 	<select id="selectMember" resultMap="memberResultSet">
+ 		select *
+ 		from tb_member
+ 		where user_no = #{userNo}
+ 		and status = 'Y'
+ 	</select>
+ 	<insert id="firstEntry">
+ 		insert 
+ 			into tb_chatting
+ 			values(seq_chatting.nextval, seq_chat_room.currval, #{userName}, null , null, #{userNo}, sysdate,'O')
+ 	</insert>
+ 	<delete id="exitRoom">
+ 		delete 
+ 			from tb_chat_user 
+ 		  where user_no = #{userNo}
+ 		  	and room_no = #{roomNo}
+ 	</delete>
+ 	<update id="hideRoom">
+ 		update
+ 			tb_chat_user
+ 		set status = 'H' 
+ 		where room_no = #{roomNo}
+ 			and user_no = #{userNo}
+ 	</update>
+ 	<select id="selectHideUser" resultMap="chatUserResultSet">
+ 		select 
+	    u.user_no,
+	    room_no,
+	    user_name,
+	    profile,
+	    count
+	from tb_chat_user u 
+	join  tb_member m on(u.user_no = m.user_no)
+	where room_no in (select room_no
+	                            from tb_chat_room r
+	                            join tb_chat_user u using(room_no)
+	                            where u.user_no = #{userNo}
+	                                and r.status = 'Y')
+	        and u.user_no = #{userNo}
+	        and u.room_no = #{roomNo}
+	        and u.status = 'H'
+ 	</select>
+ 	<update id="displayRoom">
+ 		update
+ 			tb_chat_user
+ 		set status = 'S' 
+ 		where room_no = #{roomNo}
+ 			and user_no = #{userNo}
+ 	</update>
+ 	<select id="opponentUser" resultMap="chatUserResultSet">
+ 	select user_no
+       , room_no
+       , c.status
+       , count
+       , user_name
+       , profile
+ 	 	from tb_chat_user c
+        join tb_member m using(user_no)
+ 	 	where user_no != #{userNo}
+ 	 		and room_no = #{roomNo}
+ 	 		and (c.status = 'S' or c.status='H')  
+            and m.status = 'Y'
+ 	</select>
+ 	<insert id="insertChatFile">
+ 		insert
+ 			into tb_chatting
+ 			values(seq_chatting.nextval,#{roomNo},#{chattingContent},#{originName},#{changeName},#{userNo},sysdate,'F')
+ 	</insert>
+ 	<select id="selectFriend" resultMap="memberResultSet">
+ 	select *
+		from tb_member
+		join (
+		    select b.user_no
+		    from tb_friend a
+		    join (select * from tb_friend where user_add_no = #{userNo}) b on (a.user_add_no = b.user_no)
+		    where a.user_no = #{userNo}
+		    and b.user_blocked = 'N'
+		    )
+		using(user_no)
+		where status = 'Y'
+ 	</select>
+ 	
  </mapper>
