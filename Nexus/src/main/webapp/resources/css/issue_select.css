@@ -44,6 +44,20 @@ text-decoration: none;
 
 
 
+.btnBox {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btnGroup1{
+	margin-right: 25px;
+}
+
+.btnGroup2 {
+margin-right: 5vw;
+}
+
+
 
 /* 에디터--------------------------- */
 

@@ -77,7 +77,7 @@
 					</div>
 					<div class="modal-body">
 						<input type="hidden" name="ino" value="${ino}">
-						현재 이슈의 ${state } 상태를 변경합니다
+						 "${title}" 이슈의 ${state } 상태를 변경합니다
 					</div>
 					<div class="modal-footer">
 						<!-- 상태에 따라 종료 / open 버튼 text 바뀌게 ### -->
@@ -99,54 +99,93 @@
 
 
 	<div class="editor-label">
-
+	
+	
 		<div class="mb-3">
-			<label for="defaultSelect" class="form-label">이슈 담당자</label>
-
+			<label for="defaultSelect" class="form-label">이슈 담당자</label> <br>
 			<div>
+
 				<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-					<c:forEach items="${assignees}" var="a">
-						<p>${assignees}</p>
-						<p>${a }</p>
-						<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${assignee}"><img src="${assigneeProfiles[loop.index]}" alt="" class="rounded-circle" /></li>
+					<c:forEach var="assignee" items="${assignees}">
+						<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-m pull-up" title="${assignee.userName}"><img src="${assignee.profile}" alt="" class="rounded-circle" /></li>
 					</c:forEach>
 				</ul>
+
+
 			</div>
 
-			<select id="issueAssignees" class="form-select" name="assignees">
+			<br>
+
+			<select id="issueAssignees" class="form-select" name="assignees" multiple>
+			
+				<c:forEach var="r" items="${RepoMembers}">
+				<c:if test="${empty r }">			
 				<option>이슈 담당자</option>
-				<c:forEach var="r" items="${RepoMembers }">
-					<option value="${r.userName }">${r.userName}</option>
+</c:if>
+
+					<option value="${r.userName}" <c:forEach var="assignee" items="${assignees}">
+            <c:if test="${r.userName == assignee.userName}">
+                selected
+            </c:if>
+        </c:forEach>>${r.userName}</option>
 				</c:forEach>
+
+
 			</select>
 		</div>
+
+
+
+
+
 
 
 		<div class="mb-3">
 			<label for="defaultSelect" class="form-label">라벨</label>
-			<select id="issueLabel" class="form-select" name="labels">
-				<option>라벨</option>
+			
+			
+			<div>
+			
+		<c:forEach items="${labels}" var="label">
+		<c:choose>
+												<c:when test="${label eq 'bug'}">
+													<span class="badge rounded-pill bg-label-danger">${label}</span>
+												</c:when>
+												<c:when test="${label eq 'enhancement'}">
+													<span class="badge rounded-pill bg-label-info">${label}</span>
+												</c:when>
+												<c:when test="${label eq 'duplicate'}">
+													<span class="badge rounded-pill bg-label-dark">${label}</span>
+												</c:when>
+												<c:when test="${label eq 'documentation'}">
+													<span class="badge rounded-pill bg-label-primary">${label}</span>
+												</c:when>
+												<c:when test="${label eq 'invalid'}">
+													<span class="badge rounded-pill bg-label-warning">${label}</span>
+												</c:when>
+												<c:when test="${label eq 'help wanted'}">
+													<span class="badge rounded-pill bg-label-success">${label}</span>
+												</c:when>
+												<c:otherwise>
+													<span class="badge rounded-pill bg-label-secondary">${label}</span>
+												</c:otherwise>
+											</c:choose>
+</c:forEach>
+		
+			
+			
+			</div>
+			
+			<br>
+			<select id="defaultSelect" class="form-select labelSelect" name="issueLabel" multiple>
 				<c:forEach var="l" items="${lList }">
-					<option value="${l.name }">${l.name }</option>
+				<c:if test="${empty l }">
+				<option>라벨</option>
+				</c:if>
+					<option value="${l.name }" <c:forEach items="${labels}" var="label"> <c:if test="${l.name == label }"> selected </c:if></c:forEach>>${l.name }</option>
 				</c:forEach>
 			</select>
 		</div>
-
-
-
-
-
-
-		<div class="mb-3">
-			<label for="defaultSelect" class="form-label">마일스톤</label>
-			<select id="issueMile" class="form-select" name="milestone">
-				<option>마일스톤</option>
-				<option value="1" type="checkbox">One</option>
-				<option value="2" type="checkbox">Two</option>
-				<option value="3" type="checkbox">Three</option>
-			</select>
-		</div>
-
 
 
 
@@ -176,56 +215,22 @@
             console.log(markdownValue); // Output: "# Hello, World!"
 
 
-            /*----------------------------------------------------*/
+            $(document).ready(function() {
+        	    $('#issueUpdateForm').submit(function() {
+        	    	
+        	    	
+        	    	  var markdown = editor.getMarkdown();
+        	    	    $("input[name='body']").val(markdown);
+        	    	
+        	        
+        	    	
+        	      
 
-
-// Get references to the select and hidden input elements
-const selectEl = document.getElementById('issueAssignees');
-const hiddenEl = document.querySelector('#issueUpdateForm input[name="assigneesHidden"]');
-
-// Listen for change events on the select element
-selectEl.addEventListener('change', (event) => {
-  // Get the selected value and update the hidden input value
-  const selectedValue = event.target.value;
-  hiddenEl.value = selectedValue;
-});
-
+        	        return true;
+        	    });
+        	});
             
-const selectE2 = document.getElementById('issueLabel');
-const hiddenE2 = document.querySelector('#issueUpdateForm input[name="labelHidden"]');
-
-// Listen for change events on the select element
-selectE2.addEventListener('change', (event) => {
-  // Get the selected value and update the hidden input value
-  const selectedValue = event.target.value;
-  hiddenE2.value = selectedValue;
-});          
-            
-const selectE3 = document.getElementById('issueProject');
-const hiddenE3 = document.querySelector('#issueUpdateForm input[name="projectHidden"]');
-
-// Listen for change events on the select element
-selectE3.addEventListener('change', (event) => {
-  // Get the selected value and update the hidden input value
-  const selectedValue = event.target.value;
-  hiddenE3.value = selectedValue;
-});  
-
-const selectE4 = document.getElementById('issueMile');
-const hiddenE4 = document.querySelector('#issueUpdateForm input[name="mileHidden"]');
-
-// Listen for change events on the select element
-selectE4.addEventListener('change', (event) => {
-  // Get the selected value and update the hidden input value
-  const selectedValue = event.target.value;
-  hiddenE4.value = selectedValue;
-});  
-            
-$("#btn1").click(function(){
-    var markdown = editor.getMarkdown();
-    $("input[name='body']").val(markdown);
-});        
-            
+      
             
 
         </script>

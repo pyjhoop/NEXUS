@@ -272,29 +272,26 @@
 
 
 									<script>
-										//버튼 클릭 이벤트 리스너 등록
-										document
-												.querySelector('.cleanBtn')
-												.addEventListener(
-														'click',
-														function() {
-															// 삭제할 요소의 부모 요소 탐색
-															const parentElement = document
-																	.querySelector('.issueAlerm').parentElement;
+									document.addEventListener('DOMContentLoaded', function() {
+									  const cleanBtn = document.querySelector('.cleanBtn');
+									  if (cleanBtn) {
+									    cleanBtn.addEventListener('click', function() {
+									      const parentElement = document.querySelector('.issueAlerm').parentElement;
 
-															// 부모 요소에서 삭제할 요소 찾아 삭제
-															const targetElement = parentElement
-																	.querySelector('.issueAlerm');
-															targetElement
-																	.remove();
-														});
-										
-										
-										$(document).ready(function() {
-											  $('.ringring').click(function() {
-											    $('.redpoint').addClass('visually-hidden');
-											  });
-											});
+									      const targetElement = parentElement.querySelector('.issueAlerm');
+									      if (targetElement) {
+									        targetElement.remove();
+									      }
+									    });
+									  }
+									});
+
+									$(document).ready(function() {
+									  $('.ringring').click(function() {
+									    $('.redpoint').addClass('visually-hidden');
+									  });
+									});
+
 
 									</script>
 

@@ -27,6 +27,8 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/issue_mini.js"></script>
 
+
+
 <!-- 알람 종 js -->
 <script src="${pageContext.request.contextPath}/resources/js/alarm.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/alarmSocket.js"></script>
@@ -58,7 +60,7 @@
 			<div class="why">
 				<div class="editor-wrapper">
 
-					<div id="editor">에디터활성안돼ㅠㅠ</div>
+					<div id="editor">에디터활성안돼 씨앙</div>
 
 					<input type="hidden" name="body" value="">
 
@@ -67,7 +69,6 @@
 				<div class="btn-box">
 					<br>
 					<button type="submit" class="btn btn-outline-primary" id="btn1">제출하기</button>
-
 
 				</div>
 		</form>

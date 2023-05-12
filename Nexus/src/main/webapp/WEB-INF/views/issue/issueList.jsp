@@ -77,8 +77,19 @@
 
 
 				<div class="luda">
+
 					<a class="btn btn-primary" href="issueEnroll.mini">이슈 등록</a>
 				</div>
+				<br>
+			<div class="btnBox">
+  <div class="btnGroup1">
+    <button class="btn btn-outline-dark btn-sm issueauthor" name="author" value="writer">내가 작성한 이슈</button>
+  </div>
+  <div class="btnGroup2">
+    <button class="btn btn-outline-dark btn-sm issueassign" name="assign" value="myIssue">내 담당 이슈</button>
+  </div>
+</div>
+
 				<br>
 
 				<div class="table-responsive text-nowrap">
@@ -114,28 +125,9 @@
 								</th>
 
 
-								<th>
-									<form action="issueShow.mini" method="get" align="center">
-										<select onchange="this.form.submit()" class="form-select form-select-sm" name="author" aria-label="Default select example">
-											<option selected value="writer">작성자</option>
-											<c:forEach var="r" items="${RepoMembers }">
-												<option value="${r.userName }">${r.userName}</option>
-											</c:forEach>
-										</select>
-									</form>
-								</th>
+								<th>작성자</th>
 
-								<th>
-									<form action="issueShow.mini" method="get" align="center">
-										<select onchange="this.form.submit()" class="form-select form-select-sm" name="assign" aria-label="Default select example">
-											<option selected value="all">담당자</option>
-											<c:forEach var="r" items="${RepoMembers }">
-												<option value="${r.userName }">${r.userName}</option>
-
-											</c:forEach>
-										</select>
-									</form>
-								</th>
+								<th>담당자</th>
 								<th>마일스톤</th>
 							</tr>
 						</thead>
@@ -267,6 +259,18 @@
 					});
 
 				
+				  document.addEventListener('DOMContentLoaded', function() {
+				    var authorButton = document.querySelector('.issueauthor');
+				    var assignButton = document.querySelector('.issueassign');
+
+				    authorButton.addEventListener('click', function() {
+				      window.location.href = 'issueShow.mini?author=writer';
+				    });
+
+				    assignButton.addEventListener('click', function() {
+				      window.location.href = 'issueShow.mini?assign=myIssue';
+				    });
+				  });
 
 				
 			</script>

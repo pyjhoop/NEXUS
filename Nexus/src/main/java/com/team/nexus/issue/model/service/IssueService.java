@@ -111,10 +111,15 @@ public class IssueService {
 		return response.getBody();
 	}
 
+	
+	
+	
 	public List<GitIssue> getIssues(String repository, String token, String state, String assign, String label)
 			throws IOException {
 
 		String url = "";
+	
+		
 		if (assign != null) {
 			url = "https://api.github.com/issues";
 		} else {
@@ -152,13 +157,18 @@ public class IssueService {
 		return list;
 	}
 
-	public List<GitIssue> getIssuesByAssignee(String assignee, HttpSession session) throws IOException {
+	
+	
+	
+	public List<GitIssue> getIssuesByAssignee(String assignee, HttpSession session,String token) throws IOException {
+		
+		
+		
 		String apiUrl = "https://api.github.com/issues?filter=assigned";
 
-		String assigneeToken = (String) session.getAttribute("assigneeToken");
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer " + assigneeToken);
+		headers.set("Authorization", "Bearer " + token);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
@@ -210,14 +220,12 @@ public class IssueService {
 		return lList;
 	}
 
-	public List<GitIssue> getIssuesByAuthor(String author, HttpSession session, String repository) {
+	public List<GitIssue> getIssuesByAuthor(String author, HttpSession session, String token) {
 
-		String apiUrl = "https://api.github.com/repos/" + repository + "/issues?filter=assigned";
-
-		String assigneeToken = (String) session.getAttribute("assigneeToken");
+		String apiUrl = "https://api.github.com/issues?filter=created";
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer " + assigneeToken);
+		headers.set("Authorization", "Bearer " + token);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
@@ -246,7 +254,7 @@ public class IssueService {
 	public List<GitIssue> getIssuesByLabel(String label, HttpSession session, String repository, String token)
 			throws IOException {
 
-		 String apiUrl = "https://api.github.com/repos/" + repository + "/issues?labels=" + URLEncoder.encode(label, "UTF-8");
+		 String apiUrl = "https://api.github.com/repos/" + repository + "/issues?labels="+label;
 
 		 
 		    HttpHeaders headers = new HttpHeaders();
