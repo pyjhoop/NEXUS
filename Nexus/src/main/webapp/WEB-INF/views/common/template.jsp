@@ -190,7 +190,7 @@
 						<i class="menu-icon tf-icons  bx bxs-megaphone"></i>
 						<div data-i18n="Documentation">Personal Pr</div>
 					</a></li>
-				<li class="menu-item"><a href="javascript:void(0);" class="menu-link ">
+				<li class="menu-item"><a href="project.re" class="menu-link ">
 						<i class="menu-icon tf-icons bx bxs-group"></i>
 						<div data-i18n="Form Layouts">Recruit</div>
 					</a></li>

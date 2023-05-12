@@ -141,9 +141,6 @@ select {
     .note-modal-content{
     	height: 400px;
     }
- #stackInputCard{
- 	
- }
 </style>
 </head>
 <body>
@@ -199,9 +196,8 @@ select {
  					
                    <div class="input-group" style="border: none; box-shadow: none;" onchange="dataListChange()">
                    <multi-input id="multi-input">
-			      <input id="stackInputCard" list="speakers" placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
+			      <input id="stackInputCard" list="speakers"  placeholder="사용가능한 자신의 기술 스택을 선택해주세요. 검색도 가능합니다."/>
 			      <datalist id="speakers">
-			      <!-- stackInputCard에 "선택안함"이 있을경우 다른 옵션들 비활성화  -->
 			        <option value="AWS" class="item"></option>
 			        <option value="Django" class="item"></option>
 			        <option value="Docker" class="item"></option>
@@ -238,7 +234,6 @@ select {
                        </div>
                        <input  id="selecteds" name="psnPrStack" type="hidden"> <br>
                        <script src="${pageContext.request.contextPath}/resources/js/multi-input.js"></script>
-        				<script src="${pageContext.request.contextPath}/resources/js/script1.js"></script>
         				
          <script type="text/javascript">
          const multiInput= document.getElementById('multi-input'); 

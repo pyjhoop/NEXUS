@@ -400,7 +400,7 @@ transform: scale(1.1);
 	<div id="mainBody" style="width: 100%; margin-right: 5rem;">
 	
 	<div id="prs" >
-	<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollPsnPr.pr'">
+	<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollRecruit.re'">
 	새 글 쓰기
 </button>
 </div>
@@ -538,7 +538,7 @@ transform: scale(1.1);
                   </div>
                 </div>
                 
-                <script>
+                <!-- <script>
                 var val1 = "";
                 $(document).on("click",".LanguageBar_languages__2Ilqf li", function(){
             		 val1 += $(this).attr('value') + ' ';
@@ -628,7 +628,8 @@ transform: scale(1.1);
                           }) 
                   });
                 });
-                </script>
+                </script> -->
+                
 </div> 
 
 
@@ -667,9 +668,7 @@ transform: scale(1.1);
 	<script>
             	$(function(){
             		$(".card-body").click(function(){
-            			console.log("클릭은된");
-            			location.href= 'personalPr.bo?pno=' + $(this).children(".prCount").val();
-            			console.log("클릭이후");
+            			location.href= 'recruit.bo?rno=' + $(this).children(".prCount").val();
             		})	
             	})
             </script> 

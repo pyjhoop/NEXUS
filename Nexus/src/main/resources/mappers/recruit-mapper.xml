@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="recruitMapper">
+	<resultMap type="Recruit" id="recruitBoardResultSet">
+		<result column="PJT_PR_NO" property="pjtPrNo"/>
+		<result column="PJT_PR_TITLE" property="pjtPrTitle"/>
+		<result column="PJT_PR_START" property="pjtPrStart"/>
+		<result column="PJT_PR_PERIOD" property="pjtPrPeriod"/>
+		<result column="PJT_PR_DEADLINE" property="pjtPrDeadline"/>
+		<result column="PJT_PR_STACK" property="pjtPrStack"/>
+		<result column="PJT_PR_FACE" property="pjtPrFace"/>
+		<result column="PJT_PR_CONTACT" property="pjtPrContact"/>
+		<result column="PJT_PR_CAPACITY" property="pjtPrCapacity"/>
+		<result column="PJT_PR_CONTENT" property="pjtPrContent"/>
+		<result column="PJT_PR_RECRUITS" property="pjtPrRecruits"/>
+		<result column="PJT_PR_CREATEDATE" property="pjtPrCreateDate"/>
+		<result column="PJT_PR_FIELD" property="pjtPrField"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="COUNT" property="count"/>
+		<result column="profile" property="profile"/>
+	</resultMap>
+	
+	
+		<select id="selectListCount" resultType="_int">
+			select
+				 count(*)
+			from PJT_PR_BOARD
+	</select>
+	
+	<select id="selectRecruit" resultMap="recruitBoardResultSet">
+		select
+			 PJT_PR_NO
+			,PJT_PR_TITLE
+			,PJT_PR_START
+			,PJT_PR_PERIOD
+			,PJT_PR_DEADLINE
+			,PJT_PR_STACK
+			,PJT_PR_FACE
+			,PJT_PR_CONTENT
+			,PJT_PR_FIELD
+			,PJT_PR_CAPACITY
+			,PJT_PR_RECRUITS
+			,PJT_PR_CONTACT
+			,to_char(PJT_PR_CREATEDATE) AS "PJT_PR_CREATEDATE"
+			,USER_NO
+			,USER_NAME
+			,PROFILE
+			,COUNT
+			FROM PJT_PR_BOARD
+			JOIN TB_MEMBER USING (USER_NO)
+			ORDER BY PJT_PR_CREATEDATE DESC
+	</select>
+	
+	
+	<insert id="insertRecruit">
+		INSERT INTO PJT_PR_BOARD VALUES
+		(pjt_pr_no, PJT_PR_TITLE, PJT_PR_START, PJT_PR_PERIOD, PJT_PR_DEADLINE, PJT_PR_STACK, PJT_PR_FACE,
+		 PJT_PR_CONTACT, PJT_PR_CAPACITY, PJT_PR_CONTENT, PJT_PR_RECRUITS,  PJT_PR_CREATEDATE, USER_NO, PJT_PR_FIELD, COUNT)
+		 values(SEQ_PJT_PR.NEXTVAL, #{pjtPrTitle}, #{pjtPrStart}, #{pjtPrPeriod}, #{pjtPrDeadline}, #{pjtPrStack}, #{pjtPrFace}, #{pjtPrContact},
+		  #{pjtPrCapacity}, #{pjtPrContent}, #{pjtPrRecruits}, to_char(sysdate,'yy/MM/dd HH24:mi'),  #{userNo}, #{pjtPrField},  0)
+	</insert>
+	
+	
+	<update id= "increaseCount">
+		update
+	    PJT_PR_BOARD
+	    set count = count + 1
+	    where PJT_PR_NO = #{pjtPrNo}
+	</update>
+	
+	<select id="recruitDetail" resultMap="recruitBoardResultSet">
+		select 
+			 PSN_PR_NO
+			,PSN_PR_STACK
+			,PSN_PR_CONTENT
+			,PSN_PR_AVLPRD
+			,PSN_PR_TITLE
+			,PSN_PR_CONTACT
+			,to_char(PJT_PR_CREATEDATE) AS "PJT_PR_CREATEDATE"
+			,USER_NO
+			,PROFILE
+			,USER_NAME
+			,CATEGORY
+			,COUNT
+			FROM PSN_PR_BOARD
+			JOIN TB_MEMBER USING (USER_NO)
+			where PSN_PR_NO = #{PSN_PR_NO}
+	</select>
+	
+	<select id="selectRecruitAjax" resultMap="recruitBoardResultSet">
+		SELECT *
+	FROM PJT_PR_BOARD
+	JOIN TB_MEMBER USING (USER_NO)
+	WHERE 
+	<foreach collection="array" item="pjtPrStack"  separator="or">
+		PJT_PR_STACK like '%${pjtPrStack}%'
+    </foreach>
+    ORDER BY PJT_PR_CREATEDATE DESC
+	</select>
+	
+
+	
+</mapper>

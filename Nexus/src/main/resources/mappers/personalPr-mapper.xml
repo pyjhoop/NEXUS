@@ -86,7 +86,7 @@
 	<foreach collection="array" item="psnPrStack"  separator="or">
 		psn_pr_stack like '%${psnPrStack}%'
     </foreach>
-		
+    ORDER BY CREATE_DATE DESC
 	</select>
 	
 	
