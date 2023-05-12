@@ -8,15 +8,6 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/jquery/jquery-3.1.1.min.js"></script>
-<style>
-</style>
-
-
-
-
-</style>
-
-
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
@@ -34,6 +25,15 @@
 <script src="${pageContext.request.contextPath}/resources/js/alarmSocket.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
+<style>
+	.assClose:hover{
+		cursor: pointer;
+	}
+	.labelClose:hover{
+		cursor: pointer;
+	}
+</style>
 
 
 </head>
@@ -84,26 +84,30 @@
 
 
 
-		<div class="mb-3">
-			<label for="defaultSelect" class="form-label">이슈 담당자</label>
+		<div class="mb-3 test">
+			<label for="defaultSelect1" class="form-label">이슈 담당자</label>
 
-			<select id="defaultSelect" class="form-select assigneesSelect" name="issueAss">
+			<select id="defaultSelect1" class="form-select assigneesSelect" name="issueAss" onchange="selectAss();">
 				<option>이슈 담당자</option>
 				<c:forEach var="r" items="${RepoMembers }">
-					<option value="${r.userName }">${r.userName}</option>
+					<option  value="${r.profile}">${r.userName}</option>
 				</c:forEach>
 			</select>
+			<br>
+			
 		</div>
 
 
-		<div class="mb-3">
+		<div class="mb-3 test1">
 			<label for="defaultSelect" class="form-label">라벨</label>
-			<select id="defaultSelect" class="form-select labelSelect" name="issueLabel">
+			<select id="defaultSelect" class="form-select labelSelect" name="issueLabel" onchange="selectLabel();">
 				<option>라벨</option>
 				<c:forEach var="l" items="${lList }">
 					<option value="${l.name }">${l.name }</option>
 				</c:forEach>
 			</select>
+			<br>
+			
 		</div>
 
 
@@ -132,25 +136,119 @@
 
 	<script>
 
-	 $('.assigneesSelect').change(function() {
-		 var selectedAssignee = $(this).val();
-		 console.log(selectedAssignee); // 선택된 이슈 담당자 출력
+		function selectAss(){
 
-		 $('input[name="assignee"]').val(selectedAssignee);
+		var numSelect = document.getElementById("defaultSelect1");
+		var userName = numSelect.options[document.getElementById("defaultSelect1").selectedIndex].text;
+		var profile = numSelect.options[document.getElementById("defaultSelect1").selectedIndex].value;
+		var assignees = $("input[name=assignee]");
 
-		 });
+		if(userName == "이슈 담당자") return;
 
-		 $('.labelSelect').change(function() {
-		 var selectedLabel = $(this).val();
-		 console.log(selectedLabel); // 선택된 라벨 출력
+		let ass = $(".test ul");
+		
+		let boolean = "";
+		
+		for(let i=0; i<ass.length; i++){
+			boolean = "false";
+			var check = $(ass[i]).prop("id");
+			if(userName == check){
+				boolean = "true";
+				break;
+			}
+		}
 
-		 $('input[name="label"]').val(selectedLabel);  
-		 });
+		if(boolean == "true") return;
+			var str = '<ul id="'+userName+'" class="mb-1 list-unstyled users-list m-0 avatar-group d-flex align-items-center">'
+			+'<li class="avatar avatar-xs pull-up"><img src="'+ profile+'" alt="" class="rounded-circle"></li>'
+			+ userName+'<i i class="bx bx-x-circle mt-1 ml-1 assClose"></i>';
+			
+			if(ass.length==0){
+				assignees.val(userName);
+			}else{
+				assignees.val(assignees.val()+","+userName);
+			}
+			$(".test").append(str)
+		}
+
+		function selectLabel(){
+			var numSelect = document.getElementById("defaultSelect");
+			var label = numSelect.options[document.getElementById("defaultSelect").selectedIndex].value;
+			var labelStr = $("input[name=label]");
+
+			if(label == "라벨") return;
+
+			let str = createLabel(label);
+
+			let labels = $(".labelSpan");
+		
+
+			let boolean1 = "";
+
+			for(let i=0; i<labels.length; i++){
+				boolean1 = "false";
+				var check1 = $(labels[i]).prop("id");
+				if(label == check1){
+					boolean1 = "true";
+					break;
+				}
+			}
+
+			if(boolean1 == "true") return;
+
+			if(labels.length ==0){
+				labelStr.val(label);
+			}else{
+				labelStr.val(labelStr.val()+","+label);
+			}
+			$(".test1").append(str);
+
+
+
+		}
+
+		function createLabel(label){
+			let str = "";
+			if(label == "bug"){
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-danger">bug</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}else if(label == "enhancement"){
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-info">enhancement</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}else if(label == "duplicate"){
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-dark">duplicate</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}else if(label == "documentation"){
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-primary">documentation</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}else if(label == "invalid"){
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-warning">invalid</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}else if(label == "help wanted"){
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-success">help wanted</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}else{
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-secondary">'+label+'</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}
+
+			return str;
+		}
+
+
+	
+
+		
   
 
 
             
 	$(document).ready(function() {
+
+		$(document).on("click",".assClose",function(){
+			console.log($(this));
+			$(this).parent("ul").remove();
+		})
+
+		$(document).on("click",".labelClose",function(){
+			$(this).parent(".labelSpan").remove();
+		})
+
+
+
 	    $('#issueEnrollForm').submit(function() {
 	    	
 	    	

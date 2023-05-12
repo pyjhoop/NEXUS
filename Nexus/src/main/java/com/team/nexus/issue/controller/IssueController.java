@@ -112,19 +112,34 @@ public class IssueController {
 		String token = ((Member) session.getAttribute("loginUser")).getToken();
 		String repository = (String) session.getAttribute("repository");
 		String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
-
+		
+		String[] assignees = assignee.split(",");
+		String[] labels = label.split(",");
+		
+		
+		
 		JSONObject issueJson = new JSONObject();
 		issueJson.put("title", title);
 		issueJson.put("body", body);
-		issueJson.put("assignee", assignee);
+		JSONArray assigneesArray = new JSONArray();
+		
+		for(String s: assignees) {
+			assigneesArray.add(s);
+		}
+		
 		JSONArray labelsArray = new JSONArray();
-		labelsArray.add(label);
+		for(String s: labels) {
+			labelsArray.add(s);
+			
+		}
+		issueJson.put("assignees", assigneesArray);
 		issueJson.put("labels", labelsArray);
 
 		
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer " + token);
+		headers.set("Accept", "application/vnd.github+json");
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<String> requestEntity = new HttpEntity<String>(issueJson.toString(), headers);
 
