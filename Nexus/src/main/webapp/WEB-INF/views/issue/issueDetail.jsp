@@ -136,6 +136,46 @@
 
 
 
+<script>
+
+
+
+
+document.getElementById('issueAssignees').addEventListener('change', function() {
+  const selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
+  const assigneeList = document.getElementById('assigneeList');
+  
+  // Remove existing assignees
+  const assignees = assigneeList.querySelectorAll('li');
+  assignees.forEach(assignee => {
+    assignee.remove();
+  });
+  
+  // Add selected assignees
+  const assigneeDropdown = this.options;
+  for (let i = 0; i < assigneeDropdown.length; i++) {
+    const option = assigneeDropdown[i];
+    const userName = option.value;
+    if (option.selected) {
+      const newAssignee = document.createElement('li');
+      newAssignee.setAttribute('data-bs-toggle', 'tooltip');
+      newAssignee.setAttribute('data-popup', 'tooltip-custom');
+      newAssignee.setAttribute('data-bs-placement', 'top');
+      newAssignee.classList.add('avatar', 'avatar-m', 'pull-up');
+      newAssignee.setAttribute('title', userName);
+      
+      const img = document.createElement('img');
+      img.src = option.getAttribute('data-profile');
+      img.alt = '';
+      img.classList.add('rounded-circle');
+      
+      newAssignee.appendChild(img);
+      assigneeList.appendChild(newAssignee);
+    }
+  }
+});
+
+</script>
 
 
 
