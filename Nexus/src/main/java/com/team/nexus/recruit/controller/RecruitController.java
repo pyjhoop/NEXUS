@@ -53,9 +53,11 @@ public class RecruitController {
 	  HttpSession session) {
 	  
 	  
-	  int index = re.getPjtPrContent().lastIndexOf(",");
-	  
-	  re.setPjtPrContent(re.getPjtPrContent().substring(0, index));
+			/*
+			 * int index = re.getPjtPrContent().lastIndexOf(",");
+			 * 
+			 * re.setPjtPrContent(re.getPjtPrContent().substring(0, index));
+			 */
 	  
 	  int userNo = ((Member)session.getAttribute("loginUser")).getUserNo();
 	  
@@ -63,7 +65,9 @@ public class RecruitController {
 	  
 	  System.out.println(re);
 	  
-	  return "redirect:project.re"; }
+	  return "redirect:project.re";
+	  
+	  }
 	  
 	  
 	  @RequestMapping("Recruit.re") public ModelAndView recruitDetailView(int rno,
@@ -97,7 +101,9 @@ public class RecruitController {
 	  ArrayList<Recruit> reList = rService.selectRecruitAjax(strArr); 
 	  System.out.println(reList);
 	  
-	  return new Gson().toJson(reList); }
+	  return new Gson().toJson(reList); 
+	  
+	  }
 	 
 
 }

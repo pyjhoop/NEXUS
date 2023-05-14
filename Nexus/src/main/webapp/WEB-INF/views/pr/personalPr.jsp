@@ -163,11 +163,7 @@
   padding: 0;
 }
 
-html,
-css {
-  width: 100%;
-  height: 100%;
-}
+
 .position {
   margin-left: auto;
   margin-right: auto;

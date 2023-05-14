@@ -127,7 +127,6 @@
     grid-gap: 30px;
     gap: 30px
 }
-
 .SelectedLanguage_selectedLanguage__3AUIy {
     display: flex;
     grid-gap: 10px;
@@ -162,7 +161,6 @@
   margin: 0;
   padding: 0;
 }
-
 html,
 css {
   width: 100%;
@@ -174,7 +172,6 @@ css {
   text-align: center;
   margin-top: 15%;
 }
-
 #workarea {
   position: absolute;
   width: 100%;
@@ -197,29 +194,16 @@ css {
   top: 0;
   left: 0;
 }
-/*
-    This is the outer svg wrapper that the SVG itself will 
-    fill. Multiple svg-wrapper classes can be put side by side.
-*/
-
 .svg-wrapper {
   margin-top: 0;
   position: relative;
   width: 150px;
-  /*make sure to use same height/width as in the html*/
   height: 40px;
   display: inline-block;
   border-radius: 3px;
   margin-left: 5px;
   margin-right: 5px
 }
-/*
-  This is where we define the fill, color, thickness,
-  and stroke pattern of the SVG when there is no hover.
-  The dasharray and offset together define the line position
-  under the words. Here's also where the transition speed is set.
-*/
-
 #shape {
   stroke-width: 6px;
   fill: transparent;
@@ -228,11 +212,6 @@ css {
   stroke-dashoffset: -220;
   transition: 1s all ease;
 }
-/* 
-    Pushing the text up into the SVG. Without this the
-    text would be below the div's.
-*/
-
 #text {
   margin-top: -35px;
   text-align: center;
@@ -280,9 +259,9 @@ hr{
 	height: 1500px !important;
 }
 .card{
-	width: 15.8rem;;
+	width: 20.2rem;;
 	/* height: 229.984px; */
-	height: 280px;
+	height: 27rem;
 }
 .card-body{
 	display: block;
@@ -293,7 +272,6 @@ hr{
 	height: 241px;
 }
 .card-text{
-	width: 216px;
 	/* height: 103px; */
 	overflow: hidden;
   text-overflow: ellipsis;
@@ -303,15 +281,19 @@ hr{
   margin-bottom: 35px !important;
    float: left; 
    font-size: 13px; 
-   width: 240px; 
-   height: 99.375px;
+   width: 100%; 
+   height: 8rem;
 	
 }
 .card-category{
-	float:left; width: 50%;
+	float:left; width: 40%;
 }
 .card-category1{
 	float: right;
+	/* color: #3e86f5;  */
+	font-weight: bold;
+	color: gray;
+
 }
 .card-title{
 	 overflow: hidden;
@@ -320,8 +302,11 @@ hr{
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
    margin-right: 0px; 
-   width: 235px; 
-   height: 39.794px;
+   width: 100%; 
+   height: 3.5rem;
+   color: black;
+   font-size: 1.5rem;
+   margin-bottom:3.5rem !important;
 }
 #card-id{
 	margin-bottom: 15px !important;
@@ -391,6 +376,61 @@ transform: scale(1.1);
 .countDiv{
 	float: right;
 }
+.card-category2{
+	color: #3e86f5;
+	font-weight: bold;
+	font-size: 0.85rem;
+	display: inline-block;
+}
+.card-category3{
+	color: green;
+	font-weight: bold;
+	font-size: 0.85rem;
+	display: inline-block;
+}
+.card-category4{
+	color: hotpink;
+	font-weight: bold;
+	font-size: 0.85rem;
+	display: inline-block;
+}
+.card-category5{
+	color: orange;
+	font-weight: bold;
+	font-size: 0.85rem;
+	display: inline-block;
+}
+.card-category6{
+	color: #d2d24c;
+	font-weight: bold;
+	font-size: 0.85rem;
+	display: inline-block;
+}
+.card-category7{
+	color: purple;
+	font-weight: bold;
+	font-size: 0.85rem;
+	display: inline-block;
+}
+.LanguageBar_languages__2Ilqf button{
+	width: 9rem;
+	float: right;
+}
+#navs-justified-home button{
+	margin-left: 28rem;
+}
+#navs-justified-profile button{
+	margin-left: 7rem;
+}
+#navs-justified-messages button{
+	margin-left: 17rem;
+}
+#navs-justified-mobile button{
+	margin-left: 25rem;
+}
+#navs-justified-etc button{
+	margin-left: 10rem;
+}
 </style>
 <body>
 <jsp:include page="../common/template.jsp"/>
@@ -399,11 +439,11 @@ transform: scale(1.1);
 <div class="container-xxl flex-grow-1">
 	<div id="mainBody" style="width: 100%; margin-right: 5rem;">
 	
-	<div id="prs" >
+	<!-- <div id="prs" >
 	<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollRecruit.re'">
 	새 글 쓰기
 </button>
-</div>
+</div> -->
 	
 	<div id="stacks" style="overflow: auto; padding: 0;">
 <div class="col-xl-6" style="width: 100%; max-width: 100%;" >
@@ -473,6 +513,7 @@ transform: scale(1.1);
 							<li value="Figma" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/figma.svg" alt="Figma"><span>Figma</span></li>
 							<li value="Zeplin" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/zeplin.svg" alt="Zeplin"><span>Zeplin</span></li>
 							<li value="Jest" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/jest.svg" alt="Jest"><span>Jest</span></li>
+							<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollRecruit.re'">새 글 쓰기</button>
 							</ul>
 						</section>
                       </div>
@@ -486,6 +527,7 @@ transform: scale(1.1);
 							<li value="Svelte" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/svelte.svg" alt="Svelte"><span>Svelte</span></li>
 							<li value="Nextjs" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/nextjs.svg" alt="Nextjs"><span>Nextjs</span></li>
 							<li value="Nodejs" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/nodejs.svg" alt="Nodejs"><span>Nodejs</span></li>
+							<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollRecruit.re'">새 글 쓰기</button>
 							</ul>
 						</section>
                       </div>
@@ -507,6 +549,7 @@ transform: scale(1.1);
 							<li value="MySQL" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/mysql.svg" alt="MySQL"><span>MySQL</span></li>
 							<li value="MongoDB" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/mongodb.svg" alt="MongoDB"><span>MongoDB</span></li>
 							<li value="Python" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/python.svg" alt="Python"><span>Python</span></li>
+							<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollRecruit.re'">새 글 쓰기</button>
 							</ul>
 						</section>
                       </div>
@@ -518,6 +561,7 @@ transform: scale(1.1);
 							<li value="Swift" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/swift.svg" alt="Swift"><span>Swift</span></li>
 							<li value="ReactNative" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/reactnative.svg" alt="ReactNative"><span>ReactNative</span></li>
 							<li value="Unity" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/unity.svg" alt="Unity"><span>Unity</span></li>
+							<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollRecruit.re'">새 글 쓰기</button>
 							</ul>
 						</section>
                       </div>
@@ -531,6 +575,7 @@ transform: scale(1.1);
 							<li value="Figma" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/figma.svg" alt="Figma"><span>Figma</span></li>
 							<li value="Zeplin" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/zeplin.svg" alt="Zeplin"><span>Zeplin</span></li>
 							<li value="Jest" class="LanguageBar_languageIcon__Um7GQ LanguageBar_full__3qQet"><img class="LanguageBar_logo__332tN" src="https://holaworld.io/images/languages/jest.svg" alt="Jest"><span>Jest</span></li>
+							<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollRecruit.re'">새 글 쓰기</button>
 							</ul>
 						</section>
                       </div>
@@ -538,11 +583,11 @@ transform: scale(1.1);
                   </div>
                 </div>
                 
-                <!-- <script>
+                <script>
                 var val1 = "";
                 $(document).on("click",".LanguageBar_languages__2Ilqf li", function(){
             		 val1 += $(this).attr('value') + ' ';
-            		 console.log(val1);
+            		 /* console.log(val1); */
             	});
                 
                 
@@ -558,13 +603,13 @@ transform: scale(1.1);
                       li.classList.add('selected');
                       val2.push(li.getAttribute('value'));
                     }
-                       console.log(val2); // log value to console */
+                       console.log(val2); // log value to console 
                        
                        let val3 = val2.join(",")
-                       console.log(val3);
+                       console.log(val3); 
                        
-                       $.ajax({
-                          	url:"psnPrStackArray",
+                         $.ajax({
+                          	url:"RecruitStackArray",
                           	type:"post",
                           	data: {"arrStr" : val3},
                           	success: function(data){
@@ -574,27 +619,72 @@ transform: scale(1.1);
                           			value += "<div class='card'>"
                           				   + "<div class='card-body'>"
                           				   + "<p class='card-category'>"
-                          				   + data[i].createDate
+                          				   + data[i].pjtPrCreateDate
                           				   + "</p>"
                           				   + "<p class='card-category1'>"
-                          				   + data[i].category
+                          				   + "모집 마감일:"
+                          				   + data[i].pjtPrDeadline
                           				   + "</p>"
                           				   + "<h5 class='card-title'>"
                           				   + "<b>"
-                          				   + data[i].psnPrTitle
+                          				   + data[i].pjtPrTitle
                           				   + "</b>"
                           				   + "</h5>"
-                          				   + "<p class='card-text'>"
-                          				   + data[i].psnPrContent
+                          				   +"<span>"
+                          				   +"프로젝트 시작일:"
+                          				   +"</span>"
+                          				   +"&nbsp;"
+                          				   +"<p class='card-category4'>"
+                          				   +data[i].pjtPrStart
                           				   +"</p>"
-                          				   +"<img class='card-image' src="
+                          				   +"<br>"
+                          				   +"<span>"
+                          				   +"예상 프로젝트 진행기간: "
+                          				   +"</span>"
+                          				   +"<p class='card-category5'>"
+                          				   +data[i].pjtPrPeriod
+                          				   +"</p>"
+                          				   +"<br>"
+                          				   +"<span>"
+                          				   +"프로젝트 정원: "
+                          				   +"</span>"
+                          				   +"&nbsp;"
+                          				   +"<p class='card-category6'>"
+                          				   +data[i].pjtPrCapacity
+                          				   +"</p>"
+                          				   +"<br>"
+                          				   +"<span>"
+                        				   +"모집인원: "
+                        				   +"</span>"
+                        				   +"&nbsp;"
+                        				   +"<p class='card-category3'>"
+                        				   +data[i].pjtPrRecruits
+                        				   +"</p>"
+                        				   +"<br>"
+                        				   +"<span>"
+                          				   +"모집분야:"
+                          				   +"</span>"
+                          				   +"&nbsp;"
+                          				   +"<p class='card-category2'>"
+                          				   +data[i].pjtPrField
+                          				   +"</p>"
+                          				   +"<br>"
+                          				   +"<span>"
+                        				   +"진행방식: "
+                        				   +"</span>"
+                        				   +"&nbsp;"
+                        				   +"<p class='card-category7'>"
+                        				   +data[i].pjtPrFace
+                        				   +"</p>"
+                        				   +"<br>"
+                        				   +"<img class='card-image' src="
                           				   + data[i].profile
                           				   + " >"
                           				   +"<span class='card-name'>"
-                          				   + data[i].userName
-                          				   + "</span>"
-                          				   + "<input class='prCount' type='hidden' value="
-                          				   + data[i].psnPrNo
+                        				   + data[i].userName
+                        				   + "</span>"
+                        				   + "<input class='prCount' type='hidden' value="
+                          				   + data[i].pjtPrNo
                           				   + " />"
                           				   + "<div class='countDiv'>"
                           				   + "<i class='bx bx-show'>"
@@ -602,33 +692,24 @@ transform: scale(1.1);
                           				   + "<p class='pCount'>"
                           				   + data[i].count
                           				   + "</p>"
+                          				   +"&nbsp;"
                           				   + "<i class='bx bx-bookmark'>"
                           				   + "</i>"
                           				   + "</div>"
                           				   + "</div>"
                           				   + "</div>"; 
-                          				
-                          		}
+                          		} 
                           		console.log(value);
                           		$("#shell").html(value);
+                          		 
                           		
                           		
-                          		
-                          		$(function(){
-                            		$(".card-body").click(function(){
-                            			console.log("클릭은된");
-                            			location.href= 'personalPr.bo?pno=' + $(this).children(".prCount").val();
-                            			console.log("클릭이후");
-                            		})	
-                            	})
-                            	
-                            	
-                            	
+                          		    
                           	}
-                          }) 
+                          })  
                   });
-                });
-                </script> -->
+                });  
+                </script> 
                 
 </div> 
 
@@ -643,18 +724,25 @@ transform: scale(1.1);
 <div id="shell" style="display: block; height: 1200px; width: 100%;">
 
 
-<c:forEach var="p" items="${personalPrList }">
+<c:forEach var="r" items="${RecruitList }">
 	 <div class="card">
 	  <div class="card-body" >
-	    <p class="card-category" >${p.createDate }</p>
-	    <p class="card-category1">${p.category }</p>
-	    <h5 class="card-title"><b>${p.psnPrTitle }</b></h5>
-	    <p class="card-text">${p.psnPrContent }</p>
-	    <img class="card-image"  src="${p.profile}" alt="" >
-	    <span class="card-name">${p.userName}</span>
-	    <input class="prCount" type="hidden" value="${p.psnPrNo }" />
+	    <p class="card-category" >${r.pjtPrCreateDate }</p>
+	    <p class="card-category1" >모집 마감일: ${r.pjtPrDeadline }</p>
+	    <h5 class="card-title"><b>${r.pjtPrTitle }</b></h5>
+	     <span>프로젝트 시작일: </span>&nbsp; <p class="card-category4">${r.pjtPrStart }</p><br>
+	     <span>예상 프로젝트 진행기간: </span>&nbsp; <p class="card-category5">${r.pjtPrPeriod }</p><br>
+	     <span>프로젝트 정원: </span>&nbsp; <p class="card-category6">${r.pjtPrCapacity }</p><br>
+	    <%-- <p class="card-text">${r.pjtPrContent }</p> --%>
+	    <span>모집인원:</span>&nbsp; <p class="card-category3">${r.pjtPrRecruits }</p><br>
+	    <span>모집분야:</span> <p class="card-category2">${r.pjtPrField }</p><br>
+	    <span>진행방식:</span> <p class="card-category7">${r.pjtPrFace }</p><br>
+	   
+	    <img class="card-image"  src="${r.profile}" alt="" >
+	    <span class="card-name">${r.userName}</span>
+	    <input class="prCount" type="hidden" value="${r.pjtPrNo }" />
 	    <div class="countDiv">
-	    	<i class='bx bx-show'></i> <p  class="pCount">${p.count }</p> &nbsp;
+	    	<i class='bx bx-show'></i> <p  class="pCount">${r.count }</p> &nbsp;
 	    	
 	    <i class='bx bx-bookmark'></i>
 	    </div>

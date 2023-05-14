@@ -56,7 +56,7 @@
 	
 	
 	<insert id="insertRecruit">
-		INSERT INTO PJT_PR_BOARD VALUES
+		INSERT INTO PJT_PR_BOARD 
 		(pjt_pr_no, PJT_PR_TITLE, PJT_PR_START, PJT_PR_PERIOD, PJT_PR_DEADLINE, PJT_PR_STACK, PJT_PR_FACE,
 		 PJT_PR_CONTACT, PJT_PR_CAPACITY, PJT_PR_CONTENT, PJT_PR_RECRUITS,  PJT_PR_CREATEDATE, USER_NO, PJT_PR_FIELD, COUNT)
 		 values(SEQ_PJT_PR.NEXTVAL, #{pjtPrTitle}, #{pjtPrStart}, #{pjtPrPeriod}, #{pjtPrDeadline}, #{pjtPrStack}, #{pjtPrFace}, #{pjtPrContact},
