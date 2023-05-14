@@ -12,8 +12,10 @@ import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -29,7 +31,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -41,7 +46,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.team.nexus.issue.model.service.IssueServiceImpl;
+import com.team.nexus.issue.model.service.IssueService;
 import com.team.nexus.issue.model.vo.GitIssue;
 import com.team.nexus.issue.model.vo.Label;
 import com.team.nexus.member.model.vo.Member;
@@ -51,241 +56,70 @@ import com.team.nexus.repository.model.service.RepositoryService;
 public class IssueController {
 
 	@Autowired
-	private IssueServiceImpl iService;
-	
-	@Autowired
-	private RepositoryService repoService;
-	
+	private IssueService iService;
 
 	@RequestMapping(value = "issueShow.mini", produces = "application/json; charset=utf-8")
-	public String issueList(HttpSession session, Member m, Model model, @RequestParam(required = false) String state)
-			throws IOException {
+	public String issueList(HttpSession session, Member m, Model model, @RequestParam(required = false) String state,@RequestParam(required = false) String label,@RequestParam(required = false) String author,
+			@RequestParam(required = false) String assign,@RequestParam(required = false) String authorName,@RequestParam(required = false) String newTitle ,@RequestParam(required = false) String issueNumber ,@RequestParam(required = false) String userObject) throws IOException {
 
-		String repository = (String)session.getAttribute("repository");
-		
-//		연준이 코드
-		
-		
-		String url3 = repository + "/labels";
-        
-		
-        String labelResponse = repoService.getGitContentsByGet(url3, session);
-        
-        
-        
-        ObjectMapper obj = new ObjectMapper();
-        JsonNode jsonNode;
-        
-        jsonNode = obj.readTree(labelResponse);
-        
-        ArrayList<Label> lList = new ArrayList<Label>();
-        
-        for(int i = 0; i<jsonNode.size(); i++) {
-           
-           
-           String id = jsonNode.get(i).get("id").asText();
-           String name = jsonNode.get(i).get("name").asText();
-           String color = jsonNode.get(i).get("color").asText();
-           String description = jsonNode.get(i).get("description").asText();
-           
-           Label l = new Label(id, name, color, description);
-           lList.add(l);
-        }
-		
-		
-		
-		
+		String repository = (String) session.getAttribute("repository");
+
+		List<Label> lList = iService.getLabels(repository, session);
+
 		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
 
+		List<GitIssue> list;
 
-		String url = "";
-		
-		
-		
-		
-		if (state != null) {
-			url = "https://api.github.com/repos/" + repository + "/issues?state=" + state;
-		} else {
-			url = "https://api.github.com/repos/" + repository + "/issues?state=open";
-		}
-
-		URL requestUrl = new URL(url);
-
-		HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
-
-		urlConnection.setRequestProperty("Authorization", "Bearer " + token);
-
-		urlConnection.setRequestMethod("GET");
-
-		BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-
-		String line;
-		String responseText = "";
-
-		while ((line = br.readLine()) != null) {
-			responseText += line;
-		}
-
-//	      System.out.println(responseText);
-
-		JsonArray arr = JsonParser.parseString(responseText).getAsJsonArray();
-
-//	      System.out.println(arr);
-
-		ArrayList<GitIssue> list = new ArrayList<GitIssue>();
-
-		for (int i = 0; i < arr.size(); i++) {
-
-			// Inside the for loop
-			GitIssue git = new GitIssue();
-
-			// Set title
-			git.setTitle(arr.get(i).getAsJsonObject().get("title").getAsString());
-
-			// Set labels (as an array of strings)
-			JsonArray labelsArr = arr.get(i).getAsJsonObject().get("labels").getAsJsonArray();
-			String[] labels = new String[labelsArr.size()];
-			for (int j = 0; j < labelsArr.size(); j++) {
-				labels[j] = labelsArr.get(j).getAsJsonObject().get("name").getAsString();
-			}
-			git.setLabels(labels);
-
-			// Set state
-			git.setState(arr.get(i).getAsJsonObject().get("state").getAsString());
-
-			// Set milestone
-			JsonElement milestoneElem = arr.get(i).getAsJsonObject().get("milestone");
-			if (!milestoneElem.isJsonNull()) {
-				JsonObject milestoneObj = milestoneElem.getAsJsonObject();
-				git.setMilestone(milestoneObj.get("title").getAsString());
-			}
-
-			// Set number
-			git.setNumber(arr.get(i).getAsJsonObject().get("number").getAsInt());
-
-			// Set assignees (as an array of strings)
-//	    	  JsonArray assigneesArr = arr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
-//	    	  String[] assignees = new String[assigneesArr.size()];
-//	    	  for (int j = 0; j < assigneesArr.size(); j++) {
-//	    	      JsonObject assigneeObj = assigneesArr.get(j).getAsJsonObject();
-//	    	      assignees[j] = assigneeObj.get("login").getAsString();
-//	    	  }
-//	    	  git.setAssignees(assignees);
-
-			// Set assignees (as an array of strings)
-			JsonArray assigneesArr = arr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
-			String[] assignees = new String[assigneesArr.size()];
-			String[] assigneeProfiles = new String[assigneesArr.size()]; // 이슈 담당자 프로필
-			for (int j = 0; j < assigneesArr.size(); j++) {
-				JsonObject assigneeObj = assigneesArr.get(j).getAsJsonObject();
-				assignees[j] = assigneeObj.get("login").getAsString();
-				assigneeProfiles[j] = assigneeObj.get("avatar_url").getAsString(); // 이슈 담당자 프로필
-			}
-			git.setAssignees(assignees);
-			git.setAssigneeProfiles(assigneeProfiles); // 이슈 담당자 프로필 설정
-
-			// Set createdAt (with only the date)
-			String createdDateTimeString = arr.get(i).getAsJsonObject().get("created_at").getAsString();
-			LocalDateTime createdDateTime = LocalDateTime.parse(createdDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
-			String createdDateString = createdDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			git.setCreatedAt(createdDateString);
-
-			// Set updatedAt
-			git.setUpdatedAt(arr.get(i).getAsJsonObject().get("updated_at").getAsString());
-
-			// Set closedAt (if it's not null)
-			JsonElement closedAtElem = arr.get(i).getAsJsonObject().get("closed_at");
-			if (!closedAtElem.isJsonNull()) {
-				git.setClosedAt(closedAtElem.getAsString());
-			}
-
-			// Set issueId
-			git.setIssudId(arr.get(i).getAsJsonObject().get("id").getAsString());
-
-			// Set user (as a string)
-			JsonObject userObj = arr.get(i).getAsJsonObject().get("user").getAsJsonObject();
-			git.setUser(userObj.get("login").getAsString());
-
-			// Set user profile
-			String userProfileUrl = userObj.get("avatar_url").getAsString();
-			git.setProfile(userProfileUrl);
-
-			list.add(git);
-		}
+	    if (assign != null && assign.equals("myIssue")) {
+	        list = iService.getIssuesByAssignee(assign,session,token);
+	    } else if(author != null && author.equals("writer")) {
+	    	list = iService.getIssuesByAuthor(author, session,token);
+	    }else if (label != null && !label.equals("noChoice")) {
+	        list = iService.getIssuesByLabel(label, session,repository,token);
+	    }
+	    else {
+	        list = iService.getIssues(repository, token, state, assign, label);
+	    }
 
 		model.addAttribute("list", list);
 		model.addAttribute("lList", lList);
+		
+//	    model.addAttribute("issueNumber", issueNumber);
+//	    model.addAttribute("authorName", authorName);
+//	    model.addAttribute("newTitle", newTitle);
+	    
 
 		return "issue/issueList";
 	}
 
 	@RequestMapping("issueEnroll.mini")
-	public String issueEnrollForm(HttpSession session, Model model) throws IOException, IOException {
-		
-		
-		
+	public String issueEnrollForm(HttpSession session, Model model, @RequestParam(required = false) String state,
+			@RequestParam(required = false) String assign) throws IOException, IOException {
 
-		String repository = (String)session.getAttribute("repository");
-		
-//		연준이 코드
-		
-		
-		String url3 = repository + "/labels";
-        
-		
-        String labelResponse = repoService.getGitContentsByGet(url3, session);
-        
-        
-        
-        ObjectMapper obj = new ObjectMapper();
-        JsonNode jsonNode;
-        
-        jsonNode = obj.readTree(labelResponse);
-        
-        ArrayList<Label> lList = new ArrayList<Label>();
-        
-        for(int i = 0; i<jsonNode.size(); i++) {
-           
-           
-           String id = jsonNode.get(i).get("id").asText();
-           String name = jsonNode.get(i).get("name").asText();
-           String color = jsonNode.get(i).get("color").asText();
-           String description = jsonNode.get(i).get("description").asText();
-           
-           Label l = new Label(id, name, color, description);
-           lList.add(l);
-        }
-		
-		
+		String repository = (String) session.getAttribute("repository");
+		List<Label> lList = iService.getLabels(repository, session);
+
 		model.addAttribute("lList", lList);
-		
+
 		return "issue/issueEnrollView";
 	}
 
-	
 	@RequestMapping(value = "createIssue.mi", produces = "application/json; charset=utf-8")
 	public String insertIssue(@RequestParam String title, @RequestParam(required = false) String body,
-			@RequestParam(required = false) String assignees, HttpSession session) {
+	        @RequestParam(required = false) String label, @RequestParam(required = false) String assignee,
+	        HttpSession session, Model model) {
 
-		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
-
-//		https://api.github.com/repos/{owner}/{repo}/issues 변수로 각 받아와서 코드 수정해야함
-		
-		
-		String repository = (String)session.getAttribute("repository");
-		
-		
+		String token = ((Member) session.getAttribute("loginUser")).getToken();
+		String repository = (String) session.getAttribute("repository");
 		String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
 
-		// Create a JSON object for the issue payload
 		JSONObject issueJson = new JSONObject();
 		issueJson.put("title", title);
 		issueJson.put("body", body);
-		JSONArray assigneesArray = new JSONArray();
-//		### 라벨만 있으면 에러나서 주석처리함
-		//assigneesArray.add(assignees);
-		// issueJson.put("assignees", assigneesArray);
-		
+		issueJson.put("assignee", assignee);
+		JSONArray labelsArray = new JSONArray();
+		labelsArray.add(label);
+		issueJson.put("labels", labelsArray);
 
 		
 
@@ -294,7 +128,6 @@ public class IssueController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<String> requestEntity = new HttpEntity<String>(issueJson.toString(), headers);
 
-		// Send a POST request to the GitHub API
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, String.class);
 		HttpStatus responseStatus = responseEntity.getStatusCode();
@@ -303,56 +136,95 @@ public class IssueController {
 			throw new RuntimeException("Failed to create issue on GitHub API: " + responseStatus.toString());
 		}
 
+		Gson gson = new GsonBuilder().setLenient().create();
+		JsonObject issue = gson.fromJson(responseEntity.getBody(), JsonObject.class);
+		String issueNumber = issue.get("number").getAsString(); 
+		String newTitle = issue.get("title").getAsString();
+		JsonObject userObject = issue.getAsJsonObject("user");
+		String authorName = userObject.get("login").getAsString();
+
+//		model.addAttribute("issueNumber", issueNumber); 
+//		model.addAttribute("authorName", authorName);
+//		model.addAttribute("newTitle", newTitle);
+
+		session.setAttribute("updateBellIcon", "updateBellIcon");
+
 		return "redirect:issueShow.mini";
 	}
 
+	@RequestMapping("removeRingSession")
+	public String removeRingSession(HttpServletRequest request, HttpSession session) {
+
+		if (session != null) {
+			session.removeAttribute("updateBellIcon");
+		}
+		return "redirect:/";
+	}
+
+//	@RequestMapping(value="issueAlerm.mi", produces = "application/json; charset=utf-8")
+//	public String issueAlerm() {
+//
+//		
+//		return "common/template";
+//	}
+
+
+	@RequestMapping(value = "issueState.mi", produces = "application/json; charset=utf-8")
+	public String updateStateIssue(@RequestParam int ino, @RequestParam String state, HttpSession session) {
+
+		String token = ((Member) session.getAttribute("loginUser")).getToken();
+		String repository = (String) session.getAttribute("repository");
+
+		String apiUrl = "https://api.github.com/repos/" + repository + "/issues/" + ino;
+
+		// code for changing issue status
+		JsonObject json = new JsonObject();
+		json.addProperty("state", state);
+		String jsonStr = json.toString();
+
+		HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
+
+		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(apiUrl)).header("Authorization", "Bearer " + token)
+				.header("Content-Type", "application/json").method("PATCH", HttpRequest.BodyPublishers.ofString(jsonStr)).build();
+
+		try {
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println(response.body());
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:issueShow.mini";
+	}
+
+	@RequestMapping(value = "updateIssue.mi", produces = "application/json; charset=utf-8")
+	public String updateIssue(@RequestParam String title, @RequestParam(required = false) String body,
+			@RequestParam(required = false) String assignees, HttpSession session,int ino) {
+
+		String repository = (String) session.getAttribute("repository");
+
+		String apiUrl = repository + "/issues";
+
+		System.out.println(apiUrl);
+
+		String response = iService.gitPatchMethod(apiUrl, session, title, body,ino);
+
+		session.setAttribute("updateBellIcon", "updateBellIcon");
+
+		return "redirect:issueShow.mini";
+	}
 	
 	
-	@RequestMapping(value="issueDetail.mini", produces = "application/json; charset=utf-8")
+	
+	@RequestMapping(value = "issueDetail.mini", produces = "application/json; charset=utf-8")
 	public String selectIssue(@RequestParam String ino, HttpSession session, Model model) {
 	    try {
 	        String token = ((Member) session.getAttribute("loginUser")).getToken();
-	        
-	        
-	    	String repository = (String)session.getAttribute("repository");
-	    	
-	    	
-	    	
-//			연준이 코드
-			
-			
-			String url3 = repository + "/labels";
-	        
-			System.out.println(url3);
-			
-	        String labelResponse = repoService.getGitContentsByGet(url3, session);
-	        
-	        
-	        
-	        ObjectMapper obj = new ObjectMapper();
-	        JsonNode jsonNode;
-	        
-	        jsonNode = obj.readTree(labelResponse);
-	        
-	        ArrayList<Label> lList = new ArrayList<Label>();
-	        
-	        for(int i = 0; i<jsonNode.size(); i++) {
-	           
-	           
-	           String id = jsonNode.get(i).get("id").asText();
-	           String name = jsonNode.get(i).get("name").asText();
-	           String color = jsonNode.get(i).get("color").asText();
-	           String description = jsonNode.get(i).get("description").asText();
-	           
-	           Label l = new Label(id, name, color, description);
-	           lList.add(l);
-	        }
-	    	
-	    	
-			
-			String apiUrl = "https://api.github.com/repos/" + repository + "/issues/" +ino;
-			
-			
+	        String repository = (String) session.getAttribute("repository");
+
+	        List<Label> lList = iService.getLabels(repository, session);
+
+	        String apiUrl = "https://api.github.com/repos/" + repository + "/issues/" + ino;
 
 	        RestTemplate restTemplate = new RestTemplate();
 	        HttpHeaders headers = new HttpHeaders();
@@ -378,38 +250,27 @@ public class IssueController {
 
 	        // Retrieve assignees array
 	        JsonArray assigneesArray = issueJson.getAsJsonArray("assignees");
-	        
-	        ArrayList<Member> list = new ArrayList<Member>();
-	        
-	        
+	        ArrayList<Member> assignees = new ArrayList<>();
+
 	        if (assigneesArray != null) {
 	            for (JsonElement assigneeElement : assigneesArray) {
 	                JsonObject assigneeObject = assigneeElement.getAsJsonObject();
-	                
+
 	                String userName = assigneeObject.get("login").getAsString();
 	                String assigneeProfiles = assigneeObject.get("avatar_url").getAsString();
-	                
-	                Member m = new Member();
-	                
-	                m.setUserName(userName);
-	                m.setProfile(assigneeProfiles);
-	                
-	                list.add(m);
-	                
-	               
-	                
-//	                String assigneeLogin = assigneeObject.get("login").getAsString();
-//	                assignees.add(assigneeLogin);
-//	                assigneeProfiles.add(assigneeObject.get("avatar_url").getAsString());
-	            }
-	            
-//	            System.out.println(list);
-	        }
 
+	                Member assignee = new Member();
+	                assignee.setUserName(userName);
+	                assignee.setProfile(assigneeProfiles);
+
+	                assignees.add(assignee);
+	            }
+	        }
 
 	        // Retrieve labels array
 	        JsonArray labelsArray = issueJson.getAsJsonArray("labels");
 	        List<String> labels = new ArrayList<>();
+
 	        if (labelsArray != null) {
 	            for (JsonElement labelElement : labelsArray) {
 	                JsonObject labelObject = labelElement.getAsJsonObject();
@@ -421,19 +282,16 @@ public class IssueController {
 	        // Retrieve issue manager's profile
 	        JsonObject userObject = issueJson.getAsJsonObject("user");
 	        String issueManagerName = userObject.get("login").getAsString();
-//	        String assigneeProfiles = userObject.get("avatar_url").getAsString();
 
 	        model.addAttribute("title", title);
 	        model.addAttribute("body", body);
 	        model.addAttribute("state", state);
 	        model.addAttribute("ino", ino);
-//	        model.addAttribute("assignees", assignees);
+	        model.addAttribute("assignees", assignees);
 	        model.addAttribute("labels", labels);
 	        model.addAttribute("issueManagerName", issueManagerName);
-//	        model.addAttribute("assigneeProfiles", assigneeProfiles);
-	        
-	        
-	 
+	        model.addAttribute("lList", lList);
+
 	        return "issue/issueDetail";
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -441,64 +299,31 @@ public class IssueController {
 	    }
 	}
 
-
 	
-	
-	
-	@RequestMapping(value = "issueState.mi", produces = "application/json; charset=utf-8")
-	public String updateStateIssue(@RequestParam int ino, @RequestParam String state, HttpSession session) {
 
-	    String token = ((Member) session.getAttribute("loginUser")).getToken();
-    	String repository = (String)session.getAttribute("repository");
-		
-		String apiUrl = "https://api.github.com/repos/" + repository + "/issues/" +ino;
+	@RequestMapping(value = "myIssue", produces = "application/json; charset=utf-8")
+	public String myIssueList(@RequestParam(value = "assign") String assign, HttpSession session, Model model) {
+		String token = ((Member) session.getAttribute("loginUser")).getToken();
+		String repository = (String) session.getAttribute("repository");
 
-	    // code for changing issue status
-	    JsonObject json = new JsonObject();
-	    json.addProperty("state", state);
-	    String jsonStr = json.toString();
+		String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(apiUrl).queryParam("assignee", assign);
 
-	    HttpClient client = HttpClient.newBuilder()
-	            .version(HttpClient.Version.HTTP_1_1)
-	            .build();
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "Bearer " + token);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<?> entity = new HttpEntity<>(headers);
 
-	    HttpRequest request = HttpRequest.newBuilder()
-	            .uri(URI.create(apiUrl))
-	            .header("Authorization", "Bearer " + token)
-	            .header("Content-Type", "application/json")
-	            .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonStr))
-	            .build();
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.exchange(builder.build().encode().toUri(), HttpMethod.GET, entity,
+				String.class);
 
-	    try {
-	        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-	        System.out.println(response.body());
-	    } catch (IOException | InterruptedException e) {
-	        e.printStackTrace();
-	    }
+		JSONArray issueArray = new JSONArray();
+		issueArray.add(response.getBody());
 
-	    return "redirect:issueShow.mini";
+		model.addAttribute("issues", issueArray);
+
+		return "issue/issueShow";
 	}
 
-
-
-	@RequestMapping(value="updateIssue.mi", produces = "application/json; charset=utf-8")
-	public String updateIssue(@RequestParam String title, @RequestParam(required = false) String body,
-			@RequestParam(required = false) String assignees, HttpSession session,int ino) {
-		
-
-		
-		String repository = (String)session.getAttribute("repository");
-		
-		
-		String apiUrl = repository + "/issues";
-
-		String response = repoService.gitPatchMethod(apiUrl, session,title,body,ino);
-
-
-		
-		
-		return "redirect:issueShow.mini";
-	}
-	
-	
 }

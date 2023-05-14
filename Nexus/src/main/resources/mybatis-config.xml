@@ -23,12 +23,9 @@
 		<typeAlias type="com.team.nexus.chatting.model.vo.ChatRoom" alias="ChatRoom"/>
 		<typeAlias type="com.team.nexus.chatting.model.vo.ChatMessage" alias="ChatMessage"/>
 		<typeAlias type="com.team.nexus.chatting.model.vo.ChatUser" alias="ChatUser"/>
-		
 		<typeAlias type="com.team.nexus.repository.model.vo.Repositories" alias="Repositories"/>
-		
-
 		<typeAlias type="com.team.nexus.news.model.vo.Zzim" alias="Zzim"/>
-
+		<typeAlias type="com.team.nexus.friend.model.vo.Friend" alias="Friend"/>
 	</typeAliases>
 	
 	<!-- 
@@ -47,9 +44,6 @@
 		<mapper resource="/mappers/chatting-mapper.xml"/>
 		<mapper resource="/mappers/repositories-mapper.xml"/>
 		<mapper resource="/mappers/recruit-mapper.xml"/>
-		
-		
-		
-
+		<mapper resource="/mappers/friend-mapper.xml"/>
 	</mappers>
 </configuration>
