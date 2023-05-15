@@ -73,21 +73,26 @@
 	
 	<select id="recruitDetail" resultMap="recruitBoardResultSet">
 		select 
-			 PSN_PR_NO
-			,PSN_PR_STACK
-			,PSN_PR_CONTENT
-			,PSN_PR_AVLPRD
-			,PSN_PR_TITLE
-			,PSN_PR_CONTACT
+			 PJT_PR_NO
+			,PJT_PR_TITLE
+			,PJT_PR_START
+			,PJT_PR_PERIOD
+			,PJT_PR_DEADLINE
+			,PJT_PR_STACK
 			,to_char(PJT_PR_CREATEDATE) AS "PJT_PR_CREATEDATE"
 			,USER_NO
 			,PROFILE
 			,USER_NAME
-			,CATEGORY
+			,PJT_PR_FACE
+			,PJT_PR_CONTACT
+			,PJT_PR_CAPACITY
+			,PJT_PR_CONTENT
+			,PJT_PR_RECRUITS
+			,PJT_PR_FIELD
 			,COUNT
-			FROM PSN_PR_BOARD
+			FROM PJT_PR_BOARD
 			JOIN TB_MEMBER USING (USER_NO)
-			where PSN_PR_NO = #{PSN_PR_NO}
+			where PJT_PR_NO = #{PJT_PR_NO}
 	</select>
 	
 	<select id="selectRecruitAjax" resultMap="recruitBoardResultSet">

@@ -701,10 +701,6 @@ transform: scale(1.1);
                           		} 
                           		console.log(value);
                           		$("#shell").html(value);
-                          		 
-                          		
-                          		
-                          		    
                           	}
                           })  
                   });
@@ -712,14 +708,6 @@ transform: scale(1.1);
                 </script> 
                 
 </div> 
-
-
-
-
-
-
-
-
 
 <div id="shell" style="display: block; height: 1200px; width: 100%;">
 
@@ -737,7 +725,6 @@ transform: scale(1.1);
 	    <span>모집인원:</span>&nbsp; <p class="card-category3">${r.pjtPrRecruits }</p><br>
 	    <span>모집분야:</span> <p class="card-category2">${r.pjtPrField }</p><br>
 	    <span>진행방식:</span> <p class="card-category7">${r.pjtPrFace }</p><br>
-	   
 	    <img class="card-image"  src="${r.profile}" alt="" >
 	    <span class="card-name">${r.userName}</span>
 	    <input class="prCount" type="hidden" value="${r.pjtPrNo }" />

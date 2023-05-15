@@ -73,16 +73,13 @@ public class RecruitController {
 	  @RequestMapping("Recruit.re") public ModelAndView recruitDetailView(int rno,
 	  ModelAndView mv) {
 	  
-	  System.out.println("성공0");
 	  
 	  int count = rService.increaseCount(rno);
 	  
-	  System.out.println("성공1");
 	  
 	  if(count > 0) {
 	  
 	  
-	  System.out.println("성공"); 
 	  Recruit r = rService.recruitDetail(rno);
 	  mv.addObject("r", r).setViewName("recruit/recruitDetail");
 	  
@@ -93,6 +90,29 @@ public class RecruitController {
 	  } return mv;
 	  
 	  }
+	  
+	  @RequestMapping("recruit.bo")
+		public ModelAndView personalDetailView(int rno, ModelAndView mv) { 
+			
+			
+			int count = rService.increaseCount(rno);
+			
+			
+			if(count > 0) {
+				
+				
+				Recruit r = rService.recruitDetail(rno);
+				mv.addObject("r", r).setViewName("recruit/recruitDetail");
+				
+				
+			}else {
+				mv.addObject("errorMsg", "실패").setViewName("common/errorPage");
+				
+				
+			}
+			return mv;
+
+		}
 	  
 	  @ResponseBody
 	  @RequestMapping(value = "RecruitStackArray", produces = "application/json;")

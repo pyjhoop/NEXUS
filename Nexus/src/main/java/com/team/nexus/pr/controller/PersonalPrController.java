@@ -93,16 +93,13 @@ public class PersonalPrController {
 	@RequestMapping("personalPr.bo")
 	public ModelAndView personalDetailView(int pno, ModelAndView mv) { 
 		
-		System.out.println("성공0");
 		
 		int count = pService.increaseCount(pno);
 		
-		System.out.println("성공1");
 		
 		if(count > 0) {
 			
 			
-			System.out.println("성공");
 			PersonalPr p = pService.personalPrDetail(pno);
 			mv.addObject("p", p).setViewName("pr/personalPrDetail");
 			

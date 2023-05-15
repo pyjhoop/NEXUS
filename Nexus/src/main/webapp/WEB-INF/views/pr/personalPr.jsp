@@ -663,9 +663,7 @@ transform: scale(1.1);
 	<script>
             	$(function(){
             		$(".card-body").click(function(){
-            			console.log("클릭은된");
             			location.href= 'personalPr.bo?pno=' + $(this).children(".prCount").val();
-            			console.log("클릭이후");
             		})	
             	})
             </script> 
