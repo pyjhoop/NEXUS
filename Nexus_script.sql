@@ -739,7 +739,6 @@ CREATE SEQUENCE SEQ_PROJECT_NO
 
 CREATE TABLE "PJT_PR_BOARD" (
    "PJT_PR_NO"   number      NOT NULL,
-   "user_no"   number      NOT NULL,
    "PJT_PR_TITLE"   VARCHAR2(100)      NOT NULL,
    "PJT_PR_START"   VARCHAR2(100)      NOT NULL,
    "PJT_PR_PERIOD"   VARCHAR2(100)      NULL,
@@ -750,14 +749,13 @@ CREATE TABLE "PJT_PR_BOARD" (
    "PJT_PR_CAPACITY"   VARCHAR2(100)      NULL,
    "PJT_PR_CONTENT"   VARCHAR2(4000)      NOT NULL,
    "PJT_PR_RECRUITS"   VARCHAR2(100)      NULL,
-   "PJT_PR_CREATEDATE"   date   DEFAULT SYSDATE   NOT NULL,
-   "user_id"   varchar2(50)      NOT NULL,
-   "PJT_PR_FIELD"   VARCHAR2(100)     NULL
+   "PJT_PR_CREATEDATE"   VARCHAR2(500)     NOT NULL,
+    "USER_NO"    NUMBER REFERENCES TB_MEMBER,
+   "PJT_PR_FIELD"   VARCHAR2(100)     NULL,
+   "COUNT" NUMBER NOT NULL
 );
 
 COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_NO" IS '프젝홍보 게시글 번호';
-
-COMMENT ON COLUMN "PJT_PR_BOARD"."user_no" IS 'seq';
 
 COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_TITLE" IS '게시글 제목';
 
@@ -781,9 +779,20 @@ COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_RECRUITS" IS '모집인원';
 
 COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_CREATEDATE" IS '게시글 등록일';
 
-COMMENT ON COLUMN "PJT_PR_BOARD"."user_id" IS '작성자 ID';
+COMMENT ON COLUMN "PJT_PR_BOARD"."USER_NO" IS '회원번호';
 
 COMMENT ON COLUMN "PJT_PR_BOARD"."PJT_PR_FIELD" IS '모집분야';
+
+COMMENT ON COLUMN "PJT_PR_BOARD"."COUNT" IS '조회수';
+
+
+
+INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL,   '쇼핑몰 프로젝트 팀원구해요', '4월말', '3달정도', '5월초', 'ORACLE,JAVA', 'FULL비대면', '댓글달아주세요', '10명내외', '저희는 쇼핑몰을 개발하고자 합니다', '3명',  to_char(sysdate,'yy/MM/dd HH24:mi'), 1, '백엔드',0);
+
+INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL,   '게임커뮤니티 프로젝트 팀원구해요', '4월15일', '6개월', '4월말', 'PYHTON,JAVASCRIPT', '대면', '카톡오픈채팅방', '5명정도', '저희는 게임커뮤니티를 개발하고자 합니다', '4명',  to_char(sysdate,'yy/MM/dd HH24:mi'), 2, '프론트엔드,백엔드',0);
+
+INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL,  '사이드 프로젝트 팀원구해요', '5월중순', '3개월', '5월초', 'JAVA,SPRING', 'FULL비대면', '010-1234-5678', '10명', '저희는 친목커뮤니티를 개발하고자 합니다', '5명',  to_char(sysdate,'yy/MM/dd HH24:mi'), 3, '백엔드',0);
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "SAVED_PJT_PR" (
@@ -799,17 +808,18 @@ COMMENT ON COLUMN "SAVED_PJT_PR"."PJT_PR_SAVED_DATE" IS '찜한 날짜';
 COMMENT ON COLUMN "SAVED_PJT_PR"."PJT_PR_NO" IS '홍보 게시글 번호';
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CREATE TABLE "PSN_PR_BOARD" (
-   "PSN_PR_NO"   number      NOT NULL,
-   "PSN_PR_STACK"   VARCHAR2(300)      NULL,
-   "PSN_PR_CONTENT"   VARCHAR2(4000)      NOT NULL,
-   "PSN_PR_AVLPRD"   VARCHAR2(100)    NULL,
-   "PSN_PR_TITLE"   VARCHAR2(200)      NOT NULL,
-   "PSN_PR_CONTACT"   VARCHAR2(500)      NULL,
-   "user_id"   VARCHAR2(50)      NOT NULL,
-   "user_no"   number      NOT NULL
+CREATE TABLE PSN_PR_BOARD (
+   PSN_PR_NO   number    PRIMARY KEY,
+   PSN_PR_STACK   VARCHAR2(300)      NULL,
+   PSN_PR_CONTENT   VARCHAR2(4000),
+   PSN_PR_AVLPRD   VARCHAR2(100)    NULL,
+   PSN_PR_TITLE   VARCHAR2(198)      NOT NULL,
+   PSN_PR_CONTACT   VARCHAR2(500)    ,
+   CREATE_DATE  VARCHAR2(500) NOT NULL,
+   USER_NO    NUMBER REFERENCES TB_MEMBER,
+   CATEGORY VARCHAR2(100),
+   COUNT NUMBER
 );
-
 
 COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_NO" IS '개인홍보 게시글 번호';
 
@@ -823,9 +833,17 @@ COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_TITLE" IS '게시글 제목';
 
 COMMENT ON COLUMN "PSN_PR_BOARD"."PSN_PR_CONTACT" IS '연락방법';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."user_id" IS '작성자 ID';
+COMMENT ON COLUMN "PSN_PR_BOARD"."USER_NO" IS '회원번호';
 
-COMMENT ON COLUMN "PSN_PR_BOARD"."user_no" IS 'seq';
+COMMENT ON COLUMN "PSN_PR_BOARD"."CATEGORY" IS '카테고리';
+
+COMMENT ON COLUMN "PSN_PR_BOARD"."COUNT" IS '조회수';
+
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'AJAX,HTML,CSS,REACT', '자신있습니다', '4월중순~10월말', '프론트엔드 개발자입니다', '채팅', to_char(sysdate,'yy/MM/dd HH24:mi'),  1, '백엔드', 2 );
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'ORACLE,JAVA,SPRING', '백엔드 프로젝트 참여경력 많습니다.','4월초 이후', '백엔드 개발자입니다', '010-1234-5678', to_char(sysdate,'yy/MM/dd HH24:mi'), 2, '풀스택', 12 );
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'FLUTTER,JAVA,CSS,FIGMA', '자신있습니다', '4월말~', '풀스택 개발자입니다', '채팅',  to_char(sysdate,'yy/MM/dd HH24:mi'), 3, '모바일', 39);
+INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'FLUTTER,JAVA,CSS,FIGMA', '자신있습니다', '4월말~', '풀스택 개발자입니다', '채팅',  to_char(sysdate,'yy/MM/dd HH24:mi'), 4, '모바일', 67);
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE "SAVED_PSN_PR" (
@@ -928,19 +946,12 @@ COMMENT ON COLUMN "MILESTONE"."milest_end" IS '마일스톤 종료일자';
 
 COMMENT ON COLUMN "MILESTONE"."milest_status" IS '마일스톤 상태';
 
-INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 1,  '쇼핑몰 프로젝트 팀원구해요', '4월말', '3달정도', '5월초', 'ORACLE,JAVA', 'FULL비대면', '댓글달아주세요', '10명내외', '저희는 쇼핑몰을 개발하고자 합니다', '3명', SYSDATE, 'user01', '백엔드');
-
-INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 2,  '게임커뮤니티 프로젝트 팀원구해요', '4월15일', '6개월', '4월말', 'PYHTON,JAVASCRIPT', '대면', '카톡오픈채팅방', '5명정도', '저희는 게임커뮤니티를 개발하고자 합니다', '4명', SYSDATE, 'user02', '프론트엔드,백엔드');
-
-INSERT INTO PJT_PR_BOARD VALUES(SEQ_PJT_PR.NEXTVAL, 3,  '사이드 프로젝트 팀원구해요', '5월중순', '3개월', '5월초', 'JAVA,SPRING', 'FULL비대면', '010-1234-5678', '10명', '저희는 친목커뮤니티를 개발하고자 합니다', '5명', SYSDATE, 'user03', '백엔드');
 
 INSERT INTO SAVED_PJT_PR VALUES (1, SYSDATE, 1);
 INSERT INTO SAVED_PJT_PR VALUES (2, SYSDATE,2);
 INSERT INTO SAVED_PJT_PR VALUES (3, SYSDATE,3);
 
-INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'AJAX,HTML,CSS,REACT', '자신있습니다', '4월중순~10월말', '프론트엔드 개발자입니다', '채팅', 'user01', 1 );
-INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'ORACLE,JAVA,SPRING', '백엔드 프로젝트 참여경력 많습니다.','4월초 이후', '백엔드 개발자입니다', '010-1234-5678', 'user02', 2 );
-INSERT INTO PSN_PR_BOARD VALUES(SEQ_PSN_PR.NEXTVAL, 'FLUTTER,JAVA,CSS,FIGMA', '자신있습니다', '4월말~', '풀스택 개발자입니다', '채팅', 'user02', 3 );
+
 
 INSERT INTO SAVED_PSN_PR VALUES(1, 1, SYSDATE );
 
