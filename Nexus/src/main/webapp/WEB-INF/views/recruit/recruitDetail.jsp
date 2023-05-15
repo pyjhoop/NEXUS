@@ -72,17 +72,17 @@
 }
 #info1, #info2{
 	width: 45%;
-	height: 22rem;
+	height: 13rem;
 	float:left !important;
 }
 #specs2{
 	/* overflow: auto; */
-	margin-bottom: 3rem; 
+	margin-bottom: 1rem; 
 	padding-left: 0.8rem; 
 	border-bottom: 3px solid #f2f2f2";
 }
 #info1 span, #info2 span, #info3 span{
-	margin-left: 0.7rem;
+	margin-left: 1rem;
 	color: black;
 }
 #info1 div, #info2 div, #info3 div{
@@ -99,6 +99,9 @@
 #pjtPrStackSpan, #info3, #info4{
 	display: inline-block;
 }
+ #info4{
+ 	margin-top: 1rem;
+ }
 </style>
 
 <body>
