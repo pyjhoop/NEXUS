@@ -46,15 +46,15 @@ public class MemberController {
 	    
 		// access_token 
 		String token = gService.getToken(code);
-		
+		System.out.println("1");
 		System.out.println("token : " + token);
-	    
+	    System.out.println("2");
 		// access_token을 이용한 유저 정보 얻어오기
 		Member m = gService.getUserInfo(token);
-		
+		System.out.println("3");
 		
         Member m1 = mService.selectMember(m);
-        
+        System.out.println("4s");
         // 조회된 결과 없을시 insert
         if(m1 == null) {
         	int result = mService.insertMember(m);
