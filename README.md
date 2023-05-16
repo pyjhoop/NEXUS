@@ -7,7 +7,7 @@
 
 
 
-<img src="https://img.shields.io/badge/oracle-#F80000?style=flat-square&logo=oracle&logoColor=로고색"/>
+<img src="https://img.shields.io/badge/oracle-F80000?style=flat-square&logo=oracle&logoColor=로고색"/>
 
 
 <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white"/>
