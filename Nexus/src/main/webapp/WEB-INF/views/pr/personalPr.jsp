@@ -163,11 +163,7 @@
   padding: 0;
 }
 
-html,
-css {
-  width: 100%;
-  height: 100%;
-}
+
 .position {
   margin-left: auto;
   margin-right: auto;
@@ -367,6 +363,7 @@ margin-bottom: 5px;
 .pagination{
 	width: 100%;
 	text-align: center;
+	float: left;
 }
 .card-category{
 	font-size: 12px;
@@ -391,13 +388,36 @@ transform: scale(1.1);
 .countDiv{
 	float: right;
 }
+.flex-grow-1{
+	margin-bottom: 15rem;
+}
+ #pagingArea {
+            width: fit-content;
+            margin: auto;
+            margin-top: 5rem;
+}
+.pagination li{
+	border: 1px solid lightgray;
+}
+.pagination{
+	width: 100%;
+	text-align: center;
+	float: left;
+	margin-top: 3rem;
+	margin-right: 3rem;
+}
+.page-link{
+	background-clip: border-box !important;
+	background-color: white !important;
+	color: #0d6efd !important;
+}
 </style>
 <body>
 <jsp:include page="../common/template.jsp"/>
 
 
-<div class="container-xxl flex-grow-1">
-	<div id="mainBody" style="width: 100%; margin-right: 5rem;">
+<div class="container-xxl flex-grow-1" style="height: auto;">
+	<div id="mainBody" style="width: 100%; margin-right: 5rem; height: auto;">
 	
 	<div id="prs" >
 	<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollPsnPr.pr'">
@@ -639,7 +659,7 @@ transform: scale(1.1);
 
 
 
-<div id="shell" style="display: block; height: 1200px; width: 100%;">
+<div id="shell" style="width: 100%; margin-bottom: 3rem; height: 20rem;">
 
 
 <c:forEach var="p" items="${personalPrList }">
@@ -667,9 +687,7 @@ transform: scale(1.1);
 	<script>
             	$(function(){
             		$(".card-body").click(function(){
-            			console.log("클릭은된");
             			location.href= 'personalPr.bo?pno=' + $(this).children(".prCount").val();
-            			console.log("클릭이후");
             		})	
             	})
             </script> 
@@ -679,8 +697,38 @@ transform: scale(1.1);
 
 </div>
 
+<div id="pagingArea" style="display: block;">
+                <ul class="pagination">
+                	
+                	<c:choose>
+                		<c:when test="${pi.currentPage eq 1 }">
+	                    	<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+                		</c:when>
+                		<c:otherwise>
+                			<li class="page-item "><a class="page-link" href="personal.me?cpage=${pi.currentPage - 1 }">Previous</a></li>
+                		</c:otherwise>
+	                  </c:choose>  
+	                  
+	                  
+	                    <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                    		<li class="page-item"><a class="page-link" href="personal.me?cpage=${p }">${p }</a></li>
+	                    </c:forEach>
+                    	
+                    	
+                    	<c:choose>
+                    		<c:when test="${pi.currentPage eq pi.maxPage }">
+	                    		<li class="page-item disabled"><a class="page-link" href="">Next</a></li>
+	                    	</c:when>
+	                    	
+	                    	<c:otherwise>
+	                    		<li class="page-item"><a class="page-link" href="personal.me?cpage=${pi.currentPage + 1 }">Next</a></li>
+	                    	</c:otherwise>
+	                    </c:choose>
+                </ul>
+            </div>
 
 	
+</div>
 </div>
 
 </body>

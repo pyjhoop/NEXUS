@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../common/template.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/personalPr.css">
@@ -19,19 +18,22 @@
 <!-- jQuery 라이브러리 -->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<!-- summernote -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-
-<script src="${pageContext.request.contextPath}/resources/js/summernote-ko-KR.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/enrollRecruit.js"></script>
+
 
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
  <link rel="stylesheet" href="/resources/demos/style.css">
  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 
+ <!-- summernote -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/resources/js/summernote-ko-KR.js"></script>
 
 <style>
 #body{
@@ -82,9 +84,6 @@ button {
 }
 .col-md-6{
 	width:100%;
-}
-#stackInputCard{
-	width: 40rem;;
 }
 .form-control{
 	height: 60px;
@@ -141,7 +140,7 @@ select {
 }
 #selectBoxes, #contentBox{
 	width: 88%;
-	height: 28rem;
+	height: 26rem;
 }
 #div1{
 	width:50%;
@@ -153,14 +152,18 @@ select {
 	height:100%;
 	float: right;
 }
-#div1-1, #div2-1, #div1-2, #div1-3,#div1-4, #div2-2, #div2-3, #div2-4, #titleDiv{
+#div1-1, #div2-1, #div1-2, #div1-3,#div1-4, #div2-2, #div2-3, #div2-4, #titleDiv, .container{
 	padding-top: 1rem;
 	padding-left: 1rem;
 }
-#selectBoxes input, #selectBoxes select, .input-group, #titleInput {
+
+#selectBoxes input, #selectBoxes select{
 	width: 95%;
 	height: 3rem;
-	
+}
+#titleInput{
+	width: 97.5%;
+	height: 3rem;
 }
 /* 달력 css  */
 .ui-widget-header { border: 0px solid #dddddd; background: #fff; } 
@@ -214,16 +217,22 @@ select {
  #titleInput::placeholder{
  	text-align: left !important;
  }
- #div2-4, .input-group, #stackInputCard{
+ #div2-4{
  	overflow: auto !important;
  }
  multi-input {
   display: inline-block;
-  width: 100%;
-  height: 3rem;
   overflow: auto;
+  width: 50rem;
+   border: 1px solid black;
 }
- 
+#div2-4 input{
+	width: 1rem;
+	height: 1rem;
+}
+#fieldBox input{
+	margin-right: 0.2rem;
+}
 </style>
 </head>
 <script>
@@ -249,7 +258,7 @@ $.datepicker.setDefaults({
 <form action="insertRecruit" method="post" style="height: 100%;">
 <div id="body" style="margin: 0px; margin-top: 30px; width: 100%">
 		<div class="col-md-6" style="width:150rem; height:100%;  max-width: 100%; margin: auto;">
-                  <div class="card mb-4" style="width: 100%; margin: auto; height: 100rem; overflow: auto;">
+                  <div class="card mb-4" style="width: 100%; margin: auto; height: 110rem; overflow: auto;">
                   <div id="headerrr" style="width: 90%; padding-top: 4rem; margin: auto; margin-top:0px; margin-bottom:0px; display: inline-block;">
                     <h4 class="card-header" style="border-bottom: 3px solid #f2f2f2; " >
                     <!--  <span  style="font-size: 2.3rem; color: skyblue; margin-top: 2rem; display: inline-block;" class="material-symbols-outlined">counter_1</span> &nbsp; -->
@@ -260,11 +269,12 @@ $.datepicker.setDefaults({
                   	<div id="div1">
                   	<div id="div1-1">
                   		<label><b>프로젝트 시작일</b></label><br>
-                  		<input type="text" class="datepicker" placeholder="프로젝트 시작일을 입력하세요">
+                  		<input type="text" id="pjtPrStart" name="pjtPrStart" class="datepicker" placeholder="프로젝트 시작일을 입력하세요" required="required">
                   	</div >
+                  	
                   	<div id="div1-2">
                   		<label><b>프로젝트 진행 기간</b></label><br>
-                  		<select name="category" style="text-align: center; color: gray">
+                  		<select name="pjtPrPeriod"  style="text-align: center; color: gray" required="required">
 						<option value="" selected="selected" style="display: none;">기간미정 ~ 6개월이상</option>
 						<option value="기간 미정">기간 미정</option>
 						<option value="개월">1개월</option>
@@ -278,25 +288,25 @@ $.datepicker.setDefaults({
                   	</div>
                   	<div id="div1-3">
                   		<label><b>모집 인원</b></label><br>
-                  		<select name="category" style="text-align: center; color: gray">
+                  		<select name="pjtPrRecruits" style="text-align: center; color: gray" required="required">
 						<option value="" selected="selected" style="display: none;">인원미정 ~ 10명이상</option>
-						<option value="기간 미정">미정</option>
-						<option value="개월">1명</option>
-						<option value="2개월">2명</option>
-						<option value="3개월">3명</option>
-						<option value="4개월">4명</option>
-						<option value="5개월">5명</option>
-						<option value="6개월">6명</option>
-						<option value="6개월">7명</option>
-						<option value="6개월">8명</option>
-						<option value="6개월">9명</option>
-						<option value="6개월">10명</option>
-						<option value="6개월 이상">10명 이상</option>
+						<option value="미정">미정</option>
+						<option value="1명">1명</option>
+						<option value="2명">2명</option>
+						<option value="3명">3명</option>
+						<option value="4명">4명</option>
+						<option value="5명">5명</option>
+						<option value="6명">6명</option>
+						<option value="7명">7명</option>
+						<option value="8명">8명</option>
+						<option value="9명">9명</option>
+						<option value="10명">10명</option>
+						<option value="10명 이상">10명 이상</option>
 					</select><br>
                   	</div>
                   	<div id="div1-4">
                   		<label><b>연락 방법</b></label><br>
-                  		<input type="text" placeholder="연락받을 이메일주소나 전화번호등을 남겨주세요">
+                  		<input type="text" name="pjtPrContact" placeholder="연락받을 이메일주소나 전화번호등을 남겨주세요" required="required">
                   	</div>
                   
                   	</div>
@@ -305,57 +315,111 @@ $.datepicker.setDefaults({
                   <div id="div2">
                   	<div id="div2-1">
                   		<label><b>인원모집 마감일</b></label><br>
-                  		<input type="text" class="datepicker" placeholder="인원모집 마감일을 입력하세요">
+                  		<input type="text" name="pjtPrDeadline" class="datepicker" placeholder="인원모집 마감일을 입력하세요" required="required">
                   	</div>
                   		<div id="div2-2">
                   		<label><b>프로젝트 진행 방식</b></label><br>
-                  		<select name="category" style="text-align: center; color:gray">
+                  		<select name="pjtPrFace" style="text-align: center; color:gray" required="required">
 						<option value="" selected="selected" style="display: none;">비대면 or 대면 or 비대면&대면 혼합</option>
-						<option value="기간 미정">미정</option>
-						<option value="개월">FULL 비대면</option>
-						<option value="2개월">FULL 대면</option>
-						<option value="3개월">대면 있으나 불참해도 상관없음</option>
-						<option value="4개월">대면 참석 필수</option>
+						<option value="미정">미정</option>
+						<option value="FULL 비대면">FULL 비대면</option>
+						<option value="FULL 대면">FULL 대면</option>
+						<option value="대면 있으나 불참해도 상관없음">대면 있으나 불참해도 상관없음</option>
+						<option value="대면 참석 필수">대면 존재, 참석 필수</option>
 						</select><br>
                   	</div>
                   		<div id="div2-3">
                   		<label><b>프로젝트 정원</b></label><br>
-                  		<input type="text" placeholder="프로젝트의 정원(명)을 입력하세요">
+                  		<select name="pjtPrCapacity" style="text-align: center; color: gray" required="required">
+						<option value="" selected="selected" style="display: none;">프로젝트의 정원을 입력하세요</option>
+						<option value="미정">미정</option>
+						<option value="2명">2명</option>
+						<option value="3명">3명</option>
+						<option value="4명">4명</option>
+						<option value="5명">5명</option>
+						<option value="6명">6명</option>
+						<option value="7명">7명</option>
+						<option value="8명">8명</option>
+						<option value="9명">9명</option>
+						<option value="10명">10명</option>
+						<option value="10 ~ 15명">10 ~ 15명</option>
+						<option value="16 ~ 20명">16 ~ 20명</option>
+						<option value="21 ~ 25명">21 ~ 25명</option>
+						<option value="26 ~ 30명">26 ~ 30명</option>
+						<option value="30명이상">30명이상</option>
+					</select><br>
                   	</div>
                   	
                   	
                   	<div id="div2-4" style="overflow: auto;">
                   	<label ><b>모집 포지션</b></label>  
-                  		<div class="input-group" style="border: none; box-shadow: none;" onchange="dataListChange()">
-                   <multi-input id="multi-input" >
-			      <input id="stackInputCard" style="width: 100%; height: 100%;" list="speakers" placeholder="모집하시는 분야를 선택해주세요"/>
-			      <datalist id="speakers">
-			        <option value="프론트엔드" class="item"></option>
-			        <option value="백엔드" class="item"></option>
-			        <option value="풀스택" class="item"></option>
-			        <option value="모바일" class="item"></option>
-			        <option value="기타" class="item"></option>
-			      </datalist>
-			    </multi-input>
-                       </div>
-                       <input  id="selecteds" name="pjtPrField" type="hidden"> <br>
-                       <script src="${pageContext.request.contextPath}/resources/js/multi-input.js"></script>
-        		
-        		
-        				  <script type="text/javascript">
-			         const multiInput= document.getElementById('multi-input'); 
-			         var selecteds = document.getElementById('selecteds'); 
-			
-			        function dataListChange(){
-			          	console.log(multiInput.getValues());
-			           document.getElementById('selecteds').value =multiInput.getValues();
-			        }
-		        </script> 
-		        
+                  	<div id="fieldBox" style="width: 100%; height: 3.5rem;">
+                  		<label style="font-size: 1.2rem; margin-top: 0.8rem;"><input type="checkbox" style="margin-left: 1rem; " name="pjtPrField" value="프론트엔드">프론트엔드</label>&nbsp;&nbsp;&nbsp;
+      					 <label style="font-size: 1.2rem;"><input type="checkbox" name="pjtPrField" value="백엔드">백엔드</label>&nbsp;&nbsp;&nbsp;
+      					 <label style="font-size: 1.2rem;"><input type="checkbox" name="pjtPrField" value="풀스택">풀스택</label>&nbsp;&nbsp;&nbsp;
+      					 <label style="font-size: 1.2rem;"><input type="checkbox" name="pjtPrField" value="모바일">모바일</label>&nbsp;&nbsp;&nbsp;
+      					 <label style="font-size: 1.2rem;"><input type="checkbox" name="pjtPrField" value="기타">기타</label>
                   	</div>
+                  		 
+                 	</div> 
                   	</div>
                   
                   </div> <!-- selectBoxes  -->
+                  
+                  <div id="stackDiv" style="overflow: auto; padding-left: 6rem;">
+                  	<label ><b>기술 스택</b></label>  
+ 					
+                   <div class="input-group" style="border: none; box-shadow: none;" onchange="dataListChange()">
+                   <multi-input id="multi-input" >
+			      <input id="stackInputCard" list="speakers" style="width: 100%;" placeholder="프로젝트에서 사용할 기술 스택을 선택해주세요. 검색도 가능합니다."/>
+			      <datalist id="speakers">
+			        <option value="AWS" class="item"></option>
+			        <option value="Django" class="item"></option>
+			        <option value="Docker" class="item"></option>
+			        <option value="Express" class="item"></option>
+			        <option value="Figma" class="item"></option>
+			        <option value="Firebase" class="item"></option>
+			        <option value="Flutter" class="item"></option>
+			        <option value="Git" class="item"></option>
+			        <option value="Go" class="item"></option>
+			        <option value="GraphQL" class="item"></option>
+			        <option value="Java" class="item"></option>
+			        <option value="JavaScript" class="item"></option>
+			        <option value="Kotlin" class="item"></option>
+			        <option value="Kubernetes" class="item"></option>
+			        <option value="MongoDB" class="item"></option>
+			        <option value="MySQL" class="item"></option>
+			        <option value="Nestjs" class="item"></option>
+			        <option value="Nextjs" class="item"></option>
+			        <option value="NodeJs" class="item"></option>
+			        <option value="php"class="item"></option>
+			        <option value="Python" class="item"></option>
+			        <option value="TypeScript" class="item"></option>
+			        <option value="React" class="item"></option>
+			        <option value="ReactNative" class="item"></option>
+			        <option value="Spring" class="item"></option>
+			        <option value="Svelte" class="item"></option>
+			        <option value="Swift" class="item"></option>
+			        <option value="Unity" class="item"></option>
+			        <option value="Vue" class="item"></option>
+			        <option value="Zeplin" class="item"></option>
+			        <option value="Zest" class="item"></option>
+			      </datalist>
+			    </multi-input>
+                       </div>
+                       <input  id="selecteds" name="pjtPrStack" type="hidden"> <br>
+                       <script src="${pageContext.request.contextPath}/resources/js/multi-input.js"></script>
+        				
+         <script type="text/javascript">
+         const multiInput= document.getElementById('multi-input'); 
+         var selecteds = document.getElementById('selecteds'); 
+
+        function dataListChange(){
+          	console.log(multiInput.getValues());
+           document.getElementById('selecteds').value =multiInput.getValues();
+        }
+        </script>  
+                  </div>
                   
                   <div id="contentBox" style="margin: auto; margin-top: 0px;">
                   	<div id="header2" style="width: 100%; padding-top: 4rem; margin: auto; margin-top:0px; margin-bottom:0px; display: inline-block;">
@@ -365,42 +429,33 @@ $.datepicker.setDefaults({
                   </div>
                   
                  
-                  <div id="titleDiv">
+                  <div id="titleDiv" >
                    <label ><b>제목</b></label>  <br>
-                  		<input id="titleInput" type="text" placeholder=" 글 제목을 입력해주세요">
+                  		<input id="titleInput" name="pjtPrTitle" type="text" placeholder=" 글 제목을 입력해주세요">
                   	</div><br>
                   
                   
-                   <div class="container" style="padding-left: 0px; float: left;">
-  		<textarea class="summernote" id="summernote" name="editordata"></textarea>    
-		</div>
+                   <div class="container" style="padding-left: 1rem; float: left;">
+			  			<textarea class="summernote" id="summernote" name="editordata"></textarea>    
+					</div>
 		
-		 <input type="hidden" name="userNo" value="${loginUser.userNo}">
-		
-		<script>
-		$('.summernote').summernote({
-			  height: 600,
-			  lang: "ko-KR"
-			});
-		</script>
+		 			<input type="hidden" name="userNo" value="${loginUser.userNo}">
+					
+					<script>
+					$('.summernote').summernote({
+						  height: 600,
+						  lang: "ko-KR"
+						});
+					</script>
                   
                   </div>
-                  
-                   
-  
-      
-      	
+    
+    </div>
     
      <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center;">
       	<button type="submit" id="enrollPsnPr" class="btn btn-outline-primary"  style="font-size: 20px" onclick="returnFunction()"><b>등록하기</b></button> &nbsp;   <!-- 버튼 클래스  class="btn btn-outline-primary"   -->
 		<button type="reset" class="btn btn-outline-secondary" style="font-size: 20px"><b>취소</b></button>
       </div>
-                  
-                  
-                  
-         
-      
-    </div>
     
      
     </div>

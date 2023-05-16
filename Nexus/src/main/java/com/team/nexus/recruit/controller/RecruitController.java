@@ -53,9 +53,11 @@ public class RecruitController {
 	  HttpSession session) {
 	  
 	  
-	  int index = re.getPjtPrContent().lastIndexOf(",");
-	  
-	  re.setPjtPrContent(re.getPjtPrContent().substring(0, index));
+			/*
+			 * int index = re.getPjtPrContent().lastIndexOf(",");
+			 * 
+			 * re.setPjtPrContent(re.getPjtPrContent().substring(0, index));
+			 */
 	  
 	  int userNo = ((Member)session.getAttribute("loginUser")).getUserNo();
 	  
@@ -63,22 +65,21 @@ public class RecruitController {
 	  
 	  System.out.println(re);
 	  
-	  return "redirect:project.re"; }
+	  return "redirect:project.re";
+	  
+	  }
 	  
 	  
 	  @RequestMapping("Recruit.re") public ModelAndView recruitDetailView(int rno,
 	  ModelAndView mv) {
 	  
-	  System.out.println("성공0");
 	  
 	  int count = rService.increaseCount(rno);
 	  
-	  System.out.println("성공1");
 	  
 	  if(count > 0) {
 	  
 	  
-	  System.out.println("성공"); 
 	  Recruit r = rService.recruitDetail(rno);
 	  mv.addObject("r", r).setViewName("recruit/recruitDetail");
 	  
@@ -90,6 +91,29 @@ public class RecruitController {
 	  
 	  }
 	  
+	  @RequestMapping("recruit.bo")
+		public ModelAndView personalDetailView(int rno, ModelAndView mv) { 
+			
+			
+			int count = rService.increaseCount(rno);
+			
+			
+			if(count > 0) {
+				
+				
+				Recruit r = rService.recruitDetail(rno);
+				mv.addObject("r", r).setViewName("recruit/recruitDetail");
+				
+				
+			}else {
+				mv.addObject("errorMsg", "실패").setViewName("common/errorPage");
+				
+				
+			}
+			return mv;
+
+		}
+	  
 	  @ResponseBody
 	  @RequestMapping(value = "RecruitStackArray", produces = "application/json;")
 	  public String psnPrStackArray(String arrStr) { 
@@ -97,7 +121,9 @@ public class RecruitController {
 	  ArrayList<Recruit> reList = rService.selectRecruitAjax(strArr); 
 	  System.out.println(reList);
 	  
-	  return new Gson().toJson(reList); }
+	  return new Gson().toJson(reList); 
+	  
+	  }
 	 
 
 }

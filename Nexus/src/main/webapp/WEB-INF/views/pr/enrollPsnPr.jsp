@@ -228,7 +228,7 @@ select {
 			        <option value="Unity" class="item"></option>
 			        <option value="Vue" class="item"></option>
 			        <option value="Zeplin" class="item"></option>
-			        <option value="Zest" class="item"></option>
+			        <option value="Jest" class="item"></option>
 			      </datalist>
 			    </multi-input>
                        </div>

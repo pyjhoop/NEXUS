@@ -44,7 +44,7 @@ $(function(){
         
         minHeight: null,
         maxHeight: null,
-        focus: true,
+       
         lang: "ko-KR",
         toolbar: [
             // [groupName, [list of button]]
