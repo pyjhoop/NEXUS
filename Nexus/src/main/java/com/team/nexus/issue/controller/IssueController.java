@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -57,6 +59,9 @@ public class IssueController {
 
 	@Autowired
 	private IssueService iService;
+	
+	@Autowired
+	private WebClient webClient;
 
 	@RequestMapping(value = "issueShow.mini", produces = "application/json; charset=utf-8")
 	public String issueList(HttpSession session, Member m, Model model, @RequestParam(required = false) String state,@RequestParam(required = false) String label,@RequestParam(required = false) String author,
@@ -214,16 +219,41 @@ public class IssueController {
 
 	@RequestMapping(value = "updateIssue.mi", produces = "application/json; charset=utf-8")
 	public String updateIssue(@RequestParam String title, @RequestParam(required = false) String body,
-			@RequestParam(required = false) String assignees, HttpSession session,int ino) {
+			@RequestParam(required = false) String assignee, String label, HttpSession session,int ino) {
 
 		String repository = (String) session.getAttribute("repository");
 
-		String apiUrl = repository + "/issues";
+		String token = ((Member) session.getAttribute("loginUser")).getToken();
+		
+		String apiUrl = "https://api.github.com/repos/" + repository + "/issues/" + ino;
+		
+		String[] assignees = assignee.split(",");
+		String[] labels = label.split(",");
+		
+		JSONArray array1 = new JSONArray();
+		for(int i = 0; i<assignees.length; i++) {
+			array1.add(assignees[i]);
+		}
 
-		System.out.println(apiUrl);
-
-		String response = iService.gitPatchMethod(apiUrl, session, title, body,ino);
-
+		JSONArray array2 = new JSONArray();
+		for(int i =0; i<labels.length; i++) {
+			array2.add(labels[i]);
+		}
+		JSONObject requestBody = new JSONObject();
+		requestBody.put("assignees", array1);
+		requestBody.put("labels", array2);
+		
+		String response = webClient
+				.patch()
+				.uri(apiUrl)
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.header(HttpHeaders.ACCEPT, "application/vnd.github+json")
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				.bodyValue(requestBody.toString())
+				.retrieve()
+				.bodyToMono(String.class)
+				.block();
+		
 		session.setAttribute("updateBellIcon", "updateBellIcon");
 
 		return "redirect:issueShow.mini";

@@ -83,9 +83,6 @@ public class RepositoryController {
 		session.setAttribute("repoName", repo.getRepoName());
 		
 		
-		
-		
-		
 		// 언어 사용률 가져오는 부분
 		Mono<String> responseText = repoService.asynHttpRequest(url, session).subscribeOn(Schedulers.boundedElastic());
 		

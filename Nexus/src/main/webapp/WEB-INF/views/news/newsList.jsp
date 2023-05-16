@@ -58,15 +58,20 @@
 
                             <script>
                                 var htmlString = '${i.newsContent}';
-                                var $html = $(htmlString);
-                                if($html.find("img").length >0){
-                                    $html.find("img").remove();
+                                var $html1 = $(htmlString);
+								
+								console.log(htmlString);
+								
+                                if($html1.find("img").length >0){
+                                    $html1.find("img").remove();
                                 }
-								if($html.find("iframe").length>0){
-									$html.find("iframe").remove();
+								if($html1.find("iframe").length>0){
+									$html1.find("iframe").remove();
 								}
 
-                                $(".card-text${i.newsNo}").html($html.html());
+								console.log($html1.text())
+
+                                $(".card-text${i.newsNo}").html($html1.text());
                                 
                             </script>
 	                          

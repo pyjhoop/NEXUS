@@ -35,7 +35,6 @@
 	
 	<script>
 		console.log('${map}')
-		console.log("hhh")
 	</script>
 	
 	<c:set var="array" value="${fn:split('bg-primary,bg-success,bg-danger,bg-warning,bg-info',',')}" />
