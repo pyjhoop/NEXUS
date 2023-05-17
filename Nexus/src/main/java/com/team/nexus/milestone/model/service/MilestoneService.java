@@ -26,6 +26,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -37,6 +40,7 @@ import com.team.nexus.member.model.vo.Member;
 import com.team.nexus.milestone.model.dao.MilestoneDao;
 import com.team.nexus.milestone.model.vo.GitMilestone;
 import com.team.nexus.milestone.model.vo.Milestone;
+import com.team.nexus.repository.model.vo.Content;
 
 @Service
 public class MilestoneService {
@@ -131,11 +135,46 @@ public class MilestoneService {
 			responseText += line;
 			
 		}
-
-//		System.out.println(responseText);
-		JsonElement arr = (JsonElement) JsonParser.parseString(responseText);
 		ArrayList<GitMilestone> list = new ArrayList<GitMilestone>();
-		System.out.println(arr);
+		
+		Gson gson = new Gson();
+        JsonArray jsonArray = gson.fromJson(responseText, JsonArray.class);
+        
+        for(int i =0; i<jsonArray.size(); i++) {
+        	GitMilestone gm = new GitMilestone();
+        	
+        	gm.setTitle(jsonArray.get(i).getAsJsonObject().get("title").getAsString());
+        	JsonObject jo = jsonArray.get(i).getAsJsonObject().get("creator").getAsJsonObject();
+        	gm.setCreator(jo.get("login").getAsString());
+        	gm.setProfile(jo.get("avatar_url").getAsString());
+        	gm.setState(jsonArray.get(i).getAsJsonObject().get("state").getAsString());
+        	gm.setOpenedIssues(jsonArray.get(i).getAsJsonObject().get("open_issues").getAsInt());
+        	gm.setClosedIssues(jsonArray.get(i).getAsJsonObject().get("closed_issues").getAsInt());
+        	gm.setCreatedAt(jsonArray.get(i).getAsJsonObject().get("created_at").getAsString());
+        	gm.setUpdatedAt(jsonArray.get(i).getAsJsonObject().get("updated_at").getAsString());
+        	JsonElement dueOnElement = jsonArray.get(i).getAsJsonObject().get("due_on");
+        	if (dueOnElement != null && !dueOnElement.isJsonNull()) {
+        	    gm.setDue_on(dueOnElement.getAsString());
+        	} else {
+        	    gm.setDue_on("");
+        	}
+        	
+        	JsonElement dueOnElement1 = jsonArray.get(i).getAsJsonObject().get("due_on");
+        	
+        	if (dueOnElement1 != null && !dueOnElement1.isJsonNull()) {
+        	    gm.setClosedAt(dueOnElement1.getAsString());
+        	} else {
+        		gm.setClosedAt("");
+        	}
+        	
+        }
+		System.out.println();
+		System.out.println(list);
+		
+		return list;
+
+			
+		}
 		
 
 		/*
@@ -143,8 +182,6 @@ public class MilestoneService {
 		 * arr.get(i).getAsJsonObject(); GitMilestone git =
 		 * createGitMilestoneFromJsonObject(milestoneObj); list.add(git); }
 		 */
-		return list;
-	}
 	
 	
 	private GitMilestone createGitMilestoneFromJsonObject(JsonObject milestoneObj) {
