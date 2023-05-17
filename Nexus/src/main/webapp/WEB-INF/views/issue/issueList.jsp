@@ -73,7 +73,7 @@
 
 
 
-
+				<input type="hidden" name="state" id="state" value="${state }">
 
 
 				<div class="luda">
@@ -81,14 +81,24 @@
 					<a class="btn btn-primary" href="issueEnroll.mini">이슈 등록</a>
 				</div>
 				<br>
-			<div class="btnBox">
-  <div class="btnGroup1">
-    <button class="btn btn-outline-dark btn-sm issueauthor" name="author" value="writer">내가 작성한 이슈</button>
-  </div>
-  <div class="btnGroup2">
-    <button class="btn btn-outline-dark btn-sm issueassign" name="assign" value="myIssue">내 담당 이슈</button>
-  </div>
-</div>
+				<div class="btnBox">
+					<div class="btnGroup1">
+						<c:set var="isButtonDisplayed" value="false" scope="page" />
+
+						<c:forEach items="${list}" var="i" varStatus="loop">
+							<c:if test="${i.userId eq loginUser.userId && !isButtonDisplayed}">
+								<button class="btn btn-outline-dark btn-sm issueauthor" name="author" value="${i.user }">내가 작성한 이슈</button>
+								<c:set var="isButtonDisplayed" value="true" scope="page" />
+							</c:if>
+						</c:forEach>
+
+
+
+					</div>
+					<div class="btnGroup2">
+						<button class="btn btn-outline-dark btn-sm issueassign" name="assign" value="myIssue">내 담당 이슈</button>
+					</div>
+				</div>
 
 				<br>
 
@@ -96,7 +106,7 @@
 					<table class="table" id="issueTable">
 						<thead>
 							<tr>
-								<th>번호</th>
+								<th style="width: 5%;">번호</th>
 								<form action="" method="get" align="center">
 									<th>
 										<button type="submit" name="state" value="open" class="btn btn-outline-success btn-sm">진행 중</button>
@@ -110,9 +120,9 @@
 
 								</form>
 
-								<th>생성일</th>
+								<th style="width: 9%;">생성일</th>
 
-								<th>
+								<th style="width: 28%;">
 									<form action="issueShow.mini" method="get" align="center">
 										<select onchange="this.form.submit()" class="form-select form-select-sm" name="label" aria-label="Default select example">
 											<option selected value="noChoice">라벨</option>
@@ -130,15 +140,20 @@
 								<th>담당자</th>
 								<th>마일스톤</th>
 							</tr>
+
+
+							<input type="hidden" id="page" value="1">
+
+
 						</thead>
-						<tbody class="table-border-bottom-0">
+						<tbody class="table-border-bottom-0" id="issueTableBody">
 
 
 							<!-- 한바퀴  -->
 							<c:forEach var="i" items="${list }">
 
 								<tr>
-									<td style="width: 5%;">${i.number }</td>
+									<td>${i.number }</td>
 
 									<td colspan="3" style="width: 26%">
 										<a href="issueDetail.mini?ino=${i.number}" class="textA">
@@ -147,10 +162,10 @@
 									</td>
 
 
-									<td style="width: 9%;">${i.createdAt }</td>
+									<td>${i.createdAt }</td>
 
 
-									<td style="width: 28%;">
+									<td>
 										<c:forEach items="${i.labels}" var="label">
 											<c:choose>
 												<c:when test="${label eq 'bug'}">
@@ -219,13 +234,6 @@
 
 
 
-
-
-
-
-
-
-
 							</c:forEach>
 							<!-- 한바퀴  -->
 
@@ -237,7 +245,7 @@
 			<!--/ Basic Bootstrap Table -->
 
 
-
+			<div id="observer" class="card" style="visibility: hidden;">더보기</div>
 
 
 
@@ -248,42 +256,236 @@
 					return new bootstrap.Tooltip(tooltipTriggerEl);
 				});
 
-			
-				
-				
 				$(function() {
-					  $("#boardList>tbody>tr").click(function() {
-					    var ino = $(this).find('input[name="ino"]').val();
-					    location.href = "issueDetail.mini?ino=" + ino;
-					  });
+					$("#boardList>tbody>tr").click(function() {
+						var ino = $(this).find('input[name="ino"]').val();
+						location.href = "issueDetail.mini?ino=" + ino;
+					});
+				});
+
+				document.addEventListener('DOMContentLoaded', function() {
+					var authorButton = document.querySelector('.issueauthor');
+					var assignButton = document.querySelector('.issueassign');
+
+					authorButton.addEventListener('click', function() {
+
+						var author = this.value;
+						window.location.href = 'issueShow.mini?author='
+								+ author;
+
 					});
 
-				
-				  document.addEventListener('DOMContentLoaded', function() {
-				    var authorButton = document.querySelector('.issueauthor');
-				    var assignButton = document.querySelector('.issueassign');
-
-				    authorButton.addEventListener('click', function() {
-				      window.location.href = 'issueShow.mini?author=writer';
-				    });
-
-				    assignButton.addEventListener('click', function() {
-				      window.location.href = 'issueShow.mini?assign=myIssue';
-				    });
-				  });
+					assignButton.addEventListener('click', function() {
+						window.location.href = 'issueShow.mini?assign=myIssue';
+					});
+				});
 
 				
+				
+		
+				
+				
+				
+				
+				
+				var stateValue = document.getElementById('state').value;
+				
+				 const $observer = document.getElementById('observer');
+				    let page = 1;
+				           
+				    const io = new IntersectionObserver((entries) => {
+				       if (entries[0].isIntersecting) {
+				           page+=1;
+				           
+				           
+				      if(stateValue == 'closed'){
+				 
+				       $.ajax({
+				           url:"ajaxIssue",
+				           data: {"page":page,
+				        	   		"state" : stateValue},
+				           success:handleAjaxSuccess  
+
+				           , error:function(){
+				               console.log("ajax 오류 발생")
+				           }
+				       })
+
+				       }else if(stateValue == 'all'){
+				    	   $.ajax({
+					           url:"ajaxIssue",
+					           data: {"page":page,
+					        	   		"state" : stateValue},
+					           success:handleAjaxSuccess  
+
+					           , error:function(){
+					               console.log("ajax 오류 발생")
+					           }
+					       })
+				       }else{
+				    	   $.ajax({
+					           url:"ajaxIssue",
+					           data: {"page":page},
+					           success:handleAjaxSuccess  
+					           , error:function(){
+					               console.log("ajax 오류 발생")
+					           }
+					       })
+				       }
+				      
+				      
+				       }
+				       });
+				    io.observe($observer);
+				
+				
+				
+				
+				    function handleAjaxSuccess(data) {
+				    	  var tableBody = $("#issueTableBody");
+
+				    	  for (var i = 0; i < data.length; i++) {
+				    	    var item = data[i];
+
+				    	    var row = $("<tr></tr>");
+
+				    	    var number = $("<td></td>").text(item.number);
+				    	    row.append(number);
+
+				    	    var titleColumn = $("<td></td>").attr("colspan", "3").css("width", "26%");
+				    	    var anchorElement = $("<a></a>")
+				    	      .attr("href", "issueDetail.mini?ino=" + item.number)
+				    	      .addClass("textA");
+				    	    var iconElement = $("<i></i>").addClass(
+				    	      "fab fa-angular fa-lg text-danger me-3"
+				    	    );
+				    	    var strongElement = $("<strong></strong>").text(item.title);
+				    	    anchorElement.append(iconElement, strongElement);
+				    	    titleColumn.append(anchorElement);
+				    	    row.append(titleColumn);
+
+				    	    var createAt = $("<td></td>").text(item.createdAt);
+				    	    row.append(createAt);
+
+				    	    var labelsColumn = $("<td></td>").css("width", "28%");
+				    	    $.each(item.labels, function (index, label) {
+				    	      var badge = $("<span></span>").addClass("badge rounded-pill");
+
+				    	      if (label === "bug") {
+				    	        badge.addClass("bg-label-danger");
+				    	      } else if (label === "enhancement") {
+				    	        badge.addClass("bg-label-info");
+				    	      } else if (label === "duplicate") {
+				    	        badge.addClass("bg-label-dark");
+				    	      } else if (label === "documentation") {
+				    	        badge.addClass("bg-label-primary");
+				    	      } else if (label === "invalid") {
+				    	        badge.addClass("bg-label-warning");
+				    	      } else if (label === "help wanted") {
+				    	        badge.addClass("bg-label-success");
+				    	      } else {
+				    	        badge.addClass("bg-label-secondary");
+				    	      }
+
+				    	      badge.text(label);
+				    	      labelsColumn.append(badge);
+				    	    });
+				    	    row.append(labelsColumn);
+
+				    	    var userColumn = $("<td></td>").css("width", "10%");
+				    	    var userAvatar = $("<ul></ul>").addClass(
+				    	      "list-unstyled users-list m-0 avatar-group d-flex align-items-center"
+				    	    );
+				    	    var userAvatarItem = $("<li></li>")
+				    	      .addClass("avatar avatar-xs pull-up")
+				    	      .attr("data-bs-toggle", "tooltip")
+				    	      .attr("data-popup", "tooltip-custom")
+				    	      .attr("data-bs-placement", "top")
+				    	      .attr("title", item.user);
+				    	    var userAvatarImage = $("<img>")
+				    	      .attr("src", item.profile)
+				    	      .attr("alt", "")
+				    	      .addClass("rounded-circle");
+				    	    userAvatarItem.append(userAvatarImage);
+				    	    userAvatar.append(userAvatarItem);
+				    	    userColumn.append(userAvatar);
+				    	    row.append(userColumn);
+
+				    	    var assigneesColumn = $("<td></td>").css("width", "13%");
+				    	    var assigneesList = $("<ul></ul>").addClass(
+				    	      "list-unstyled users-list m-0 avatar-group d-flex align-items-center"
+				    	    );
+				    	    $.each(item.assignees, function (index, assignee) {
+				    	      var assigneeItem = $("<li></li>")
+				    	        .addClass("avatar avatar-xs pull-up")
+				    	        .attr("data-bs-toggle", "tooltip")
+				    	        .attr("data-popup", "tooltip-custom")
+				    	        .attr("data-bs-placement", "top")
+				    	        .attr("title", assignee);
+				    	      var assigneeImage = $("<img>")
+				    	        .attr("src", item.assigneeProfiles[index])
+				    	        .attr("alt", "")
+				    	        .addClass("rounded-circle");
+				    	      assigneeItem.append(assigneeImage);
+				    	      assigneesList.append(assigneeItem);
+				    	    });
+				    	    assigneesColumn.append(assigneesList);
+				    	    row.append(assigneesColumn);
+
+				    	    var milestoneColumn = $("<td></td>").css("width", "10%");
+				    	    var milestoneContent = $("<div></div>").addClass("dropdown");
+				    	    var milestoneText = $("<span></span>").text(item.milestone);
+				    	    var milestoneButton = $("<button></button>")
+				    	      .addClass("btn p-0 dropdown-toggle hide-arrow")
+				    	      .attr("type", "button")
+				    	      .attr("data-bs-toggle", "dropdown");
+				    	    var milestoneIcon = $("<i></i>").addClass("bx bx-dots-vertical-rounded");
+				    	    var milestoneMenu = $("<div></div>").addClass("dropdown-menu");
+				    	    var moveMenuItem = $("<a></a>")
+				    	      .addClass("dropdown-item")
+				    	      .attr("href", "javascript:void(0)")
+				    	      .html('<i class="bx bx-send me-1"></i> 이동');
+				    	    var deleteMenuItem = $("<a></a>")
+				    	      .addClass("dropdown-item")
+				    	      .attr("href", "javascript:void(0)")
+				    	      .html('<i class="bx bx-trash me-1"></i> 삭제');
+
+				    	    // Check if milestone is empty and add the 'invisible' class
+				    	    if (!item.milestone) {
+				    	      milestoneContent.addClass("invisible");
+				    	    }
+
+				    	    milestoneContent.append(
+				    	      milestoneText,
+				    	      milestoneButton.append(milestoneIcon),
+				    	      milestoneMenu.append(moveMenuItem, deleteMenuItem)
+				    	    );
+				    	    milestoneColumn.append(milestoneContent);
+				    	    row.append(milestoneColumn);
+
+				    	    tableBody.append(row);
+				    	    // 데이터 처리 로직
+				    	  }
+				    	}
+	
+				
+				
+				
+				
+				
+				
+				
+			
 			</script>
 
 
 			<c:if test="${not empty newTitle }">
 
 				<script>
-		
 					$(function() {
 						issueWeb();
 					});
-					</script>
+				</script>
 
 			</c:if>
 

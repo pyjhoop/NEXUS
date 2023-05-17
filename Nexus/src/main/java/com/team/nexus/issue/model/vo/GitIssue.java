@@ -22,8 +22,9 @@ public class GitIssue {
 	private String createdAt; 	// 생성일
 	private String updatedAt; 	// 수정일
 	private String closedAt;  	// 종료일
-	private String issudId;   	// 이슈아이디
+	private String id;   	// 이슈아이디
 	private String user; 		// 작성자
+	private String userId;		// 작성자의 숫자 id
 	private String profile;		// 프로필
 	
 	

@@ -115,21 +115,33 @@ public class IssueService {
 	
 	
 	
-	public List<GitIssue> getIssues(String repository, String token, String state, String assign, String label)
+	public List<GitIssue> getIssues(String repository, String token, String state, String assign, String label, Integer page)
 			throws IOException {
 
 		String url = "";
 	
 		
-		if (assign != null) {
-			url = "https://api.github.com/issues";
-		} else {
-			url = "https://api.github.com/repos/" + repository + "/issues?state=open";
-			if (state != null) {
-				url += "&state=" + state;
+		
+		if (state != null) {
+			
+			
+			if (page == null) {
+		        url = "https://api.github.com/repos/" + repository + "/issues?state=" + state + "&page=1";
+		    } else {
+		        url = "https://api.github.com/repos/" + repository + "/issues?state=" + state + "&page=" + page;
+		    }
+		}else  {
+		url = "https://api.github.com/repos/" + repository + "/issues?state=open";
+			
+			if(page != null) {
+				
+				url = "https://api.github.com/repos/" + repository + "/issues?state=open&page=" + page;
 			}
-
 		}
+		
+	
+		
+		
 
 		URL requestUrl = new URL(url);
 
@@ -137,8 +149,9 @@ public class IssueService {
 
 		urlConnection.setRequestProperty("Authorization", "Bearer " + token);
 		urlConnection.setRequestMethod("GET");
+		
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+		BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
 
 		String line;
 		String responseText = "";
@@ -147,6 +160,8 @@ public class IssueService {
 			responseText += line;
 		}
 
+		
+		
 		JsonArray arr = JsonParser.parseString(responseText).getAsJsonArray();
 		ArrayList<GitIssue> list = new ArrayList<GitIssue>();
 
@@ -221,10 +236,13 @@ public class IssueService {
 		return lList;
 	}
 
-	public List<GitIssue> getIssuesByAuthor(String author, HttpSession session, String token) {
+	public List<GitIssue> getIssuesByAuthor(String author, HttpSession session, String token,String repository) {
 
-		String apiUrl = "https://api.github.com/issues?filter=created";
-
+		
+		
+		String apiUrl = "https://api.github.com/repos/" + repository + "/issues?creator=" + author;
+		
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer " + token);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -335,10 +353,11 @@ public class IssueService {
 			git.setClosedAt(closedAtElem.getAsString());
 		}
 
-		git.setIssudId(issueObj.get("id").getAsString());
+		git.setId(issueObj.get("id").getAsString()); // 이슈 아이디
 
 		JsonObject userObj = issueObj.get("user").getAsJsonObject();
 		git.setUser(userObj.get("login").getAsString());
+		git.setUserId(userObj.get("id").getAsString());
 
 		String userProfileUrl = userObj.get("avatar_url").getAsString();
 		git.setProfile(userProfileUrl);
