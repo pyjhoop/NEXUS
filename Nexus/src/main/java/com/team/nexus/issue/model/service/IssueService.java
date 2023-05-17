@@ -114,7 +114,7 @@ public class IssueService {
 	
 	
 	
-	public List<GitIssue> getIssues(String repository, String token, String state, String assign, String label)
+	public List<GitIssue> getIssues(String repository, String token, String state, String assign, String label, Integer page)
 			throws IOException {
 
 		String url = "";
@@ -123,10 +123,28 @@ public class IssueService {
 		if (assign != null) {
 			url = "https://api.github.com/issues";
 		} else {
-			url = "https://api.github.com/repos/" + repository + "/issues?state=open";
+			
+			url = "https://api.github.com/repos/" + repository + "/issues?state=open&page=1";
+
 			if (state != null) {
-				url += "&state=" + state;
+				url = "https://api.github.com/repos/" + repository + "/issues?state=" + state;
+				System.out.println("상태변경~~");
+				
+				if(page != 1) {
+					url = "https://api.github.com/repos/" + repository + "/issues?state=" + state + "&page="+ page;
+					System.out.println("상태변경 + 페이지변경????");
+				}
+				
 			}
+			
+			
+			if(page != null) {
+				url = "https://api.github.com/repos/" + repository + "/issues?state=open&page=" + page;
+				System.out.println("이거타냐요~~~ 페이지" + page);
+			}
+			
+			
+
 
 		}
 
@@ -220,10 +238,13 @@ public class IssueService {
 		return lList;
 	}
 
-	public List<GitIssue> getIssuesByAuthor(String author, HttpSession session, String token) {
+	public List<GitIssue> getIssuesByAuthor(String author, HttpSession session, String token,String repository) {
 
-		String apiUrl = "https://api.github.com/issues?filter=created";
-
+		
+		
+		String apiUrl = "https://api.github.com/repos/" + repository + "/issues?creator=" + author;
+		
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer " + token);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -334,10 +355,11 @@ public class IssueService {
 			git.setClosedAt(closedAtElem.getAsString());
 		}
 
-		git.setIssudId(issueObj.get("id").getAsString());
+		git.setId(issueObj.get("id").getAsString()); // 이슈 아이디
 
 		JsonObject userObj = issueObj.get("user").getAsJsonObject();
 		git.setUser(userObj.get("login").getAsString());
+		git.setUserId(userObj.get("id").getAsString());
 
 		String userProfileUrl = userObj.get("avatar_url").getAsString();
 		git.setProfile(userProfileUrl);

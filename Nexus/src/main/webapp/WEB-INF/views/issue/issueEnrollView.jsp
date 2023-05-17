@@ -60,7 +60,7 @@
 			<div class="why">
 				<div class="editor-wrapper">
 
-					<div id="editor">에디터활성안돼 씨앙</div>
+					<div id="editor"></div>
 
 					<input type="hidden" name="body" value="">
 

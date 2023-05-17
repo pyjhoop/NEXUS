@@ -31,6 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,7 +61,7 @@ public class IssueController {
 
 	@RequestMapping(value = "issueShow.mini", produces = "application/json; charset=utf-8")
 	public String issueList(HttpSession session, Member m, Model model, @RequestParam(required = false) String state,@RequestParam(required = false) String label,@RequestParam(required = false) String author,
-			@RequestParam(required = false) String assign,@RequestParam(required = false) String authorName,@RequestParam(required = false) String newTitle ,@RequestParam(required = false) String issueNumber ,@RequestParam(required = false) String userObject) throws IOException {
+			@RequestParam(required = false) Integer page,@RequestParam(required = false) String assign,@RequestParam(required = false) String authorName,@RequestParam(required = false) String newTitle ,@RequestParam(required = false) String issueNumber ,@RequestParam(required = false) String userObject) throws IOException {
 
 		String repository = (String) session.getAttribute("repository");
 
@@ -72,13 +73,15 @@ public class IssueController {
 
 	    if (assign != null && assign.equals("myIssue")) {
 	        list = iService.getIssuesByAssignee(assign,session,token);
-	    } else if(author != null && author.equals("writer")) {
-	    	list = iService.getIssuesByAuthor(author, session,token);
+	    } else if(author != null) {
+	    	list = iService.getIssuesByAuthor(author, session,token,repository);
+	    	
 	    }else if (label != null && !label.equals("noChoice")) {
 	        list = iService.getIssuesByLabel(label, session,repository,token);
 	    }
 	    else {
-	        list = iService.getIssues(repository, token, state, assign, label);
+	        list = iService.getIssues(repository, token, state, assign, label,page);
+	        System.out.println(list);
 	    }
 
 		model.addAttribute("list", list);
@@ -92,6 +95,48 @@ public class IssueController {
 		return "issue/issueList";
 	}
 
+	
+	
+	
+	
+	@RequestMapping(value="ajaxIssue", produces  = "application/json; charset=utf-8")
+	@ResponseBody
+	public String ajaxIssue(HttpSession session, Member m, Model model, @RequestParam(required = false) String state,@RequestParam(required = false) String label,@RequestParam(required = false) String author,
+			@RequestParam(required = false) Integer page,@RequestParam(required = false) String assign,@RequestParam(required = false) String authorName,@RequestParam(required = false) String newTitle ,@RequestParam(required = false) String issueNumber ,@RequestParam(required = false) String userObject) throws IOException {
+
+		String repository = (String) session.getAttribute("repository");
+
+		List<Label> lList = iService.getLabels(repository, session);
+
+		String token = ((Member) (session.getAttribute("loginUser"))).getToken();
+
+		List<GitIssue> list;
+
+	    if (assign != null && assign.equals("myIssue")) {
+	        list = iService.getIssuesByAssignee(assign,session,token);
+	    } else if(author != null) {
+	    	list = iService.getIssuesByAuthor(author, session,token,repository);
+	    	
+	    }else if (label != null && !label.equals("noChoice")) {
+	        list = iService.getIssuesByLabel(label, session,repository,token);
+	    }
+	    else {
+	        list = iService.getIssues(repository, token, state, assign, label,page);
+	        System.out.println(list);
+	    }
+	    Gson gson = new Gson();
+	    String json = gson.toJson(list);
+
+	    return json;
+	}
+
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping("issueEnroll.mini")
 	public String issueEnrollForm(HttpSession session, Model model, @RequestParam(required = false) String state,
 			@RequestParam(required = false) String assign) throws IOException, IOException {

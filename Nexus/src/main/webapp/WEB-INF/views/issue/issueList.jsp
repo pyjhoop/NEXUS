@@ -81,14 +81,23 @@
 					<a class="btn btn-primary" href="issueEnroll.mini">이슈 등록</a>
 				</div>
 				<br>
-			<div class="btnBox">
-  <div class="btnGroup1">
-    <button class="btn btn-outline-dark btn-sm issueauthor" name="author" value="writer">내가 작성한 이슈</button>
-  </div>
-  <div class="btnGroup2">
-    <button class="btn btn-outline-dark btn-sm issueassign" name="assign" value="myIssue">내 담당 이슈</button>
-  </div>
-</div>
+				<div class="btnBox">
+					<div class="btnGroup1">
+						<c:set var="isButtonDisplayed" value="false" scope="page" />
+
+						<c:forEach items="${list}" var="i" varStatus="loop">
+							<c:if test="${i.userId eq loginUser.userId && !isButtonDisplayed}">
+								<button class="btn btn-outline-dark btn-sm issueauthor" name="author" value="${i.user }">내가 작성한 이슈</button>
+								<c:set var="isButtonDisplayed" value="true" scope="page" />
+							</c:if>
+						</c:forEach>
+
+
+					</div>
+					<div class="btnGroup2">
+						<button class="btn btn-outline-dark btn-sm issueassign" name="assign" value="myIssue">내 담당 이슈</button>
+					</div>
+				</div>
 
 				<br>
 
@@ -130,8 +139,13 @@
 								<th>담당자</th>
 								<th>마일스톤</th>
 							</tr>
+
+
+							<input type="hidden" id="page" value="1">
+
+
 						</thead>
-						<tbody class="table-border-bottom-0">
+						<tbody class="table-border-bottom-0" id="issueTableBody">
 
 
 							<!-- 한바퀴  -->
@@ -219,13 +233,6 @@
 
 
 
-
-
-
-
-
-
-
 							</c:forEach>
 							<!-- 한바퀴  -->
 
@@ -237,7 +244,7 @@
 			<!--/ Basic Bootstrap Table -->
 
 
-
+ 	 <div id="observer" class="card" style="visibility: hidden;">더보기</div>
 
 
 
@@ -248,42 +255,111 @@
 					return new bootstrap.Tooltip(tooltipTriggerEl);
 				});
 
-			
-				
-				
 				$(function() {
-					  $("#boardList>tbody>tr").click(function() {
-					    var ino = $(this).find('input[name="ino"]').val();
-					    location.href = "issueDetail.mini?ino=" + ino;
-					  });
+					$("#boardList>tbody>tr").click(function() {
+						var ino = $(this).find('input[name="ino"]').val();
+						location.href = "issueDetail.mini?ino=" + ino;
+					});
+				});
+
+				document.addEventListener('DOMContentLoaded', function() {
+					var authorButton = document.querySelector('.issueauthor');
+					var assignButton = document.querySelector('.issueassign');
+
+					authorButton.addEventListener('click', function() {
+
+						var author = this.value;
+						window.location.href = 'issueShow.mini?author='
+								+ author;
+
 					});
 
-				
-				  document.addEventListener('DOMContentLoaded', function() {
-				    var authorButton = document.querySelector('.issueauthor');
-				    var assignButton = document.querySelector('.issueassign');
-
-				    authorButton.addEventListener('click', function() {
-				      window.location.href = 'issueShow.mini?author=writer';
-				    });
-
-				    assignButton.addEventListener('click', function() {
-				      window.location.href = 'issueShow.mini?assign=myIssue';
-				    });
-				  });
+					assignButton.addEventListener('click', function() {
+						window.location.href = 'issueShow.mini?assign=myIssue';
+					});
+				});
 
 				
+				
+		
+				
+				
+				
+				
+				
+				
+				
+				 const $observer = document.getElementById('observer');
+				    let page = 1;
+				           
+				    const io = new IntersectionObserver((entries) => {
+				       if (entries[0].isIntersecting) {
+				           page+=1;
+				       
+				       $.ajax({
+				           url:"ajaxIssue",
+				           data: {"page":page},
+				           success:function(data){
+				              
+				        	   
+				        	   console.log(data);
+				        	   
+				        	      var tableBody = $("#issueTableBody");
+
+
+
+				        	      for (var i = 0; i < data.length; i++) {
+				        	    	  var item = data[i];
+				        	    	  
+				        	    	  var row = $("<tr></tr>");
+				        	    	  
+				        	    	  var number = $("<td></td>").text(item.number);
+					        	        row.append(number);
+
+					        	        var titleColumn = $("<td></td>").text(item.title);
+					        	        row.append(titleColumn);
+					        	        
+					        	        var createAt = $("<td></td>").text(item.createdAt);
+					        	        row.append(createAt);
+					        	        
+
+					        	        tableBody.append(row);
+				        	    	  // 데이터 처리 로직
+				        	    	}
+				               
+
+				           }, error:function(){
+				               console.log("ajax 오류 발생")
+				           }
+				       })
+
+				       }else{
+				       }
+				       });
+				    io.observe($observer);
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			
 			</script>
 
 
 			<c:if test="${not empty newTitle }">
 
 				<script>
-		
 					$(function() {
 						issueWeb();
 					});
-					</script>
+				</script>
 
 			</c:if>
 
