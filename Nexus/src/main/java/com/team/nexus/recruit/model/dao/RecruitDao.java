@@ -37,8 +37,8 @@ public class RecruitDao {
 	}
 	
 	
-	public int increaseCount(SqlSessionTemplate sqlSession, int personalPrNo) {
-		return sqlSession.update("recruitMapper.increaseCount", personalPrNo);
+	public int increaseCount(SqlSessionTemplate sqlSession, int pjtPrNo) {
+		return sqlSession.update("recruitMapper.increaseCount", pjtPrNo);
 	}
 	
 	public Recruit recruitDetail(SqlSessionTemplate sqlSession, int personalPrNo) {

@@ -87,6 +87,7 @@ public class IssueService {
 
 //		RestTemplate restTemplate = new RestTemplate();
 //		 PATCH 메소드를 사용하기 위해 필요한 HttpClient 버전이 낮기 때문에 발생하는 문제
+		
 
 		HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
 		requestFactory.setHttpClient(HttpClients.createDefault());

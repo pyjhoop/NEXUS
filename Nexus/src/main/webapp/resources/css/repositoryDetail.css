@@ -77,3 +77,19 @@
     border: none;
     background-color: white;
 }
+
+.jsColor{
+	background-color:rgb(241,224,90) !important;
+}
+.cssColor{
+	background-color: rgb(86,61,124) !important;
+}
+.javaColor{
+	background-color: rgb(176,114,25) !important;
+}
+.plsqlColor{
+	background-color: rgb(218,216,216) !important;
+}
+.htmlColor{
+	background-color: rgb(217,76,38) !important;
+}

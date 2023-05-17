@@ -11,3 +11,14 @@
 .hiddenp{
     visibility: hidden;
 }
+.cardcon{
+    height: 100%;
+}
+
+form{
+    height: 100%;
+}
+
+.note-editable{
+    height: 700px !important;
+}

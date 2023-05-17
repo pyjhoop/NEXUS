@@ -10,7 +10,7 @@ $(function(){
 
     $(".bxs-heart-circle").click(function(){
         console.log($(".text-primary"))
-        if($(".text-primary").length ==0){
+        if($(".zzimWrap .text-primary").length ==0){
             like();
             $(this).addClass("text-primary")
         }else{
@@ -80,6 +80,7 @@ function like(){
         },
         success:function(data){
             console.log(data)
+            console.log("좋아요")
             $(".likeCount").text(data);
         }, error:function(){
             console.log("ajax 통신 오류");
@@ -99,6 +100,7 @@ function unlike(){
             userNo:userNo1
         },
         success:function(data){
+            console.log("실어요")
             console.log(data)
             $(".likeCount").text(data);
         }, error:function(){

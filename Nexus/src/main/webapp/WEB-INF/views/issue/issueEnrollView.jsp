@@ -6,25 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script type="text/javascript" src="js/jquery/jquery-3.1.1.min.js"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/i18n/defaults-*.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+
+
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/issue_select.css">
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css">
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/issue_mini.js"></script>
 
 
 
-<!-- 알람 종 js -->
-<script src="${pageContext.request.contextPath}/resources/js/alarm.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/alarmSocket.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 <style>
 	.assClose:hover{
@@ -73,16 +68,21 @@
 				</div>
 		</form>
 	</div>
+	<script>
+        const Editor = toastui.Editor;
 
+		const editor = new Editor({
+				el: document.querySelector('#editor'),
+				height: '500px',
+				initialEditType: 'markdown',
+			});
+
+		editor.getMarkdown();
+    </script>
 
 
 
 	<div class="editor-label">
-
-
-
-
-
 
 		<div class="mb-3 test">
 			<label for="defaultSelect1" class="form-label">이슈 담당자</label>
@@ -97,7 +97,6 @@
 			
 		</div>
 
-
 		<div class="mb-3 test1">
 			<label for="defaultSelect" class="form-label">라벨</label>
 			<select id="defaultSelect" class="form-select labelSelect" name="issueLabel" onchange="selectLabel();">
@@ -109,17 +108,6 @@
 			<br>
 			
 		</div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 	</div>
@@ -141,7 +129,7 @@
 		var numSelect = document.getElementById("defaultSelect1");
 		var userName = numSelect.options[document.getElementById("defaultSelect1").selectedIndex].text;
 		var profile = numSelect.options[document.getElementById("defaultSelect1").selectedIndex].value;
-		var assignees = $("input[name=assignee]");
+		
 
 		if(userName == "이슈 담당자") return;
 
@@ -161,20 +149,15 @@
 		if(boolean == "true") return;
 			var str = '<ul id="'+userName+'" class="mb-1 list-unstyled users-list m-0 avatar-group d-flex align-items-center">'
 			+'<li class="avatar avatar-xs pull-up"><img src="'+ profile+'" alt="" class="rounded-circle"></li>'
-			+ userName+'<i i class="bx bx-x-circle mt-1 ml-1 assClose"></i>';
-			
-			if(ass.length==0){
-				assignees.val(userName);
-			}else{
-				assignees.val(assignees.val()+","+userName);
-			}
+			+ userName+'<i class="bx bx-x-circle mt-1 ml-1 assClose"></i></ul>';
+
 			$(".test").append(str)
 		}
 
 		function selectLabel(){
 			var numSelect = document.getElementById("defaultSelect");
 			var label = numSelect.options[document.getElementById("defaultSelect").selectedIndex].value;
-			var labelStr = $("input[name=label]");
+			
 
 			if(label == "라벨") return;
 
@@ -196,11 +179,6 @@
 
 			if(boolean1 == "true") return;
 
-			if(labels.length ==0){
-				labelStr.val(label);
-			}else{
-				labelStr.val(labelStr.val()+","+label);
-			}
 			$(".test1").append(str);
 
 
@@ -239,8 +217,8 @@
 	$(document).ready(function() {
 
 		$(document).on("click",".assClose",function(){
-			console.log($(this));
-			$(this).parent("ul").remove();
+			var $ul = $(this).parent("ul");
+			$ul.remove();
 		})
 
 		$(document).on("click",".labelClose",function(){
@@ -251,13 +229,38 @@
 
 	    $('#issueEnrollForm').submit(function() {
 	    	
-	    	
-	      
-	    	
-	        
-	        console.log("aaaaaaaa")
-	    	
-	      
+			var markdown = editor.getMarkdown();
+			$("input[name='body']").val(markdown);
+			
+			// assignees
+			var assignees = $("input[name=assignee]");
+			var uls = $(".test ul");
+			console.log(uls);
+			var str1 = "";
+			console.log($(uls[0]).prop("id"));
+			for(let i=0; i<uls.length; i++){
+				if(i==0){
+					str1+=$(uls[i]).prop("id");
+				}else{
+					str1+= ","+$(uls[i]).prop("id");
+				}
+			}
+			console.log(str1);
+			assignees.val(str1);
+
+			// labels
+			var spans = $(".test1").children("label").siblings("span");
+			var labelStr = $("input[name=label]");
+			console.log(spans);
+			var str2 = "";
+			for(let i=0; i<spans.length; i++){
+				if(i==0){
+					str2 += $(spans[0]).prop("id");
+				}else{
+					str2 += ","+$(spans[i]).prop("id");
+				}
+			}
+			labelStr.val(str2);
 
 	        return true;
 	    });

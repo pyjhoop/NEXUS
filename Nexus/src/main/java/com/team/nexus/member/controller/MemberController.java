@@ -52,6 +52,8 @@ public class MemberController {
 		// access_token을 이용한 유저 정보 얻어오기
 		Member m = gService.getUserInfo(token);
 		
+		String newId = m.getUserId()+"@github.io";
+    	m.setUserId(newId);
 		
         Member m1 = mService.selectMember(m);
         

@@ -164,6 +164,13 @@ select option:checked {
   display: none;
 }
 
+.assClose:hover{
+  cursor: pointer;
+}
+.labelClose:hover{
+  cursor: pointer;
+}
+
 
   
 
