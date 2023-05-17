@@ -121,32 +121,27 @@ public class IssueService {
 		String url = "";
 	
 		
-		if (assign != null) {
-			url = "https://api.github.com/issues";
-		} else {
+		
+		if (state != null) {
 			
-			url = "https://api.github.com/repos/" + repository + "/issues?state=open&page=1";
-
-			if (state != null) {
-				url = "https://api.github.com/repos/" + repository + "/issues?state=" + state;
-				System.out.println("상태변경~~");
-				
-				if(page != 1) {
-					url = "https://api.github.com/repos/" + repository + "/issues?state=" + state + "&page="+ page;
-					System.out.println("상태변경 + 페이지변경????");
-				}
-				
-			}
 			
+			if (page == null) {
+		        url = "https://api.github.com/repos/" + repository + "/issues?state=" + state + "&page=1";
+		    } else {
+		        url = "https://api.github.com/repos/" + repository + "/issues?state=" + state + "&page=" + page;
+		    }
+		}else  {
+		url = "https://api.github.com/repos/" + repository + "/issues?state=open";
 			
 			if(page != null) {
+				
 				url = "https://api.github.com/repos/" + repository + "/issues?state=open&page=" + page;
 			}
-			
-			
-
-
 		}
+		
+	
+		
+		
 
 		URL requestUrl = new URL(url);
 
@@ -164,10 +159,6 @@ public class IssueService {
 		while ((line = br.readLine()) != null) {
 			responseText += line;
 		}
-
-		
-		
-	
 
 		
 		

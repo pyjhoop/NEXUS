@@ -90,7 +90,7 @@ public class IssueController {
 
 		model.addAttribute("list", list);
 		model.addAttribute("lList", lList);
-		
+		model.addAttribute("state", state);
 //	    model.addAttribute("issueNumber", issueNumber);
 //	    model.addAttribute("authorName", authorName);
 //	    model.addAttribute("newTitle", newTitle);
