@@ -1,5 +1,13 @@
 
-/* 종모양 설정*/
+.label-list {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 5px;
+}
+
+.label-list .badge {
+   display: block;
+}
 
 
 /* 글등록 버튼 속성*/

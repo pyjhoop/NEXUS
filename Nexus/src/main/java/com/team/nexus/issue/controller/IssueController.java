@@ -81,7 +81,6 @@ public class IssueController {
 	    }
 	    else {
 	        list = iService.getIssues(repository, token, state, assign, label,page);
-	        System.out.println(list);
 	    }
 
 		model.addAttribute("list", list);
@@ -122,7 +121,6 @@ public class IssueController {
 	    }
 	    else {
 	        list = iService.getIssues(repository, token, state, assign, label,page);
-	        System.out.println(list);
 	    }
 	    Gson gson = new Gson();
 	    String json = gson.toJson(list);

@@ -140,7 +140,6 @@ public class IssueService {
 			
 			if(page != null) {
 				url = "https://api.github.com/repos/" + repository + "/issues?state=open&page=" + page;
-				System.out.println("이거타냐요~~~ 페이지" + page);
 			}
 			
 			
@@ -154,8 +153,9 @@ public class IssueService {
 
 		urlConnection.setRequestProperty("Authorization", "Bearer " + token);
 		urlConnection.setRequestMethod("GET");
+		
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+		BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
 
 		String line;
 		String responseText = "";
@@ -164,6 +164,12 @@ public class IssueService {
 			responseText += line;
 		}
 
+		
+		
+	
+
+		
+		
 		JsonArray arr = JsonParser.parseString(responseText).getAsJsonArray();
 		ArrayList<GitIssue> list = new ArrayList<GitIssue>();
 

@@ -18,7 +18,7 @@
 
 
 
-
+<script src="${pageContext.request.contextPath}/resources/js/issueList.js"></script>
 
 
 <!-- Latest compiled and minified CSS -->
@@ -92,6 +92,7 @@
 							</c:if>
 						</c:forEach>
 
+						
 
 					</div>
 					<div class="btnGroup2">
@@ -105,7 +106,7 @@
 					<table class="table" id="issueTable">
 						<thead>
 							<tr>
-								<th>번호</th>
+								<th style="width: 5%;">번호</th>
 								<form action="" method="get" align="center">
 									<th>
 										<button type="submit" name="state" value="open" class="btn btn-outline-success btn-sm">진행 중</button>
@@ -119,9 +120,9 @@
 
 								</form>
 
-								<th>생성일</th>
+								<th style="width: 9%;">생성일</th>
 
-								<th>
+								<th style="width: 28%;">
 									<form action="issueShow.mini" method="get" align="center">
 										<select onchange="this.form.submit()" class="form-select form-select-sm" name="label" aria-label="Default select example">
 											<option selected value="noChoice">라벨</option>
@@ -152,7 +153,7 @@
 							<c:forEach var="i" items="${list }">
 
 								<tr>
-									<td style="width: 5%;">${i.number }</td>
+									<td >${i.number }</td>
 
 									<td colspan="3" style="width: 26%">
 										<a href="issueDetail.mini?ino=${i.number}" class="textA">
@@ -161,10 +162,10 @@
 									</td>
 
 
-									<td style="width: 9%;">${i.createdAt }</td>
+									<td>${i.createdAt }</td>
 
 
-									<td style="width: 28%;">
+									<td >
 										<c:forEach items="${i.labels}" var="label">
 											<c:choose>
 												<c:when test="${label eq 'bug'}">
@@ -288,56 +289,7 @@
 				
 				
 				
-				
-				 const $observer = document.getElementById('observer');
-				    let page = 1;
-				           
-				    const io = new IntersectionObserver((entries) => {
-				       if (entries[0].isIntersecting) {
-				           page+=1;
-				       
-				       $.ajax({
-				           url:"ajaxIssue",
-				           data: {"page":page},
-				           success:function(data){
-				              
-				        	   
-				        	   console.log(data);
-				        	   
-				        	      var tableBody = $("#issueTableBody");
-
-
-
-				        	      for (var i = 0; i < data.length; i++) {
-				        	    	  var item = data[i];
-				        	    	  
-				        	    	  var row = $("<tr></tr>");
-				        	    	  
-				        	    	  var number = $("<td></td>").text(item.number);
-					        	        row.append(number);
-
-					        	        var titleColumn = $("<td></td>").text(item.title);
-					        	        row.append(titleColumn);
-					        	        
-					        	        var createAt = $("<td></td>").text(item.createdAt);
-					        	        row.append(createAt);
-					        	        
-
-					        	        tableBody.append(row);
-				        	    	  // 데이터 처리 로직
-				        	    	}
-				               
-
-				           }, error:function(){
-				               console.log("ajax 오류 발생")
-				           }
-				       })
-
-				       }else{
-				       }
-				       });
-				    io.observe($observer);
-				
+		
 				
 				
 				
