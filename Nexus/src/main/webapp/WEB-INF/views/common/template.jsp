@@ -159,7 +159,7 @@
 							<i class="menu-icon tf-icons bx bx-collection"></i>
 							<div data-i18n="Basic">Issue</div>
 						</a></li>
-					<li class="menu-item"><a href="#" onclick="return repoCheck();" class="menu-link">
+					<li class="menu-item"><a href="milestoneList.m" onclick="return repoCheck();" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-box"></i>
 							<div data-i18n="User interface">Milestone</div>
 						</a></li>

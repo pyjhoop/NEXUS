@@ -28,7 +28,7 @@ public class MilestoneController {
 	@Autowired
 	private IssueService iService;
 	
-	@RequestMapping(value = "milestoneList", produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "milestoneList.m", produces = "application/json; charset=utf-8")
 	public String milestoneList(HttpSession session, Member m, Model model, @RequestParam(required = false) 
 	String state,@RequestParam(required = false) String issue,@RequestParam(required = false) String author,
 	@RequestParam(required = false) String token,
@@ -39,18 +39,18 @@ public class MilestoneController {
 
 		String repository = (String) session.getAttribute("repository");
 
-		List<GitIssue> mList = iService.getIssues( repository, token,  state,  assign,  label);
-
+		
+		
+		
 		String token1 = ((Member) (session.getAttribute("loginUser"))).getToken();
 
 		List<GitMilestone> list;
 
 	    
-	        list = mService.getMilestones(repository, token1, state,  issue);
+	        list = mService.getMilestones(session,repository, token1, state);
 
 			
 			 model.addAttribute("list", list); 
-			 model.addAttribute("mList", mList);
 			 
 		
 

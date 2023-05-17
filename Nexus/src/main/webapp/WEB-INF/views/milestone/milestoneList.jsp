@@ -7,6 +7,11 @@
 <title>Nexus!</title>
 </head>
 <body>
-
+<div>
+	<c:forEach var="l" items="${list }">
+												<option value="${l.name }">${l.name }</option>
+											</c:forEach>
+											<P>ㄹㄴㅇ</P>
+</div>
 </body>
 </html>

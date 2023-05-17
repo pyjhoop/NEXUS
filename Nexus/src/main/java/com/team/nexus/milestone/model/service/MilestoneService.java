@@ -105,27 +105,21 @@ public class MilestoneService {
 	}
 	
 	
-	public List<GitMilestone> getMilestones(String repository, String token, String state, String assign, String issue)
+	public List<GitMilestone> getMilestones(HttpSession session, String repository, String token1, String state)
 			throws IOException {
 
-		String url = "";
 	
 		
-		if (assign != null) {
-			url = "https://api.github.com/repos/OWNER/REPO/milestones";
-		} else {
-			url = "https://api.github.com/repos/" + repository + "/issues?state=open";
-			if (state != null) {
-				url += "&state=" + state;
-			}
-
-		}
+		String repository2 = (String) session.getAttribute("repository");
+		
+		String url = "https://api.github.com/repos/" + repository + "/milestones";
+		
 
 		URL requestUrl = new URL(url);
 
 		HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
 
-		urlConnection.setRequestProperty("Authorization", "Bearer " + token);
+		urlConnection.setRequestProperty("Authorization", "Bearer " + token1);
 		urlConnection.setRequestMethod("GET");
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
@@ -135,90 +129,68 @@ public class MilestoneService {
 
 		while ((line = br.readLine()) != null) {
 			responseText += line;
+			
 		}
 
-		JsonArray arr = JsonParser.parseString(responseText).getAsJsonArray();
+//		System.out.println(responseText);
+		JsonElement arr = (JsonElement) JsonParser.parseString(responseText);
 		ArrayList<GitMilestone> list = new ArrayList<GitMilestone>();
+		System.out.println(arr);
+		
 
-		for (int i = 0; i < arr.size(); i++) {
-			JsonObject milestoneObj = arr.get(i).getAsJsonObject();
-			GitMilestone git = createGitMilestoneFromJsonObject(milestoneObj);
-			list.add(git);
-		}
+		/*
+		 * for (int i = 0; i < arr.size(); i++) { JsonObject milestoneObj =
+		 * arr.get(i).getAsJsonObject(); GitMilestone git =
+		 * createGitMilestoneFromJsonObject(milestoneObj); list.add(git); }
+		 */
 		return list;
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	private GitIssue createGitMilestoneFromJsonObject(JsonObject milestoneObj) {
+	private GitMilestone createGitMilestoneFromJsonObject(JsonObject milestoneObj) {
+//		title  creator  state  number login  avatar_url  created_at  updated_at  closed_at  due_on  id
 		GitMilestone git = new GitMilestone();
 
 		git.setTitle(milestoneObj.get("title").getAsString());
-
-		JsonArray issuesArr = milestoneObj.get("issues").getAsJsonArray();
-		String[] issues = new String[issuesArr.size()];
-		for (int j = 0; j < issuesArr.size(); j++) {
-			issues[j] = issuesArr.get(j).getAsJsonObject().get("name").getAsString();
-		}
-		git.setIssues(issues);
+		
+		/*
+		 * JsonElement creatorElem = milestoneObj.get("creator"); if
+		 * (!creatorElem.isJsonNull()) { JsonObject creatorObj =
+		 * creatorElem.getAsJsonObject();
+		 * git.setCreator(creatorObj.get("id").getAsString()); }
+		 */
 
 		git.setState(milestoneObj.get("state").getAsString());
 
-		JsonElement milestoneElem = issueObj.get("milestone");
-		if (!milestoneElem.isJsonNull()) {
-			JsonObject milestoneObj = milestoneElem.getAsJsonObject();
-			git.setMilestone(milestoneObj.get("title").getAsString());
-		}
 
-		git.setNumber(issueObj.get("number").getAsInt());
+		git.setNumber(milestoneObj.get("number").getAsInt());
+		
 
-		JsonArray assigneesArr = issueObj.get("assignees").getAsJsonArray();
-		String[] assignees = new String[assigneesArr.size()];
-		String[] assigneeProfiles = new String[assigneesArr.size()]; // 이슈 담당자 프로필
-		for (int j = 0; j < assigneesArr.size(); j++) {
-			JsonObject assigneeObj = assigneesArr.get(j).getAsJsonObject();
-			assignees[j] = assigneeObj.get("login").getAsString();
-			assigneeProfiles[j] = assigneeObj.get("avatar_url").getAsString(); // 이슈 담당자 프로필
-		}
-		git.setAssignees(assignees);
-		git.setAssigneeProfiles(assigneeProfiles); // 이슈 담당자 프로필 설정
-
-		String createdDateTimeString = issueObj.get("created_at").getAsString();
+		String createdDateTimeString = milestoneObj.get("created_at").getAsString();
 		LocalDateTime createdDateTime = LocalDateTime.parse(createdDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
 		String createdDateString = createdDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		git.setCreatedAt(createdDateString);
 
-		git.setUpdatedAt(issueObj.get("updated_at").getAsString());
+		git.setUpdatedAt(milestoneObj.get("updated_at").getAsString());
+		
+		git.setUpdatedAt(milestoneObj.get("due_on").getAsString());
 
-		JsonElement closedAtElem = issueObj.get("closed_at");
+		JsonElement closedAtElem = milestoneObj.get("closed_at");
 		if (!closedAtElem.isJsonNull()) {
 			git.setClosedAt(closedAtElem.getAsString());
 		}
 
-		git.setIssudId(issueObj.get("id").getAsString());
+		git.setMilestoneId(milestoneObj.get("id").getAsString());
 
-		JsonObject userObj = issueObj.get("user").getAsJsonObject();
-		git.setUser(userObj.get("login").getAsString());
+		JsonObject creatorObj = milestoneObj.get("creator").getAsJsonObject();
+		git.setUser(creatorObj.get("login").getAsString());
 
-		String userProfileUrl = userObj.get("avatar_url").getAsString();
+		String userProfileUrl = creatorObj.get("avatar_url").getAsString();
 		git.setProfile(userProfileUrl);
 
 		return git;
 	}
+	
 	
 	
 	

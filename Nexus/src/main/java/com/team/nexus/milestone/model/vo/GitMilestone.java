@@ -22,13 +22,15 @@ public class GitMilestone {
 	private String milestoneAuthor;
 	private String status;
 	private String progress;
+	title  creator  state  number login  avatar_url  created_at  updated_at  closed_at  due_on  id
  */
 	
 	private String title;
-	private String[] issues;  	
+	private String creator;
 	private String state;	  	
-	private String milestoneId;   	
 	private int number;
+	private String[] issues;  	
+	private String milestoneId;
 	private String createdAt; 	
 	private String updatedAt; 	
 	private String closedAt;  	
