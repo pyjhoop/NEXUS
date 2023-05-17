@@ -33,19 +33,15 @@
 
 
 
-
-
-
 	<div class="container total-box" style="margin-left: 0px; margin-right: 0px;">
 
 		<form action="updateIssue.mi" method="post" id="issueUpdateForm">
 
 			<input type="text" class="form-control issuetitle" name="title" placeholder="Title" value="${title }" autofocus>
 			<input type="hidden" name="ino" value="${ino }">
-			<input type="hidden" name="assigneesHidden" value="">
-			<input type="hidden" name="projectHidden" value="">
+			<input type="hidden" name="assignee" value="">
 			<input type="hidden" name="mileHidden" value="">
-			<input type="hidden" name="labelHidden" value="">
+			<input type="hidden" name="label" value="">
 
 			<div class="why">
 				<div class="editor-wrapper">
@@ -102,36 +98,79 @@
 	
 	
 		<div class="mb-3">
-			<label for="defaultSelect" class="form-label">이슈 담당자</label> <br>
-			<div>
-
-				<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-					<c:forEach var="assignee" items="${assignees}">
-						<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-m pull-up" title="${assignee.userName}"><img src="${assignee.profile}" alt="" class="rounded-circle" /></li>
+			<div class="mb-3 test">
+				<label for="defaultSelect1" class="form-label">이슈 담당자</label>
+	
+				<select id="defaultSelect1" class="form-select assigneesSelect" name="issueAss" onchange="selectAss();">
+					<option>이슈 담당자</option>
+					<c:forEach var="r" items="${RepoMembers }">
+						<option  value="${r.profile}">${r.userName}</option>
 					</c:forEach>
-				</ul>
-
-
+				</select>
+				<br>
+				<div>
+					<c:forEach var="assignee" items="${assignees}">
+						<ul id="${assignee.userName}" class="mb-1 list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+						<li class="avatar avatar-xs pull-up"><img src="${assignee.profile}" alt="" class="rounded-circle"></li>
+						${assignee.userName}<i i class="bx bx-x-circle mt-1 ml-1 assClose"></i></ul>
+						<script>
+							var assignees = $("input[name=assignee]");
+							if(assignees.val().length == 0){
+								assignees.val("${assignee.userName}");
+							}else{
+								assignees.val(assignees.val()+","+"${assignee.userName}");
+							}
+						</script>
+					</c:forEach>
+				</div>
+				
+			</div>
+	
+			<div class="mb-3 test1">
+				<label for="defaultSelect" class="form-label">라벨</label>
+				<select id="defaultSelect" class="form-select labelSelect" name="issueLabel" onchange="selectLabel();">
+					<option>라벨</option>
+						<c:forEach var="l" items="${lList }">
+							<option value="${l.name }">${l.name }</option>
+						</c:forEach>
+				</select>
+				<br>
+				<c:forEach items="${labels}" var="label">
+					<c:choose>
+						<c:when test="${label eq 'bug'}">
+							<span class="labelSpan mr-1" id="${label}"><span class="badge rounded-pill bg-label-danger">bug</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>
+						</c:when>
+						<c:when test="${label eq 'enhancement'}">
+							<span class="labelSpan mr-1" id="${label}"><span class="badge rounded-pill bg-label-info">enhancement</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>
+						</c:when>
+						<c:when test="${label eq 'duplicate'}">
+							<span class="labelSpan mr-1" id="${label}"><span class="badge rounded-pill bg-label-dark">duplicate</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>
+						</c:when>
+						<c:when test="${label eq 'documentation'}">
+							<span class="labelSpan mr-1" id="${label}"><span class="badge rounded-pill bg-label-primary">documentation</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>
+						</c:when>
+						<c:when test="${label eq 'invalid'}">
+							<span class="labelSpan mr-1" id="${label}"><span class="badge rounded-pill bg-label-warning">invalid</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>
+						</c:when>
+						<c:when test="${label eq 'help wanted'}">
+							<span class="labelSpan mr-1" id="${label}"><span class="badge rounded-pill bg-label-success">help wanted</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>
+						</c:when>
+						<c:otherwise>
+							<span class="labelSpan mr-1" id="${label}"><span class="badge rounded-pill bg-label-secondary">${label}</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>
+						</c:otherwise>
+					</c:choose>
+					<script>
+						var labelStr = $("input[name=label]");
+						console.log(assignees)
+						if(labelStr.val().length == 0){
+							labelStr.val("${label}");
+						}else{
+							labelStr.val(labelStr.val()+","+"${label}");
+						}
+					</script>
+				</c:forEach>
 			</div>
 
-			<br>
-
-			<select id="issueAssignees" class="form-select" name="assignees" multiple>
-			
-				<c:forEach var="r" items="${RepoMembers}">
-				<c:if test="${empty r }">			
-				<option>이슈 담당자</option>
-</c:if>
-
-					<option value="${r.userName}" <c:forEach var="assignee" items="${assignees}">
-            <c:if test="${r.userName == assignee.userName}">
-                selected
-            </c:if>
-        </c:forEach>>${r.userName}</option>
-				</c:forEach>
-
-
-			</select>
 		</div>
 
 
@@ -179,71 +218,101 @@ document.getElementById('issueAssignees').addEventListener('change', function() 
 
 
 
-
-		<div class="mb-3">
-			<label for="defaultSelect" class="form-label">라벨</label>
-			
-			
-			<div>
-			
-		<c:forEach items="${labels}" var="label">
-		<c:choose>
-												<c:when test="${label eq 'bug'}">
-													<span class="badge rounded-pill bg-label-danger">${label}</span>
-												</c:when>
-												<c:when test="${label eq 'enhancement'}">
-													<span class="badge rounded-pill bg-label-info">${label}</span>
-												</c:when>
-												<c:when test="${label eq 'duplicate'}">
-													<span class="badge rounded-pill bg-label-dark">${label}</span>
-												</c:when>
-												<c:when test="${label eq 'documentation'}">
-													<span class="badge rounded-pill bg-label-primary">${label}</span>
-												</c:when>
-												<c:when test="${label eq 'invalid'}">
-													<span class="badge rounded-pill bg-label-warning">${label}</span>
-												</c:when>
-												<c:when test="${label eq 'help wanted'}">
-													<span class="badge rounded-pill bg-label-success">${label}</span>
-												</c:when>
-												<c:otherwise>
-													<span class="badge rounded-pill bg-label-secondary">${label}</span>
-												</c:otherwise>
-											</c:choose>
-</c:forEach>
-		
-			
-			
-			</div>
-			
-			<br>
-			<select id="defaultSelect" class="form-select labelSelect" name="issueLabel" multiple>
-				<c:forEach var="l" items="${lList }">
-				<c:if test="${empty l }">
-				<option>라벨</option>
-				</c:if>
-					<option value="${l.name }" <c:forEach items="${labels}" var="label"> <c:if test="${l.name == label }"> selected </c:if></c:forEach>>${l.name }</option>
-				</c:forEach>
-			</select>
-		</div>
-
-
-
-
-
-
-
-
-
-
-
-
 	</div>
 	<!-- editor-label -->
 
 	</div>
 
 	<script>
+
+	$(document).on("click",".assClose",function(){
+			console.log($(this));
+			$(this).parent("ul").remove();
+		})
+
+		$(document).on("click",".labelClose",function(){
+			$(this).parent(".labelSpan").remove();
+		})
+
+	function selectAss(){
+
+		var numSelect = document.getElementById("defaultSelect1");
+		var userName = numSelect.options[document.getElementById("defaultSelect1").selectedIndex].text;
+		var profile = numSelect.options[document.getElementById("defaultSelect1").selectedIndex].value;
+
+		if(userName == "이슈 담당자") return;
+
+		let ass = $(".test ul");
+
+		let boolean = "";
+
+		for(let i=0; i<ass.length; i++){
+			boolean = "false";
+			var check = $(ass[i]).prop("id");
+			if(userName == check){
+				boolean = "true";
+				break;
+			}
+		}
+
+		if(boolean == "true") return;
+			var str = '<ul id="'+userName+'" class="mb-1 list-unstyled users-list m-0 avatar-group d-flex align-items-center">'
+			+'<li class="avatar avatar-xs pull-up"><img src="'+ profile+'" alt="" class="rounded-circle"></li>'
+			+ userName+'<i class="bx bx-x-circle mt-1 ml-1 assClose"></i></ul>';
+			
+			$(".test").append(str)
+	}
+
+	function selectLabel(){
+			var numSelect = document.getElementById("defaultSelect");
+			var label = numSelect.options[document.getElementById("defaultSelect").selectedIndex].value;
+			
+
+			if(label == "라벨") return;
+
+			let str = createLabel(label);
+
+			let labels = $(".labelSpan");
+		
+
+			let boolean1 = "";
+
+			for(let i=0; i<labels.length; i++){
+				boolean1 = "false";
+				var check1 = $(labels[i]).prop("id");
+				if(label == check1){
+					boolean1 = "true";
+					break;
+				}
+			}
+
+			if(boolean1 == "true") return;
+
+			$(".test1").append(str);
+
+		}
+
+		function createLabel(label){
+			let str = "";
+			if(label == "bug"){
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-danger">bug</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}else if(label == "enhancement"){
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-info">enhancement</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}else if(label == "duplicate"){
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-dark">duplicate</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}else if(label == "documentation"){
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-primary">documentation</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}else if(label == "invalid"){
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-warning">invalid</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}else if(label == "help wanted"){
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-success">help wanted</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}else{
+				str = '<span class="labelSpan mr-1" id="'+label+'"><span class="badge rounded-pill bg-label-secondary">'+label+'</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>'
+			}
+
+			return str;
+		}
+
 
             var editor = new toastui.Editor({
                 el: document.querySelector('#editor'),
@@ -258,14 +327,39 @@ document.getElementById('issueAssignees').addEventListener('change', function() 
             $(document).ready(function() {
         	    $('#issueUpdateForm').submit(function() {
         	    	
+					var markdown = editor.getMarkdown();
+					$("input[name='body']").val(markdown);
         	    	
-        	    	  var markdown = editor.getMarkdown();
-        	    	    $("input[name='body']").val(markdown);
-        	    	
-        	        
-        	    	
-        	      
+        	        // assignees
+					var assignees = $("input[name=assignee]");
+					var uls = $(".test ul");
+					console.log(uls);
+					var str1 = "";
+					console.log($(uls[0]).prop("id"));
+					for(let i=0; i<uls.length; i++){
+						if(i==0){
+							str1+=$(uls[i]).prop("id");
+						}else{
+							str1+= ","+$(uls[i]).prop("id");
+						}
+					}
+					console.log(str1);
+					assignees.val(str1);
 
+					// labels
+					var spans = $(".test1").children("label").siblings("span");
+					var labelStr = $("input[name=label]");
+					console.log(spans);
+					var str2 = "";
+					for(let i=0; i<spans.length; i++){
+						if(i==0){
+							str2 += $(spans[0]).prop("id");
+						}else{
+							str2 += ","+$(spans[i]).prop("id");
+						}
+					}
+					labelStr.val(str2);
+        	    	
         	        return true;
         	    });
         	});

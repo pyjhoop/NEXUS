@@ -46,14 +46,19 @@
 
           </div>
 
-          <textarea name="newsContent" id="newsContent"></textarea>
+          <textarea name="newsContent" id="newsContent" style="height: 700px;"></textarea>
           
           <c:if test="${ !empty news }">
           	<script>
           		
-          		
               let text = `${news.newsContent}`;
-              $("#newsContent").summernote('code',text)
+             
+
+              $("#newsContent").summernote('code',text);
+
+              
+        
+             
           	</script>
             <input type="hidden" name="newsNo", value="${news.newsNo }">
           </c:if>
@@ -86,13 +91,6 @@
       </div>
 
     </div>
-
-    <c:if test="${news.newsContent != null}">
-      <script>
-        let string = '${news.newsContent}';
-        $("#newsContent").summernote('pasteHTML',string);
-      </script>
-    </c:if>
 
   
 

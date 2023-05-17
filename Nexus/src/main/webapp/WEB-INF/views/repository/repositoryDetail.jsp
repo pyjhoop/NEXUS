@@ -35,7 +35,6 @@
 	
 	<script>
 		console.log('${map}')
-		console.log("hhh")
 	</script>
 	
 	<c:set var="array" value="${fn:split('bg-primary,bg-success,bg-danger,bg-warning,bg-info',',')}" />
@@ -53,15 +52,62 @@
                         <div class="col-lg-5 col-md-5 col-sm-5">
                             <br>
                             <div class="progress mb-3">
+                            <!-- 
                             <c:forEach var="value" items="${map.values() }" varStatus="status">
-                                <div class="progress-bar ${array[status.index] } shadow-none" role="progressbar" style="width: ${value}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                            	<c:choose>
+                            		<c:when test=""></c:when>
+                            	</c:choose>
+                                <div class="progress-bar shadow-none" role="progressbar" style="width: ${value}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                            </c:forEach>
+                             -->
+                            <c:forEach var="i" items="${map}" varStatus="status">
+                            	<c:choose>
+                            		<c:when test="${fn:contains(i, 'JavaScript')}">
+		                                <div class="progress-bar shadow-none jsColor" role="progressbar" style="width: ${i.value}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                            		</c:when>
+                            		<c:when test="${fn:contains(i, 'CSS')}">
+		                                <div class="progress-bar shadow-none cssColor" role="progressbar" style="width: ${i.value}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                            		</c:when>
+                            		<c:when test="${fn:contains(i, 'Java')}">
+		                                <div class="progress-bar shadow-none javaColor" role="progressbar" style="width: ${i.value}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                            		</c:when>
+                            		<c:when test="${fn:contains(i, 'PLSQL')}">
+		                                <div class="progress-bar shadow-none plsqlColor" role="progressbar" style="width: ${i.value}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                            		</c:when>
+                            		<c:when test="${fn:contains(i, 'HTML')}">
+		                                <div class="progress-bar shadow-none jsColor" role="progressbar" style="width: ${i.value}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                            		</c:when>
+                            		
+                            	</c:choose>
                             </c:forEach>
                             </div>
                             
-                            <c:forEach var="i" items="${map }" varStatus="status">
+                            <c:forEach var="i" items="${map}" varStatus="status">
                                 <div style="float: left; width: 50%;">
-                                    <p class="circle ${array[status.index] }"></p>
+                                <c:choose>
+                            		<c:when test="${fn:contains(i, 'JavaScript')}">
+                            		 <p class="circle jsColor"></p>
                                     <span class="cirName"> ${ i }%</span>
+                            		</c:when>
+                            		<c:when test="${fn:contains(i, 'CSS')}">
+                            		 <p class="circle cssColor"></p>
+                                    <span class="cirName"> ${ i }%</span>
+                            		</c:when>
+                            		<c:when test="${fn:contains(i, 'Java')}">
+                            		 <p class="circle javaColor"></p>
+                                    <span class="cirName"> ${ i }%</span>
+                            		</c:when>
+                            		<c:when test="${fn:contains(i, 'PLSQL')}">
+                            		 <p class="circle plsqlColor"></p>
+                                    <span class="cirName"> ${ i }%</span>
+                            		</c:when>
+                            		<c:when test="${fn:contains(i, 'HTML')}">
+                            		 <p class="circle htmlColor"></p>
+                                    <span class="cirName"> ${ i }%</span>
+                            		</c:when>
+                            		
+                            	</c:choose>
+                                   
 
                                 </div>
                             

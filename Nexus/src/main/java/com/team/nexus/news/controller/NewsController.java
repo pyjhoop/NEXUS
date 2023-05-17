@@ -220,7 +220,14 @@ public class NewsController {
 	
 	@RequestMapping("updateNews")
 	public String updateNews(News n) {
-
+		
+		System.out.println("====update====");
+		System.out.println(n);
+		
+		int index = n.getNewsContent().lastIndexOf(",");
+		String str = n.getNewsContent().substring(0, index);
+		n.setNewsContent(str);
+		
 		int result = newsService.updateNews(n);
 		return "redirect:news.p";
 	}
@@ -228,8 +235,7 @@ public class NewsController {
 	@RequestMapping("newsLike")
 	@ResponseBody
 	public String ajaxNewsLike(Zzim z) {
-		System.out.println(z);
-		// 있는지 조회부터
+		// 내가 찜했는지 조회부터
 		int result = newsService.likeCount(z);
 		
 		if(result>0) { //update

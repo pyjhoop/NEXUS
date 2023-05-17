@@ -31,7 +31,7 @@
 			         n.news_no
 			       , m.user_name 
 			       , n.news_title
-			       , DBMS_LOB.SUBSTR(n.news_content, 1000, 1) as "news_content"
+			       , DBMS_LOB.SUBSTR(n.news_content, 2000, 1) as "news_content"
                    , to_char(n.create_date,'YYYY-MM-DD') "CREATE_DATE"
 			       , thumbnail
 			       , profile
@@ -43,7 +43,7 @@
              <if test='text != "new" and text != "popular" and text !=null'>
 	             and m.user_no = #{state}             
              </if>
-             group by n.news_no, m.user_name, n.news_title, DBMS_LOB.SUBSTR(news_content, 1000, 1),to_char(create_date,'YYYY-MM-DD'), thumbnail, profile
+             group by n.news_no, m.user_name, n.news_title, DBMS_LOB.SUBSTR(news_content, 2000, 1),to_char(create_date,'YYYY-MM-DD'), thumbnail, profile
              <if test='state == "new" or state == null or state == "my"'>
 	             order by news_no desc
              </if>
