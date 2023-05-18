@@ -32,9 +32,10 @@ public class MailSendService {
 		String toMail = email;
 		String title = "회원 가입 인증 이메일 입니다."; // 이메일 제목 
 		String content = 
-				"홈페이지를 방문해주셔서 감사합니다." + 	//html 형식으로 작성 ! 
+				"<img alt='' src='https://pyjhoop.github.io/image/logo5.png' width='484px' height='170px'><br>"+
+				"<strong>NEXUS</strong>를 방문해주셔서 감사합니다." + 	//html 형식으로 작성 ! 
                 "<br><br>" + 
-			    "인증 번호는 " + authNumber + "입니다." + 
+			    "인증 번호는 <strong>" + authNumber + "</strong>입니다." + 
 			    "<br>" + 
 			    "해당 인증번호를 인증번호 확인란에 기입하여 주세요."; //이메일 내용 삽입
 		mailSend(setFrom, toMail, title, content);

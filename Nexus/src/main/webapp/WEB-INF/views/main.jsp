@@ -45,7 +45,7 @@
 
               </div>
 
-              <div class="card mt-4" style="padding: 10px;">
+              <div class="card mt-4 issueTable" style="padding: 10px; height: 65%; overflow: auto;">
                 <h5 class="text-primary">Latest issues</h5>
                 
                   <table class="table" id="issueTable">

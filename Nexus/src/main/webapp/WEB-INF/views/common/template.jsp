@@ -205,7 +205,7 @@
 					<div data-i18n="Form Elements">News</div>
 				</a></li>
 
-				<li class="menu-item"><a href="selectChat.ih" target="_blank" class="menu-link">
+				<li class="menu-item"><a href="selectChat.ih" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-message-rounded-dots"></i>
 						<div data-i18n="Support">Chatting</div>
 					</a></li>
