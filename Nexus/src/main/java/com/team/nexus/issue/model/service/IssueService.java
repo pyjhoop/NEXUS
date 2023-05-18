@@ -236,7 +236,7 @@ public class IssueService {
 	         for (int i = 0; i < jsonNode.size(); i++) {
 	            String id = jsonNode.get(i).get("id").asText();
 	            String title = jsonNode.get(i).get("title").asText();
-	            int number = jsonNode.get(i).get("number").asInt();
+	            String number = jsonNode.get(i).get("number").asText();
 	            String state = jsonNode.get(i).get("state").asText();
 	            Milestone m = new Milestone(id, title, number, state);
 	            mList.add(m);

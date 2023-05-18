@@ -19,7 +19,7 @@ public class Milestone {
    
    private String id;
    private String title;
-   private int number;
+   private String number;
    private String state;
    
    
