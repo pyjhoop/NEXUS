@@ -44,8 +44,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/issue_select.css">
 
-<style>
-</style>
+
 
 
 
@@ -93,28 +92,7 @@
 				</div>
 				<br>
 				<div class="btnBox">
-					<div class="btnGroup1">
-
-						<c:set var="email" value="${loginUser.userId}" />
-						<c:set var="username"
-							value="${email.substring(0, email.indexOf('@'))}" />
-						<c:set var="isAuthor" value="false" />
-
-						<c:forEach items="${list}" var="i" varStatus="loop">
-							<c:if test="${i.userId eq username }">
-								<c:set var="isAuthor" value="true" />
-							</c:if>
-						</c:forEach>
-
-
-						<c:if test="${isAuthor eq 'true' }">
-							<button class="btn btn-outline-dark btn-sm issueauthor"
-								name="author" value="${i.user }">내가 작성한 이슈</button>
-						</c:if>
-
-
-
-					</div>
+					
 					<div class="btnGroup2">
 						<button class="btn btn-outline-dark btn-sm issueassign"
 							name="assign" value="myIssue">내 담당 이슈</button>

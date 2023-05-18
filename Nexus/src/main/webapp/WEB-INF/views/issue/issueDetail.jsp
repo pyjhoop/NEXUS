@@ -21,11 +21,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/issue_mini.js"></script>
 
 
-<style>
-.mb-3 {
-   margin-botom: 2rem !important;
-}
-</style>
+
 
 
 
