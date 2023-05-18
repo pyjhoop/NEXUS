@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
 </head>
 <body>
+
 	<jsp:include page="common/template.jsp"/>
 	<div class="container-xxl flex-grow-1 container-p-y">
 
@@ -150,15 +151,20 @@
             <c:set var="bool" value="false"/>
             <c:set var="bool1" value="false"/>
             <c:set var="doneLoop" value="false"/>
+            
             <div class="col-md-2 col-lg-2 mb-3">
               <div class="card mb-3" style="padding: 10px; height: 90%">
                 <h5 class="text-primary">Friends</h5>
 	                <c:forEach var="i" items="${fList }">
+	                	<c:set var="bool" value="false"/>
+	                	<c:set var="bool1" value="false"/>
 	                	
 		                <c:forEach var="m" items="${ConnectMembers}">
-		                	<c:set var="bool" value="false"/>
 		                	<c:choose>
 		                		<c:when test="${ m == i.userName }">
+		                			<script>
+		                				console.log("${m}");
+		                			</script>
 		                			<c:set var="bool1" value="true"/>
 		                		</c:when>
 		                		<c:otherwise>
