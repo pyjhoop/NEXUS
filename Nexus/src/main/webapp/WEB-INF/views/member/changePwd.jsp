@@ -33,6 +33,7 @@
       rel="stylesheet"
     />
 
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/vendor/fonts/boxicons.css" />
 
@@ -77,31 +78,31 @@
                   <span class="app-brand-text demo text-body fw-bolder">NEXUS</span>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Forgot Password? 🔒</h4>
-              <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
-              <form id="formAuthentication" class="mb-3" action="resetPwd.p" method="GET">
+              <h4 class="mb-2">Change Password 🔒</h4>
+              <form id="formAuthentication" class="mb-3" action="resetPwd.p" method="POST">
 	              <div class="mb-3">
-	                  <label for="ID" class="form-label">아이디</label>
+	                  <label for="userPwd" class="form-label">비밀번호</label>
 	                  <input
-	                    type="text"
+	                    type="password"
 	                    class="form-control"
-	                    id="id"
-	                    name="userId"
-	                    placeholder="Enter your id"
+	                    id="userPwd"
+	                    name="userPwd"
+	                    placeholder="비밀번호 입력"
 	                    autofocus
 	                  />
 	                </div>
+	                <input type="hidden" name="userId" value="${userId }">
                 <div class="mb-3">
-                  <label for="email" class="form-label">이메일</label>
+                  <label for="pwdConfirm" class="form-label">비밀번호 확인</label>
                   <input
-                    type="text"
+                    type="password"
                     class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email"
+                    id="pwdConfirm"
+                    name="pwdConfirm"
+                    placeholder="비밀번호 재입력"
                   />
                 </div>
-                <button type="submit" class="btn btn-primary d-grid w-100">사용자 확인</button>
+                <button type="submit" class="btn btn-primary d-grid w-100" onclick="return pwdCheck();">비밀번호 재설정</button>
               </form>
               <div class="text-center">
                 <a href="login.p" class="d-flex align-items-center justify-content-center">
@@ -115,6 +116,50 @@
         </div>
       </div>
     </div>
+
+    <script>
+      var sum = 0;
+      $(function(){
+        $("#userPwd").keyup(function(){
+          $(".inf1").remove();
+        const regEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+        const pwd = $(this);
+        if(regEx.test(pwd.val())){
+            pwd.after("<span class='text-primary inf1'>사용가능</span>")
+            pwd.css("border-color","");
+        }else{
+            pwd.after("<span class='text-danger inf1'>영문자와 숫자 특수문자를 조합해 8자 이상 입력해주세요</span>")
+            pwd.addClass("dis");
+        }
+    })
+
+    // 비밀번호 재확인 
+    $("#pwdConfirm").focusout(function(){
+        $(".inf2").remove();
+        const pwdFirm = $(this);
+        const pwdRaw = $("#userPwd").val();
+        if(pwdRaw != ''){
+            if(pwdFirm.val() == pwdRaw){
+                pwdFirm.after("<span class='text-primary inf2'>비밀번호가 일치합니다</span>")
+                pwdFirm.removeClass("dis")
+                pwdFirm.css("border-color","");
+                sum=1;
+            }else if((pwdFirm.val() != pwdRaw )){
+                pwdFirm.after("<span class='text-danger inf2'>비밀번호가 일치하지 않습니다</span>")
+                pwdFirm.addClass("dis");
+            }
+        }
+    })
+      })
+
+      function pwdCheck(){
+        if(sum == 1){
+          return true;
+        }else{
+          return false;
+        }
+      }
+    </script>
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->

@@ -205,19 +205,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping("resetPwd.p")
-	public String resetPwd(Member m, HttpSession session) {
+	public String resetPwd(String userId, Model model) {
 		
-		int count = mService.resetPwd(m);
-		
-		if(count>0) {
-			System.out.println("비번 변경 페이지 이동");
-			return "redirect:login.p";
-		}else {
-			System.out.println("정보가 일치지 않습니다.");
-			session.setAttribute("alertMsg", "정보가 일치하지 않습니다.");
-			return "redirect:forgotPwd.p";
-		}
-		
+		model.addAttribute("userId",userId);
+		return "member/changePwd";
 	}
 	
 	@RequestMapping(value="enrollToken", produces = "text/html; charset=utf-8")
@@ -235,8 +226,8 @@ public class MemberController {
 			return "토큰 등록에 실패했습니다. 다시 등록해주세요";
 		}
 		
-		
-		
 	}
+	
+
 	
 }
