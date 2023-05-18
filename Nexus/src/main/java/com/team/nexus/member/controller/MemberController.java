@@ -177,9 +177,10 @@ public class MemberController {
 		String access_Token = kakaoService.getAccessToken(code);
 		token = access_Token;
 		}
+		
 		Member userInfo = kakaoService.getUserInfo(token);
 		session.setAttribute("loginUser", userInfo);
-		
+		token = "";
 		return "redirect:main.p";		
 	}
 	

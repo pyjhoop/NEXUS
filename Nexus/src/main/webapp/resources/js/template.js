@@ -1,4 +1,9 @@
 $(function(){
+    
+    $("#hotNews").click(function(){
+        var newsNo1 = $("#newsNo");
+        location.href="newsDetail.p?nNo="+newsNo1.val();
+    })
 
     $("#tokenSubmit").click(function(){
         var token = $("#gitToken").val();
@@ -23,6 +28,8 @@ $(function(){
         type:"GET",
         success:function(data){
             console.log(data);
+            var newsNo = $("#newsNo");
+            newsNo.val(data.newsNo);
             $hotNews.html(data.newsTitle);
 
         },error: function(){
@@ -30,12 +37,16 @@ $(function(){
         }
     })
 
+    
+
     setInterval(() =>{
         $.ajax({
             url:"selectHotNews",
             type:"GET",
             success:function(data){
                 console.log(data);
+                var newsNo = $("#newsNo");
+                newsNo.val(data.newsNo);
                 $hotNews.html(data.newsTitle);
 
             },error: function(){
