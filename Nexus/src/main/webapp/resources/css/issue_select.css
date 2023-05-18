@@ -1,4 +1,14 @@
 
+
+.assClose:hover {
+   cursor: pointer;
+}
+
+.labelClose:hover {
+   cursor: pointer;
+}
+
+
 .label-list {
    display: flex;
    flex-wrap: wrap;

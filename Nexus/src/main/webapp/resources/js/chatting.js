@@ -127,7 +127,7 @@ chatSocket.onmessage = function(e) {
              myChatting += "<div class='chat-attachment'>" +
                             "<img src=" +
                             chatMessage.changeName +
-                            " >" +
+                            " class='chat-img'>" +
                             "<div class='chat-attach-caption'>" +
                             chatMessage.originName +
                             "</div>" +
@@ -209,7 +209,7 @@ chatSocket.onmessage = function(e) {
                  myChatting += "<div class='chat-attachment'>" +
                                 "<img src=" +
                                 chatMessage.changeName +
-                                " >" +
+                                " class='chat-img'>" +
                                 "<div class='chat-attach-caption'>" +
                                 chatMessage.originName +
                                 "</div>" +

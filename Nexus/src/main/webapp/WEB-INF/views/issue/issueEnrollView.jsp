@@ -21,15 +21,6 @@
 
 
 
-<style>
-.assClose:hover {
-   cursor: pointer;
-}
-
-.labelClose:hover {
-   cursor: pointer;
-}
-</style>
 
 
 </head>

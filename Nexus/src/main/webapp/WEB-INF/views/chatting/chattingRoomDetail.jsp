@@ -175,7 +175,7 @@ a:hover { text-decoration:none !important }
 									${f.userName }
 									</div>
 									<div>
-									userCode : ${f.userNo }
+									${f.userId }
 									</div>
 									</div>
 									<div>
