@@ -152,7 +152,16 @@
               <div class="card mb-3" style="padding: 10px; height: 90%">
                 <h5 class="text-primary">Friends</h5>
 	                <c:forEach var="i" items="${fList }">
-		                <c:forEach var="m" items="${ConnectMembers }">
+                    <script>
+                      console.log("i:==========");
+                      console.log('${i.userName}');
+                      console.log('${ConnectMembers}');
+                    </script>
+		                <c:forEach var="m" items="${ConnectMembers}">
+                      <script>
+                        console.log('m:===========')
+                        console.log('${m}');
+                      </script>
 		                	<c:choose>
 		                		<c:when test="${ m == i.userName }">
 		                			<c:set var="bool" value="true"/>
