@@ -160,6 +160,7 @@
 	                	<c:set var="bool1" value="false"/>
 	                	
 		                <c:forEach var="m" items="${ConnectMembers}">
+
 		                	<c:choose>
 		                		<c:when test="${ m == i.userName }">
 		                			<script>
