@@ -162,7 +162,6 @@ public class IssueController {
          String[] assignees = assignee.split(",");
          String[] labels = label.split(",");
          
-         System.out.println(labels);
          System.out.println(assignees);
          System.out.println(milestone);
          
