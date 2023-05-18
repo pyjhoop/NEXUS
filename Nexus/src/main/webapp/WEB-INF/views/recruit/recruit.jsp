@@ -335,9 +335,9 @@ margin-bottom: 5px;
 	display: inline-block; 
 	font-size: 1.1rem;
 }
-.bx{
+/* .bx{
 	font-size: 1.8rem !important;
-}
+} */
 #prs{
 	width: 83%; 
 	height: 50px;

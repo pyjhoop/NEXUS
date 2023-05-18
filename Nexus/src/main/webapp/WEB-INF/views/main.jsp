@@ -147,30 +147,29 @@
               </div>
             </div>
 
-
+            <c:set var="bool" value="false"/>
+            <c:set var="bool1" value="false"/>
+            <c:set var="doneLoop" value="false"/>
             <div class="col-md-2 col-lg-2 mb-3">
               <div class="card mb-3" style="padding: 10px; height: 90%">
                 <h5 class="text-primary">Friends</h5>
 	                <c:forEach var="i" items="${fList }">
-                    <script>
-                      console.log("i:==========");
-                      console.log('${i.userName}');
-                      console.log('${ConnectMembers}');
-                    </script>
+	                	
 		                <c:forEach var="m" items="${ConnectMembers}">
-                      <script>
-                        console.log('m:===========')
-                        console.log('${m}');
-                      </script>
+		                	<c:set var="bool" value="false"/>
 		                	<c:choose>
 		                		<c:when test="${ m == i.userName }">
-		                			<c:set var="bool" value="true"/>
+		                			<c:set var="bool1" value="true"/>
 		                		</c:when>
 		                		<c:otherwise>
 		                			<c:set var="bool" value="false"/>
 		                		</c:otherwise>
 		                	</c:choose>
+		                	
 	                	</c:forEach>
+	                	
+	                	<c:set var="bool" value="${bool1}"/>
+	                	
 	                	<div style="width: 100%; display: flex">
 	                		<c:choose>
 	                			<c:when test="${ bool == true }">

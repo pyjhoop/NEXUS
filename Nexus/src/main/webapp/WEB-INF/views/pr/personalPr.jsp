@@ -9,7 +9,7 @@
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 </head>
 <style>
-#mainBody{
+	#mainBody{
 	height: auto; 
 	width: 100%;
 	margin:auto;
@@ -224,11 +224,6 @@
   stroke-dashoffset: -220;
   transition: 1s all ease;
 }
-/* 
-    Pushing the text up into the SVG. Without this the
-    text would be below the div's.
-*/
-
 #text {
   margin-top: -35px;
   text-align: center;
@@ -302,8 +297,7 @@ hr{
    width: 240px; 
    height: 99.375px;
 	
-}
-.card-category{
+}.card-category{
 	float:left; width: 50%;
 }
 .card-category1{
@@ -346,9 +340,9 @@ margin-bottom: 5px;
 	display: inline-block; 
 	font-size: 1.1rem;
 }
-.bx{
+/* .bx{
 	font-size: 1.8rem !important;
-}
+} */
 #prs{
 	width: 83%; 
 	height: 50px;
@@ -411,6 +405,7 @@ transform: scale(1.1);
 	background-color: white !important;
 	color: #0d6efd !important;
 }
+
 </style>
 <body>
 <jsp:include page="../common/template.jsp"/>
