@@ -306,23 +306,19 @@ public class IssueController {
 		
 			if (milestone != null && !milestone.isEmpty()) {
 				requestBody.put("milestone", milestone);
+		    }else {
+		        // 마일스톤이 없는 경우에는 빈 문자열로 설정하여 삭제를 반영
+		    	requestBody.put("milestone", "");
 		    }
 
 		
 		String[] assignees = assignee.split(",");
-//		String[] labels = label.split(",");
 
 		JSONArray array1 = new JSONArray();
 		for (int i = 0; i < assignees.length; i++) {
 			array1.add(assignees[i]);
 		}
-
-//		JSONArray array2 = new JSONArray();
-//		for (int i = 0; i < labels.length; i++) {
-//			array2.add(labels[i]);
-//		}
 		requestBody.put("assignees", array1);
-//		requestBody.put("labels", array2);
 		
 		
 		
@@ -333,6 +329,9 @@ public class IssueController {
 	            labelsArray.add(s);
 	        }
 	        requestBody.put("labels", labelsArray);
+	    }else {
+	        // 라벨이 없는 경우에는 빈 배열로 설정하여 삭제를 반영
+	    	requestBody.put("labels", new JSONArray());
 	    }
 		
 		
