@@ -224,5 +224,40 @@
 		  where news_no = #{newsNo}
 	</update>
 	
+	<select id="getNewsList" resultMap="newsResultSet">
+			select
+			         n.news_no
+			       , m.user_name 
+			       , n.news_title
+			       , DBMS_LOB.SUBSTR(n.news_content, 2000, 1) as "news_content"
+                   , to_char(n.create_date,'YYYY-MM-DD') "CREATE_DATE"
+			       , thumbnail
+			       , profile
+                   , count(CASE WHEN z.status = 'Y' THEN 1 ELSE NULL END) as "likeCount"
+			 from tb_news n
+			 join tb_member m on(n.user_no = m.user_no)
+             left join tb_news_zzim z on(n.news_no = z.news_no)
+             where n.status='Y'
+             group by n.news_no, m.user_name, n.news_title, DBMS_LOB.SUBSTR(news_content, 2000, 1),to_char(create_date,'YYYY-MM-DD'), thumbnail, profile
+             order by 5 desc, 8 desc
+	</select>
+	
+	<select id="selectHotNews" resultMap="newsResultSet">
+		select * from (
+        select
+			         n.news_no
+			       , n.news_title
+                   , to_char(n.create_date,'YYYY-MM-DD') "CREATE_DATE"
+                   , count(CASE WHEN z.status = 'Y' THEN 1 ELSE NULL END) as "likeCount"
+			 from tb_news n
+			 join tb_member m on(n.user_no = m.user_no)
+             left join tb_news_zzim z on(n.news_no = z.news_no)
+             where n.status='Y'
+             group by n.news_no, n.news_title, to_char(create_date,'YYYY-MM-DD')
+             order by 3 desc, 4 desc
+             )
+             where rownum = 1
+	</select>
+	
 	
 </mapper>

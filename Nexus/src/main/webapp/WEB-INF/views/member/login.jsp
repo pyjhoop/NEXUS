@@ -91,6 +91,13 @@
 	
 		<c:remove var="alertMsg" scope="session" />
 	</c:if>
+	
+	<c:if test="${ not empty loginUser }">
+		<script>
+			location.href="main.p";
+		</script>
+	</c:if>
+
 	    
     
 

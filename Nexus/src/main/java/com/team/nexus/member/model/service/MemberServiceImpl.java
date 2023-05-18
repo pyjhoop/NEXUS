@@ -1,11 +1,14 @@
 package com.team.nexus.member.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team.nexus.member.model.dao.MemberDao;
 import com.team.nexus.member.model.vo.Member;
+import com.team.nexus.repository.model.vo.Repositories;
 
 @Service
 public class MemberServiceImpl {
@@ -40,6 +43,11 @@ public class MemberServiceImpl {
 	public int enrollToken(Member m) {
 		return mDao.enrollToken(sqlSession, m);
 	}
+
+	public int updateConnection(int no) {
+		return mDao.updateConnection(sqlSession, no);
+	}
+
 	
 	
 

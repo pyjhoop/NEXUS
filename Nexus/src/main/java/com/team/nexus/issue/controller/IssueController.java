@@ -161,6 +161,8 @@ public class IssueController {
 		String repository = (String) session.getAttribute("repository");
 		String apiUrl = "https://api.github.com/repos/" + repository + "/issues";
 		
+		System.out.println(apiUrl);
+		
 		String[] assignees = assignee.split(",");
 		String[] labels = label.split(",");
 		
@@ -309,6 +311,88 @@ public class IssueController {
 	    try {
 	        String token = ((Member) session.getAttribute("loginUser")).getToken();
 	        String repository = (String) session.getAttribute("repository");
+
+	        List<Label> lList = iService.getLabels(repository, session);
+
+	        String apiUrl = "https://api.github.com/repos/" + repository + "/issues/" + ino;
+
+	        RestTemplate restTemplate = new RestTemplate();
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.set("Authorization", "Bearer " + token);
+	        headers.setContentType(MediaType.APPLICATION_JSON);
+	        HttpEntity<String> requestEntity = new HttpEntity<>("", headers);
+	        ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, requestEntity, String.class);
+	        HttpStatus responseStatus = responseEntity.getStatusCode();
+
+	        if (responseStatus != HttpStatus.OK) {
+	            throw new RuntimeException("Failed to retrieve issue data from GitHub API: " + responseStatus.toString());
+	        }
+
+	        Gson gson = new GsonBuilder().setLenient().create();
+	        JsonObject issueJson = gson.fromJson(responseEntity.getBody(), JsonObject.class);
+	        String title = issueJson.get("title").getAsString();
+
+	        // body branch processing null date
+	        JsonElement bodyElement = issueJson.get("body");
+	        String body = (bodyElement != null && !bodyElement.isJsonNull()) ? bodyElement.getAsString() : null;
+
+	        String state = issueJson.get("state").getAsString();
+
+	        // Retrieve assignees array
+	        JsonArray assigneesArray = issueJson.getAsJsonArray("assignees");
+	        ArrayList<Member> assignees = new ArrayList<>();
+
+	        if (assigneesArray != null) {
+	            for (JsonElement assigneeElement : assigneesArray) {
+	                JsonObject assigneeObject = assigneeElement.getAsJsonObject();
+
+	                String userName = assigneeObject.get("login").getAsString();
+	                String assigneeProfiles = assigneeObject.get("avatar_url").getAsString();
+
+	                Member assignee = new Member();
+	                assignee.setUserName(userName);
+	                assignee.setProfile(assigneeProfiles);
+
+	                assignees.add(assignee);
+	            }
+	        }
+
+	        // Retrieve labels array
+	        JsonArray labelsArray = issueJson.getAsJsonArray("labels");
+	        List<String> labels = new ArrayList<>();
+
+	        if (labelsArray != null) {
+	            for (JsonElement labelElement : labelsArray) {
+	                JsonObject labelObject = labelElement.getAsJsonObject();
+	                String labelName = labelObject.get("name").getAsString();
+	                labels.add(labelName);
+	            }
+	        }
+
+	        // Retrieve issue manager's profile
+	        JsonObject userObject = issueJson.getAsJsonObject("user");
+	        String issueManagerName = userObject.get("login").getAsString();
+
+	        model.addAttribute("title", title);
+	        model.addAttribute("body", body);
+	        model.addAttribute("state", state);
+	        model.addAttribute("ino", ino);
+	        model.addAttribute("assignees", assignees);
+	        model.addAttribute("labels", labels);
+	        model.addAttribute("issueManagerName", issueManagerName);
+	        model.addAttribute("lList", lList);
+
+	        return "issue/issueDetail";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "common/error500";
+	    }
+	}
+	
+	@RequestMapping(value = "issueDetail1.mini", produces = "application/json; charset=utf-8")
+	public String selectIssue1(@RequestParam String ino, String repository ,HttpSession session, Model model) {
+	    try {
+	        String token = ((Member) session.getAttribute("loginUser")).getToken();
 
 	        List<Label> lList = iService.getLabels(repository, session);
 

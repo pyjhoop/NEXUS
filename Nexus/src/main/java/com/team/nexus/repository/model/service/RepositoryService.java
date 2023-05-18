@@ -175,4 +175,12 @@ public class RepositoryService {
 		return response.getBody();
 	}
 
+	public int updateAccessDate(int rNo) {
+		return rDao.updateAccessDate(sqlSession, rNo);
+	}
+
+	public ArrayList<Repositories> selectRepoList1(int userNo) {
+		return rDao.selectRepoList1(sqlSession, userNo);
+	}
+
 }

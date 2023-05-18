@@ -66,6 +66,7 @@ public class RepositoryController {
 	@RequestMapping("repoDetail.p")
 	public String repoDetail(HttpSession session,int rNo , Model model) throws JsonMappingException, JsonProcessingException{
 		Repositories repo = repoService.selectRepo(rNo);
+		int updateResult = repoService.updateAccessDate(rNo);
 		
 		
 		String url = repo.getUserName()+"/"+repo.getRepoName()+"/languages";
@@ -162,20 +163,11 @@ public class RepositoryController {
 		
 		// 레파지토리 멤버 세션에 저장
 		session.setAttribute("RepoMembers", mList);
-		
-		
 		session.setAttribute("list",list);
 		session.setAttribute("map",map);
 		session.setAttribute("repo",repo);
 		session.setAttribute("text",text);
 		session.setAttribute("mList",mList);
-		
-//		model.addAttribute("list",list);
-//		model.addAttribute("map",map);
-//		model.addAttribute("repo",repo);
-//		model.addAttribute("text",text);
-//		model.addAttribute("mList",mList);
-		
 		
 		return "repository/repositoryDetail";
 		

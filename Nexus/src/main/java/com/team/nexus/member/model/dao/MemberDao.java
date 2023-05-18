@@ -1,11 +1,13 @@
 package com.team.nexus.member.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.team.nexus.member.model.vo.Member;
+import com.team.nexus.repository.model.vo.Repositories;
 
 @Repository
 public class MemberDao {
@@ -38,4 +40,9 @@ public class MemberDao {
 	public int enrollToken(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("memberMapper.enrollToken", m);
 	}
+
+	public int updateConnection(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.update("memberMaper.updateConnection",no);
+	}
+
 }

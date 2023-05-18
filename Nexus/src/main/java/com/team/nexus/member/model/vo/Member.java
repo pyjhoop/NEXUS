@@ -30,5 +30,6 @@ public class Member {
 	private String roomTitle2;
 	private String changeName2;
 	private String rollName;
+	private String connectStatus;
 	
 }

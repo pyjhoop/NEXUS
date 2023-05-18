@@ -17,6 +17,7 @@
 		<result column="enroll_date" property="enrollDate"/>
 		<result column="token" property="token"/>
 		<result column="status" property="status"/>
+		<result column="connect_status" property="connectStatus"/>
 	</resultMap>
 
 	<!-- 회원가입시 아이디 체크용 -->
@@ -143,6 +144,12 @@
 		update tb_member
 		   set token = #{token}
 		 where user_no = #{userNo} 
+	</update>
+	
+	<update id="updateConnection">
+		update tb_member
+		   set connect_status = 'Y'
+		 where user_no = #{no}
 	</update>
 	
 </mapper>

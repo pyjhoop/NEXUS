@@ -278,6 +278,15 @@ public class NewsController {
 		return new Gson().toJson(list);
 	}
 	
+	@RequestMapping(value="selectHotNews", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String selectHotNews() {
+		
+		News n = newsService.selectHotNews();
+		
+		return new Gson().toJson(n);
+	}
+	
 	
 	
 }

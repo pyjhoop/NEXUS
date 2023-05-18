@@ -16,4 +16,31 @@ $(function(){
             }
         })
     })
+
+    var $hotNews = $("#hotNews");
+    $.ajax({
+        url:"selectHotNews",
+        type:"GET",
+        success:function(data){
+            console.log(data);
+            $hotNews.html(data.newsTitle);
+
+        },error: function(){
+            console.log("ajax 통신 에러")
+        }
+    })
+
+    setInterval(() =>{
+        $.ajax({
+            url:"selectHotNews",
+            type:"GET",
+            success:function(data){
+                console.log(data);
+                $hotNews.html(data.newsTitle);
+
+            },error: function(){
+                console.log("ajax 통신 에러")
+            }
+        })
+    }, 5000)
 })

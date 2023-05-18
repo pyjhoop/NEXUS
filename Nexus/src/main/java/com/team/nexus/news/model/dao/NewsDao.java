@@ -86,5 +86,13 @@ public class NewsDao {
 		return (ArrayList)sqlsession.selectList("newsMapper.selectList", state);
 	}
 
+	public ArrayList<News> getNewsList(SqlSessionTemplate sqlsession) {
+		return (ArrayList)sqlsession.selectList("newsMapper.getNewsList");
+	}
+
+	public News selectHotNews(SqlSessionTemplate sqlsession) {
+		return sqlsession.selectOne("newsMapper.selectHotNews");
+	}
+
 	
 }

@@ -34,5 +34,13 @@ public class RepositoryDao {
 		return sqlSession.selectOne("repoMapper.getRepoContent", repo);
 	}
 
+	public int updateAccessDate(SqlSessionTemplate sqlSession, int rNo) {
+		return sqlSession.update("repoMapper.updateAccessDate", rNo);
+	}
+
+	public ArrayList<Repositories> selectRepoList1(SqlSessionTemplate sqlSession, int userNo) {
+		return (ArrayList)sqlSession.selectList("repoMapper.selectRepoList1", userNo);
+	}
+
 
 }

@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -302,16 +303,119 @@ public class IssueService {
 		}
 
 	
-	
-	
-	
-	
-	
-	
 	private GitIssue createGitIssueFromJsonObject(JsonObject issueObj) {
 		GitIssue git = new GitIssue();
 
 		git.setTitle(issueObj.get("title").getAsString());
+
+		JsonArray labelsArr = issueObj.get("labels").getAsJsonArray();
+		String[] labels = new String[labelsArr.size()];
+		for (int j = 0; j < labelsArr.size(); j++) {
+			labels[j] = labelsArr.get(j).getAsJsonObject().get("name").getAsString();
+		}
+		git.setLabels(labels);
+
+		git.setState(issueObj.get("state").getAsString());
+
+		JsonElement milestoneElem = issueObj.get("milestone");
+		if (!milestoneElem.isJsonNull()) {
+			JsonObject milestoneObj = milestoneElem.getAsJsonObject();
+			git.setMilestone(milestoneObj.get("title").getAsString());
+		}
+
+		git.setNumber(issueObj.get("number").getAsInt());
+
+		JsonArray assigneesArr = issueObj.get("assignees").getAsJsonArray();
+		String[] assignees = new String[assigneesArr.size()];
+		String[] assigneeProfiles = new String[assigneesArr.size()]; // 이슈 담당자 프로필
+		for (int j = 0; j < assigneesArr.size(); j++) {
+			JsonObject assigneeObj = assigneesArr.get(j).getAsJsonObject();
+			assignees[j] = assigneeObj.get("login").getAsString();
+			assigneeProfiles[j] = assigneeObj.get("avatar_url").getAsString(); // 이슈 담당자 프로필
+		}
+		git.setAssignees(assignees);
+		git.setAssigneeProfiles(assigneeProfiles); // 이슈 담당자 프로필 설정
+
+		String createdDateTimeString = issueObj.get("created_at").getAsString();
+		LocalDateTime createdDateTime = LocalDateTime.parse(createdDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
+		String createdDateString = createdDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		git.setCreatedAt(createdDateString);
+
+		git.setUpdatedAt(issueObj.get("updated_at").getAsString());
+
+		JsonElement closedAtElem = issueObj.get("closed_at");
+		if (!closedAtElem.isJsonNull()) {
+			git.setClosedAt(closedAtElem.getAsString());
+		}
+
+		git.setId(issueObj.get("id").getAsString()); // 이슈 아이디
+
+		JsonObject userObj = issueObj.get("user").getAsJsonObject();
+		git.setUser(userObj.get("login").getAsString());
+		git.setUserId(userObj.get("id").getAsString());
+
+		String userProfileUrl = userObj.get("avatar_url").getAsString();
+		git.setProfile(userProfileUrl);
+
+		return git;
+	}
+	
+	
+	
+	public ArrayList<GitIssue> getHomeIssues(HttpSession session) throws IOException {
+		 LocalDate currentDate = LocalDate.now();
+	        
+        // Subtract 5 days from the current date
+        LocalDate fiveDaysAgo = currentDate.minusDays(5);
+        
+        // Format the date as "yyyy-mm-dd"
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = fiveDaysAgo.format(formatter);
+		String apiUrl = "https://api.github.com/issues?since="+formattedDate+"&state=open";
+		
+		String token = ((Member)session.getAttribute("loginUser")).getToken();
+		ArrayList<GitIssue> list = new ArrayList<>();
+		
+		if(token == null || token.equals("")) {
+			return list;
+		}
+
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "Bearer " + token);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, requestEntity, String.class);
+		HttpStatus responseStatus = responseEntity.getStatusCode();
+
+		if (responseStatus != HttpStatus.OK) {
+			throw new RuntimeException("Failed to get assigned issues on GitHub API: " + responseStatus.toString());
+		}
+
+		Gson gson = new GsonBuilder().setLenient().create();
+		JsonArray arr = JsonParser.parseString(responseEntity.getBody()).getAsJsonArray();
+		
+
+		for (int i = 0; i < arr.size(); i++) {
+			JsonObject issueObj = arr.get(i).getAsJsonObject();
+			GitIssue git = createGitIssueFromJsonObject1(issueObj);
+			list.add(git);
+		}
+		System.out.println(list);
+
+		return list;
+	}
+	
+	private GitIssue createGitIssueFromJsonObject1(JsonObject issueObj) {
+		GitIssue git = new GitIssue();
+
+		git.setTitle(issueObj.get("title").getAsString());
+		
+		JsonObject repository = issueObj.get("repository").getAsJsonObject();
+		String fullName = repository.get("full_name").getAsString();
+		git.setFullName(fullName);
 
 		JsonArray labelsArr = issueObj.get("labels").getAsJsonArray();
 		String[] labels = new String[labelsArr.size()];

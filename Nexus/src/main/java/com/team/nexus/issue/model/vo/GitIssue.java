@@ -1,6 +1,5 @@
 package com.team.nexus.issue.model.vo;
 
-import com.google.gson.JsonElement;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +17,7 @@ public class GitIssue {
 	private String state;	  	// open - closed - all
 	private String milestone; 	// 마일스톤
 	private int number;		  	// 이슈 생성 번호
+	private String fullName;    // 레파지토리 이름
 
 	private String createdAt; 	// 생성일
 	private String updatedAt; 	// 수정일

@@ -17,7 +17,7 @@
     <div class="content-wrapper">
 	  <div class="container-xxl flex-grow-1 container-p-y">
 		
-		<div align="right" style="overflow: hidden">
+		<div align="right" style="overflow: hidden; height: 50px;">
 	      <h4 class="fw-bold py-3" style="padding-bottom: 0rem; display: inline-block; float: left;"><span class="text-muted fw-light"></span> 친구 관리</h4>
 		  <!-- Button ModalScrollable -->
           <button

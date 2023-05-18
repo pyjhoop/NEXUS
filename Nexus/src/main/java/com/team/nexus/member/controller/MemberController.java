@@ -1,6 +1,9 @@
 package com.team.nexus.member.controller;
 
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +15,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.team.nexus.member.model.service.kakaoService;
+import com.team.nexus.friend.model.service.FriendService;
+import com.team.nexus.friend.model.vo.Friend;
+import com.team.nexus.issue.model.service.IssueService;
+import com.team.nexus.issue.model.vo.GitIssue;
 import com.team.nexus.member.model.service.GithubService;
 import com.team.nexus.member.model.service.MailSendService;
 import com.team.nexus.member.model.service.MemberServiceImpl;
 import com.team.nexus.member.model.vo.Member;
+import com.team.nexus.news.model.service.NewsService;
+import com.team.nexus.news.model.vo.News;
+import com.team.nexus.repository.model.service.RepositoryService;
+import com.team.nexus.repository.model.vo.Repositories;
 
 
 
@@ -24,6 +35,18 @@ public class MemberController {
 	
 	@Autowired
 	private MemberServiceImpl mService;
+	
+	@Autowired
+	private RepositoryService rService;
+	
+	@Autowired
+	private IssueService iService;
+	
+	@Autowired
+	private NewsService nService;
+	
+	@Autowired
+	private FriendService fService;
 	
 	@Autowired
 	private MailSendService mailService;
@@ -73,7 +96,26 @@ public class MemberController {
 	}
 	
 	@RequestMapping("main.p")
-	public String nexusPage() {
+	public String nexusPage(HttpSession session, Model model) throws IOException {
+		// 최근 접속한 repository 3개 select
+		int userNo = ((Member)(session.getAttribute("loginUser"))).getUserNo();
+		ArrayList<Repositories> list = rService.selectRepoList1(userNo);
+		
+		// 5일동안 나에게 할당된 open 상태인 이슈들 보여주기
+		ArrayList<GitIssue> gList = iService.getHomeIssues(session);
+		
+		// 최신순, 인기순 뉴스 5개 조회
+		ArrayList<News> nList = nService.getNewsList();
+		
+		// 친구 조회
+		
+		ArrayList<Friend> fList = fService.selectList(userNo);
+		
+		
+		model.addAttribute("list",list);
+		model.addAttribute("gList",gList);
+		model.addAttribute("nList",nList);
+		model.addAttribute("fList", fList);
 		return "main";
 	}
 	
@@ -137,7 +179,7 @@ public class MemberController {
 		Member userInfo = kakaoService.getUserInfo(token);
 		session.setAttribute("loginUser", userInfo);
 		
-		return "main";		
+		return "redirect:main.p";		
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces = "application/hal+json; charset=UTF-8" )
@@ -155,7 +197,7 @@ public class MemberController {
 		
 		if(loginUser != null && bcrypt.matches(m.getUserPwd(), loginUser.getUserPwd())){
 			session.setAttribute("loginUser", loginUser);
-			return "main";
+			return "redirect:main.p";
 		}else {
 			session.setAttribute("alertMsg", "아이디나 비밀번호가 일치하지 않습니다.");
 			return "redirect:/";

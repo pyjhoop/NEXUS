@@ -145,15 +145,17 @@
 					<li class="menu-item"><a href="main.p" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-home-circle"></i>
 							<div data-i18n="Analytics">Home</div>
-						</a></li>
-					<li class="menu-item" id="repository"><a href="repository.p" onclick="return tokenCheck();" class="menu-link">
-							<i class="menu-icon tf-icons bx bxl-github"></i>
-							<div data-i18n="Basic">Repository</div>
-						</a></li>
+						</a>
+					</li>
+					
 
 					<!-- Components -->
 					<li class="menu-header small text-uppercase"><span class="menu-header-text">Project</span></li>
 					<!-- Cards -->
+					<li class="menu-item" id="repository"><a href="repository.p" onclick="return tokenCheck();" class="menu-link">
+						<i class="menu-icon tf-icons bx bxl-github"></i>
+						<div data-i18n="Basic">Repository</div>
+					</a></li>
 
 					<li class="menu-item"><a href="issueShow.mini" onclick="return repoCheck();" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-collection"></i>
@@ -162,10 +164,6 @@
 					<li class="menu-item"><a href="milestoneList.m" onclick="return repoCheck();" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-box"></i>
 							<div data-i18n="User interface">Milestone</div>
-						</a></li>
-					<li class="menu-item"><a href="#" onclick="return repoCheck();" class="menu-link">
-							<i class="menu-icon tf-icons bx bx-copy"></i>
-							<div data-i18n="Extended UI">Kanban</div>
 						</a></li>
 
 					<script>
@@ -195,16 +193,18 @@
 
 
 
-					<li class="menu-item news"><a href="news.p" class="menu-link">
-						<i class="menu-icon tf-icons bx bx-detail"></i>
-						<div data-i18n="Form Elements">News</div>
-					</a></li>
+					
 				<li class="menu-item"><a href="selectCal.ih" class="menu-link">
 						<i class="menu-icon tf-icons bx bxs-calendar"></i>
 						<div data-i18n="Tables">Calendar</div>
 					</a></li>
 				<!-- Misc -->
-				<li class="menu-header small text-uppercase"><span class="menu-header-text">Team</span></li>
+				<li class="menu-header small text-uppercase"><span class="menu-header-text">Others</span></li>
+				<li class="menu-item news"><a href="news.p" class="menu-link">
+					<i class="menu-icon tf-icons bx bx-detail"></i>
+					<div data-i18n="Form Elements">News</div>
+				</a></li>
+
 				<li class="menu-item"><a href="selectChat.ih" target="_blank" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-message-rounded-dots"></i>
 						<div data-i18n="Support">Chatting</div>
@@ -245,9 +245,10 @@
 						<!-- Search -->
 						<div class="navbar-nav align-items-center">
 							<div class="nav-item d-flex align-items-center">
-								<c:if test="${ repoName != null }">
-									<span style="margin-left: 5px; margin-top: 5px;" class="text-primary">${repository}</span>
-								</c:if>
+								<span style='color:#f10000'>
+									<i class='bx bx-chevrons-right' style='color:#f10000'  ></i>
+									Hot News: <span id="hotNews"></span>
+								</span>
 							</div>
 						</div>
 						<!-- /Search -->

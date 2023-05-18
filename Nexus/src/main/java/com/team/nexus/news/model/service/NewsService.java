@@ -3,6 +3,7 @@ package com.team.nexus.news.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,6 +85,14 @@ public class NewsService {
 
 	public ArrayList<News> ajaxRepage(String state) {
 		return newsDao.ajaxRepage(sqlsession, state);
+	}
+
+	public ArrayList<News> getNewsList() {
+		return newsDao.getNewsList(sqlsession);
+	}
+
+	public News selectHotNews() {
+		return newsDao.selectHotNews(sqlsession);
 	}
 
 

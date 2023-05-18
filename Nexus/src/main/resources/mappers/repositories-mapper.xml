@@ -72,5 +72,27 @@
 		 where repo_No = #{repoNo}
 	</select>
 	
+	<update id="updateAccessDate">
+		update tb_repository
+		   set access_date = sysdate
+		 where repo_no = #{rNo}
+	</update>
+	
+	<select id="selectRepoList1" resultMap="repoResultSet">
+	 <![CDATA[
+	 select 
+				repo_no
+			  , user_no
+			  , user_name
+			  , repo_name
+			  , repo_status
+	      from tb_repository
+	      where user_no = #{userNo}
+	      and status = 'N' 
+	      and rownum <= 3
+	      order by access_date desc]]> 
+		
+	</select>
+	
 	
 </mapper>
