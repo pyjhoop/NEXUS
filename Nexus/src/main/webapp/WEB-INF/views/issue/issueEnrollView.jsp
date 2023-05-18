@@ -89,7 +89,7 @@
          <label for="defaultSelect1" class="form-label">이슈 담당자</label>
 
          <select id="defaultSelect1" class="form-select assigneesSelect" name="issueAss" onchange="selectAss();">
-            <option>이슈 담당자</option>
+            <option >이슈 담당자</option>
             <c:forEach var="r" items="${RepoMembers }">
                <option value="${r.profile}">${r.userName}</option>
             </c:forEach>
@@ -101,7 +101,7 @@
       <div class="mb-3 test1">
          <label for="defaultSelect" class="form-label">라벨</label>
          <select id="defaultSelect" class="form-select labelSelect" name="issueLabel" onchange="selectLabel();">
-            <option>라벨</option>
+            <option >라벨</option>
             <c:forEach var="l" items="${lList }">
                <option value="${l.name }">${l.name }</option>
             </c:forEach>
@@ -116,7 +116,7 @@
       <div class="mb-3 test2">
          <label for="defaultSelect2" class="form-label">마일스톤</label>
          <select id="defaultSelect2" class="form-select mileSelect" name="issueMile" onchange="selectMile();">
-            <option>마일스톤</option>
+            <option >마일스톤</option>
             <c:forEach var="m" items="${mList}">
                <option value="${m.number }">${m.title}</option>
             </c:forEach>
@@ -148,6 +148,7 @@
       var userName = numSelect.options[document.getElementById("defaultSelect1").selectedIndex].text;
       var profile = numSelect.options[document.getElementById("defaultSelect1").selectedIndex].value;
       
+      
 
       if(userName == "이슈 담당자") return;
 
@@ -175,7 +176,7 @@
       function selectLabel(){
          var numSelect = document.getElementById("defaultSelect");
          var label = numSelect.options[document.getElementById("defaultSelect").selectedIndex].value;
-         
+         console.log(label);
 
          if(label == "라벨") return;
 
@@ -229,6 +230,10 @@
       function selectMile() {
            var numSelect = document.getElementById("defaultSelect2");
            var milestoneNum = numSelect.options[numSelect.selectedIndex].value;
+           $("input[name='milestone']").val(milestoneNum);
+           
+           console.log("@@@@")
+           console.log(milestoneNum);
            
            if (milestoneNum == "마일스톤") return;
            
@@ -266,12 +271,7 @@
 
        $('#issueEnrollForm').submit(function() {
           
-          //마일스톤
-            var numSelect = document.getElementById("defaultSelect2");
-            var milestoneNum = numSelect.options[numSelect.selectedIndex].value;
-            $("input[name='milestone']").val(milestoneNum);
           
-            console.log(milestoneNum);
           
          var markdown = editor.getMarkdown();
          $("input[name='body']").val(markdown);

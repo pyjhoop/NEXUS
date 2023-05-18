@@ -201,7 +201,7 @@
             <br>
             <div>
                <c:forEach var="mile" items="${milestoneList}">
-            <span class="milestoneSpan mr-1" id="${mile.title}"><span class="badge rounded-pill bg-label-primary">${mile.title}</span><i class="bx bx-x-circle ml-1 labelClose"></i></span>
+            <span class="milestoneSpan mr-1" id="${mile.title}"><span class="badge rounded-pill bg-label-primary">${mile.title}</span><i class="bx bx-x-circle ml-1 milestoneClose"></i></span>
                   
                </c:forEach>
             </div>
@@ -273,6 +273,7 @@ document.getElementById('issueAssignees').addEventListener('change', function() 
       
          $(document).on("click",".milestoneClose",function(){
          $(this).parent(".milestoneSpan").remove();
+         $("input[name='milestone']").val(null);
       })
       
       
@@ -361,7 +362,7 @@ document.getElementById('issueAssignees').addEventListener('change', function() 
       function selectMile() {
            var numSelect = document.getElementById("defaultSelect2");
            var milestoneNum = numSelect.options[numSelect.selectedIndex].value;
-           
+           $("input[name='milestone']").val(milestoneNum);
            if (milestoneNum == "마일스톤") return;
            
            var milestoneTitle = $("#defaultSelect2 option:selected").text();
@@ -393,10 +394,6 @@ document.getElementById('issueAssignees').addEventListener('change', function() 
                $('#issueUpdateForm').submit(function() {
                   
                   
-                  
-                    var numSelect = document.getElementById("defaultSelect2");
-                    var milestoneNum = numSelect.options[numSelect.selectedIndex].value;
-                    $("input[name='milestone']").val(milestoneNum);
                   
                var markdown = editor.getMarkdown();
                $("input[name='body']").val(markdown);
