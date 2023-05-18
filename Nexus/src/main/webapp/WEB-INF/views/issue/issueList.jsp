@@ -69,7 +69,9 @@
 				<span class="text-muted fw-light">Project /</span> NEXUS Project
 			</h4>
 
-
+		<form id="mileDelite" action="updatemile.mi" method="post">
+		<input type="hidden" name="ino" value="">
+		</form>
 
 			<br> <br>
 
@@ -180,7 +182,7 @@
 							<c:forEach var="i" items="${list }">
 
 								<tr>
-									<td>${i.number }</td>
+									<td class="uniqueNo">${i.number }</td>
 
 									<td colspan="3" style="width: 26%"><a
 										href="issueDetail.mini?ino=${i.number}" class="textA"> <i
@@ -249,7 +251,7 @@
 									<td style="width: 10%;">
 										<!-- 마일스톤 클릭시 해당 마일스톤으로 이동 ###   -->
 										<div class="dropdown">
-											${i.milestone }
+											${i.milestone}
 											<button type="button"
 												class="btn p-0 dropdown-toggle hide-arrow ${empty i.milestone ? 'invisible' : ''}"
 												data-bs-toggle="dropdown">
@@ -258,7 +260,7 @@
 											<div class="dropdown-menu">
 												<a class="dropdown-item" href="javascript:void(0);"> <i
 													class="bx bx-send me-1"></i> 이동
-												</a> <a class="dropdown-item" href="javascript:void(0);"> <i
+												</a> <a class="dropdown-item" onclick="mileDelite(${i.number});"> <i
 													class="bx bx-trash me-1"></i> 삭제
 												</a>
 											</div>
@@ -489,10 +491,13 @@
                          .addClass("dropdown-item")
                          .attr("href", "javascript:void(0)")
                          .html('<i class="bx bx-send me-1"></i> 이동');
-                       var deleteMenuItem = $("<a></a>")
-                         .addClass("dropdown-item")
-                         .attr("href", "javascript:void(0)")
-                         .html('<i class="bx bx-trash me-1"></i> 삭제');
+                       var deleteMenuItem = $('<a></a>')
+                       .addClass('dropdown-item')
+                       .html('<i class="bx bx-trash me-1"></i> 삭제')
+                       .on('click', function() {
+                         mileDelite();
+                       });
+
 
                        // Check if milestone is empty and add the 'invisible' class
                        if (!item.milestone) {
@@ -515,7 +520,20 @@
             
             
             
-            
+            function mileDelite(number) {
+            	
+            	
+            	 // form 요소 가져오기
+                var form = document.getElementById('mileDelite');
+            	 
+            	 var ino = number
+            	 
+                // hidden input에 값을 세팅
+                 $("input[name='ino']").val(ino);
+                
+                // form 제출
+                form.submit();
+            }
             
             
             

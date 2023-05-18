@@ -290,6 +290,42 @@ public class IssueController {
 	}
 
 
+	
+	
+	
+	@RequestMapping(value = "updatemile.mi", produces = "application/json; charset=utf-8")
+	public String updatemile( @RequestParam(required = false) String milestone,
+			 HttpSession session,int ino) {
+
+		String repository = (String) session.getAttribute("repository");
+
+		String token = ((Member) session.getAttribute("loginUser")).getToken();
+
+		
+		String apiUrl = "https://api.github.com/repos/" + repository + "/issues/" + ino;
+
+		JSONObject requestBody = new JSONObject();
+
+		     // 마일스톤이 없는 경우에는 빈 문자열로 설정하여 삭제를 반영
+		   requestBody.put("milestone", "");
+		    
+		
+
+		String response = webClient.patch().uri(apiUrl).header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.header(HttpHeaders.ACCEPT, "application/vnd.github+json")
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).bodyValue(requestBody.toString())
+				.retrieve().bodyToMono(String.class).block();
+
+
+		session.setAttribute("updateBellIcon", "updateBellIcon");
+
+		return "redirect:issueShow.mini";
+	}
+	
+	
+	
+	
+	
 
 	@RequestMapping(value = "issueDetail.mini", produces = "application/json; charset=utf-8")
 	public String selectIssue(@RequestParam String ino, HttpSession session, Model model) {
