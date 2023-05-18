@@ -33,6 +33,6 @@ public class GitIssue {
 	 private String[] assignees;    // 이슈 담당자 이름
 	 private String[] assigneeProfiles; // 이슈 담당자 프로필 경로
 	
-	
+	 private String login;
 	
 }

@@ -142,6 +142,8 @@ public class IssueService {
 	      urlConnection.setRequestProperty("Authorization", "Bearer " + token);
 	      urlConnection.setRequestMethod("GET");
 
+	      
+	      // 인코딩 깨질때 사용하기 utf-8
 	      BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
 
 	      String line;
@@ -509,6 +511,7 @@ public class IssueService {
 		JsonObject userObj = issueObj.get("user").getAsJsonObject();
 		git.setUser(userObj.get("login").getAsString());
 		git.setUserId(userObj.get("id").getAsString());
+		git.setLogin(userObj.get("login").getAsString()); // login 값 설정
 
 		String userProfileUrl = userObj.get("avatar_url").getAsString();
 		git.setProfile(userProfileUrl);

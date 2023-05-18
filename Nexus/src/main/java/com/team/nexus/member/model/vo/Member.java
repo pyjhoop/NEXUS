@@ -32,4 +32,6 @@ public class Member {
 	private String rollName;
 	private String connectStatus;
 	
+	
+	
 }
