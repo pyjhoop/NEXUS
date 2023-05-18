@@ -45,4 +45,8 @@ public class MemberDao {
 		return sqlSession.update("memberMaper.updateConnection",no);
 	}
 
+	public int changePwd(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.updatePwd",m);
+	}
+
 }

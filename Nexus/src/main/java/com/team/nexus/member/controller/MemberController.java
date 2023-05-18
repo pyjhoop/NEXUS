@@ -228,6 +228,19 @@ public class MemberController {
 		
 	}
 	
+	@RequestMapping("changePwd")
+	public String changePwd(Member m) {
+		m.setUserPwd(bcrypt.encode(m.getUserPwd()));
+		
+		int result = mService.changePwd(m);
+		
+		if(result>0) {
+			return "redirect:login.p";
+		}else {
+			return "redirect:login.p";
+		}
+	}
+	
 
 	
 }

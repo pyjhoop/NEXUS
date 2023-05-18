@@ -48,6 +48,10 @@ public class MemberServiceImpl {
 		return mDao.updateConnection(sqlSession, no);
 	}
 
+	public int changePwd(Member m) {
+		return mDao.changePwd(sqlSession, m);
+	}
+
 	
 	
 

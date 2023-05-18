@@ -79,18 +79,18 @@
 	</update>
 	
 	<select id="selectRepoList1" resultMap="repoResultSet">
-	 <![CDATA[
-	 select 
+	 select * from (
+              select 
 				repo_no
 			  , user_no
 			  , user_name
 			  , repo_name
 			  , repo_status
 	      from tb_repository
-	      where user_no = #{userNo}
+	      where user_no = 4
 	      and status = 'N' 
-	      and rownum <= 3
-	      order by access_date desc]]> 
+	      order by access_date desc)
+          where rownum between 1 and 3
 		
 	</select>
 	

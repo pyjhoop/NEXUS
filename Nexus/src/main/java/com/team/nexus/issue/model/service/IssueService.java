@@ -161,6 +161,44 @@ public class IssueService {
 	      }
 	      return list;
 	   }
+	   
+	   public List<GitIssue> getMilestoneIssues(String repository, String token, String  mno, String state1) throws IOException {
+			//https://api.github.com/repos/pyjhoop/NEXUS/issues?milestone=6
+			//https://api.github.com/repos/pyjhoop/NEXUS/issues?milestone=9/state=open
+		    String url = "https://api.github.com/repos/" + repository + "/issues?milestone=" + mno + "/state=open";
+		    
+		    if (state1 != null) {
+				url += "&state=" + state1;
+			}
+
+		    URL requestUrl = new URL(url);
+		    HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
+
+		    urlConnection.setRequestProperty("Authorization", "Bearer " + token);
+		    urlConnection.setRequestMethod("GET");
+
+		    BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+		    String line;
+		    String responseText = "";
+
+		    while ((line = br.readLine()) != null) {
+		        responseText += line;
+		    }
+
+		    JsonArray arr = JsonParser.parseString(responseText).getAsJsonArray();
+		    System.out.println("ddddddddddddddddddddddddddddddddddddddddddddddddd");
+		    System.out.println(arr);
+		    ArrayList<GitIssue> list = new ArrayList<>();
+
+		    for (int i = 0; i < arr.size(); i++) {
+		        JsonObject issueObj = arr.get(i).getAsJsonObject();
+		        GitIssue git = createGitIssueFromJsonObject(issueObj);
+		        list.add(git);
+		    }
+		    System.out.println(list);
+		    return list;
+		}
 
 	   public List<GitIssue> getIssuesByAssignee(String assignee, HttpSession session, String token) throws IOException {
 
