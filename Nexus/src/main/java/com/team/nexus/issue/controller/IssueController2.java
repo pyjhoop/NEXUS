@@ -52,7 +52,7 @@ import com.team.nexus.member.model.vo.Member;
 import com.team.nexus.repository.model.service.RepositoryService;
 
 //@Controller
-public class IssueController {
+public class IssueController2 {
 
 	@Autowired
 	private IssueService iService;

@@ -13,7 +13,6 @@ public class FriendDao {
 
 	public ArrayList<Friend> selectList(SqlSessionTemplate sqlSession, int userNo) {
 		
-		System.out.println("이거");
 		return (ArrayList)sqlSession.selectList("friendMapper.selectList", userNo);
 	}
 

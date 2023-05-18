@@ -14,4 +14,7 @@
 .container-p-y>div{
     height: 100%;
 }
+.issueTable::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
 

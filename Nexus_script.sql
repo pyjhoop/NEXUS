@@ -46,15 +46,16 @@ create table tb_member(
 	social varchar2(3) check(social in('K','G','O')),
 	enroll_date	date default sysdate,
 	token	varchar2(200),
-	status	varchar2(3)	default 'Y' check(status in('Y','N'))
+	status	varchar2(3)	default 'Y' check(status in('Y','N')),
+    connect_status char(1) default 'N' check(connect_status in('Y','N'))
 );
 
 create sequence seq_member
 nocache;
 
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user01','pass01','박연준','자바마스터','email01@kh.co.kr',null,null,'O',SYSDATE,null,'Y');
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user02','pass02','이혜민','DB의 달인','email02@kh.co.kr',null,null,'O',SYSDATE,null,'Y');
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user03','pass03','임철현','스프링의귀재','email03@kh.co.kr',null,null,'O',SYSDATE,null,'Y');
+INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user01','pass01','박연준','자바마스터','email01@kh.co.kr',null,null,'O',SYSDATE,null,'Y','Y');
+INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user02','pass02','이혜민','DB의 달인','email02@kh.co.kr',null,null,'O',SYSDATE,null,'Y','Y');
+INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user03','pass03','임철현','스프링의귀재','email03@kh.co.kr',null,null,'O',SYSDATE,null,'Y','Y');
 
 
 COMMENT ON COLUMN TB_MEMBER.USER_NO IS '회원번호';
