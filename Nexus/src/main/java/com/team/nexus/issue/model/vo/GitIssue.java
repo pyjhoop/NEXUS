@@ -17,6 +17,8 @@ public class GitIssue {
 	private String state;	  	// open - closed - all
 	private String milestone; 	// 마일스톤
 	private int number;		  	// 이슈 생성 번호
+	private int milestoneNum;
+
 	private String fullName;    // 레파지토리 이름
 
 	private String createdAt; 	// 생성일

@@ -27,7 +27,6 @@ public class IssueDao {
 
 		String token = ((Member) session.getAttribute("loginUser")).getToken();
 		
-	
 
 		String response = webClient
 				.get()
