@@ -34,7 +34,6 @@ public class MyHttpSessionAttributeListener implements HttpSessionAttributeListe
 			String name = ((Member)event.getValue()).getUserName();
 			
 			aList.add(name);
-			
 			System.out.println(aList);
 			
 			HttpSession session = event.getSession();
@@ -58,8 +57,6 @@ public class MyHttpSessionAttributeListener implements HttpSessionAttributeListe
 //			String nick = ((Member)event.getValue()).getUserNick();
 //			int no = ((Member)event.getValue()).getUserNo();
 //			sessionMap.replace(no, nick);
-//			System.out.println(sessionMap);
-//			System.out.println("=================");
 //			
 //			HttpSession session = event.getSession();
 //			session.setAttribute("members", sessionMap);

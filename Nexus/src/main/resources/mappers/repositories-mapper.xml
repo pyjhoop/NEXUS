@@ -87,7 +87,7 @@
 			  , repo_name
 			  , repo_status
 	      from tb_repository
-	      where user_no = 4
+	      where user_no = #{userNo}
 	      and status = 'N' 
 	      order by access_date desc)
           where rownum between 1 and 3

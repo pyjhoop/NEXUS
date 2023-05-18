@@ -245,9 +245,9 @@
 						<!-- Search -->
 						<div class="navbar-nav align-items-center">
 							<div class="nav-item d-flex align-items-center">
-								<span style='color:#f10000'>
-									<i class='bx bx-chevrons-right' style='color:#f10000'  ></i>
-									Hot News: <span id="hotNews"></span>
+								<span class="text-primary">
+									<i class='bx bx-chevrons-right' style="color: black;"></i>
+									<span style="color:black">Hot News: </span> <span id="hotNews" class="text-primary" ></span>
 								</span>
 							</div>
 						</div>

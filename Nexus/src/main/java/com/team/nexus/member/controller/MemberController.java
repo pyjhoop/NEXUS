@@ -100,7 +100,8 @@ public class MemberController {
 		// 최근 접속한 repository 3개 select
 		int userNo = ((Member)(session.getAttribute("loginUser"))).getUserNo();
 		ArrayList<Repositories> list = rService.selectRepoList1(userNo);
-		
+		System.out.println("repo3개");
+		System.out.println(list);
 		// 5일동안 나에게 할당된 open 상태인 이슈들 보여주기
 		ArrayList<GitIssue> gList = iService.getHomeIssues(session);
 		

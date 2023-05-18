@@ -41,25 +41,16 @@
 	<c:set var="textarray" value="${fn:split('text-primary,text-success,text-danger,text-warning,text-info',',')}" />
     <div class="container-xxl flex-grow-1 container-p-y cpadding mt-5">
         <div class="row">
-            <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="col-lg-9 col-md-9 col-sm-9">
                 <div class="card mb-5">
                     <div class="row mt-3 mb-3" style="width: 80%; margin: auto;">
                         <div class="col-lg-7 col-md-7 col-sm-7" style="display: flex;">
                             <img src="resources/image/github_repo.png" id="repoImg" alt="">
                             <br>
-                            <!-- <span id="repoPath">${repo.userName }/${repo.repoName }</span> -->
                         </div>
                         <div class="col-lg-5 col-md-5 col-sm-5">
                             <br>
                             <div class="progress mb-3">
-                            <!-- 
-                            <c:forEach var="value" items="${map.values() }" varStatus="status">
-                            	<c:choose>
-                            		<c:when test=""></c:when>
-                            	</c:choose>
-                                <div class="progress-bar shadow-none" role="progressbar" style="width: ${value}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                            </c:forEach>
-                             -->
                             <c:forEach var="i" items="${map}" varStatus="status">
                             	<c:choose>
                             		<c:when test="${fn:contains(i, 'JavaScript')}">
@@ -164,17 +155,9 @@
                     </div>
                 </div>
 
-                <div class="card mdFile">
-
-                    <div>
-
-                        ${text}
-
-                    </div>
-
-                </div>
+                
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="col-lg-3 col-md-3 col-sm-3">
                 <div class="card mb-5 repoCont">
                     <div style="width: 90%; margin: auto; margin-top: 20px; margin-bottom: 20px;">
                         <div style="display: flex; justify-content: space-between;">
@@ -233,6 +216,17 @@
 
                 </div>
                 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9 card mdFile">
+
+                <div>
+
+                    ${text}
+
+                </div>
+
             </div>
         </div>
     </div>
