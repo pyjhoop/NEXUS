@@ -116,7 +116,7 @@
  	<select id="searchUser" resultMap="memberResultSet">
  		select *
  		from tb_member
- 		where user_name like '%${search}%'
+ 		where (user_name like '%${search}%' or user_id like '%${search}%')
  			and user_no != #{userNo}
  			and status = 'Y'
  	</select>

@@ -370,8 +370,7 @@ a:hover { text-decoration:none !important }
      				   result[i].userName +
      				   "</div>" + 
      				   "<div>" +
-     				   "userCode : " + 
-     				   result[i].userNo +
+     				   result[i].userId +
      				   "</div>" +
      				   "</div>" +
      				   "<div>" +
