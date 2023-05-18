@@ -152,4 +152,10 @@
 		 where user_no = #{no}
 	</update>
 	
+	<update id="updatePwd">
+		update tb_member
+		   set user_pwd = #{userPwd}
+		 where user_id = #{userId}
+	</update>
+	
 </mapper>

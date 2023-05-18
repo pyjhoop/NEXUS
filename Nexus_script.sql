@@ -53,9 +53,9 @@ create table tb_member(
 create sequence seq_member
 nocache;
 
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user01','pass01','박연준','자바마스터','email01@kh.co.kr',null,null,'O',SYSDATE,null,'Y','Y');
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user02','pass02','이혜민','DB의 달인','email02@kh.co.kr',null,null,'O',SYSDATE,null,'Y','Y');
-INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user03','pass03','임철현','스프링의귀재','email03@kh.co.kr',null,null,'O',SYSDATE,null,'Y','Y');
+--INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user01','pass01','박연준','자바마스터','email01@kh.co.kr',null,null,'O',SYSDATE,null,'Y','Y');
+--INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user02','pass02','이혜민','DB의 달인','email02@kh.co.kr',null,null,'O',SYSDATE,null,'Y','Y');
+--INSERT INTO TB_MEMBER VALUES(seq_member.nextval,'user03','pass03','임철현','스프링의귀재','email03@kh.co.kr',null,null,'O',SYSDATE,null,'Y','Y');
 
 
 COMMENT ON COLUMN TB_MEMBER.USER_NO IS '회원번호';
