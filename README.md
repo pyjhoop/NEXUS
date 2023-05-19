@@ -74,7 +74,7 @@ NEXUS는 깃허브를 기반으로 한 실시간 소통 플랫폼으로, 팀원�
 
 
 # 이슈
-![이슈녹화](https://github.com/pyjhoop/NEXUS/assets/113378302/33861275-4eef-4bcf-b9b6-4542c702995c)
+
 <br>
 <br>
 
@@ -124,11 +124,7 @@ NEXUS는 깃허브를 기반으로 한 실시간 소통 플랫폼으로, 팀원�
     <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=black">
  <img src="https://img.shields.io/badge/visual studio code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
     <br>
-    <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
-    <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
-    <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
-    <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
-    <img src="https://img.shields.io/badge/postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white">
+  
 
 </div>
 
