@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Nexus!</title>
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 <style>
 .luda{
 	height: 5rem;
@@ -46,21 +47,11 @@ th{
 
 <jsp:include page="../common/template.jsp" />
 	<!-- 생성일,종료일,수정일, 진척도, -->
-	<script>
-		$(function(){
-	
-		// active 클래스 를 repository로 옮기기
-		$(".active").removeClass("active");
-		$("#milestone").addClass("active");
-	
-		})
-	
-	 </script>
 	
 <div class="content-wrapper">
 	<div class="container-xxl flex-grow-1 container-p-y">
 		<h4 class="fw-bold py-3 mb-4">
-				<span class="text-muted fw-light">Milestones /</span> NEXUS Project
+				<span class="text-muted fw-light">NEXUS / </span>Milestones
 			</h4>
 		
 	<div class="card">
@@ -108,9 +99,9 @@ th{
 								<tr>
 									<td style="width: 2%;">${l.number }</td>
 									
-									<td  style="width: 10%">
+									<td  style="width: 10%; text-align: center;">
 										<a href="milestoneDetail?mno=${l.number}" class="textA">
-											<i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${l.title}</strong>
+											<i class="fab fa-angular fa-lg text-danger me-3" style="text-align: center;"></i> <strong>${l.title}</strong>
 										</a>
 									</td>
 									
@@ -150,32 +141,6 @@ th{
 	
 	</div>
 	
-	<script>
-				const tooltipTriggerList = [].slice.call(document
-						.querySelectorAll('[data-bs-toggle="tooltip"]'));
-				tooltipTriggerList.map(function(tooltipTriggerEl) {
-					return new bootstrap.Tooltip(tooltipTriggerEl);
-				});
-
-			
-				
-				
-				$(function() {
-					  $("#boardList>tbody>tr").click(function() {
-					    var mno = $(this).find('input[name="mno"]').val();
-					    location.href = "milestoneDetail?mno=" + mno;
-					    console.log(mno);
-					  });
-					});
-
-				
-
-				
-			</script>
-		
-
-		
-		
 		<%-- <c:forEach var="g" items="${list }">
 			${g.title }
 		</c:forEach> --%>

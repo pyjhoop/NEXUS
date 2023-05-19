@@ -12,7 +12,7 @@
 <style>
 #mainBody{
 	width: 100%;
-	height: 100rem;;
+	height: auto;;
 	padding: 2.5rem 2rem 2srem 2rem;
 	background-color: white;
 	margin-top: 3rem;
@@ -106,20 +106,20 @@
 
 <body>
 <jsp:include page="../common/template.jsp"/>
+
 <script>
 		
 	
-	// active 클래스 를 repository로 옮기기
-	$(".active").removeClass("active");
-	$("#rcccccc").addClass("active");
-	// $("#total1").addClass("active");
-
-
-
- </script>
+		// active 클래스 를 repository로 옮기기
+		$(".active").removeClass("active");
+		$("#rcccccc").addClass("active");
+		// $("#total1").addClass("active");
+	
+	
+	
+	 </script>
 
 <div class="container-xxl flex-grow-1" >
-
 
 
 <div id="mainBody">
@@ -184,7 +184,7 @@
 		<b>${r.pjtPrContent }</b>
 	</div>
 
-</div>
+</div><br><Br><Br><br><Br><Br>
 
 
 
@@ -254,7 +254,7 @@
 
 
 
-</div>
+</div><br><Br><Br><br><Br><Br>
 
 </body>
 </html>

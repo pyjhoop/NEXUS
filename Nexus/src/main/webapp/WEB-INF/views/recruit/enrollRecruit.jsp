@@ -233,6 +233,9 @@ select {
 #fieldBox input{
 	margin-right: 0.2rem;
 }
+.note-editable{
+	height: 38rem;
+}
 </style>
 </head>
 <script>
@@ -254,7 +257,8 @@ $.datepicker.setDefaults({
   </script>
 <body>
 
-	<script>
+<div class="container-xxl flex-grow-1"> 
+<script>
 		
 	
 		// active 클래스 를 repository로 옮기기
@@ -265,12 +269,10 @@ $.datepicker.setDefaults({
 	
 	
 	 </script>
-
-<div class="container-xxl flex-grow-1"> 
 <form action="insertRecruit" method="post" style="height: 100%;">
 <div id="body" style="margin: 0px; margin-top: 30px; width: 100%">
 		<div class="col-md-6" style="width:150rem; height:100%;  max-width: 100%; margin: auto;">
-                  <div class="card mb-4" style="width: 100%; margin: auto; height: 110rem; overflow: auto;">
+                  <div class="card mb-4" style="width: 100%; margin: auto; height: 130rem; overflow: auto;">
                   <div id="headerrr" style="width: 90%; padding-top: 4rem; margin: auto; margin-top:0px; margin-bottom:0px; display: inline-block;">
                     <h4 class="card-header" style="border-bottom: 3px solid #f2f2f2; " >
                     <!--  <span  style="font-size: 2.3rem; color: skyblue; margin-top: 2rem; display: inline-block;" class="material-symbols-outlined">counter_1</span> &nbsp; -->
@@ -448,26 +450,31 @@ $.datepicker.setDefaults({
                   
                   
                    <div class="container" style="padding-left: 1rem; float: left;">
-			  			<textarea class="summernote" id="summernote" name="editordata"></textarea>    
-					</div>
+			  			<textarea class="summernote" id="summernote" name="pjtPrContent"></textarea>    
+					</div><br><Br>
 		
 		 			<input type="hidden" name="userNo" value="${loginUser.userNo}">
 					
 					<script>
+					$(document).ready(function() {
 					$('.summernote').summernote({
 						  height: 600,
 						  lang: "ko-KR"
 						});
 					</script>
                   
-                  </div>
-    
-    </div>
+                  </div><br><br><br><br><br>
+                  
+          
     
      <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center;">
       	<button type="submit" id="enrollPsnPr" class="btn btn-outline-primary"  style="font-size: 20px" onclick="returnFunction()"><b>등록하기</b></button> &nbsp;   <!-- 버튼 클래스  class="btn btn-outline-primary"   -->
 		<button type="reset" class="btn btn-outline-secondary" style="font-size: 20px"><b>취소</b></button>
       </div>
+    </div>
+    
+    
+     
     
      
     </div>

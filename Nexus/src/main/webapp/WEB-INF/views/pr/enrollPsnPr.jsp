@@ -28,6 +28,8 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/summernote-ko-KR.js"></script>
 
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
+
         
 
 <style>
@@ -145,7 +147,11 @@ select {
 </head>
 <body>
 
-	<script>
+<div class="container-xxl flex-grow-1"> 
+<form action="insertPersonalPr" method="post" style="height: 100%;">
+<div id="body" style="margin: 0px; margin-top: 30px; width: 100%">
+		<div class="col-md-6" style="width:150rem; height:100%;  max-width: 100%; margin: auto;">
+		<script>
 		
 	
 		// active 클래스 를 repository로 옮기기
@@ -156,14 +162,9 @@ select {
 	
 	
 	 </script>
-
-<div class="container-xxl flex-grow-1"> 
-<form action="insertPersonalPr" method="post" style="height: 100%;">
-<div id="body" style="margin: 0px; margin-top: 30px; width: 100%">
-		<div class="col-md-6" style="width:150rem; height:100%;  max-width: 100%; margin: auto;">
                   <div class="card mb-4" style="width: 100%; margin: auto;">
                     <h4 class="card-header"  ><b>정보 입력</b></h4>
-                    <div class="card-body demo-vertical-spacing demo-only-element" style="height: 1500px; overflow: auto; "><br>
+                    <div class="card-body demo-vertical-spacing demo-only-element" style="height: 1500px; "><br>
                     
                     <label><b>제목</b></label>
                       <div class="input-group" >
@@ -258,15 +259,17 @@ select {
         </script> 
         
         <label style="float: left;" ><b>자기소개</b></label><br><br>
-        <!-- summerNote 들어갈 자리 -->
         
+        
+        <!-- summerNote 들어갈 자리 -->
         <div class="container" style="padding-left: 0px; float: left;">
-  		<textarea class="summernote" id="summernote" name="editordata"></textarea>    
+  		<textarea class="summernote" id="summernote" name="psnPrContent"></textarea>    
 		</div>
 		
 		 <input type="hidden" name="userNo" value="${loginUser.userNo}">
 		
 		<script>
+		$(document).ready(function() {
 		$('.summernote').summernote({
 			  height: 600,
 			  lang: "ko-KR"
@@ -274,7 +277,7 @@ select {
 		</script>
   
       
-      	</div>
+      	</div><br><br><br><br>
     
      <div id="buttonDiv" style="width:50%; height:200px; margin: auto; text-align: center;">
       	<button type="submit" id="enrollPsnPr" class="btn btn-outline-primary"  style="font-size: 20px" onclick="returnFunction()"><b>등록하기</b></button> &nbsp;   <!-- 버튼 클래스  class="btn btn-outline-primary"   -->

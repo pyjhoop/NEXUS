@@ -9,7 +9,7 @@
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 </head>
 <style>
-	#mainBody{
+#mainBody{
 	height: auto; 
 	width: 100%;
 	margin:auto;
@@ -224,6 +224,11 @@
   stroke-dashoffset: -220;
   transition: 1s all ease;
 }
+/* 
+    Pushing the text up into the SVG. Without this the
+    text would be below the div's.
+*/
+
 #text {
   margin-top: -35px;
   text-align: center;
@@ -297,7 +302,8 @@ hr{
    width: 240px; 
    height: 99.375px;
 	
-}.card-category{
+}
+.card-category{
 	float:left; width: 50%;
 }
 .card-category1{
@@ -328,8 +334,8 @@ hr{
 margin-bottom: 5px;
 }
 .bx-bookmark::before{
-	width: 30px;
-	height: 30px;
+	/* width: 30px;
+	height: 30px; */
 }
 .prCount{
 	width: 0px; 
@@ -340,9 +346,9 @@ margin-bottom: 5px;
 	display: inline-block; 
 	font-size: 1.1rem;
 }
-/* .bx{
-	font-size: 1.8rem !important;
-} */
+.bx{
+	/* font-size: 1.8rem !important; */
+}
 #prs{
 	width: 83%; 
 	height: 50px;
@@ -374,7 +380,7 @@ border: 1px solid dray !important;
 transform: scale(1.1);
 }
 .bx-show{
-	margin-bottom: 5px;
+	/* margin-bottom: 5px; */
 }
 .bx-bookmark{
 	float: right; 
@@ -405,31 +411,29 @@ transform: scale(1.1);
 	background-color: white !important;
 	color: #0d6efd !important;
 }
-
 </style>
 <body>
 <jsp:include page="../common/template.jsp"/>
-
+<script>
+		
+	
+		// active 클래스 를 repository로 옮기기
+		$(".active").removeClass("active");
+		$("#pr123").addClass("active");
+		// $("#total1").addClass("active");
+	
+	
+	
+	 </script>
 
 <div class="container-xxl flex-grow-1" style="height: auto;">
-	<div id="mainBody" style="width: 100%; margin-right: 5rem; height: auto;">
+	<div id="mainBody" style="width: 100%; margin-right: 5rem; height: auto; overflow: au">
 	
 	<div id="prs" >
 	<button type="button" class="btn btn-outline-primary" id="newBtn" onclick="location.href='enrollPsnPr.pr'">
 	새 글 쓰기
 </button>
 </div>
-<script>
-		
-	
-	// active 클래스 를 repository로 옮기기
-	$(".active").removeClass("active");
-	$("#pr123").addClass("active");
-	// $("#total1").addClass("active");
-
-
-
- </script>
 	
 	<div id="stacks" style="overflow: auto; padding: 0;">
 <div class="col-xl-6" style="width: 100%; max-width: 100%;" >
@@ -674,14 +678,14 @@ transform: scale(1.1);
 	    <p class="card-category" >${p.createDate }</p>
 	    <p class="card-category1">${p.category }</p>
 	    <h5 class="card-title"><b>${p.psnPrTitle }</b></h5>
-	    <p class="card-text">${p.psnPrContent }</p>
+	    <p class="card-text"></p>
 	    <img class="card-image"  src="${p.profile}" alt="" >
 	    <span class="card-name">${p.userName}</span>
 	    <input class="prCount" type="hidden" value="${p.psnPrNo }" />
 	    <div class="countDiv">
 	    	<i class='bx bx-show'></i> <p  class="pCount">${p.count }</p> &nbsp;
 	    	
-	    <i class='bx bx-bookmark'></i>
+	   <!--  <i class='bx bx-bookmark'></i> -->
 	    </div>
 	  </div>
 </div>
@@ -703,7 +707,7 @@ transform: scale(1.1);
 
 </div>
 
-<div id="pagingArea" style="display: block;">
+<%-- <div id="pagingArea" style="display: block;">
                 <ul class="pagination">
                 	
                 	<c:choose>
@@ -731,7 +735,7 @@ transform: scale(1.1);
 	                    	</c:otherwise>
 	                    </c:choose>
                 </ul>
-            </div>
+            </div> --%>
 
 	
 </div>

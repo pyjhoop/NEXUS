@@ -119,6 +119,7 @@ public class MilestoneService {
       String repository2 = (String) session.getAttribute("repository");
       
 		/* String url = "https://api.github.com/repos/" + repository + "/milestones"; */
+//      https://api.github.com/repos/pyjhoop/NEXUS/issues?milestone=6&state=closed
       String url = "https://api.github.com/repos/" + repository + "/milestones?state=open";
       
       if (state != null) {
@@ -134,7 +135,7 @@ public class MilestoneService {
       urlConnection.setRequestProperty("Authorization", "Bearer " + token1);
       urlConnection.setRequestMethod("GET");
 
-      BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+      BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),  "UTF-8"));
 
       String line;
       String responseText = "";

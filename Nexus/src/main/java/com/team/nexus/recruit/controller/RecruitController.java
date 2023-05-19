@@ -60,6 +60,7 @@ public class RecruitController {
 			 */
 	  
 	  int userNo = ((Member)session.getAttribute("loginUser")).getUserNo();
+	  re.setUserNo(userNo);
 	  
 	  int result = rService.insertRecruit(re);
 	  

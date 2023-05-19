@@ -53,7 +53,7 @@ public class PersonalPrController {
 	public ModelAndView selectPrList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		int listCount = pService.selectListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 20);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 50);
 		ArrayList<PersonalPr> personalPrList = pService.selectPersonalPr(pi);
 		
 		
@@ -75,12 +75,8 @@ public class PersonalPrController {
 	@RequestMapping("insertPersonalPr")
 	public String insertPersonalPr(PersonalPr pr, HttpSession session) {
 		
-		/*
-		 * int index = pr.getPsnPrContent().lastIndexOf(",");
-		 * 
-		 * pr.setPsnPrContent(pr.getPsnPrContent().substring(0, index));
-		 */
 		int userNo = ((Member)session.getAttribute("loginUser")).getUserNo();
+		pr.setUserNo(userNo);
 		
 		int result = pService.insertPersonalPr(pr); 
 		

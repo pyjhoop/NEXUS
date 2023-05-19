@@ -69,9 +69,7 @@
 
 <body>
 <jsp:include page="../common/template.jsp"/>
-
-<div class="container-xxl flex-grow-1" >
-	<script>
+<script>
 		
 	
 		// active 클래스 를 repository로 옮기기
@@ -83,8 +81,10 @@
 	
 	 </script>
 
+<div class="container-xxl flex-grow-1" >
 
-<div id="mainBody">
+
+<div id="mainBody" style="height: auto;">
 
 
 
@@ -122,13 +122,13 @@
 	
 	<div style="margin-left:5rem; border-bottom: 1.5px solid #f2f2f2; width: 88%;"></div>
 	
-	<div id="realContent" style="padding: 2rem 0rem 3rem 6rem; font-size: 1.2rem; color: black;">
+	<div id="realContent" style="padding: 2rem 0rem 3rem 6rem; font-size: 1.2rem; color: black; ">
 		<b>${p.psnPrContent }</b>
 	</div>
 
 </div>
 
-</div>
+</div><br><Br><Br><br><br>
 
 
 </div>
