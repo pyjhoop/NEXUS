@@ -1,18 +1,35 @@
 // Collapsible
-var coll = document.getElementsByClassName("collapsible");
+var coll = document.getElementsByClassName("chatBotButton");
 
 for (let i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function () {
         this.classList.toggle("active");
 
-        var content = this.nextElementSibling;
+        var content = document.getElementById("chatBotContent");
 
         if (content.style.maxHeight) {
             content.style.maxHeight = null;
         } else {
             content.style.maxHeight = content.scrollHeight + "px";
         }
+		document.getElementById("chat-button").toggleAttribute('hidden');
+    });
+}
 
+var coll2 = document.getElementsByClassName("collapsible");
+
+for (let i = 0; i < coll2.length; i++) {
+    coll2[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+
+        var content = document.getElementById("chatBotContent");
+
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+        } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+        }
+		document.getElementById("chat-button").toggleAttribute('hidden');
     });
 }
 
@@ -35,7 +52,7 @@ function getTime() {
 
 // Gets the first message
 function firstBotMessage() {
-    let firstMessage = "How's it going?"
+    let firstMessage = "무엇이든 물어보세요"
     document.getElementById("botStarterMessage").innerHTML = '<p class="botText"><span>' + firstMessage + '</span></p>';
 
     let time = getTime();
@@ -94,7 +111,7 @@ function sendButton() {
 }
 
 function heartButton() {
-    buttonSendText("Heart clicked!")
+    buttonSendText("고마워 AI!")
 }
 
 // Press enter to send a message

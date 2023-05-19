@@ -82,10 +82,9 @@
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 <!-- chatbot -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/css/chat.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/css/home.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/css/chat.css?ver=4">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/css/home.css?ver=5">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css?ver=6">
 
 
 <!-- 알람창 JavaScript -->
@@ -142,7 +141,7 @@
 
 				<ul class="menu-inner py-1">
 					<!-- Dashboard -->
-					<li class="menu-item"><a href="main.p" class="menu-link">
+					<li class="menu-item" id="home"><a href="main.p" class="menu-link" >
 							<i class="menu-icon tf-icons bx bx-home-circle"></i>
 							<div data-i18n="Analytics">Home</div>
 						</a>
@@ -157,11 +156,11 @@
 						<div data-i18n="Basic">Repository</div>
 					</a></li>
 
-					<li class="menu-item"><a href="issueShow.mini" onclick="return repoCheck();" class="menu-link">
+					<li class="menu-item" id="issue"><a href="issueShow.mini" onclick="return repoCheck();" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-collection"></i>
 							<div data-i18n="Basic">Issue</div>
 						</a></li>
-					<li class="menu-item"><a href="milestoneList.m" onclick="return repoCheck();" class="menu-link">
+					<li class="menu-item" id="milestone"><a href="milestoneList.m" onclick="return repoCheck();" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-box"></i>
 							<div data-i18n="User interface">Milestone</div>
 						</a></li>
@@ -194,7 +193,7 @@
 
 
 					
-				<li class="menu-item"><a href="selectCal.ih" class="menu-link">
+				<li class="menu-item" id="calendar1"><a href="selectCal.ih" class="menu-link">
 						<i class="menu-icon tf-icons bx bxs-calendar"></i>
 						<div data-i18n="Tables">Calendar</div>
 					</a></li>
@@ -205,23 +204,23 @@
 					<div data-i18n="Form Elements">News</div>
 				</a></li>
 
-				<li class="menu-item"><a href="selectChat.ih" class="menu-link">
+				<li class="menu-item" id="chat1"><a href="selectChat.ih" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-message-rounded-dots"></i>
 						<div data-i18n="Support">Chatting</div>
 					</a></li>
-				<li class="menu-item"><a href="#" target="_blank" class="menu-link">
-						<i class="menu-icon tf-icons bx bx-bot"></i>
-						<div data-i18n="Support">Chattbot</div>
-					</a></li>
-				<li class="menu-item"><a href="personal.me" target="_blank" class="menu-link">
+				<li class="menu-item"><div class="chatBotButton"><a href="#" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-bot"></i>
+							<div data-i18n="Support">Chattbot</div>
+						</a></div></li>
+				<li class="menu-item" id="pr123"><a href="personal.me" class="menu-link">
 						<i class="menu-icon tf-icons  bx bxs-megaphone"></i>
 						<div data-i18n="Documentation">Personal Pr</div>
 					</a></li>
-				<li class="menu-item"><a href="project.re" class="menu-link ">
+				<li class="menu-item" id="rcccccc"><a href="project.re" class="menu-link ">
 						<i class="menu-icon tf-icons bx bxs-group"></i>
 						<div data-i18n="Form Layouts">Recruit</div>
 					</a></li>
-				<li class="menu-item"><a href="friend.me" class="menu-link">
+				<li class="menu-item" id="frrrr"><a href="friend.me" class="menu-link">
 						<i class="menu-icon tf-icons bx bx-user-plus"></i>
 						<div data-i18n="Form Elements">Friend</div>
 					</a></li>
@@ -423,12 +422,12 @@
 
 
 				<!-- CHAT BAR BLOCK to be changed to a bubble-->
-				<div class="chat-bar-collapsible">
-					<button id="chat-button" type="button" class="collapsible">
-						Chat with us! <i id="chat-icon" style="color: #fff;" class="fa fa-fw fa-comments-o"></i>
+				<div class="chat-bar-collapsible" style="z-index: 5">
+					<button id="chat-button" type="button" class="collapsible" hidden>
+						<i id="chat-icon" style="color: #fff;" class="fa fa-fw fa-comments-o"></i>봇 상담원
 					</button>
 
-					<div class="content">
+					<div class="content" id="chatBotContent">
 						<div class="full-chat-block">
 							<!-- Message Container -->
 							<div class="outer-container">
@@ -437,14 +436,14 @@
 									<div id="chatbox">
 										<h5 id="chat-timestamp"></h5>
 										<p id="botStarterMessage" class="botText">
-											<span>Loading...</span>
+											<span>로딩중...</span>
 										</p>
 									</div>
 
 									<!-- User input box -->
 									<div class="chat-bar-input-block">
 										<div id="userInput">
-											<input id="textInput" class="input-box" type="text" name="msg" placeholder="Tap 'Enter' to send a message">
+											<input id="textInput" class="input-box" type="text" name="msg" placeholder="'엔터'를 눌러 메세지를 보내보세요">
 											<p></p>
 										</div>
 
@@ -547,7 +546,7 @@
 
 				<!-- chatbot -->
 				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-				<script src="${pageContext.request.contextPath}/resources/static/scripts/responses.js"></script>
-				<script src="${pageContext.request.contextPath}/resources/static/scripts/chat.js"></script>
+				<script src="${pageContext.request.contextPath}/resources/static/scripts/responses.js?ver=2"></script>
+				<script src="${pageContext.request.contextPath}/resources/static/scripts/chat.js?ver=3"></script>
 </body>
 </html>

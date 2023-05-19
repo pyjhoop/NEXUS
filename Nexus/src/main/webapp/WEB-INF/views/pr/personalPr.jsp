@@ -419,6 +419,17 @@ transform: scale(1.1);
 	새 글 쓰기
 </button>
 </div>
+<script>
+		
+	
+	// active 클래스 를 repository로 옮기기
+	$(".active").removeClass("active");
+	$("#pr123").addClass("active");
+	// $("#total1").addClass("active");
+
+
+
+ </script>
 	
 	<div id="stacks" style="overflow: auto; padding: 0;">
 <div class="col-xl-6" style="width: 100%; max-width: 100%;" >

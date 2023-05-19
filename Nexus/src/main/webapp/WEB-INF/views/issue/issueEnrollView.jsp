@@ -29,6 +29,17 @@
 
    <jsp:include page="../common/template.jsp" />
 
+   <script>
+      $(function(){
+
+      // active 클래스 를 repository로 옮기기
+      $(".active").removeClass("active");
+      $("#issue").addClass("active");
+
+      })
+
+   </script>
+
    <div class="container total-box" style="margin-left: 0px; margin-right: 0px;">
 
       <form action="createIssue.mi" method="post" id="issueEnrollForm">

@@ -42,6 +42,17 @@ float: right !important;
 <body>
 <jsp:include page="../common/template.jsp" />
 <!-- 위에서 해당 마일스톤의 정보 가져와야함 -->
+
+<script>
+	$(function(){
+
+	// active 클래스 를 repository로 옮기기
+	$(".active").removeClass("active");
+	$("#milestone").addClass("active");
+
+	})
+
+ </script>
 <div class="content-wrapper">
 	<div class="container-xxl flex-grow-1 container-p-y">
 	  <h4 class="fw-bold py-3 mb-4">

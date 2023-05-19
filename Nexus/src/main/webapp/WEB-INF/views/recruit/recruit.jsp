@@ -8,6 +8,7 @@
 <title>Nexus!</title>
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/logo3.png" />
 </head>
+<jsp:include page="../common/template.jsp"/>
 <style>
 #mainBody{
 	height: auto; 
@@ -451,9 +452,23 @@ transform: scale(1.1);
 	background-color: white !important;
 	color: #0d6efd !important;
 }
+
 </style>
 <body>
-<jsp:include page="../common/template.jsp"/>
+	<script>
+		
+	
+		// active 클래스 를 repository로 옮기기
+		$(".active").removeClass("active");
+		$("#rcccccc").addClass("active");
+		// $("#total1").addClass("active");
+	
+	
+	
+	 </script>
+
+	
+
 
 
 <div class="container-xxl flex-grow-1">
@@ -471,7 +486,7 @@ transform: scale(1.1);
                   <div class="nav-align-top mb-4" style="width: 100%;">
                     <ul class="nav nav-tabs nav-fill" role="tablist" style="margin-bottom: 0;" >
                       <li class="nav-item" style="margin: 0;">
-                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-home" aria-controls="navs-justified-home" aria-selected="true">
+                        <button type="button" class="nav-link" id="total1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-home" aria-controls="navs-justified-home" aria-selected="true">
                           <i class="tf-icons bx bx-home"></i>  &nbsp; <b style="font-size: 17px;">모두보기</b>
                           <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger"></span>
                         </button>
@@ -497,6 +512,7 @@ transform: scale(1.1);
                         </button>
                       </li>
                     </ul>
+					
                     
                     <div class="tab-content" style="overflow: auto; width: 100%;">
                       <div class="tab-pane fade active show" id="navs-justified-home" role="tabpanel">

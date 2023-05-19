@@ -90,6 +90,16 @@ a:hover { text-decoration:none !important }
 </head>
 <body>
 	<jsp:include page="../common/template.jsp"/>
+	<script>
+		$(function(){
+	
+		// active 클래스 를 repository로 옮기기
+		$(".active").removeClass("active");
+		$("#chat1").addClass("active");
+	
+		})
+	
+	 </script>
 	
 	<div class="container-wrapper">
 	<div class="container-xxl flex-grow-1 container-p-y">

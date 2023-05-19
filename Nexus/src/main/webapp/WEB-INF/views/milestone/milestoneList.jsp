@@ -46,6 +46,16 @@ th{
 
 <jsp:include page="../common/template.jsp" />
 	<!-- 생성일,종료일,수정일, 진척도, -->
+	<script>
+		$(function(){
+	
+		// active 클래스 를 repository로 옮기기
+		$(".active").removeClass("active");
+		$("#milestone").addClass("active");
+	
+		})
+	
+	 </script>
 	
 <div class="content-wrapper">
 	<div class="container-xxl flex-grow-1 container-p-y">

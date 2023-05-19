@@ -254,6 +254,18 @@ $.datepicker.setDefaults({
   </script>
 <body>
 
+	<script>
+		
+	
+		// active 클래스 를 repository로 옮기기
+		$(".active").removeClass("active");
+		$("#rcccccc").addClass("active");
+		// $("#total1").addClass("active");
+	
+	
+	
+	 </script>
+
 <div class="container-xxl flex-grow-1"> 
 <form action="insertRecruit" method="post" style="height: 100%;">
 <div id="body" style="margin: 0px; margin-top: 30px; width: 100%">

@@ -106,8 +106,20 @@
 
 <body>
 <jsp:include page="../common/template.jsp"/>
+<script>
+		
+	
+	// active 클래스 를 repository로 옮기기
+	$(".active").removeClass("active");
+	$("#rcccccc").addClass("active");
+	// $("#total1").addClass("active");
+
+
+
+ </script>
 
 <div class="container-xxl flex-grow-1" >
+
 
 
 <div id="mainBody">

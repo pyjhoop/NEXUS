@@ -71,6 +71,17 @@
 <jsp:include page="../common/template.jsp"/>
 
 <div class="container-xxl flex-grow-1" >
+	<script>
+		
+	
+		// active 클래스 를 repository로 옮기기
+		$(".active").removeClass("active");
+		$("#pr123").addClass("active");
+		// $("#total1").addClass("active");
+	
+	
+	
+	 </script>
 
 
 <div id="mainBody">
