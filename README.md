@@ -1,5 +1,6 @@
 
 
+
  <div style="display:flex; flex-direction:row;"></div>
   <div style="display:flex; flex-direction:row;"></div>
    <div style="display:flex; flex-direction:row;"></div>
@@ -53,60 +54,101 @@ NEXUS는 **연결, 관계, 집합체**를 뜻하는 단어로 여러 다른 것�
 
 
 
-<br>
+<br><br><br><br><br>
 
 
-## 메인페이지 
-
-<br><br>
-
-
-## 사용자 프로필 화면
-
+## ⭐메인페이지 
 
 <br><br>
 
+### 로그인 성공시 메인페이지로 이동
+ 최근 접근했던 레파지토리 기록과 5일이내 나에게 할당된 이슈를 볼수있고 친구목록 (로그인유무) 체크가능
 
-## 일정 등록 녹화
-
+<img width="1281" alt="메인화면 1" src="https://github.com/pyjhoop/NEXUS/assets/113378302/facdd36b-64fe-42d8-b62c-aa600d66d16b">
 <br><br>
 
 
 
-## 레파지토리
+<br><br><br><br>
+## ⭐사용자 프로필 화면
+
+
+<br><br>
+### 상단메뉴바의 프로필 이미지를 누르면 메뉴 출력 - 프로필 수정,로그아웃
+<img width="178" alt="프로필" src="https://github.com/pyjhoop/NEXUS/assets/113378302/3bb79292-4dd8-46d1-bcaa-c309094be4c5">
+<img width="1281" alt="프로필수정" src="https://github.com/pyjhoop/NEXUS/assets/113378302/29eac9de-aca3-4e53-8c59-984c29e578e2">
+
+<br><br><br><br>
+## ⭐일정 등록 
+
+### 일정 등록 삭제 가능 
+![Insert-title-here-Chrome-2023-05-24-21-51-22](https://github.com/pyjhoop/NEXUS/assets/113378302/327ea4c0-cb39-46af-a321-421b163a9416)
+<br><br><br>
+### 칸반으로 쉽게 이동 가능 
+![Insert-title-here-Chrome-2023-05-24-21-45-11](https://github.com/pyjhoop/NEXUS/assets/113378302/98e61b2f-7024-48fd-8287-5a61956207ae)
+<br><br><br><br><br><br>
+
+
+
+## ⭐레파지토리
+
+<br><br><br><br>
+### 다른 레파지토리 등록
+![1](https://github.com/pyjhoop/NEXUS/assets/113378302/ebf68a35-a307-4202-8cc0-db91a3ed032d)
+<br><br><br><br>
+### 파일 경로 이동 + 코드 확인 가능
+![2](https://github.com/pyjhoop/NEXUS/assets/113378302/a15552ce-f843-4fc5-bf5d-4f64d691e2a8)
+![3](https://github.com/pyjhoop/NEXUS/assets/113378302/339761eb-e11d-46f6-af2e-484c24c5b738)
+<br><br><br><br>
+
 
 <br><br>
 
 
-## 이슈
+## ⭐이슈
+<br><br>
 
-<br>
-<br>
+### 이슈 상태별 조회 + 무한스크롤 구현 
+![10](https://github.com/pyjhoop/NEXUS/assets/113378302/761a08ba-4690-45ae-ab18-b163215440a9)
+
+
+### 메인페이지 최근 나에게 할당된 이슈에서도 조회 가능 
 
 
 
-## 마일스톤
+### 이슈 등록 + 깃허브 연동
+![5](https://github.com/pyjhoop/NEXUS/assets/113378302/d5e4f169-6c8f-49a6-8ec0-cf5947c6c0c3)
+
+<br><br>
+### 이슈 상태 수정 + 상태 변경
+
+![4](https://github.com/pyjhoop/NEXUS/assets/113378302/9f059506-7ff7-4f59-8a6b-1d399495b977)
+<br><br><br><br><br><br>
+
+
+
+## ⭐마일스톤
 
 <br><br>
 
 
-## 채팅 녹화
+## ⭐채팅 
 
 
 <br><br>
 
 
-## 뉴스
+## ⭐뉴스
 
 <br><br>
 
 
-## 팀원 모집
+## ⭐팀원 모집
 
 <br><br>
 
 
-## 챗봇 녹화
+## ⭐챗봇 녹화
 
 
 
@@ -119,7 +161,6 @@ NEXUS는 **연결, 관계, 집합체**를 뜻하는 단어로 여러 다른 것�
 ## 🌈Technology Stack
 
 <div style="display:flex; flex-direction:row;">
- <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
     <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=white"> 
     <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> 
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> 
@@ -129,7 +170,11 @@ NEXUS는 **연결, 관계, 집합체**를 뜻하는 단어로 여러 다른 것�
     <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=black">
  <img src="https://img.shields.io/badge/visual studio code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
     <br>
-  
+      <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
+    <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
+    <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
+    <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+    <img src="https://img.shields.io/badge/postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white">
 
 </div>
 
@@ -146,20 +191,6 @@ NEXUS는 **연결, 관계, 집합체**를 뜻하는 단어로 여러 다른 것�
  
   <br><br>
   
-  ## 프로젝트를 통해 배운것
-  
-  
-  깃허브와 협업 도구의 결합: 이 프로젝트를 통해 깃허브의 다양한 기능을 활용하고, 협업 도구로서의 역할을 강화시킬 수 있었습니다. 깃허브를 중심으로 한 팀의 소통과 협업을 개선하는 방법을 학습하였습니다.
-
-실시간 소통과 알림: 팀원들이 프로젝트에 대한 실시간 업데이트와 이벤트를 받을 수 있도록 실시간 소통 및 알림 기능을 구현하는 방법을 배웠습니다. 이를 통해 팀원들은 프로젝트의 진행 상황과 변경 사항을 빠르게 파악하고, 대응할 수 있습니다.
-
-코드 관리와 이슈 트래킹: 깃허브의 코드 관리 기능과 이슈 트래킹 기능을 효과적으로 활용하는 방법을 습득했습니다. 코드 리뷰, 머지, 이슈 생성 및 관리 등을 통해 프로젝트의 코드 품질을 향상시키고, 문제를 해결할 수 있었습니다.
-
-프로젝트 관리와 태스크 추적: 깃허브의 프로젝트 관리 기능과 태스크 추적을 통해 프로젝트의 진행 상황을 시각적으로 파악하고 관리하는 방법을 배웠습니다. 프로젝트 보드를 활용하여 할 일, 진행 중인 작업, 완료된 작업 등을 체계적으로 관리할 수 있었습니다.
-
-커뮤니티 형성과 지식 공유: 프로젝트를 통해 팀원들 간의 소통을 돕고, 커뮤니티를 형성하여 정보 공유와 토론을 진행하는 방법을 경험했습니다. 팀원들 간의 지식 공유와 협업 문화를 발전시킬 수 있었습니다.
-
-이 프로젝트를 통해 깃허브를 비롯한 협업 도구의 다양한 기능과 활용 방법을 배움으로써 효율적이고 원활한 팀 협업을 실현하는 데에 많은 도움이 되었습니다.
 
  
 
